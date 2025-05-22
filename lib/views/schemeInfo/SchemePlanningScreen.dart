@@ -1,7 +1,10 @@
 import 'package:cno_inspection/views/schemeInfo/SourceScreen.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
+import '../../utils/CustomTextField.dart';
+import 'RetrofittingAugmentationScreen.dart';
 
 class SchemePlanningScreen extends StatefulWidget {
   const SchemePlanningScreen({Key? key}) : super(key: key);
@@ -13,6 +16,8 @@ class SchemePlanningScreen extends StatefulWidget {
 class _SchemePlanningScreen extends State<SchemePlanningScreen> {
   String _selectedValue = 'yes'; // Default selected value
   String? selectedValueQ1;
+  String? selectedOption = 'option1';
+  final TextEditingController textController = TextEditingController();
 
   final List<String> _dropdownOptions = [
     'Atleast once in 7 days',
@@ -20,6 +25,8 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
     'Atleast once in more than 15 days'
   ];
   String? SetFreq;
+  List<String> selectedInstitutions = [];
+  final TextEditingController householdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -83,100 +90,121 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                             SizedBox(
                               height: 5,
                             ),
-                            Text(
-                              "1.	Has the surveys done for planning of the scheme ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                  color: Colors.black),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: CustomRadioQuestion(
-                                questionText: "1.1	Topographical survey",
-                                options: const ['Yes', 'No'], // You can pass more options if needed
-                                selectedValue: selectedValueQ1,
-                                onChanged: (val) {
-                                  setState(() {
-                                    selectedValueQ1 = val;
-                                  });
-                                },
-                              ),
-                            ),
 
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: CustomRadioQuestion(
-                                questionText: "1.2.	GPS/physical survey done",
-                                options: ['Yes', 'No'], // You can pass more options if needed
-                                selectedValue: selectedValueQ1,
-                                onChanged: (val) {
-                                  setState(() {
-                                    selectedValueQ1 = val;
-                                  });
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: CustomRadioQuestion(
-                                questionText: "1.3.Google Earth/Maps survey	",
-                                options: ['Yes', 'No'], // You can pass more options if needed
-                                selectedValue: selectedValueQ1,
-                                onChanged: (val) {
-                                  setState(() {
-                                    selectedValueQ1 = val;
-                                  });
-                                },
-                              ),
-                            ),
 
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: CustomRadioQuestion(
-                                questionText: "1.4.	No survey done	",
-                                options: ['Yes', 'No'], // You can pass more options if needed
-                                selectedValue: selectedValueQ1,
-                                onChanged: (val) {
-                                  setState(() {
-                                    selectedValueQ1 = val;
-                                  });
-                                },
-                              ),
-                            ),
 
-                            CustomRadioQuestion(
-                              questionText: "2.	What are the running hours per day considered for designing of WTP/Transmission main?",
-                              options: ['Safe', 'Critical / Over exploited','Semi-critical'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
+                            CustomCheckboxQuestion(
+                              questionText: "1.	Has the surveys done for planning of the scheme :",
+                              options: ['Topographical survey', 'GPS/physical survey done', 'Google Earth/Maps survey', 'No survey done'],
+                              selectedValues: selectedInstitutions,
+                              onChanged: (newSelected) {
                                 setState(() {
-                                  selectedValueQ1 = val;
+                                  selectedInstitutions = newSelected;
                                 });
                               },
                             ),
-                            CustomRadioQuestion(
-                              questionText: "3.	What is the retention time in hours per day considered for design of ",
-                              /*o	OHSR/OHT/ESR			:	hrs.
-o	MBR				:	hrs.
-*/
-                              options: ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
+
+
+
+
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              // Align text to the left
+                              children: [
+                                CustomTextField(
+                                  labelText: "2.What are the running hours per day considered for designing of WTP/Transmission main?",
+                                  hintText: 'Enter here',
+                                  controller: householdController,
+                                  isRequired: false,
+                                ),
+
+                                SizedBox(
+                                  height: 18,
+                                ),
+
+                                CustomTextField(
+                                  labelText: '3.1 What is the retention time in hours per day considered for design of OHSR/OHT/ESR   ',
+                                  hintText: 'Enter here',
+                                  controller: householdController,
+                                  isRequired: false,
+                                ),
+
+                                SizedBox(
+                                  height: 18,
+                                ),
+
+                                CustomTextField(
+                                  labelText: '3.2 What is the retention time in hours per day considered for design of MBR',
+                                  hintText: 'Enter here',
+                                  controller: householdController,
+                                  isRequired: false,
+                                ),
+
+                                CustomTextField(
+                                  labelText: '4.1 Please specify the pipe material used for transmission pipeline and distribution network in Rocky Strata with reasons for selecting the same',
+                                  hintText: 'Enter here',
+                                  controller: householdController,
+                                  isRequired: false,
+                                ),
+                             CustomTextField(
+                                  labelText: '4.1 Please specify the pipe material used for transmission pipeline and distribution network in Soil Strata with reasons for selecting the same',
+                                  hintText: 'Enter here',
+                                  controller: householdController,
+                                  isRequired: false,
+                                ),
+
+
+                              ],
                             ),
-                             CustomRadioQuestion(
-                              questionText: "5.	Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose?",
-                              options: ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
+
+
+
+                            Column(
+                              children: [
+                                Align(alignment: Alignment.centerLeft,
+                                    child: Text("5.	Do the on-spot excavation on any sample stretch of pipeline and check for pipe material and dia as per DPR::",
+                                      style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),)),
+                                RadioListTile<String>(
+                                  title: Text("Not Found"),
+                                  value: 'option1',
+                                  groupValue: selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedOption = value;
+                                    });
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  title: Text("Found as per DPR"),
+                                  value: 'option2',
+                                  groupValue: selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedOption = value;
+                                    });
+                                  },
+                                ),
+                                if (selectedOption == 'option2') ...[
+                                  TextField(
+                                    controller: textController,
+                                    decoration: InputDecoration(
+                                      labelText: "If deviation found",
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                ],
+                                SizedBox(height: 20),
+                             /*   ElevatedButton(
+                                  onPressed: () {
+                                    String result = selectedOption == 'option1'
+                                        ? 'Selected: Option 1'
+                                        : 'Selected: Option 2, Input: ${textController.text}';
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(content: Text(result)));
+                                  },
+                                  child: Text("Submit"),
+                                ),*/
+                              ],
                             ),
 
                             Container(
@@ -197,7 +225,7 @@ o	MBR				:	hrs.
                                           ),
                                         ),
                                         onPressed: () {
-                         /* Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => GWMQuestions()),);*/
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => RetrofittingAugmentationScreen()),);
                                         },
                                         child: Text(
                                           "SAVE & NEXT",

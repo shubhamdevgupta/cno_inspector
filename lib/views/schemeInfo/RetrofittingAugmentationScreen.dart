@@ -1,31 +1,42 @@
+import 'package:cno_inspection/views/schemeInfo/SourceScreen.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
+import 'SchemeImplementationScreen.dart';
 import 'SchemePlanningScreen.dart';
 
-class SourceScreenQuestions extends StatefulWidget {
-  const SourceScreenQuestions({Key? key}) : super(key: key);
+class RetrofittingAugmentationScreen extends StatefulWidget {
+  const RetrofittingAugmentationScreen({Key? key}) : super(key: key);
 
   @override
-  _SourceScreenQuestions createState() => _SourceScreenQuestions();
+  _RetrofittingAugmentationScreen createState() => _RetrofittingAugmentationScreen();
 }
 
-class _SourceScreenQuestions extends State<SourceScreenQuestions> {
+class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScreen> {
   String _selectedValue = 'yes'; // Default selected value
   String? selectedValueQ1;
-  final TextEditingController householdController = TextEditingController();
+  String? selectedOption = 'option1';
+  final TextEditingController textController = TextEditingController();
 
+  final List<String> _dropdownOptions = [
+    'Atleast once in 7 days',
+    'Atleast once in 15 days',
+    'Atleast once in more than 15 days'
+  ];
   String? SetFreq;
+  List<String> selectedInstitutions = [];
+  final TextEditingController householdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         // Replace the current route with a new one
-        /*   Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => VillageList()),
-        );*/
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => SchemePlanningScreen()),
+        );
 
         // Return false to prevent the default back navigation behavior
         return false;
@@ -63,16 +74,10 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                               height: 5,
                             ),
                             Text(
-                              "A.Source",
+                              "C.Additional information for Retrofitting/Augmentation Schemes only",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
-                                  color: Colors.orange),
-                            ), Text(
-                              "Field visit format for Central Nodal Officers:",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
                                   color: Colors.orange),
                             ),
                             SizedBox(
@@ -86,20 +91,11 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                             SizedBox(
                               height: 5,
                             ),
-                            CustomRadioQuestion(
-                              questionText: "1.	If the source is surface water, then, did the Source finding committee recommended the shift to surface water? ",
-                              options: const ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
+
 
                             CustomRadioQuestion(
-                              questionText: "2.Any study done to assess ground water before going for surface water?",
-                              options: ['Yes', 'No'], // You can pass more options if needed
+                              questionText: "1.	Whether the condition assessment of the legacy infrastructure done before scheme planning?",
+                              options: const ['Yes', 'No'], // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
                                 setState(() {
@@ -114,7 +110,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                               // Align text to the left
                               children: [
                                 CustomTextField(
-                                  labelText: '3.1 number of villages falling under the SAFE zones as specified by CGWB',
+                                  labelText: "2.1 Enter the length of Legacy Transmission Pipelines which has been retrofitted and being used in the scheme (KM) ",
                                   hintText: 'Enter here',
                                   controller: householdController,
                                   isRequired: false,
@@ -125,7 +121,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                 ),
 
                                 CustomTextField(
-                                  labelText: '3.2 number of villages falling under the CRITICAL / OVER-EXPLOITED zones as specified by CGWB',
+                                  labelText: '2.2 Enter the Length of Legacy Distribution Pipelines which has been retrofitted and being used in the scheme (KM) ',
                                   hintText: 'Enter here',
                                   controller: householdController,
                                   isRequired: false,
@@ -136,18 +132,26 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                 ),
 
                                 CustomTextField(
-                                  labelText: '3.3 number of villages falling under the  SEMI-CRITICAL  zones as specified by CGWB',
+                                  labelText: '2.3 Enter the Capacity of WTP which has been retrofitted and being used in the scheme (MLD) ',
                                   hintText: 'Enter here',
                                   controller: householdController,
                                   isRequired: false,
                                 ),
+
+                                CustomTextField(
+                                  labelText: '2.4 Enter the number of storage reservoirs and the capacity of each storage reservoir which has been retrofitted and being used in the scheme (in KL) ',
+                                  hintText: 'Enter here',
+                                  controller: householdController,
+                                  isRequired: false,
+                                ),
+
                               ],
                             ),
 
 
                             CustomRadioQuestion(
-                              questionText: "4.In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option—treating the contaminated groundwater or switching to a surface water source? ",
-                              options: ['Yes', 'No'], // You can pass more options if needed
+                              questionText: "3. Is the as built drawing of the new infrastructure in conjunction with the existing infrastructure available with the department/agency/GP? Has it been digitized and uploaded on PM Gatishakti?",
+                              options: const ['Yes', 'No'], // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
                                 setState(() {
@@ -155,16 +159,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                 });
                               },
                             ),
-                             CustomRadioQuestion(
-                              questionText: "5.	Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose?",
-                              options: ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
+
 
                             Container(
                               padding: EdgeInsets.all(5),
@@ -184,7 +179,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                           ),
                                         ),
                                         onPressed: () {
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SchemePlanningScreen()),);
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SchemeImplementationScreen()),);
                                         },
                                         child: Text(
                                           "SAVE & NEXT",
