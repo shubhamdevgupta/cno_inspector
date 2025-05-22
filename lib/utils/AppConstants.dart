@@ -26,7 +26,19 @@ class AppConstants {
 
   ////////////schemeinfo
   static const String navigateToDashboardSchemeInfo = '/dashboardschemeinfo';
+
+
+
+  /////dwsm
   static const String navigateToDashboardDWSM = '/dashboarddwsm';
+
+
+  ////vwsc
   static const String navigateToDashboardVWSC = '/dashboardVWSC';
+  static const String navigateToWaterSupplyPartA = '/watersupplyA';
+  static const String navigateToCommunityInvolvementPartB  = '/dashboardcommunityinvolmentpartB';
+  static const String navigateToCommunityFeedbackPartC  = '/dashboardcommunityinvolmentpartC';
+  static const String navigateToQulityPartD = '/dashboardqualitypartD';
+  static const String navigateToGrievancePartE = '/dashboardgrivenaceE';
 
 }

@@ -1,11 +1,14 @@
 import 'package:cno_inspection/provider/authentication_provider.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
+import 'package:cno_inspection/views/InteractionVWSC/CommunityFeedbackPartC.dart';
+import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
+import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
+import 'package:cno_inspection/views/InteractionVWSC/WaterQualityPartD.dart';
 
 import 'package:cno_inspection/views/InteractionVWSC/WaterSupplyPartA.dart';
 
 import 'package:cno_inspection/views/InteractionDWSM/DashboardDWSM.dart';
 import 'package:cno_inspection/views/InteractionVWSC/DashboardVWSC.dart';
-import 'package:cno_inspection/views/InteractionVWSC/vwscScreen.dart';
 
 import 'package:cno_inspection/views/auth/DashboardScreen.dart';
 import 'package:cno_inspection/views/auth/LoginScreen.dart';
@@ -43,12 +46,17 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => WaterSupplyPartA(),
+        '/': (context) => SplashScreen(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
         AppConstants.navigateToLogin: (context) => Loginscreen(),
         AppConstants.navigateToDashboardSchemeInfo: (context) => Dashboardschemeinfo(),
         AppConstants.navigateToDashboardDWSM: (context) => Dashboarddwsm(),
         AppConstants.navigateToDashboardVWSC: (context) => Dashboardvwsc(),
+        AppConstants.navigateToWaterSupplyPartA: (context) => WaterSupplyPartA(),
+        AppConstants.navigateToCommunityInvolvementPartB: (context) => CommunityInvolvementPartB(),
+        AppConstants.navigateToCommunityFeedbackPartC: (context) => CommunityFeedbackPartC(),
+        AppConstants.navigateToQulityPartD: (context) => WaterQualityPartD(),
+        AppConstants.navigateToGrievancePartE: (context) => GrievancePartE(),
       },
     );
   }
