@@ -1,3 +1,4 @@
+import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/CustomRadioQuestion.dart';
@@ -23,9 +24,9 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
     return WillPopScope(
       onWillPop: () async {
         // Replace the current route with a new one
-        /*   Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => VillageList()),
-        );*/
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => Dashboardschemeinfo()),
+        );
 
         // Return false to prevent the default back navigation behavior
         return false;

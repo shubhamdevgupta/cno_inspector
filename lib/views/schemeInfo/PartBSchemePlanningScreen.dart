@@ -162,7 +162,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                             Column(
                               children: [
                                 Align(alignment: Alignment.centerLeft,
-                                    child: Text("5.	Do the on-spot excavation on any sample stretch of pipeline and check for pipe material and dia as per DPR::",
+                                    child: Text("5.	Do the on-spot excavation on any sample stretch of pipeline and check for pipe material and dia as per DPR:",
                                       style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),)),
                                 RadioListTile<String>(
                                   title: Text("Not Found"),

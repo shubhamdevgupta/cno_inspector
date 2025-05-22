@@ -1,3 +1,4 @@
+import 'package:cno_inspection/views/InteractionDWSM/DashboardDWSM.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/CustomRadioQuestion.dart';
@@ -14,18 +15,17 @@ class _CoordinationPlanningScreen extends State<CoordinationPlanningScreen> {
   String _selectedValue = 'yes'; // Default selected value
   String? selectedValueQ1;
   final TextEditingController householdController = TextEditingController();
-
+  String? selectedOption = 'option1';
+  final TextEditingController textController = TextEditingController();
   String? SetFreq;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // Replace the current route with a new one
-        /*   Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => VillageList()),
-        );*/
-
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => Dashboarddwsm()),
+        );
         // Return false to prevent the default back navigation behavior
         return false;
       },
@@ -67,12 +67,6 @@ class _CoordinationPlanningScreen extends State<CoordinationPlanningScreen> {
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
                                   color: Colors.orange),
-                            ), Text(
-                              "Field visit format for Central Nodal Officers:",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                  color: Colors.orange),
                             ),
                             SizedBox(
                               height: 5,
@@ -85,78 +79,74 @@ class _CoordinationPlanningScreen extends State<CoordinationPlanningScreen> {
                             SizedBox(
                               height: 5,
                             ),
-                            CustomRadioQuestion(
-                              questionText: "1.	If the source is surface water, then, did the Source finding committee recommended the shift to surface water? ",
-                              options: const ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-
-                            CustomRadioQuestion(
-                              questionText: "2.Any study done to assess ground water before going for surface water?",
-                              options: ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
 
 
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // Align text to the left
                               children: [
-                                CustomTextField(
-                                  labelText: '3.1 number of villages falling under the SAFE zones as specified by CGWB',
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
+                                Align(alignment: Alignment.centerLeft,
+                                    child: Text("1. Are monthly DWSM meetings on progress of JJM works being held?",
+                                      style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),)),
+                                RadioListTile<String>(
+                                  title: Text("No"),
+                                  value: 'option1',
+                                  groupValue: selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedOption = value;
+                                    });
+                                  },
                                 ),
+                                RadioListTile<String>(
+                                  title: Text("Yes"),
+                                  value: 'option2',
+                                  groupValue: selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedOption = value;
+                                    });
+                                  },
+                                ),
+                                SizedBox(height: 5),
+                                if (selectedOption == 'option2') ...[
+                                  TextField(
+                                    controller: textController,
+                                    decoration: InputDecoration(
+                                      labelText: "(a). how many meetings were held in the last six months? ",
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
 
-                                SizedBox(
-                                  height: 18,
-                                ),
+                                  SizedBox(height: 20),
 
-                                CustomTextField(
-                                  labelText: '3.2 number of villages falling under the CRITICAL / OVER-EXPLOITED zones as specified by CGWB',
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
-                                ),
+                                  CustomRadioQuestion(
+                                    questionText: "(b). Quality of Meeting and Record maintenance: ",
+                                    options: const ['Proper Documentation with actionable decision', 'Partial Documentation','No Documentation'], // You can pass more options if needed
+                                    selectedValue: selectedValueQ1,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        selectedValueQ1 = val;
+                                      });
+                                    },
+                                  ),
 
-                                SizedBox(
-                                  height: 18,
-                                ),
-
-                                CustomTextField(
-                                  labelText: '3.3 number of villages falling under the  SEMI-CRITICAL  zones as specified by CGWB',
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
-                                ),
+                                ],
+                                SizedBox(height: 20),
+                                /*   ElevatedButton(
+                                  onPressed: () {
+                                    String result = selectedOption == 'option1'
+                                        ? 'Selected: Option 1'
+                                        : 'Selected: Option 2, Input: ${textController.text}';
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(content: Text(result)));
+                                  },
+                                  child: Text("Submit"),
+                                ),*/
                               ],
                             ),
 
-
                             CustomRadioQuestion(
-                              questionText: "4.In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option—treating the contaminated groundwater or switching to a surface water source? ",
-                              options: ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                             CustomRadioQuestion(
-                              questionText: "5.	Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose?",
-                              options: ['Yes', 'No'], // You can pass more options if needed
+                              questionText: "2.	Are District Development Coordination and Monitoring Committee (DISHA) meetings being held regularly? ",
+                              options: const ['Yes', 'No',], // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
                                 setState(() {

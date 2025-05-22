@@ -1,5 +1,6 @@
 import 'package:cno_inspection/provider/authentication_provider.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
+import 'package:cno_inspection/views/InteractionDWSM/PartACoordinationPlanningReviewScreen.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityFeedbackPartC.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
 import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
         AppConstants.navigateToSchemePlanningScreen: (context) => SchemePlanningScreen(),
 
 
-
+        AppConstants.navigateToCoordinationPlanningScreen: (context) => CoordinationPlanningScreen(),
 
 
         AppConstants.navigateToWaterSupplyPartA: (context) => WaterSupplyPartA(),
