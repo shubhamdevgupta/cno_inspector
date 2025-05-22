@@ -1,25 +1,39 @@
 import 'dart:convert';
 
-import '../model/LoginResponse.dart';
+import 'package:cno_inspection/model/authResponse/VerifyOtpResponse.dart';
+
+import '../model/authResponse/SendOtpResponse.dart';
 import '../services/BaseApiService.dart';
 
 class AuthenticaitonRepository {
   final BaseApiService _apiService = BaseApiService();
 
-  Future<LoginResponse> loginUser(
-      String phoneNumber, String password, String txtSalt, int appId) async {
+  Future<SendOtpResponse> sendOtp(String loginId) async {
     try {
       final response = await _apiService.post(
-        'APIMobile/Login',
+        '/CNOSurvey/SendOTP',
         body: jsonEncode({
-          'loginid': phoneNumber,
-          'password': password,
-          'txtSaltedHash': txtSalt,
-          'App_id': appId
+          'LoginId': loginId,
         }),
       );
 
-      return LoginResponse.fromJson(response);
+      return SendOtpResponse.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<VerifyOtpResponse> verifyOtp(String loginId, String otp) async {
+    try {
+      final response = await _apiService.post(
+        '/CNOSurvey/VerifyOTP',
+        body: jsonEncode({
+          'LoginId': loginId,
+          'OTP': otp,
+        }),
+      );
+
+      return VerifyOtpResponse.fromJson(response);
     } catch (e) {
       rethrow;
     }

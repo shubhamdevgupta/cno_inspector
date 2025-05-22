@@ -1,14 +1,14 @@
 import 'package:cno_inspection/provider/authentication_provider.dart';
+import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
 
 import 'package:cno_inspection/views/InteractionVWSC/WaterSupplyPartA.dart';
 
 import 'package:cno_inspection/views/InteractionDWSM/DashboardDWSM.dart';
 import 'package:cno_inspection/views/InteractionVWSC/DashboardVWSC.dart';
-import 'package:cno_inspection/views/InteractionVWSC/vwscScreen.dart';
 
 import 'package:cno_inspection/views/auth/DashboardScreen.dart';
-import 'package:cno_inspection/views/auth/LoginScreen.dart';
+import 'package:cno_inspection/views/auth/AuthScreen.dart';
 import 'package:cno_inspection/views/auth/SplashScreen.dart';
 import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +18,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LocalStorageService.init();
 
   runApp(
     MultiProvider(
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => WaterSupplyPartA(),
+        '/': (context) => SplashScreen(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
         AppConstants.navigateToLogin: (context) => Loginscreen(),
         AppConstants.navigateToDashboardSchemeInfo: (context) => Dashboardschemeinfo(),
