@@ -16,6 +16,9 @@ import 'package:cno_inspection/views/auth/SplashScreen.dart';
 import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/schemeInfo/PartBSchemePlanningScreen.dart';
 import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/schemeInfo/PartCRetrofittingAugmentationScreen.dart';
+import 'package:cno_inspection/views/schemeInfo/PartDSchemeImplementationScreen.dart';
+import 'package:cno_inspection/views/schemeInfo/PartEVisual%20Inspection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +60,11 @@ class MyApp extends StatelessWidget {
         AppConstants.navigateToDashboardVWSC: (context) => Dashboardvwsc(),
 
 
+        AppConstants.navigateToSourceScreenQuestions: (context) => SourceScreenQuestions(),
         AppConstants.navigateToSchemePlanningScreen: (context) => SchemePlanningScreen(),
+        AppConstants.navigateToRetrofittingAugmentationScreen: (context) => RetrofittingAugmentationScreen(),
+        AppConstants.navigateToSchemeImplementationScreen: (context) => SchemeImplementationScreen(),
+        AppConstants.navigateToVisualInspectionScreen: (context) => VisualInspectionScreen(),
 
 
 

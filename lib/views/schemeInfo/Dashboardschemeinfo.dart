@@ -94,7 +94,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                   onTap: () {
                     //
                     Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToSchemePlanningScreen);
+                        context, AppConstants.navigateToSourceScreenQuestions);
 
                   },
                 ),
@@ -108,6 +108,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                   color: Colors.orangeAccent,
                   onTap: () {
                     // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToSchemePlanningScreen);
                   },
                 ),
 
@@ -120,6 +122,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                   color: Colors.deepOrangeAccent,
                   onTap: () {
                     // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToRetrofittingAugmentationScreen);
                   },
                 ),
 
@@ -132,6 +136,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                   color: Colors.lightGreen,
                   onTap: () {
                     // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToSchemeImplementationScreen);
                   },
                 ),
 
@@ -145,6 +151,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                   color: Colors.green,
                   onTap: () {
                     // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToVisualInspectionScreen);
                   },
                 ),
 
