@@ -1,3 +1,4 @@
+import 'package:cno_inspection/utils/CustomCheckBoxQuestion.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/CustomRadioQuestion.dart';
@@ -19,6 +20,8 @@ class _SWMQuestions extends State<SWMQuestions> {
     'Atleast once in more than 15 days'
   ];
   String? SetFreq;
+  List<String> selectedInstitutions = [];
+
 
   @override
   Widget build(BuildContext context) {
@@ -123,180 +126,27 @@ class _SWMQuestions extends State<SWMQuestions> {
                                 });
                               },
                             ),
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "A 1.3 Does village have exclusive or shared vehicles for collection & transportation of waste ?",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  SizedBox(height: 5),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 1.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        ListTile(
-                                          contentPadding: EdgeInsets.zero,
-                                          title: const Text(
-                                              'Yes,exclusive vehicle'),
-                                          leading: Radio<String>(
-                                            value: 'Yes',
-                                            groupValue: _selectedValue,
-                                            onChanged: (String? value) {
-                                              setState(() {
-                                                _selectedValue = value!;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        ListTile(
-                                          contentPadding: EdgeInsets.zero,
-                                          title:
-                                              const Text('Yes, shared vehicle'),
-                                          leading: Radio<String>(
-                                            value: 'Yes, shared vehicle',
-                                            groupValue: _selectedValue,
-                                            onChanged: (String? value) {
-                                              setState(() {
-                                                _selectedValue = value!;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            CustomRadioQuestion(
+                              questionText: "5.	Scheme operational status since commissioning: ",
+                              options: ['Fully operational >3 months ', 'Operational but with interruptions','Non-functional','Partially commissioned'], // You can pass more options if needed
+                              selectedValue: selectedValueQ1,
+                              onChanged: (val) {
+                                setState(() {
+                                  selectedValueQ1 = val;
+                                });
+                              },
                             ),
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "A 1.6 What is the frequency of collection?",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
-                                      )),
-                                  SizedBox(height: 5),
-                                  Container(
-                                      width: 400,
-                                      margin: const EdgeInsets.all(5.0),
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0, right: 10.0),
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey[200],
-                                          shape: BoxShape.rectangle,
-                                          border: Border.all(
-                                              color: Colors.grey, width: 1),
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      child: DropdownButton<String>(
-                                        value: SetFreq,
-                                        hint: Text('Select Frequency'),
-                                        items: _dropdownOptions
-                                            .map((String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value),
-                                          );
-                                        }).toList(),
-                                        onChanged: (String? newValue) {
-                                          setState(() {
-                                            SetFreq = newValue;
-                                          });
-                                        },
-                                      )),
-                                  SizedBox(height: 20),
-                                  Text(
-                                    "A 1.8 Does the village have a collection and segregation shed for solid waste management?",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  SizedBox(height: 5),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 1.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: ListTile(
-                                            contentPadding: EdgeInsets.zero,
-                                            title: const Text('Yes'),
-                                            leading: Radio<String>(
-                                              value: 'yes',
-                                              groupValue: _selectedValue,
-                                              onChanged: (String? value) {
-                                                setState(() {
-                                                  _selectedValue = value!;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: ListTile(
-                                            contentPadding: EdgeInsets.zero,
-                                            title: const Text('No'),
-                                            leading: Radio<String>(
-                                              value: 'no',
-                                              groupValue: _selectedValue,
-                                              onChanged: (String? value) {
-                                                setState(() {
-                                                  _selectedValue = value!;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: SizedBox(
-                                      height: 35,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Color(0xffb0D6EFD),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10), // Adjust the radius as needed
-                                          ),
-                                        ),
-                                        onPressed: () {
-/*
-                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => GWMQuestions()),);
-*/
-                                        },
-                                        child: Text(
-                                          "SAVE & NEXT",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
+                            CustomCheckboxQuestion(
+                              questionText: "6. Whether piped water supply services available at institutions:",
+                              options: ['Schools', 'Anganwadi’s', 'PHCs', 'Not Applicable'],
+                              selectedValues: selectedInstitutions,
+                              onChanged: (newSelected) {
+                                setState(() {
+                                  selectedInstitutions = newSelected;
+                                });
+                              },
+                            ),
+
                           ],
                         ),
                       ),
