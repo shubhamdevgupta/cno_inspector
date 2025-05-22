@@ -1,8 +1,12 @@
 import 'package:cno_inspection/provider/authentication_provider.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
+
+import 'package:cno_inspection/views/InteractionVWSC/WaterSupplyPartA.dart';
+
 import 'package:cno_inspection/views/InteractionDWSM/DashboardDWSM.dart';
 import 'package:cno_inspection/views/InteractionVWSC/DashboardVWSC.dart';
 import 'package:cno_inspection/views/InteractionVWSC/vwscScreen.dart';
+
 import 'package:cno_inspection/views/auth/DashboardScreen.dart';
 import 'package:cno_inspection/views/auth/LoginScreen.dart';
 import 'package:cno_inspection/views/auth/SplashScreen.dart';
@@ -39,7 +43,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(),
+        '/': (context) => WaterSupplyPartA(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
         AppConstants.navigateToLogin: (context) => Loginscreen(),
         AppConstants.navigateToDashboardSchemeInfo: (context) => Dashboardschemeinfo(),
