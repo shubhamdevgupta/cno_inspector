@@ -1,6 +1,6 @@
 import 'package:cno_inspection/provider/authentication_provider.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
-import 'package:cno_inspection/views/InteractionVWSC/vwscScreen.dart';
+import 'package:cno_inspection/views/InteractionVWSC/WaterSupplyPartA.dart';
 import 'package:cno_inspection/views/auth/DashboardScreen.dart';
 import 'package:cno_inspection/views/auth/LoginScreen.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => SWMQuestions(),
+        '/': (context) => WaterSupplyPartA(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
         AppConstants.navigateToLogin: (context) => Loginscreen(),
       },

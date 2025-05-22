@@ -1,27 +1,20 @@
 import 'package:cno_inspection/utils/CustomCheckBoxQuestion.dart';
+import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/CustomRadioQuestion.dart';
 
-class SWMQuestions extends StatefulWidget {
-  const SWMQuestions({Key? key}) : super(key: key);
+class WaterSupplyPartA extends StatefulWidget {
+  const WaterSupplyPartA({Key? key}) : super(key: key);
 
   @override
-  _SWMQuestions createState() => _SWMQuestions();
+  _WaterSupplyPartA createState() => _WaterSupplyPartA();
 }
 
-class _SWMQuestions extends State<SWMQuestions> {
-  String _selectedValue = 'yes'; // Default selected value
+class _WaterSupplyPartA extends State<WaterSupplyPartA> {
   String? selectedValueQ1;
-
-  final List<String> _dropdownOptions = [
-    'Atleast once in 7 days',
-    'Atleast once in 15 days',
-    'Atleast once in more than 15 days'
-  ];
   String? SetFreq;
   List<String> selectedInstitutions = [];
-
 
   @override
   Widget build(BuildContext context) {
@@ -87,28 +80,13 @@ class _SWMQuestions extends State<SWMQuestions> {
                             ),
                             CustomRadioQuestion(
                               questionText: "1.	Water supply frequency?",
-                              options: ['Daily', 'Once in two days',' Once in three days ','Irregular','Not functional'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-
-                            CustomRadioQuestion(
-                              questionText: "2.	Is adequate water quantity reaching all the households: ",
-                              options: ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                            CustomRadioQuestion(
-                              questionText: "3.	Is adequate water quantity reaching to remote/SC/ST/PVTG groups: ",
-                              options: ['Yes', 'No'], // You can pass more options if needed
+                              options: [
+                                'Daily',
+                                'Once in two days',
+                                ' Once in three days ',
+                                'Irregular',
+                                'Not functional'
+                              ], // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
                                 setState(() {
@@ -117,8 +95,10 @@ class _SWMQuestions extends State<SWMQuestions> {
                               },
                             ),
                             CustomRadioQuestion(
-                              questionText: "4.	Whether water reaches tail-end households: ",
-                              options: ['Yes – Consistently', 'Occasionally','No','Not Verified'], // You can pass more options if needed
+                              questionText:
+                                  "2.	Is adequate water quantity reaching all the households: ",
+                              options: ['Yes', 'No'],
+                              // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
                                 setState(() {
@@ -127,8 +107,42 @@ class _SWMQuestions extends State<SWMQuestions> {
                               },
                             ),
                             CustomRadioQuestion(
-                              questionText: "5.	Scheme operational status since commissioning: ",
-                              options: ['Fully operational >3 months ', 'Operational but with interruptions','Non-functional','Partially commissioned'], // You can pass more options if needed
+                              questionText:
+                                  "3.	Is adequate water quantity reaching to remote/SC/ST/PVTG groups: ",
+                              options: ['Yes', 'No'],
+                              // You can pass more options if needed
+                              selectedValue: selectedValueQ1,
+                              onChanged: (val) {
+                                setState(() {
+                                  selectedValueQ1 = val;
+                                });
+                              },
+                            ),
+                            CustomRadioQuestion(
+                              questionText:
+                                  "4.	Whether water reaches tail-end households: ",
+                              options: [
+                                'Yes – Consistently',
+                                'Occasionally',
+                                'No',
+                                'Not Verified'
+                              ], // You can pass more options if needed
+                              selectedValue: selectedValueQ1,
+                              onChanged: (val) {
+                                setState(() {
+                                  selectedValueQ1 = val;
+                                });
+                              },
+                            ),
+                            CustomRadioQuestion(
+                              questionText:
+                                  "5.	Scheme operational status since commissioning: ",
+                              options: [
+                                'Fully operational >3 months ',
+                                'Operational but with interruptions',
+                                'Non-functional',
+                                'Partially commissioned'
+                              ], // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
                                 setState(() {
@@ -137,14 +151,46 @@ class _SWMQuestions extends State<SWMQuestions> {
                               },
                             ),
                             CustomCheckboxQuestion(
-                              questionText: "6. Whether piped water supply services available at institutions:",
-                              options: ['Schools', 'Anganwadi’s', 'PHCs', 'Not Applicable'],
+                              questionText:
+                                  "6. Whether piped water supply services available at institutions:",
+                              options: [
+                                'Schools',
+                                'Anganwadi’s',
+                                'PHCs',
+                                'Not Applicable'
+                              ],
                               selectedValues: selectedInstitutions,
                               onChanged: (newSelected) {
                                 setState(() {
                                   selectedInstitutions = newSelected;
                                 });
                               },
+                            ),
+
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: SizedBox(
+                                height: 35,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xffb0D6EFD),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => CommunityInvolvementPartB()),);
+                                  },
+                                  child: Text(
+                                    "SAVE & NEXT",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
 
                           ],

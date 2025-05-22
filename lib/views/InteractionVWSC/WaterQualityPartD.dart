@@ -1,20 +1,19 @@
-import 'package:cno_inspection/views/InteractionVWSC/CommunityFeedbackPartC.dart';
+import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 
-class CommunityInvolvementPartB extends StatefulWidget {
-
-
+class WaterQualityPartD extends StatefulWidget {
   @override
-  State<CommunityInvolvementPartB> createState() => _CommunityInvolvementPartBState();
+  State<WaterQualityPartD> createState() => _WaterQualityPartD();
 }
 
-class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
+class _WaterQualityPartD extends State<WaterQualityPartD> {
   String? selectedValueQ1;
   List<String> selectedInstitutions = [];
   String? selectedFrequency;
+  TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
           children: [
             SingleChildScrollView(
               child: Container(
-               child:  Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Card(
@@ -59,7 +58,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                               height: 5,
                             ),
                             Text(
-                              "Community Involvement & VWSC Functionality",
+                              "Water Quality Monitoring",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -77,7 +76,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                               height: 5,
                             ),
                             CustomRadioQuestion(
-                              questionText: "1. Is VWSC or Pani samiti formed",
+                              questionText: "1.	Availability of FTK: ",
                               options: [
                                 'Yes',
                                 'No',
@@ -90,7 +89,92 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                               },
                             ),
                             CustomRadioQuestion(
-                              questionText: "2.	Is VWSC bank account opened: ",
+                              questionText: "2.	Water testing using FTKs: ",
+                              options: [
+                                'Regularly tested ',
+                                'Occasionally ',
+                                'Not tested  ',
+                                'No FTK ',
+                              ], // You can pass more options if needed
+                              selectedValue: selectedValueQ1,
+                              onChanged: (val) {
+                                setState(() {
+                                  selectedValueQ1 = val;
+                                });
+                              },
+                            ),
+                            CustomRadioQuestion(
+                              questionText:
+                                  "3.	Number of women trained in water testing through FTKs: ",
+                              options: [
+                                'Yes',
+                                'No',
+                                'Partially',
+                              ], // You can pass more options if needed
+                              selectedValue: selectedValueQ1,
+                              onChanged: (val) {
+                                setState(() {
+                                  selectedValueQ1 = val;
+                                });
+                              },
+                            ),
+                            Text(
+                              '3.	Number of women trained in water testing through FTKs',
+                              style: const TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            TextFormField(
+                                controller: phoneController,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Color(0xFFF5F7FA),
+                                  hintText: "input ftk",
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 18, horizontal: 16),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide:
+                                        BorderSide(color: Colors.grey.shade300),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide:
+                                        BorderSide(color: Colors.grey.shade300),
+                                  ),
+                                )),
+                            Text(
+                              '4.	Who is doing the water quality testing through FTKs: ',
+                              style: const TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            TextFormField(
+                                controller: phoneController,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Color(0xFFF5F7FA),
+                                  hintText: "input ftk",
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 18, horizontal: 16),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide:
+                                        BorderSide(color: Colors.grey.shade300),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide:
+                                        BorderSide(color: Colors.grey.shade300),
+                                  ),
+                                )),
+                            CustomRadioQuestion(
+                              questionText:
+                              "5.	Disinfection/chlorination done",
                               options: [
                                 'Yes',
                                 'No',
@@ -103,12 +187,13 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                               },
                             ),
                             CustomRadioQuestion(
-                              questionText: "3.	VWSC/GP involvement in scheme operations: ",
+                              questionText:
+                              "6.	Free Residual Chlorine Level (FRC) at tail ends: ",
                               options: [
-                                'Active ',
-                                'Limited ',
-                                'No Involvement',
-                                'VWSC not formed',
+                                'Available ',
+                                'Occasionally ',
+                                'Not Available  ',
+                                'Not Tested ',
                               ], // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
@@ -117,119 +202,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                 });
                               },
                             ),
-                            CustomRadioQuestion(
-                              questionText: "4.	As-built Drawing of Pipelines available with GP office: ",
-                              options: [
-                                'Yes',
-                                'No',
-                              ], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                            //TODO if yes add new data
-                            CustomRadioQuestion(
-                              questionText: "5.	Whether meetings of VWSC are conducted in a periodic manner? ",
-                              options: [
-                                'Yes',
-                                'No',
-                              ], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                            CustomRadioQuestion(
-                              questionText: "6.	Whether records of VWSC meetings are available? ",
-                              options: [
-                                'Yes',
-                                'No',
-                              ], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                            CustomRadioQuestion(
-                              questionText: "7.	VWSC/GP involved in O&M:  ",
-                              options: [
-                                'Yes – Active ',
-                                'Yes – Limited ',
-                                'No',
-                                'Not Applicable',
-                              ], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                            CustomRadioQuestion(
-                              questionText: "8.	Scheme formally handed over to GP/VWSC:  ",
-                              options: [
-                                'Yes',
-                                'No',
-                                'Not Applicable',
-                              ], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                            CustomRadioQuestion(
-                              questionText: "9.	Operation & Maintenance arrangements: ",
-                              options: [
-                                'VWSC ',
-                                'PHED ',
-                                'Outsourced Contractor ',
-                                'No arrangement',
-                              ], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                            CustomRadioQuestion(
-                              questionText: "10.	Community awareness about scheme features: ",
-                              options: [
-                                'Well informed ',
-                                'Some awareness ',
-                                'No awareness',
-                              ], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                            CustomRadioQuestion(
-                              questionText: "11.	Community satisfaction with water quality:  ",
-                              options: [
-                                'Satisfied ',
-                                'Partially Satisfied ',
-                                'Dissatisfied ',
-                                'Not Interacted ',
-                              ], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
+
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
@@ -242,7 +215,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => CommunityFeedbackPartC()),);
+                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => GrievancePartE()),);
                                   },
                                   child: Text(
                                     "SAVE & NEXT",
@@ -270,18 +243,18 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
   }
 
   Widget buildRadioGroup(
-      String title,
-      List<String> options,
-      String? groupValue,
-      void Function(String?) onChanged,
-      ) {
+    String title,
+    List<String> options,
+    String? groupValue,
+    void Function(String?) onChanged,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 12),
         Text(title),
         ...options.map(
-              (value) => RadioListTile<String>(
+          (value) => RadioListTile<String>(
             title: Text(value),
             value: value,
             groupValue: groupValue,
@@ -289,6 +262,39 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
           ),
         )
       ],
+    );
+  }
+
+  Widget buildTextFormField({
+    required TextEditingController controller,
+    required String hint,
+    required IconData icon,
+    TextInputType keyboardType = TextInputType.text,
+    bool obscureText = false,
+    Widget? suffixIcon,
+    List<TextInputFormatter>? inputFormatters,
+  }) {
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
+      decoration: InputDecoration(
+        prefixIcon: Icon(icon, color: Colors.blueGrey),
+        suffixIcon: suffixIcon,
+        filled: true,
+        fillColor: Color(0xFFF5F7FA),
+        hintText: hint,
+        contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+      ),
     );
   }
 }
