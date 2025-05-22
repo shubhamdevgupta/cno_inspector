@@ -3,6 +3,8 @@ import 'package:cno_inspection/utils/AppConstants.dart';
 import 'package:cno_inspection/views/InteractionVWSC/vwscScreen.dart';
 import 'package:cno_inspection/views/auth/DashboardScreen.dart';
 import 'package:cno_inspection/views/auth/LoginScreen.dart';
+import 'package:cno_inspection/views/schemeInfo/SchemePlanningScreen.dart';
+import 'package:cno_inspection/views/schemeInfo/SourceScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +37,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => SWMQuestions(),
+    //    '/': (context) => SWMQuestions(),
+        '/': (context) => SourceScreenQuestions(),
+        AppConstants.navigateSchemePlanningScreen: (context) => SchemePlanningScreen(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
         AppConstants.navigateToLogin: (context) => Loginscreen(),
       },
