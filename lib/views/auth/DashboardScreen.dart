@@ -137,321 +137,384 @@ late DashboardProvider dashboardProvider;
               ],
             ),
           ),
-          body: Consumer<DashboardProvider>(
-            builder: (context, dashboardProvider, child) {
-              if (dashboardProvider.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return SingleChildScrollView(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 10, vertical: 10),
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
                       ),
-                      child: Row(
-                        children: [
-                          // Profile Picture
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.blue.shade300,
-                                  Colors.blue.shade800
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      // Profile Picture
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.blue.shade300,
+                              Colors.blue.shade800
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(2),
+                        // Border-like effect
+                        child: CircleAvatar(
+                          radius: 32,
+                          backgroundColor: Colors.grey[100],
+                          backgroundImage:
+                          const AssetImage('assets/icons/user.png'),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+
+                      // User Info
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Welcome Text
+                            Text(
+                              'Welcome',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'OpenSans',
+                                color: Colors.grey.shade700,
                               ),
                             ),
-                            padding: const EdgeInsets.all(2),
-                            // Border-like effect
-                            child: CircleAvatar(
-                              radius: 32,
-                              backgroundColor: Colors.grey[100],
-                              backgroundImage:
-                                  const AssetImage('assets/icons/user.png'),
+                            Text(
+                              "userName",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'OpenSans',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 16),
 
-                          // User Info
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            const SizedBox(height: 4),
+
+                            // Department and Phone
+                            Row(
                               children: [
-                                // Welcome Text
+                                const Icon(Icons.account_balance_sharp,
+                                    size: 18, color: Colors.teal),
+                                const SizedBox(width: 6),
                                 Text(
-                                  'Welcome',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'OpenSans',
-                                    color: Colors.grey.shade700,
-                                  ),
-                                ),
-                                Text(
-                                  "userName",
+                                  'Departmental User',
                                   style: const TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'OpenSans',
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-
-                                const SizedBox(height: 4),
-
-                                // Department and Phone
-                                Row(
-                                  children: [
-                                    const Icon(Icons.account_balance_sharp,
-                                        size: 18, color: Colors.teal),
-                                    const SizedBox(width: 6),
-                                    Text(
-                                      'Departmental User',
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: 'OpenSans',
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-
-                                const SizedBox(height: 6),
-
-                                Row(
-                                  children: [
-                                    const Icon(Icons.phone_android,
-                                        size: 18, color: Colors.teal),
-                                    const SizedBox(width: 6),
-                                    Flexible(
-                                      child: Text(
-                                        "mobile",
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: 'OpenSans',
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                      fontSize: 14,
+                                      fontFamily: 'OpenSans',
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Container(
 
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFe0f7fa), Color(0xFFFFFFFF)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
+                            const SizedBox(height: 6),
+
+                            Row(
+                              children: [
+                                const Icon(Icons.phone_android,
+                                    size: 18, color: Colors.teal),
+                                const SizedBox(width: 6),
+                                Flexible(
+                                  child: Text(
+                                    "mobile",
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: 'OpenSans',
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        borderRadius: BorderRadius.circular(24),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 16,
-                            offset: const Offset(0, 6),
-                          ),
-                        ],
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 15),
 
-                        ],
+
+                Container(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child:buildAssessmentCard(
+                      title: "Scheme Inspection Form",
+                      baselineStatus: "In-Progress",
+                      baselineColor: Colors.orangeAccent,
+                      latestStatus: "Pending",
+                      latestColor: Colors.redAccent,
+                      odfStatus: "Non-ODF Plus",
+                      odfColor: Colors.redAccent,
+                      backgroundColor: Color(0xFFE3F2FD),
+                      borderColor: Color(0xFF2196F3),
+                      buttonColor: Color(0xFF2196F3),
+                      onStartPressed: () {
+                        Navigator.pushReplacementNamed(context, AppConstants.navigateToDashboardSchemeInfo);
+                      },
+                    )
+                  ),
+                ),
+
+
+                const SizedBox(height: 10),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child:buildAssessmentCard(
+                    title: "Interaction with DWSM",
+                    baselineStatus: "In-Progress",
+                    baselineColor: Colors.orangeAccent,
+                    latestStatus: "Pending",
+                    latestColor: Colors.redAccent,
+                    odfStatus: "Non-ODF Plus",
+                    odfColor: Colors.redAccent,
+                    backgroundColor: Color(0xFFE3F2FD),
+                    borderColor: Color(0xFF2196F3),
+                    buttonColor: Color(0xFF2196F3),
+                    onStartPressed: () {
+                      Navigator.pushReplacementNamed(context, AppConstants.navigateToDashboardDWSM);
+                    },
+                  )
+                ),
+
+                const SizedBox(height:10),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: buildAssessmentCard(
+                    title: "Interaction with VWSC ",
+                    baselineStatus: "In-Progress",
+                    baselineColor: Colors.orangeAccent,
+                    latestStatus: "Pending",
+                    latestColor: Colors.redAccent,
+                    odfStatus: "Non-ODF Plus",
+                    odfColor: Colors.redAccent,
+                    backgroundColor: Color(0xFFE3F2FD),
+                    borderColor: Color(0xFF2196F3),
+                    buttonColor: Color(0xFF2196F3),
+                    onStartPressed: () {
+                      Navigator.pushReplacementNamed(context, AppConstants.navigateToDashboardVWSC);
+                    },
+                  )
+                ),
+
+
+                Container(
+
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFe0f7fa), Color(0xFFFFFFFF)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
                       ),
-                    ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
 
-                  ],
+                    ],
+                  ),
                 ),
-              );
-            },
-          )),
-    );
-  }
 
-  Widget _buildMenuCard({
-    required String title,
-    required IconData icon,
-    required String value,
-    required String imageName, // Renamed here
-    required VoidCallback onTap,
-    required List<Color> gradientColors,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: gradientColors,
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 8,
-              offset: Offset(2, 4),
+              ],
             ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                padding: EdgeInsets.all(8), // Slightly increased for spacing
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 4,
-                      offset: Offset(1, 2),
-                    ),
-                  ],
-                ),
-                child: Image.asset(
-                  'assets/icons/$imageName.png',
-                  width: 26, // Increased size
-                  height: 28,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  height: 1.3,
-                  fontFamily: 'OpenSans',
-                  shadows: [
-                    Shadow(
-                      color: Colors.black12,
-                      offset: Offset(2, 2),
-                      blurRadius: 6,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                value,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  height: 1.3,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black54,
-                      offset: Offset(2, 2),
-                      blurRadius: 6,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          )
       ),
     );
   }
-  Widget _buildInfoCard({
-    required String imagePath,
-    required Color iconColor,
-    required String title,
-    required VoidCallback onTap,
-    required String value,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
 
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+
+  Widget buildAssessmentCard({
+    required String title,
+    required String baselineStatus,
+    required Color baselineColor,
+    required String latestStatus,
+    required Color latestColor,
+    required String odfStatus,
+    required Color odfColor,
+    required Color backgroundColor,
+    required Color borderColor,
+    required Color buttonColor,
+    required VoidCallback onStartPressed,
+  }) {
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+        side: BorderSide(color: borderColor, width: 1.5),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: iconColor.withOpacity(0.6), // 🔹 Colored border
-            width: 1.2,
-          ),
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 6),
+              color: Colors.black12.withOpacity(0.05),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: iconColor.withOpacity(0.12),
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: iconColor.withOpacity(0.6), // 🔹 Colored border
-                  width: 1.2,
+            Center(
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: borderColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              child: Image.asset(
-                imagePath,
-                width: 32,
-                height: 32,
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Left Column
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Baseline Assessment",
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Icon(Icons.circle, color: baselineColor, size: 16),
+                          SizedBox(width: 6),
+                          Text(
+                            baselineStatus,
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      Text(
+                        "Latest Assessment",
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Icon(Icons.circle, color: latestColor, size: 16),
+                          SizedBox(width: 6),
+                          Text(
+                            latestStatus,
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
 
-              ),
+                // Divider
+                Container(
+                  width: 1.0,
+                  height: 100,
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  color: Colors.black26,
+                ),
+
+                // Right Column
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "ODF Plus Status",
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Icon(Icons.circle, color: odfColor, size: 16),
+                        SizedBox(width: 6),
+                        Text(
+                          odfStatus,
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 13.5,
-                fontFamily: 'OpenSans',
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: iconColor,
+            SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              height: 45,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: buttonColor,
+                  foregroundColor: Colors.white,
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: onStartPressed,
+                child: Text(
+                  "Start Baseline Assessment",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
           ],
@@ -459,4 +522,6 @@ late DashboardProvider dashboardProvider;
       ),
     );
   }
+
+
 }
