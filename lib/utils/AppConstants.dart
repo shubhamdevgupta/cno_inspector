@@ -22,4 +22,11 @@ class AppConstants {
   static const String navigateToDashboard = '/dashboard';
   static const String navigateToLogin = '/login';
 
+
+
+  ////////////schemeinfo
+  static const String navigateToDashboardSchemeInfo = '/dashboardschemeinfo';
+  static const String navigateToDashboardDWSM = '/dashboarddwsm';
+  static const String navigateToDashboardVWSC = '/dashboardVWSC';
+
 }
