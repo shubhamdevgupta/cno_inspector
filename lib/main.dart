@@ -48,8 +48,6 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-       // '/': (context) => WaterSupplyPartA(),
-        '/': (context) => SourceScreenQuestions(),
         AppConstants.navigateSchemePlanningScreen: (context) => SchemePlanningScreen(),
         '/': (context) => SplashScreen(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
@@ -59,11 +57,19 @@ class MyApp extends StatelessWidget {
         AppConstants.navigateToDashboardVWSC: (context) => Dashboardvwsc(),
 
 
+        AppConstants.navigateToSchemePlanningScreen: (context) => SchemePlanningScreen(),
+
+
+
+
+
         AppConstants.navigateToWaterSupplyPartA: (context) => WaterSupplyPartA(),
         AppConstants.navigateToCommunityInvolvementPartB: (context) => CommunityInvolvementPartB(),
         AppConstants.navigateToCommunityFeedbackPartC: (context) => CommunityFeedbackPartC(),
         AppConstants.navigateToQulityPartD: (context) => WaterQualityPartD(),
         AppConstants.navigateToGrievancePartE: (context) => GrievancePartE(),
+
+
       },
     );
   }

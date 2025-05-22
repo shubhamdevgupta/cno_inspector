@@ -28,6 +28,9 @@ class AppConstants {
   ////////////schemeinfo
   static const String navigateToDashboardSchemeInfo = '/dashboardschemeinfo';
 
+  static const String navigateToSchemePlanningScreen = '/SchemePlanningScreen';
+
+
 
 
   /////dwsm
