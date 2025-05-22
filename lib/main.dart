@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-    //    '/': (context) => SWMQuestions(),
+       // '/': (context) => SWMQuestions(),
         '/': (context) => SourceScreenQuestions(),
         AppConstants.navigateSchemePlanningScreen: (context) => SchemePlanningScreen(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
