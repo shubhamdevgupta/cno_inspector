@@ -70,12 +70,6 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
                                   color: Colors.orange),
-                            ), Text(
-                              "Field visit format for Central Nodal Officers:",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                  color: Colors.orange),
                             ),
                             SizedBox(
                               height: 5,
