@@ -1,11 +1,12 @@
-import 'package:cno_inspection/views/schemeInfo/RetrofittingAugmentationScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/SourceScreen.dart';
+import 'package:cno_inspection/views/schemeInfo/PartCRetrofittingAugmentationScreen.dart';
+import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
-import 'SchemePlanningScreen.dart';
+import 'PartBSchemePlanningScreen.dart';
+import 'PartEVisual Inspection.dart';
 
 class SchemeImplementationScreen extends StatefulWidget {
   const SchemeImplementationScreen({Key? key}) : super(key: key);
@@ -145,48 +146,89 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                               },
                             ),
 
+
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // Align text to the left
                               children: [
-                                CustomTextField(
-                                  labelText: "2.1 Enter the length of Legacy Transmission Pipelines which has been retrofitted and being used in the scheme (KM) ",
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
+                                Align(alignment: Alignment.centerLeft,
+                                    child: Text("5.	Whether revised cost have been approved by SLSSC?",
+                                      style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),)),
+                                RadioListTile<String>(
+                                  title: Text("No"),
+                                  value: 'option1',
+                                  groupValue: selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedOption = value;
+                                    });
+                                  },
                                 ),
-
-                                SizedBox(
-                                  height: 18,
+                                RadioListTile<String>(
+                                  title: Text("Yes"),
+                                  value: 'option2',
+                                  groupValue: selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedOption = value;
+                                    });
+                                  },
                                 ),
+                                if (selectedOption == 'option2') ...[
+                                  CustomRadioQuestion(
+                                    questionText: "5.1 If yes :",
+                                    options: const ['<10%', '10–25%','>25%'], // You can pass more options if needed
+                                    selectedValue: selectedValueQ1,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        selectedValueQ1 = val;
+                                      });
+                                    },
+                                  ),
 
-                                CustomTextField(
-                                  labelText: '2.2 Enter the Length of Legacy Distribution Pipelines which has been retrofitted and being used in the scheme (KM) ',
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
-                                ),
+                                  //TODO : Date Selector add here
 
-                                SizedBox(
-                                  height: 18,
-                                ),
-
-                                CustomTextField(
-                                  labelText: '2.3 Enter the Capacity of WTP which has been retrofitted and being used in the scheme (MLD) ',
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
-                                ),
-
-                                CustomTextField(
-                                  labelText: '2.4 Enter the number of storage reservoirs and the capacity of each storage reservoir which has been retrofitted and being used in the scheme (in KL) ',
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
-                                ),
-
+                                ],
+                                SizedBox(height: 20),
+                                /*   ElevatedButton(
+                                  onPressed: () {
+                                    String result = selectedOption == 'option1'
+                                        ? 'Selected: Option 1'
+                                        : 'Selected: Option 2, Input: ${textController.text}';
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(content: Text(result)));
+                                  },
+                                  child: Text("Submit"),
+                                ),*/
                               ],
                             ),
+
+
+                            CustomCheckboxQuestion(
+                              questionText: "6.	Reason(s) for revision (Select all that apply):",
+                              options: ['Price rise of materials','Additional scope of work ','Change in site conditions ','Others'],
+
+                              selectedValues: selectedInstitutions,
+                              onChanged: (newSelected) {
+                                setState(() {
+                                  selectedInstitutions = newSelected;
+                                });
+                              },
+                            ),
+
+
+
+
+                            CustomCheckboxQuestion(
+                              questionText: "8.	Components of scheme planned or mapped on the PM-Gati Shakti?",
+                              options: ['WTP','OHSR/GSR/OHT/ESR/MBR','Source','Pipeline'],
+
+                              selectedValues: selectedInstitutions,
+                              onChanged: (newSelected) {
+                                setState(() {
+                                  selectedInstitutions = newSelected;
+                                });
+                              },
+                            ),
+
 
 
                             Container(
@@ -207,7 +249,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SchemeImplementationScreen()),);
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => VisualInspectionScreen()),);
                                         },
                                         child: Text(
                                           "SAVE & NEXT",

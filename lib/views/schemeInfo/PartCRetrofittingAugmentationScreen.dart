@@ -1,11 +1,11 @@
-import 'package:cno_inspection/views/schemeInfo/SourceScreen.dart';
+import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
-import 'SchemeImplementationScreen.dart';
-import 'SchemePlanningScreen.dart';
+import 'PartDSchemeImplementationScreen.dart';
+import 'PartBSchemePlanningScreen.dart';
 
 class RetrofittingAugmentationScreen extends StatefulWidget {
   const RetrofittingAugmentationScreen({Key? key}) : super(key: key);

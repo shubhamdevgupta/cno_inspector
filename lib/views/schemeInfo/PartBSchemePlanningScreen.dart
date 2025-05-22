@@ -1,31 +1,41 @@
+import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
-import 'SchemePlanningScreen.dart';
+import 'PartCRetrofittingAugmentationScreen.dart';
 
-class SourceScreenQuestions extends StatefulWidget {
-  const SourceScreenQuestions({Key? key}) : super(key: key);
+class SchemePlanningScreen extends StatefulWidget {
+  const SchemePlanningScreen({Key? key}) : super(key: key);
 
   @override
-  _SourceScreenQuestions createState() => _SourceScreenQuestions();
+  _SchemePlanningScreen createState() => _SchemePlanningScreen();
 }
 
-class _SourceScreenQuestions extends State<SourceScreenQuestions> {
+class _SchemePlanningScreen extends State<SchemePlanningScreen> {
   String _selectedValue = 'yes'; // Default selected value
   String? selectedValueQ1;
-  final TextEditingController householdController = TextEditingController();
+  String? selectedOption = 'option1';
+  final TextEditingController textController = TextEditingController();
 
+  final List<String> _dropdownOptions = [
+    'Atleast once in 7 days',
+    'Atleast once in 15 days',
+    'Atleast once in more than 15 days'
+  ];
   String? SetFreq;
+  List<String> selectedInstitutions = [];
+  final TextEditingController householdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         // Replace the current route with a new one
-        /*   Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => VillageList()),
-        );*/
+           Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => SourceScreenQuestions()),
+        );
 
         // Return false to prevent the default back navigation behavior
         return false;
@@ -63,16 +73,10 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                               height: 5,
                             ),
                             Text(
-                              "A.Source",
+                              "B.	Scheme Planning",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
-                                  color: Colors.orange),
-                            ), Text(
-                              "Field visit format for Central Nodal Officers:",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
                                   color: Colors.orange),
                             ),
                             SizedBox(
@@ -86,27 +90,21 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                             SizedBox(
                               height: 5,
                             ),
-                            CustomRadioQuestion(
-                              questionText: "1.	If the source is surface water, then, did the Source finding committee recommended the shift to surface water? ",
-                              options: const ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
+
+
+
+                            CustomCheckboxQuestion(
+                              questionText: "1.	Has the surveys done for planning of the scheme :",
+                              options: ['Topographical survey', 'GPS/physical survey done', 'Google Earth/Maps survey', 'No survey done'],
+                              selectedValues: selectedInstitutions,
+                              onChanged: (newSelected) {
                                 setState(() {
-                                  selectedValueQ1 = val;
+                                  selectedInstitutions = newSelected;
                                 });
                               },
                             ),
 
-                            CustomRadioQuestion(
-                              questionText: "2.Any study done to assess ground water before going for surface water?",
-                              options: ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
+
 
 
                             Column(
@@ -114,7 +112,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                               // Align text to the left
                               children: [
                                 CustomTextField(
-                                  labelText: '3.1 number of villages falling under the SAFE zones as specified by CGWB',
+                                  labelText: "2.What are the running hours per day considered for designing of WTP/Transmission main?",
                                   hintText: 'Enter here',
                                   controller: householdController,
                                   isRequired: false,
@@ -125,7 +123,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                 ),
 
                                 CustomTextField(
-                                  labelText: '3.2 number of villages falling under the CRITICAL / OVER-EXPLOITED zones as specified by CGWB',
+                                  labelText: '3.1 What is the retention time in hours per day considered for design of OHSR/OHT/ESR   ',
                                   hintText: 'Enter here',
                                   controller: householdController,
                                   isRequired: false,
@@ -136,34 +134,77 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                 ),
 
                                 CustomTextField(
-                                  labelText: '3.3 number of villages falling under the  SEMI-CRITICAL  zones as specified by CGWB',
+                                  labelText: '3.2 What is the retention time in hours per day considered for design of MBR',
                                   hintText: 'Enter here',
                                   controller: householdController,
                                   isRequired: false,
                                 ),
+
+                                CustomTextField(
+                                  labelText: '4.1 Please specify the pipe material used for transmission pipeline and distribution network in Rocky Strata with reasons for selecting the same',
+                                  hintText: 'Enter here',
+                                  controller: householdController,
+                                  isRequired: false,
+                                ),
+                             CustomTextField(
+                                  labelText: '4.1 Please specify the pipe material used for transmission pipeline and distribution network in Soil Strata with reasons for selecting the same',
+                                  hintText: 'Enter here',
+                                  controller: householdController,
+                                  isRequired: false,
+                                ),
+
+
                               ],
                             ),
 
 
-                            CustomRadioQuestion(
-                              questionText: "4.In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option—treating the contaminated groundwater or switching to a surface water source? ",
-                              options: ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                             CustomRadioQuestion(
-                              questionText: "5.	Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose?",
-                              options: ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
+
+                            Column(
+                              children: [
+                                Align(alignment: Alignment.centerLeft,
+                                    child: Text("5.	Do the on-spot excavation on any sample stretch of pipeline and check for pipe material and dia as per DPR::",
+                                      style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),)),
+                                RadioListTile<String>(
+                                  title: Text("Not Found"),
+                                  value: 'option1',
+                                  groupValue: selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedOption = value;
+                                    });
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  title: Text("Found as per DPR"),
+                                  value: 'option2',
+                                  groupValue: selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedOption = value;
+                                    });
+                                  },
+                                ),
+                                if (selectedOption == 'option2') ...[
+                                  TextField(
+                                    controller: textController,
+                                    decoration: InputDecoration(
+                                      labelText: "If deviation found",
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                ],
+                                SizedBox(height: 20),
+                             /*   ElevatedButton(
+                                  onPressed: () {
+                                    String result = selectedOption == 'option1'
+                                        ? 'Selected: Option 1'
+                                        : 'Selected: Option 2, Input: ${textController.text}';
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(content: Text(result)));
+                                  },
+                                  child: Text("Submit"),
+                                ),*/
+                              ],
                             ),
 
                             Container(
@@ -184,7 +225,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                           ),
                                         ),
                                         onPressed: () {
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SchemePlanningScreen()),);
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => RetrofittingAugmentationScreen()),);
                                         },
                                         child: Text(
                                           "SAVE & NEXT",
