@@ -14,6 +14,8 @@ import 'package:cno_inspection/views/auth/DashboardScreen.dart';
 import 'package:cno_inspection/views/auth/LoginScreen.dart';
 import 'package:cno_inspection/views/auth/SplashScreen.dart';
 import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/schemeInfo/PartBSchemePlanningScreen.dart';
+import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,12 +48,17 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
+       // '/': (context) => WaterSupplyPartA(),
+        '/': (context) => SourceScreenQuestions(),
+        AppConstants.navigateSchemePlanningScreen: (context) => SchemePlanningScreen(),
         '/': (context) => SplashScreen(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
         AppConstants.navigateToLogin: (context) => Loginscreen(),
         AppConstants.navigateToDashboardSchemeInfo: (context) => Dashboardschemeinfo(),
         AppConstants.navigateToDashboardDWSM: (context) => Dashboarddwsm(),
         AppConstants.navigateToDashboardVWSC: (context) => Dashboardvwsc(),
+
+
         AppConstants.navigateToWaterSupplyPartA: (context) => WaterSupplyPartA(),
         AppConstants.navigateToCommunityInvolvementPartB: (context) => CommunityInvolvementPartB(),
         AppConstants.navigateToCommunityFeedbackPartC: (context) => CommunityFeedbackPartC(),

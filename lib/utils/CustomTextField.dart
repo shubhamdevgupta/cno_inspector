@@ -28,8 +28,8 @@ class CustomTextField extends StatelessWidget {
                 : labelText, // Use the title as-is if no asterisk is present
             style: const TextStyle(
               color: Colors.black,
-              fontSize: 16, fontFamily: 'OpenSans',
-              fontWeight: FontWeight.bold,
+              fontSize: 14, fontFamily: 'OpenSans',
+              fontWeight: FontWeight.normal,
             ),
             children: isRequired
                 ? [
