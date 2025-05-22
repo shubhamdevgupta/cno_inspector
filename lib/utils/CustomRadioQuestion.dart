@@ -16,9 +16,7 @@ class CustomRadioQuestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Ensure there are at least 2 options
     final safeOptions = options.length >= 2 ? options : ['Yes', 'No'];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

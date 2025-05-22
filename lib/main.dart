@@ -1,8 +1,16 @@
 import 'package:cno_inspection/provider/authentication_provider.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
+
+import 'package:cno_inspection/views/InteractionVWSC/WaterSupplyPartA.dart';
+
+import 'package:cno_inspection/views/InteractionDWSM/DashboardDWSM.dart';
+import 'package:cno_inspection/views/InteractionVWSC/DashboardVWSC.dart';
 import 'package:cno_inspection/views/InteractionVWSC/vwscScreen.dart';
+
 import 'package:cno_inspection/views/auth/DashboardScreen.dart';
 import 'package:cno_inspection/views/auth/LoginScreen.dart';
+import 'package:cno_inspection/views/auth/SplashScreen.dart';
+import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/schemeInfo/SchemePlanningScreen.dart';
 import 'package:cno_inspection/views/schemeInfo/SourceScreen.dart';
 import 'package:flutter/material.dart';
@@ -37,11 +45,14 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-       // '/': (context) => SWMQuestions(),
+       // '/': (context) => WaterSupplyPartA(),
         '/': (context) => SourceScreenQuestions(),
         AppConstants.navigateSchemePlanningScreen: (context) => SchemePlanningScreen(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
         AppConstants.navigateToLogin: (context) => Loginscreen(),
+        AppConstants.navigateToDashboardSchemeInfo: (context) => Dashboardschemeinfo(),
+        AppConstants.navigateToDashboardDWSM: (context) => Dashboarddwsm(),
+        AppConstants.navigateToDashboardVWSC: (context) => Dashboardvwsc(),
       },
     );
   }
