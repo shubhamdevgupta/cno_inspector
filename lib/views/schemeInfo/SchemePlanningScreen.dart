@@ -1,3 +1,4 @@
+import 'package:cno_inspection/views/schemeInfo/SourceScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/CustomRadioQuestion.dart';
@@ -25,9 +26,9 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
     return WillPopScope(
       onWillPop: () async {
         // Replace the current route with a new one
-        /*   Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => VillageList()),
-        );*/
+           Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => SourceScreenQuestions()),
+        );
 
         // Return false to prevent the default back navigation behavior
         return false;
@@ -82,29 +83,70 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                             SizedBox(
                               height: 5,
                             ),
-                            CustomRadioQuestion(
-                              questionText: "1.	If the source is surface water, then, did the Source finding committee recommended the shift to surface water? ",
-                              options: const ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
+                            Text(
+                              "1.	Has the surveys done for planning of the scheme ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: Colors.black),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: CustomRadioQuestion(
+                                questionText: "1.1	Topographical survey",
+                                options: const ['Yes', 'No'], // You can pass more options if needed
+                                selectedValue: selectedValueQ1,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedValueQ1 = val;
+                                  });
+                                },
+                              ),
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: CustomRadioQuestion(
+                                questionText: "1.2.	GPS/physical survey done",
+                                options: ['Yes', 'No'], // You can pass more options if needed
+                                selectedValue: selectedValueQ1,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedValueQ1 = val;
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: CustomRadioQuestion(
+                                questionText: "1.3.Google Earth/Maps survey	",
+                                options: ['Yes', 'No'], // You can pass more options if needed
+                                selectedValue: selectedValueQ1,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedValueQ1 = val;
+                                  });
+                                },
+                              ),
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: CustomRadioQuestion(
+                                questionText: "1.4.	No survey done	",
+                                options: ['Yes', 'No'], // You can pass more options if needed
+                                selectedValue: selectedValueQ1,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedValueQ1 = val;
+                                  });
+                                },
+                              ),
                             ),
 
                             CustomRadioQuestion(
-                              questionText: "2.Any study done to assess ground water before going for surface water?",
-                              options: ['Yes', 'No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-                            CustomRadioQuestion(
-                              questionText: "3.	Number of villages falling under the critical zones as mentioned (as mentioned by CGWB) (https://cgwb.gov.in/en/ground-water-resource-assessment-0):",
+                              questionText: "2.	What are the running hours per day considered for designing of WTP/Transmission main?",
                               options: ['Safe', 'Critical / Over exploited','Semi-critical'], // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
@@ -114,7 +156,10 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               },
                             ),
                             CustomRadioQuestion(
-                              questionText: "4.In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option—treating the contaminated groundwater or switching to a surface water source? ",
+                              questionText: "3.	What is the retention time in hours per day considered for design of ",
+                              /*o	OHSR/OHT/ESR			:	hrs.
+o	MBR				:	hrs.
+*/
                               options: ['Yes', 'No'], // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
