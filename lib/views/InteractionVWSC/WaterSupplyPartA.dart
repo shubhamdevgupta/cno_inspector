@@ -167,7 +167,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                 CustomRadioQuestion(
                                   questionText:
                                       "4.	Whether water reaches tail-end households: ",
-                                  options: [
+                                  options: const [
                                     'Yes – Consistently',
                                     'Occasionally',
                                     'No',
