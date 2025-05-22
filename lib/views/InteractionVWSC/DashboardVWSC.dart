@@ -24,11 +24,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      dashboardProvider =
-          Provider.of<DashboardProvider>(context, listen: false);
-      //  await dashboardProvider.loadDashboardData();
-    });
+
   }
 
   @override
@@ -92,7 +88,10 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
 
                   color: Colors.blue,
                   onTap: () {
-                    // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToWaterSupplyPartA);
+
+
                   },
                 ),
 
@@ -104,7 +103,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
 
                   color: Colors.orangeAccent,
                   onTap: () {
-                    // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToCommunityInvolvementPartB);
                   },
                 ),
 
@@ -116,7 +116,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
 
                   color: Colors.deepOrangeAccent,
                   onTap: () {
-                    // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToCommunityFeedbackPartC);
                   },
                 ),
 
@@ -128,7 +129,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
 
                   color: Colors.lightGreen,
                   onTap: () {
-                    // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToQulityPartD);
                   },
                 ),
 
@@ -141,7 +143,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
 
                   color: Colors.green,
                   onTap: () {
-                    // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToGrievancePartE);
                   },
                 ),
 

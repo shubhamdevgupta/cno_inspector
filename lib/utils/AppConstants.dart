@@ -21,12 +21,30 @@ class AppConstants {
 
   static const String navigateToDashboard = '/dashboard';
   static const String navigateToLogin = '/login';
+  static const String navigateSchemePlanningScreen = '/SchemePlanning';
 
 
 
   ////////////schemeinfo
   static const String navigateToDashboardSchemeInfo = '/dashboardschemeinfo';
+
+  static const String navigateToSchemePlanningScreen = '/SchemePlanningScreen';
+
+
+
+
+  /////dwsm
   static const String navigateToDashboardDWSM = '/dashboarddwsm';
+
+  static const String navigateToCoordinationPlanningScreen = '/CoordinationPlanningScreen';
+
+
+  ////vwsc
   static const String navigateToDashboardVWSC = '/dashboardVWSC';
+  static const String navigateToWaterSupplyPartA = '/watersupplyA';
+  static const String navigateToCommunityInvolvementPartB  = '/dashboardcommunityinvolmentpartB';
+  static const String navigateToCommunityFeedbackPartC  = '/dashboardcommunityinvolmentpartC';
+  static const String navigateToQulityPartD = '/dashboardqualitypartD';
+  static const String navigateToGrievancePartE = '/dashboardgrivenaceE';
 
 }

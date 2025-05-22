@@ -92,7 +92,10 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
 
                   color: Colors.blue,
                   onTap: () {
-                    // Your onTap logic
+                    //
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToSchemePlanningScreen);
+
                   },
                 ),
 
