@@ -1,10 +1,11 @@
 import 'package:cno_inspection/provider/authentication_provider.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
+import 'package:cno_inspection/views/InteractionVWSC/vwscScreen.dart';
 import 'package:cno_inspection/views/auth/DashboardScreen.dart';
 import 'package:cno_inspection/views/auth/LoginScreen.dart';
-import 'package:cno_inspection/views/auth/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
@@ -19,6 +20,7 @@ void main() async {
     ),
   );
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -33,12 +35,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(),
+        '/': (context) => SWMQuestions(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
         AppConstants.navigateToLogin: (context) => Loginscreen(),
-
       },
     );
   }
 }
-
