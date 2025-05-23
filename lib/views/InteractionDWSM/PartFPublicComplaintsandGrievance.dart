@@ -57,7 +57,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
+              "Public Complaints and Grievance Redressal",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -69,7 +69,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
+                    MaterialPageRoute(builder: (context) => Dashboarddwsm()),
                         (route) => false,
                   );
                 }

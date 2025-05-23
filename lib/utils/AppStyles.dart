@@ -11,6 +11,12 @@ class AppStyles {
     color: Colors.white,
   );
 
+ static TextStyle appBarTitleSmallText = const TextStyle(
+    fontSize: 16, fontFamily: 'OpenSans',
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
   static TextStyle setTextStyle(
       double fontSize, FontWeight fontWeight, Color color) {
     return TextStyle(

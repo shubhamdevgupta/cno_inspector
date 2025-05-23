@@ -55,7 +55,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection",
+              "Source",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -122,18 +122,6 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                           child:Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  'A. Source',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ),
-                              // 1. Source finding committee recommended shift to surface water? (Yes/No)
                               Customradiobttn(
                                 question: '1. If the source is surface water, then, did the Source finding committee recommend the shift to surface water?',
                                 options: const ['Yes', 'No'],

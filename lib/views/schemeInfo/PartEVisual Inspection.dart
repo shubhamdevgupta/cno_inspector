@@ -70,7 +70,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
+              "Visual Inspection",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -138,11 +138,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "E. Visual Inspection",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.green),
-                                ),
-                                const SizedBox(height: 10),
+
                                 const Text(
                                   "Note: A walk-through to inspect various components of scheme to be carried out (Photographs to highlight deficiencies to be taken).",
                                   style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),

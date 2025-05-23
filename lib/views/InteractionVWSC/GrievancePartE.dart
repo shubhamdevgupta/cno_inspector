@@ -43,7 +43,7 @@ class _GrievancePartE extends State<GrievancePartE> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Interaction with VWSC",
+              "Grievance Redressal",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
