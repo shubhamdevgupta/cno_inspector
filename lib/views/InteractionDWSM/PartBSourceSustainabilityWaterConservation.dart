@@ -61,7 +61,7 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
+              "Source Sustainability and Water Conservation",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -73,7 +73,7 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
+                    MaterialPageRoute(builder: (context) => Dashboarddwsm()),
                         (route) => false,
                   );
                 }

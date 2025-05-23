@@ -1,32 +1,45 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
+import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
+import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
+import '../../utils/CustomTextField.dart';
 import '../../utils/MultiSelectionlist.dart';
-import 'DashboardVWSC.dart';
+import '../../utils/customcheckquestion.dart';
+import '../../utils/customtxtfeild.dart';
+import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import 'DashboardDWSM.dart';
 
-class GrievancePartE extends StatefulWidget {
+
+class PartFPublicCompliant extends StatefulWidget {
+  const PartFPublicCompliant({Key? key}) : super(key: key);
+
   @override
-  State<GrievancePartE> createState() => _GrievancePartE();
+  _PartFPublicCompliant createState() => _PartFPublicCompliant();
 }
 
-class _GrievancePartE extends State<GrievancePartE> {
-  String? selectedGrievanceMechanism; // Yes / No
-
+class _PartFPublicCompliant extends State<PartFPublicCompliant> {
+// State variables
+  // State variables
+  String? grievanceMechanismAvailable;
   List<String> grievanceRegistrationMethods = [];
-  String? selectedTurnAroundTime; // Same day / Two days / Three days / More than three days
+  String? complaintsReceived;
+  List<String> complaintTypes = [];
+  TextEditingController avgResolutionTimeController = TextEditingController();
+  TextEditingController actionTakenController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         // Replace the current route with a new one
-        /*   Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => VillageList()),
-        );*/
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => Dashboarddwsm()),
+        );
 
         // Return false to prevent the default back navigation behavior
         return false;
@@ -43,7 +56,7 @@ class _GrievancePartE extends State<GrievancePartE> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Grievance Redressal",
+              "Public Complaints and Grievance Redressal",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -55,7 +68,7 @@ class _GrievancePartE extends State<GrievancePartE> {
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardvwsc()),
+                    MaterialPageRoute(builder: (context) => Dashboarddwsm()),
                         (route) => false,
                   );
                 }
@@ -81,20 +94,20 @@ class _GrievancePartE extends State<GrievancePartE> {
             children: [
               SingleChildScrollView(
                 child: Container(
+                  padding: const EdgeInsets.only(
+                      top: 20, left: 6, right: 6, bottom: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       NewScreenPoints(
-                        no: 5,
+                        no: 4,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          elevation: 5,
-                          child: Container(
+                      Card(
+                        elevation: 5,
+                        child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              border: Border.all(color: Colors.green, width: 1.4),
+                              border: Border.all(color: Colors.deepPurpleAccent, width: 1.4),
                               borderRadius: BorderRadius.circular(14),
                               boxShadow: [
                                 BoxShadow(
@@ -104,62 +117,105 @@ class _GrievancePartE extends State<GrievancePartE> {
                                 ),
                               ],
                             ),
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(5),
                             width: double.infinity,
                             child:Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // 1. Grievance redressal mechanism available
+
+                                // Grievance mechanism available
                                 Customradiobttn(
-                                  question: "1. Grievance redressal mechanism available:",
+                                  question: "Grievance Redressal mechanism available:",
                                   options: ["Yes", "No"],
-                                  selectedOption: selectedGrievanceMechanism,
-                                  onChanged: (val) => setState(() => selectedGrievanceMechanism = val),
+                                  selectedOption: grievanceMechanismAvailable,
+                                  onChanged: (val) => setState(() => grievanceMechanismAvailable = val),
                                 ),
 
-                                SizedBox(height: 16),
+                                const SizedBox(height: 10),
 
-                                // 2. How grievances are registered by villagers (multi-select)
+                                // How grievances are registered
                                 CustomMultiSelectChipQuestion(
-                                  question: "2. How grievances are registered by the villagers:",
+                                  question: "How grievances are registered by the villagers:",
                                   options: [
                                     "Toll free number",
                                     "Web based portal",
                                     "Mobile application",
                                     "Public grievance registration center",
-                                    "Directly calling to PHED/Contractor/O&M agency",
+                                    "Directly calling to PHED/Contractor/O&M agency"
                                   ],
                                   selectedValues: grievanceRegistrationMethods,
-                                  onSelectionChanged: (selectedList) {
+                                  onSelectionChanged: (values) {
                                     setState(() {
-                                      grievanceRegistrationMethods = selectedList;
+                                      grievanceRegistrationMethods = values;
                                     });
                                   },
                                 ),
 
+                                const SizedBox(height: 10),
 
-                                SizedBox(height: 20),
-
-                                // 3. Turn around time for grievance
+                                // Are complaints received
                                 Customradiobttn(
-                                  question: "3. Turn around time for grievance:",
-                                  options: ["Same day", "Two days", "Three days", "More than three days"],
-                                  selectedOption: selectedTurnAroundTime,
-                                  onChanged: (val) => setState(() => selectedTurnAroundTime = val),
+                                  question: "Are complaints received from public regarding JJM schemes?",
+                                  options: ["Yes", "No"],
+                                  selectedOption: complaintsReceived,
+                                  onChanged: (val) => setState(() => complaintsReceived = val),
                                 ),
+
+                                if (complaintsReceived == "Yes") ...[
+                                  const SizedBox(height: 10),
+
+                                  // Type of complaints
+                                  CustomMultiSelectChipQuestion(
+                                    question: "If yes, type of complaints (tick all applicable):",
+                                    options: [
+                                      "Poor water quality",
+                                      "Incomplete connections",
+                                      "Delay in commissioning",
+                                      "No water supply",
+                                      "Faulty construction",
+                                      "Others"
+                                    ],
+                                    selectedValues: complaintTypes,
+                                    onSelectionChanged: (values) {
+                                      setState(() {
+                                        complaintTypes = values;
+                                      });
+                                    },
+                                  ),
+
+                                  const SizedBox(height: 10),
+
+                                  // Average resolution time
+                                  Customtxtfeild(
+                                    label: "What is the average time of resolution:",
+                                    controller: avgResolutionTimeController,
+                                  ),
+
+                                  const SizedBox(height: 10),
+
+                                  // Action taken
+                                  Customtxtfeild(
+                                    label: "Action taken by department:",
+                                    controller: actionTakenController,
+                                  ),
+
+
+                                ],
+
+                                SizedBox(height: 10,),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     height: 35,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.green,
+                                        backgroundColor: Colors.deepPurpleAccent,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardvwsc()),);
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboarddwsm()),);
 
                                       },
                                       child: Text(
@@ -175,72 +231,14 @@ class _GrievancePartE extends State<GrievancePartE> {
                                 ),
                               ],
                             )
-                            ,
-                          ),
                         ),
                       )
                     ],
                   ),
                 ),
-              ),
+              )
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildRadioGroup(
-    String title,
-    List<String> options,
-    String? groupValue,
-    void Function(String?) onChanged,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 12),
-        Text(title),
-        ...options.map(
-          (value) => RadioListTile<String>(
-            title: Text(value),
-            value: value,
-            groupValue: groupValue,
-            onChanged: onChanged,
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget buildTextFormField({
-    required TextEditingController controller,
-    required String hint,
-    required IconData icon,
-    TextInputType keyboardType = TextInputType.text,
-    bool obscureText = false,
-    Widget? suffixIcon,
-    List<TextInputFormatter>? inputFormatters,
-  }) {
-    return TextFormField(
-      controller: controller,
-      obscureText: obscureText,
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: Colors.blueGrey),
-        suffixIcon: suffixIcon,
-        filled: true,
-        fillColor: Color(0xFFF5F7FA),
-        hintText: hint,
-        contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 16),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
         ),
       ),
     );

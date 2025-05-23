@@ -58,7 +58,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
+              "Monitoring, Quality and Lab Infrastructure",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -70,7 +70,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
+                    MaterialPageRoute(builder: (context) => Dashboarddwsm()),
                         (route) => false,
                   );
                 }

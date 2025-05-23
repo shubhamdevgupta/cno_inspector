@@ -58,7 +58,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection",
+              "Scheme Planning",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(

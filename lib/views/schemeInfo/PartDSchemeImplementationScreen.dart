@@ -39,7 +39,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
       onWillPop: () async {
         // Replace the current route with a new one
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => RetrofittingAugmentationScreen()),
+          MaterialPageRoute(builder: (_) => Dashboardschemeinfo()),
         );
 
         // Return false to prevent the default back navigation behavior
@@ -57,7 +57,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
+              "Scheme implementation",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -112,24 +112,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "D.	Scheme implementation",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: Colors.orange),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                color: Colors.black38, // Color of the line
-                                height: 1.0,
-                                width: double.infinity, // Thickness of the line
-                              ),
+
                               SizedBox(
                                 height: 5,
                               ),

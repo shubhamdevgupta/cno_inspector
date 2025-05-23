@@ -62,7 +62,7 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
+              "Operation & Maintenance (O&M)",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -74,7 +74,7 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
+                    MaterialPageRoute(builder: (context) => Dashboarddwsm()),
                         (route) => false,
                   );
                 }

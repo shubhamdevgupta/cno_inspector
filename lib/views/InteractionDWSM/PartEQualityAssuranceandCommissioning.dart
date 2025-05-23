@@ -1,4 +1,5 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
+import 'package:cno_inspection/views/InteractionDWSM/PartFPublicComplaintsandGrievance.dart';
 import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
+              "Quality Assurance and Commissioning",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -67,7 +68,7 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
+                    MaterialPageRoute(builder: (context) => Dashboarddwsm()),
                         (route) => false,
                   );
                 }
@@ -194,7 +195,7 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboarddwsm()),);
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartFPublicCompliant()),);
 
                                       },
                                       child: Text(

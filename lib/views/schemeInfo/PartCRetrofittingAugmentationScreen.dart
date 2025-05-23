@@ -59,8 +59,8 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
-              style: AppStyles.appBarTitle,
+              "Additional info for Retrofitting/Augmentation Schemes only",
+              style: AppStyles.appBarTitleSmallText,
             ),
             leading: IconButton(
 
@@ -125,19 +125,6 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
                           child:  Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  'C. Additional Information for Retrofitting/Augmentation Schemes Only',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Colors.deepOrange,
-                                  ),
-                                ),
-                              ),
-
-                              // 1. Condition assessment done?
                               Customradiobttn(
                                 question: '1. Whether the condition assessment of the legacy infrastructure done before scheme planning?',
                                 options: const ['Yes', 'No'],
@@ -197,10 +184,35 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
                                   });
                                 },
                               ),
-                              
-                              
 
+                              const SizedBox(height: 20),
 
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: SizedBox(
+                                  height: 35,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xffb0D6EFD),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SchemeImplementationScreen()),);
+
+                                    },
+                                    child: Text(
+                                      "SAVE & NEXT",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
 
                             ],
                           )

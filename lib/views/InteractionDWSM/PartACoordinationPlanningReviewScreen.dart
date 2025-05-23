@@ -127,13 +127,6 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                           child:  Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  'A. Coordination, Planning & Review Mechanism',
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                ),
-                              ),
 
                               Customradiobttn(
                                 question: 'Are monthly DWSM meetings on progress of JJM works being held?',

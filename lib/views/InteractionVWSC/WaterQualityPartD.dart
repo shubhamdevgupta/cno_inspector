@@ -47,7 +47,7 @@ class _WaterQualityPartD extends State<WaterQualityPartD> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Interaction with VWSC",
+              "Water Quality Monitoring",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
