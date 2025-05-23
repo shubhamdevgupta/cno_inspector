@@ -1,4 +1,5 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
+import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/LoaderUtils.dart';
 import 'package:cno_inspection/utils/toast_helper.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
@@ -6,6 +7,7 @@ import 'package:cno_inspection/views/InteractionVWSC/DashboardVWSC.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/AppConstants.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
@@ -19,6 +21,21 @@ class WaterSupplyPartA extends StatefulWidget {
 }
 
 class _WaterSupplyPartA extends State<WaterSupplyPartA> {
+  LocalStorageService _localStorageService=LocalStorageService();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final args = ModalRoute.of(context)?.settings.arguments as String?;
+    if (args != null) {
+      final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
+      vwscProvider.setVillageId(args);
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -186,14 +203,14 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                       onPressed: ()async {
                                          LoaderUtils.showLoadingWithMessage(context,message: "Water Supply Functionality");
 
-                                        await vwscProvider.saveVwscWaterSupply(userId: 34483,
-                                            stateId: 32, villageId: 503655,
+                                        await vwscProvider.saveVwscWaterSupply(userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                            stateId: 32, villageId: vwscProvider.villageId!,
                                             waterSupplyFrequency: 1,
                                             adequateWaterToHH: vwscProvider.selectedHouseholdWaterId,
                                             adequateWaterToRemote: vwscProvider.selectedPvtgGroupsId,
                                             remoteReason: vwscProvider.reasonRemoteGroupsController.text, tailEndWaterReach: vwscProvider.selectedTailEndId,
                                             schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
-                                            pwsReachInstitutions: vwscProvider.selectedinstitutionsIds, createdBy:34483 );
+                                            pwsReachInstitutions: vwscProvider.selectedinstitutionsIds, createdBy:_localStorageService.getInt(AppConstants.prefUserId)! );
                                         if(vwscProvider.status!){
                                           ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.green);
                                           Navigator.of(context).pushReplacement(

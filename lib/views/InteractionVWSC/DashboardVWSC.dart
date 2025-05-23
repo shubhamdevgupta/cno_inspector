@@ -29,8 +29,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(34483, 3);
-      _localStorage.saveInt("villageId", dashboardProvider.dashboardList.first.villageId);
+      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!, 3);
     });
   }
 
@@ -117,7 +116,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                                 .firstWhere(
                                   (village) =>
                                       village.villageId ==
-                                      dashboardProvider.selectedVwsc,
+                                      dashboardProvider.selectedVwscId,
                                   orElse: () => CnoDashboardItem(
                                     userid: 0,
                                     totalSchemes: 0,
@@ -173,7 +172,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                           );
 
                           dashboardProvider.setSelectedVWSC(
-                              selectedItem.villageId.toString());
+                              selectedItem.villageId);
+                          print('village id ${dashboardProvider.selectedVwscId}');
 
                           path = _buildLocationPath([
                             selectedItem.stateName ?? '',
@@ -186,9 +186,9 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                       ),
                     ],
                   ),
-                  if (dashboardProvider.selectedVwsc != null &&
+               /*   if (dashboardProvider.selectedVwsc != null &&
                       dashboardProvider.selectedVwsc!.isNotEmpty &&
-                      path != null)
+                      path != null)*/
                     SizedBox(height: 12,),
                   Column(
                     children: [
@@ -217,8 +217,11 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Water Supply Functionality",
                         color: Colors.blue,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
                           Navigator.pushReplacementNamed(
-                              context, AppConstants.navigateToWaterSupplyPartA);
+                              context, AppConstants.navigateToWaterSupplyPartA,
+                          arguments: selectedVillageId
+                          );
                         },
                       ),
                       SizedBox(

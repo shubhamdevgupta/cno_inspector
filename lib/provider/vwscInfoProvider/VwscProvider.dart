@@ -17,6 +17,14 @@ class Vwscprovider extends ChangeNotifier {
 
   BaseResponse? baseResponse;
 
+  int? _villageId;
+
+  int? get villageId => _villageId;
+
+  void setVillageId(int id) {
+    _villageId = id;
+    notifyListeners();
+  }
 
   // 1. Define the options map
   final Map<String, int> waterSupplyFrequencyMap = {

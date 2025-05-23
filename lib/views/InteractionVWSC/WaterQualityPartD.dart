@@ -1,4 +1,6 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
+import 'package:cno_inspection/services/LocalStorageService.dart';
+import 'package:cno_inspection/utils/AppConstants.dart';
 import 'package:cno_inspection/utils/LoaderUtils.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
@@ -19,6 +21,7 @@ class WaterQualityPartD extends StatefulWidget {
 }
 
 class _WaterQualityPartD extends State<WaterQualityPartD> {
+LocalStorageService _localStorageService =LocalStorageService();
 
   @override
   Widget build(BuildContext context) {
@@ -152,11 +155,12 @@ class _WaterQualityPartD extends State<WaterQualityPartD> {
                                     ),
                                     onPressed: () async{
                                       await LoaderUtils.conditionalLoader(isLoading: vwscProvider.isLoading);
-                                      await vwscProvider.saveWaterQualityMonitoring(userId: 2338, stateId: 32,
+
+                                      await vwscProvider.saveWaterQualityMonitoring(userId:_localStorageService.getInt(AppConstants.prefUserId)!, stateId: 32,
                                           villageId: 7878, isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,
                                           ftkTestingPeriod: vwscProvider.selectedFTKTestingFrequencyId, numberWomenTrainedFtk: int.parse(vwscProvider.womenTrainedController.text),
                                           whoTestFtk: vwscProvider.testerNameController.text, isChlorinationDone: vwscProvider.selectedDisinfectionDoneId,
-                                          frcAvailableAtEnd: vwscProvider.selectedFRCLevelId, createdBy: 2338);
+                                          frcAvailableAtEnd: vwscProvider.selectedFRCLevelId, createdBy: _localStorageService.getInt(AppConstants.prefUserId)!);
                                       if(vwscProvider.status!){
                                         ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.green);
                                         Navigator.of(context).pushReplacement(

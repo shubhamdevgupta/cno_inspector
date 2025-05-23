@@ -13,6 +13,52 @@ class Schemeprovider extends ChangeNotifier {
   bool? _status;
   bool? get status => _status;
 
+  final Map<String, int> yesNoMap = {
+    "Yes": 1,
+    "No": 2,
+  };
+  // Private variables to hold selected values
+  String? _selectedValueQ1;
+  String? _selectedValueQ2;
+  String? _selectedValueQ3;
+
+  // Getter for Q1
+  String? get selectedValueQ1 => _selectedValueQ1;
+
+  // Setter for Q1
+  set selectedValueQ1(String? value) {
+    _selectedValueQ1 = value;
+    notifyListeners();
+  }
+
+  // Getter for Q2
+  String? get selectedValueQ2 => _selectedValueQ2;
+
+  // Setter for Q2
+  set selectedValueQ2(String? value) {
+    _selectedValueQ2 = value;
+    notifyListeners();
+  }
+
+
+  // Getter for Q3
+  String? get selectedValueQ3 => _selectedValueQ3;
+
+  // Setter for Q2
+  set selectedValueQ3(String? value) {
+    _selectedValueQ3 = value;
+    notifyListeners();
+  }
+  int get selectedValueQ3Id => yesNoMap[_selectedValueQ3] ?? 0;
+  int get selectedValueQ2Id => yesNoMap[_selectedValueQ2] ?? 0;
+  int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? 0;
+
+
+  final TextEditingController safeController = TextEditingController();
+  final TextEditingController criticalController = TextEditingController();
+  final TextEditingController semiCriticalController = TextEditingController();
+  final TextEditingController waterAllocationController = TextEditingController();
+
   Future<bool> saveSourceSurvey({
     required int userId,
     required int stateId,

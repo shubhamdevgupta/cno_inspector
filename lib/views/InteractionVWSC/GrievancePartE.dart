@@ -1,9 +1,11 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
+import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomRadioQuestion.dart';
@@ -18,10 +20,7 @@ class GrievancePartE extends StatefulWidget {
 }
 
 class _GrievancePartE extends State<GrievancePartE> {
-  String? selectedGrievanceMechanism; // Yes / No
-
-  List<String> grievanceRegistrationMethods = [];
-  String? selectedTurnAroundTime; // Same day / Two days / Three days / More than three days
+  LocalStorageService _localStorageService=LocalStorageService();
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +145,10 @@ class _GrievancePartE extends State<GrievancePartE> {
                                     ),
                                     onPressed: () async{
                                       await LoaderUtils.conditionalLoader(isLoading: vwscProvider.isLoading);
-                                      await vwscProvider.saveGrievanceRedressal(userId: 2232, stateId: 32,
+                                      await vwscProvider.saveGrievanceRedressal(userId: _localStorageService.getInt(AppConstants.prefUserId)!, stateId: 32,
                                           villageId: 21, grievanceMechanismAvailable: vwscProvider.selectedGrievanceMechanismId,
                                           grievanceTurnAroundTime: vwscProvider.selectedTurnAroundTimeId, registrationTypes: vwscProvider.selectedGrievanceMethodIds,
-                                          createdBy: 2232);
+                                          createdBy: _localStorageService.getInt(AppConstants.prefUserId)!);
                                       if(vwscProvider.status!){
                                         ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.green);
                                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardvwsc()),);
