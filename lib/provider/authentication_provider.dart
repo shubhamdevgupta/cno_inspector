@@ -1,51 +1,49 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 
+import 'package:cno_inspection/model/authResponse/VerifyOtpResponse.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
-import '../model/LoginResponse.dart';
+import '../model/authResponse/SendOtpResponse.dart';
 import '../repository/AuthenticaitonRepository.dart';
 import '../services/LocalStorageService.dart';
 import '../utils/AppConstants.dart';
 import '../utils/CurrentLocation.dart';
-import '../utils/GlobalExceptionHandler.dart';
 import '../utils/LocationUtils.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   final AuthenticaitonRepository _authRepository = AuthenticaitonRepository();
   final LocalStorageService _localStorage = LocalStorageService();
 
-  AuthenticationProvider() {
-    generateCaptcha();
-  }
-
   bool _isLoggedIn = false;
 
   bool get isLoggedIn => _isLoggedIn;
-
-  var randomOne, randomTwo, captchResult;
-
-  LoginResponse? _loginResponse;
   bool _isLoading = false;
 
   // Getters
-  LoginResponse? get loginResponse => _loginResponse;
+  SendOtpResponse? _sendOtpResponse;
+
+  SendOtpResponse? get sendOtpResponse => _sendOtpResponse;
+
+  // Getters
+  VerifyOtpResponse? _verifyOtpResponse;
+
+  VerifyOtpResponse? get verifyOtpResponse => _verifyOtpResponse;
 
   bool get isLoading => _isLoading;
-
-  bool _isShownPassword = false;
-
-  bool get isShownPassword => _isShownPassword;
-
   String errorMsg = '';
 
-  double? _currentLatitude;
-  double? _currentLongitude;
+  bool _isOtpButtonEnabled = true;
+  bool get isOtpButtonEnabled => _isOtpButtonEnabled;
 
-  double? get currentLatitude => _currentLatitude;
+  int _otpTimerSeconds = 0;
+  int get otpTimerSeconds => _otpTimerSeconds;
 
-  double? get currentLongitude => _currentLongitude;
+  bool _obscureOtp = true;
+  bool get obscureOtp => _obscureOtp;
+
+  Timer? _timer;
 
   Future<void> checkLoginStatus() async {
     _isLoggedIn = _localStorage.getBool(AppConstants.prefIsLoggedIn) ?? false;
@@ -59,123 +57,79 @@ class AuthenticationProvider extends ChangeNotifier {
   }
 
   // Method to login user
-  Future<void> loginUser(phoneNumber, password, appId, Function onSuccess,
-      Function onFailure) async {
-
+  Future<void> sendOtp(loginId, Function onSuccess, Function onFailure) async {
     _isLoading = true;
     notifyListeners();
-    String txtSalt = generateSalt();
-    String encryPass = encryptPassword(password, txtSalt);
-
     try {
-      _loginResponse = await _authRepository.loginUser(phoneNumber, encryPass, txtSalt, appId);
-      if (_loginResponse?.status == 1) {
+      _sendOtpResponse = await _authRepository.sendOtp(loginId);
+      if (_sendOtpResponse!.Status == true) {
         _isLoggedIn = true;
         _localStorage.saveBool(AppConstants.prefIsLoggedIn, true);
-        _localStorage.saveString(AppConstants.prefToken, _loginResponse!.token.toString());
-        _localStorage.saveString(AppConstants.prefUserId, _loginResponse!.regId.toString());
-        _localStorage.saveString(AppConstants.prefRoleId, _loginResponse!.roleId.toString());
-        _localStorage.saveString(AppConstants.prefName, _loginResponse!.name.toString());
-        _localStorage.saveString(AppConstants.prefMobile, _loginResponse!.mobileNumber.toString());
-        _localStorage.saveString(AppConstants.prefStateId, _loginResponse!.stateId.toString());
-        _localStorage.saveString(AppConstants.prefStateName, _loginResponse!.stateName.toString());
-        _localStorage.saveString(AppConstants.prefDistrictId, _loginResponse!.districtId.toString());
-        _localStorage.saveString(AppConstants.prefRegId, _loginResponse!.regId.toString());
-
+        _startOtpTimer();
         notifyListeners();
         onSuccess();
-        generateCaptcha();
       } else {
-        errorMsg = _loginResponse!.msg!;
+        errorMsg = _sendOtpResponse!.Message!;
         onFailure(errorMsg);
       }
     } catch (e) {
-      _loginResponse = null;
+      _sendOtpResponse = null;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  Future<void> fetchLocation() async {
+  Future<void> verifyOtp(
+      loginId, otp, Function onSuccess, Function onFailure) async {
     _isLoading = true;
-    notifyListeners();
-
     try {
-      debugPrint('Requesting location permission...');
-      bool permissionGranted = await LocationUtils.requestLocationPermission();
-
-      if (permissionGranted) {
-        debugPrint('Permission granted. Fetching location...');
-        final locationData = await LocationUtils.getCurrentLocation();
-
-        if (locationData != null) {
-          _currentLatitude = locationData['latitude'];
-          _currentLongitude = locationData['longitude'];
-
-          // 🔥 Set global current location
-          CurrentLocation.setLocation(
-            lat: _currentLatitude!,
-            lng: _currentLongitude!,
-          );
-
-          debugPrint('Location Fetched: Lat: $_currentLatitude, Lng: $_currentLongitude');
-        } else {
-          debugPrint("Location fetch failed (locationData is null)");
-        }
+      _verifyOtpResponse = await _authRepository.verifyOtp(loginId, otp);
+      if (_verifyOtpResponse!.Status == true) {
+        onSuccess();
       } else {
-        debugPrint("Permission denied. Cannot fetch location.");
+        errorMsg = _verifyOtpResponse!.Message!;
+        onFailure(errorMsg);
       }
     } catch (e) {
-      debugPrint("Error during fetchLocation(): $e");
+      _verifyOtpResponse = null;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
-
-
-  String trim(String value) => value.trim();
-
-  String sha512Base64(String input) {
-    final List<int> bytes = utf8.encode(input);
-    final Digest sha512Hash = sha512.convert(bytes);
-    return base64Encode(sha512Hash.bytes);
-  }
-
-  String encryptPassword(String password, String salt) {
-    String hash1 = sha512Base64(trim(password));
-    print(hash1);
-    String hash2 = sha512Base64(salt + hash1);
-    return hash2;
-  }
-
-  /// Generates a random salt of the given length
-  String generateSalt({int length = 16}) {
-    final Random random = Random.secure();
-    final List<int> saltBytes =
-        List<int>.generate(length, (_) => random.nextInt(256));
-    return base64Encode(saltBytes);
-  }
-
-  int generateCaptcha() {
-    int max = 15;
-    randomOne = Random().nextInt(max);
-    randomTwo = Random().nextInt(max);
-    print("calling the captch $randomOne  $randomTwo");
-    captchResult = randomOne + randomTwo;
+  void _startOtpTimer() {
+    _isOtpButtonEnabled = false;
+    _otpTimerSeconds = 120; // 2 minutes
     notifyListeners();
-    return captchResult;
+
+    _timer?.cancel();
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_otpTimerSeconds <= 1) {
+        timer.cancel();
+        _isOtpButtonEnabled = true;
+        _otpTimerSeconds = 0;
+      } else {
+        _otpTimerSeconds--;
+      }
+      notifyListeners();
+    });
+  }
+  String get formattedOtpTimer {
+    final minutes = (_otpTimerSeconds ~/ 60).toString().padLeft(1, '0');
+    final seconds = (_otpTimerSeconds % 60).toString().padLeft(2, '0');
+    return "$minutes:$seconds";
   }
 
-  // Toggle Password Visibility
-  void togglePasswordVisibility() {
-    _isShownPassword = !_isShownPassword;
+  void toggleOtpVisibility() {
+    _obscureOtp = !_obscureOtp;
     notifyListeners();
   }
 
   @override
-  void reset() {
-    // TODO: implement reset
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
+
 }

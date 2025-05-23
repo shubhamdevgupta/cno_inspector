@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 import '../utils/CustomException.dart';
 
 class BaseApiService {
-  final String _baseUrl = 'https://ejalshakti.gov.in/wqmis/api/';
-  static const String ejalShakti = "https://ejalshakti.gov.in/wqmis/api/";
+  final String _baseUrl = 'https://ejalshakti.gov.in/jjm2/api';
+  static const String ejalShakti = "https://ejalshakti.gov.in/jjm2/api";
   static const String reverseGeocoding = "https://reversegeocoding.nic.in/";
   static const String github = "https://api.github.com/repos/";
 

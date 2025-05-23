@@ -92,7 +92,8 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
 
                   color: Colors.blue,
                   onTap: () {
-                    // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToCoordinationPlanningScreen);
                   },
                 ),
 

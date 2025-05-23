@@ -39,6 +39,8 @@ class AppConstants {
   /////dwsm
   static const String navigateToDashboardDWSM = '/dashboarddwsm';
 
+  static const String navigateToCoordinationPlanningScreen = '/CoordinationPlanningScreen';
+
 
   ////vwsc
   static const String navigateToDashboardVWSC = '/dashboardVWSC';

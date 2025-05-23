@@ -1,42 +1,31 @@
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/InteractionDWSM/DashboardDWSM.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
-import 'PartCRetrofittingAugmentationScreen.dart';
 
-class SchemePlanningScreen extends StatefulWidget {
-  const SchemePlanningScreen({Key? key}) : super(key: key);
+class CoordinationPlanningScreen extends StatefulWidget {
+  const CoordinationPlanningScreen({Key? key}) : super(key: key);
 
   @override
-  _SchemePlanningScreen createState() => _SchemePlanningScreen();
+  _CoordinationPlanningScreen createState() => _CoordinationPlanningScreen();
 }
 
-class _SchemePlanningScreen extends State<SchemePlanningScreen> {
+class _CoordinationPlanningScreen extends State<CoordinationPlanningScreen> {
   String _selectedValue = 'yes'; // Default selected value
   String? selectedValueQ1;
+  final TextEditingController householdController = TextEditingController();
   String? selectedOption = 'option1';
   final TextEditingController textController = TextEditingController();
-
-  final List<String> _dropdownOptions = [
-    'Atleast once in 7 days',
-    'Atleast once in 15 days',
-    'Atleast once in more than 15 days'
-  ];
   String? SetFreq;
-  List<String> selectedInstitutions = [];
-  final TextEditingController householdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // Replace the current route with a new one
-           Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => SourceScreenQuestions()),
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => Dashboarddwsm()),
         );
-
         // Return false to prevent the default back navigation behavior
         return false;
       },
@@ -45,7 +34,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           title: Text(
-            'Part-1 Scheme Inspection Form.',
+            'Part-2 Interaction with DWSM ',
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
@@ -73,7 +62,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               height: 5,
                             ),
                             Text(
-                              "B.	Scheme Planning",
+                              "A. Coordination, Planning & Review Mechanism",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -92,80 +81,13 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                             ),
 
 
-
-                            CustomCheckboxQuestion(
-                              questionText: "1.	Has the surveys done for planning of the scheme :",
-                              options: ['Topographical survey', 'GPS/physical survey done', 'Google Earth/Maps survey', 'No survey done'],
-                              selectedValues: selectedInstitutions,
-                              onChanged: (newSelected) {
-                                setState(() {
-                                  selectedInstitutions = newSelected;
-                                });
-                              },
-                            ),
-
-
-
-
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // Align text to the left
-                              children: [
-                                CustomTextField(
-                                  labelText: "2.What are the running hours per day considered for designing of WTP/Transmission main?",
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
-                                ),
-
-                                SizedBox(
-                                  height: 18,
-                                ),
-
-                                CustomTextField(
-                                  labelText: '3.1 What is the retention time in hours per day considered for design of OHSR/OHT/ESR   ',
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
-                                ),
-
-                                SizedBox(
-                                  height: 18,
-                                ),
-
-                                CustomTextField(
-                                  labelText: '3.2 What is the retention time in hours per day considered for design of MBR',
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
-                                ),
-
-                                CustomTextField(
-                                  labelText: '4.1 Please specify the pipe material used for transmission pipeline and distribution network in Rocky Strata with reasons for selecting the same',
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
-                                ),
-                             CustomTextField(
-                                  labelText: '4.1 Please specify the pipe material used for transmission pipeline and distribution network in Soil Strata with reasons for selecting the same',
-                                  hintText: 'Enter here',
-                                  controller: householdController,
-                                  isRequired: false,
-                                ),
-
-
-                              ],
-                            ),
-
-
-
                             Column(
                               children: [
                                 Align(alignment: Alignment.centerLeft,
-                                    child: Text("5.	Do the on-spot excavation on any sample stretch of pipeline and check for pipe material and dia as per DPR::",
+                                    child: Text("1. Are monthly DWSM meetings on progress of JJM works being held?",
                                       style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),)),
                                 RadioListTile<String>(
-                                  title: Text("Not Found"),
+                                  title: Text("No"),
                                   value: 'option1',
                                   groupValue: selectedOption,
                                   onChanged: (value) {
@@ -175,7 +97,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                   },
                                 ),
                                 RadioListTile<String>(
-                                  title: Text("Found as per DPR"),
+                                  title: Text("Yes"),
                                   value: 'option2',
                                   groupValue: selectedOption,
                                   onChanged: (value) {
@@ -184,17 +106,32 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                     });
                                   },
                                 ),
+                                SizedBox(height: 5),
                                 if (selectedOption == 'option2') ...[
                                   TextField(
                                     controller: textController,
                                     decoration: InputDecoration(
-                                      labelText: "If deviation found",
+                                      labelText: "(a). how many meetings were held in the last six months? ",
                                       border: OutlineInputBorder(),
                                     ),
                                   ),
+
+                                  SizedBox(height: 20),
+
+                                  CustomRadioQuestion(
+                                    questionText: "(b). Quality of Meeting and Record maintenance: ",
+                                    options: const ['Proper Documentation with actionable decision', 'Partial Documentation','No Documentation'], // You can pass more options if needed
+                                    selectedValue: selectedValueQ1,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        selectedValueQ1 = val;
+                                      });
+                                    },
+                                  ),
+
                                 ],
                                 SizedBox(height: 20),
-                             /*   ElevatedButton(
+                                /*   ElevatedButton(
                                   onPressed: () {
                                     String result = selectedOption == 'option1'
                                         ? 'Selected: Option 1'
@@ -205,6 +142,17 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                   child: Text("Submit"),
                                 ),*/
                               ],
+                            ),
+
+                            CustomRadioQuestion(
+                              questionText: "2.	Are District Development Coordination and Monitoring Committee (DISHA) meetings being held regularly? ",
+                              options: const ['Yes', 'No',], // You can pass more options if needed
+                              selectedValue: selectedValueQ1,
+                              onChanged: (val) {
+                                setState(() {
+                                  selectedValueQ1 = val;
+                                });
+                              },
                             ),
 
                             Container(
@@ -225,7 +173,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => RetrofittingAugmentationScreen()),);
+                         // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SchemePlanningScreen()),);
                                         },
                                         child: Text(
                                           "SAVE & NEXT",
