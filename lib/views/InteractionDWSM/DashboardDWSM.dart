@@ -2,13 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/authentication_provider.dart';
 import '../../provider/dashboardProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
+import '../../utils/CustomDropdown.dart';
 import '../auth/DashboardScreen.dart';
-
 
 class Dashboarddwsm extends StatefulWidget {
   const Dashboarddwsm({super.key});
@@ -21,13 +20,14 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
   final LocalStorageService _localStorage = LocalStorageService();
 
   late DashboardProvider dashboardProvider;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      //  await dashboardProvider.loadDashboardData();
+      await dashboardProvider.fetchDashboardData(34483, 2);
     });
   }
 
@@ -49,19 +49,18 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
-
               icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () {
-                  if (Navigator.of(context).canPop()) {
-                    Navigator.pop(context);
-                  } else {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => Dashboardscreen()),
-                          (route) => false,
-                    );
-                  }
-                },
+              onPressed: () {
+                if (Navigator.of(context).canPop()) {
+                  Navigator.pop(context);
+                } else {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dashboardscreen()),
+                    (route) => false,
+                  );
+                }
+              },
             ),
 
             //elevation
@@ -79,6 +78,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
             ),
             elevation: 5,
           ),
+/*
 
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(12.0),
@@ -168,6 +168,137 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
             ),
           )
       ),
+*/          body: Consumer<DashboardProvider>(
+              builder: (context, dashboardProvider, child) {
+            if (dashboardProvider.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Select DWSM",
+                        style: TextStyle(
+                          fontSize: 16, fontFamily: 'OpenSans',
+                          fontWeight: FontWeight.bold,
+                          color: Colors
+                              .black87, // Dark text for better readability
+                        ),
+                      ),
+
+                      const Divider(
+                        height: 10,
+                        color: Colors.grey,
+                        thickness: 1,
+                      ),
+                      SizedBox(height: 4),
+                      // Space between title and dropdown
+                      CustomDropdown(
+                        value: dashboardProvider.selectedDwsm,
+                        items: dashboardProvider.dashboardList.map((scheme) {
+                          return DropdownMenuItem<String>(
+                            value: scheme.districtId.toString(),
+                            child: Text(
+                              scheme.districtName!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'OpenSans',
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        title: "",
+                        appBarTitle: "Select DWSM",
+                        showSearchBar: false,
+                        onChanged: (value) {
+                          dashboardProvider.setSelectedDWSM(value);
+                        },
+                      )
+                    ],
+                  ),
+                  if (dashboardProvider.selectedDwsm != null &&
+                      dashboardProvider.selectedDwsm!.isNotEmpty)
+                    Column(
+                      children: [
+                        buildSampleCard(
+                          qnumber: "A.",
+                          title: "Coordination, Planning & Review Mechanism",
+                          color: Colors.blue,
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context,
+                                AppConstants
+                                    .navigateToCoordinationPlanningScreen);
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "B.",
+                          title: "Source Sustainability and Water Conservation",
+                          color: Colors.orangeAccent,
+                          onTap: () {
+                            // Your onTap logic
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "C.",
+                          title: "Monitoring, Quality and Lab Infrastructure",
+                          color: Colors.deepOrangeAccent,
+                          onTap: () {
+                            // Your onTap logic
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "D.",
+                          title: "Operation & Maintenance (O&M)",
+                          color: Colors.lightGreen,
+                          onTap: () {
+                            // Your onTap logic
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "E.",
+                          title: "Quality Assurance and Commissioning",
+                          color: Colors.green,
+                          onTap: () {
+                            // Your onTap logic
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "F.",
+                          title: "Public Complaints and Grievance Redressal",
+                          color: Colors.green,
+                          onTap: () {
+                            // Your onTap logic
+                          },
+                        ),
+                      ],
+                    )
+                ],
+              ),
+            );
+          })),
     );
   }
 
@@ -201,7 +332,8 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
               children: [
                 // QNumber badge
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: color.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(6),
@@ -230,7 +362,6 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                 ),
 
                 // Count badge
-
               ],
             ),
             const SizedBox(height: 14),
@@ -240,10 +371,14 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: onTap,
-                icon: const Icon(Icons.arrow_forward, size: 18, color: Colors.white),
+                icon: const Icon(Icons.arrow_forward,
+                    size: 18, color: Colors.white),
                 label: const Text(
                   "Continue",
-                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: color,
@@ -260,6 +395,4 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
       ),
     );
   }
-
-
 }

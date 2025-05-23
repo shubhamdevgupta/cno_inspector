@@ -7,8 +7,8 @@ import '../../provider/dashboardProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
+import '../../utils/CustomDropdown.dart';
 import '../auth/DashboardScreen.dart';
-
 
 class Dashboardschemeinfo extends StatefulWidget {
   const Dashboardschemeinfo({super.key});
@@ -18,16 +18,15 @@ class Dashboardschemeinfo extends StatefulWidget {
 }
 
 class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
-  final LocalStorageService _localStorage = LocalStorageService();
-
   late DashboardProvider dashboardProvider;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      //  await dashboardProvider.loadDashboardData();
+      await dashboardProvider.fetchDashboardData(34483, 1);
     });
   }
 
@@ -49,7 +48,6 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
-
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 if (Navigator.of(context).canPop()) {
@@ -58,7 +56,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => Dashboardscreen()),
-                        (route) => false,
+                    (route) => false,
                   );
                 }
               },
@@ -79,7 +77,121 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
             ),
             elevation: 5,
           ),
+          body: Consumer<DashboardProvider>(
+            builder: (context, dashboardProvider, child) {
+              if (dashboardProvider.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Select Scheme",
+                          style: TextStyle(
+                            fontSize: 16, fontFamily: 'OpenSans',
+                            fontWeight: FontWeight.bold,
+                            color: Colors
+                                .black87, // Dark text for better readability
+                          ),
+                        ),
 
+                        const Divider(
+                          height: 10,
+                          color: Colors.grey,
+                          thickness: 1,
+                        ),
+                        SizedBox(height: 4), // Space between title and dropdown
+                        CustomDropdown(
+                          value: dashboardProvider.selectedScheme,
+                          items: dashboardProvider.dashboardList.map((scheme) {
+                            return DropdownMenuItem<String>(
+                              value: scheme.schemeId.toString(),
+                              child: Text(
+                                scheme.schemeName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'OpenSans',
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          title: "",
+                          appBarTitle: "Select Scheme",
+                          showSearchBar: false,
+                          onChanged: (value) {
+                            dashboardProvider.setSelectedScheme(value);
+                          },
+                        )
+                      ],
+                    ),
+                    if (dashboardProvider.selectedScheme != null &&
+                        dashboardProvider.selectedScheme!.isNotEmpty)
+                    Column(
+                      children: [
+                        buildSampleCard(
+                          qnumber: "A.",
+                          title: "Source",
+                          color: Colors.blue,
+                          onTap: () {
+                            Navigator.pushReplacementNamed(context,
+                                AppConstants.navigateToSchemePlanningScreen);
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "B.",
+                          title: "Scheme Planning",
+                          color: Colors.orangeAccent,
+                          onTap: () {
+                            // Your onTap logic
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "C.",
+                          title: "Additional information for Retrofitting",
+                          color: Colors.deepOrangeAccent,
+                          onTap: () {
+                            // Your onTap logic
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "D.",
+                          title: "Scheme implementation",
+                          color: Colors.lightGreen,
+                          onTap: () {
+                            // Your onTap logic
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "E.",
+                          title: "Visual Inspection",
+                          color: Colors.green,
+                          onTap: () {
+                            // Your onTap logic
+                          },
+                        ),
+                      ],
+                    ),
+
+/*
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -154,13 +266,13 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                     Navigator.pushReplacementNamed(
                         context, AppConstants.navigateToVisualInspectionScreen);
                   },
+*/
+                  ],
+
                 ),
-
-
-              ],
-            ),
-          )
-      ),
+              );
+            },
+          )),
     );
   }
 
@@ -194,7 +306,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
               children: [
                 // QNumber badge
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: color.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(6),
@@ -223,7 +336,6 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                 ),
 
                 // Count badge
-
               ],
             ),
             const SizedBox(height: 14),
@@ -233,10 +345,14 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: onTap,
-                icon: const Icon(Icons.arrow_forward, size: 18, color: Colors.white),
+                icon: const Icon(Icons.arrow_forward,
+                    size: 18, color: Colors.white),
                 label: const Text(
                   "Continue",
-                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: color,
@@ -253,6 +369,4 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
       ),
     );
   }
-
-
 }

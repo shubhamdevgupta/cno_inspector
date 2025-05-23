@@ -1,4 +1,5 @@
 import 'package:cno_inspection/provider/authentication_provider.dart';
+import 'package:cno_inspection/provider/dashboardProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
 import 'package:cno_inspection/views/InteractionDWSM/PartACoordinationPlanningReviewScreen.dart';
@@ -38,6 +39,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
+        ChangeNotifierProvider(create: (_) => DashboardProvider()),
       ],
       child: MyApp(),
     ),
