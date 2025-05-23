@@ -1,3 +1,4 @@
+import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/views/InteractionVWSC/WaterQualityPartD.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +6,9 @@ import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
+import '../../utils/MultiSelectionlist.dart';
+import '../../utils/customcheckquestion.dart';
+import '../../utils/customtxtfeild.dart';
 import 'DashboardVWSC.dart';
 
 class CommunityFeedbackPartC extends StatefulWidget {
@@ -15,9 +19,10 @@ class CommunityFeedbackPartC extends StatefulWidget {
 }
 
 class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
-  String? selectedValueQ1;
-  List<String> selectedInstitutions = [];
-  String? selectedFrequency;
+  String? selectedComplaintByCommunity; // Yes / No / Not Known
+  List<String> selectedComplaintTypes = []; // multiple select options
+  TextEditingController othersComplaintController = TextEditingController();
+  String? selectedComplaintAddressed; // Yes / No / Partially
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +48,8 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Waster Supply",
-              style: AppStyles.appBarTitle,
+              "Community feedback on quality of construction",
+              style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold),
             ),
             leading: IconButton(
 
@@ -93,95 +98,76 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                         child: Card(
                           elevation: 5,
                           child: Container(
-                            color: Colors.white,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.deepOrangeAccent, width: 1.4),
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12.withOpacity(0.06),
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
                             padding: EdgeInsets.all(8),
                             width: double.infinity,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Community feedback on quality of construction",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      color: Colors.orange),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  color: Colors.black38, // Color of the line
-                                  height: 1.0,
-                                  width: double.infinity, // Thickness of the line
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                CustomRadioQuestion(
-                                  questionText: "1.	Any complaint by community on quality of construction: ",
-                                  options: [
-                                    'Yes',
-                                    'No',
-                                    'Not Known',
-                                  ], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                CustomCheckboxQuestion(
-                                  questionText:
-                                  "2.	Type of complaint (select all that apply):",
-                                  options: [
-                                    'Substandard material ',
-                                    'Poor workmanship ',
-                                    'Leakages ',
-                                    'Contamination',
-                                    'Incomplete structures ',
-                                    'No water ',
-                                    'Water discoloration ',
-                                    'Others '
-                                  ],
-                                  selectedValues: selectedInstitutions,
-                                  onChanged: (newSelected) {
-                                    setState(() {
-                                      selectedInstitutions = newSelected;
-                                    });
-                                  },
-                                ),
-                                CustomRadioQuestion(
-                                  questionText: "3.	Whether complaint is addressed",
-                                  options: [
-                                    'Yes',
-                                    'No',
-                                    'Partially',
-                                  ], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
+                                Customradiobttn(
+                                  question: "1. Any complaint by community on quality of construction:",
+                                  options: ["Yes", "No", "Not Known"],
+                                  selectedOption: selectedComplaintByCommunity,
+                                  onChanged: (val) => setState(() => selectedComplaintByCommunity = val),
                                 ),
 
+                                if (selectedComplaintByCommunity == "Yes") ...[
+                                  CustomMultiSelectChipQuestion(
+                                    question: "2. Type of complaint (select all that apply):",
+                                    options: [
+                                      "Substandard material",
+                                      "Poor workmanship",
+                                      "Leakages",
+                                      "Contamination",
+                                      "Incomplete structures",
+                                      "No water",
+                                      "Water discoloration",
+                                      "Others"
+                                    ],
+                                    selectedValues: selectedComplaintTypes,
+                                    onSelectionChanged: (valList) => setState(() => selectedComplaintTypes = valList),
+                                  ),
+
+                                  // Show text field if 'Others' is selected
+                                  if (selectedComplaintTypes.contains("Others"))
+                                    Customtxtfeild(
+                                      label: "Please specify other complaints:",
+                                      controller: othersComplaintController,
+                                      maxLines: 2,
+                                    ),
+                                ],
+
+                                Customradiobttn(
+                                  question: "3. Whether complaint is addressed:",
+                                  options: ["Yes", "No", "Partially"],
+                                  selectedOption: selectedComplaintAddressed,
+                                  onChanged: (val) => setState(() => selectedComplaintAddressed = val),
+                                ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     height: 35,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xffb0D6EFD),
+                                        backgroundColor: Colors.deepOrange,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
                                         ),
                                       ),
                                       onPressed: () {
                                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => WaterQualityPartD()),);
+
                                       },
                                       child: Text(
                                         "SAVE & NEXT",
@@ -194,9 +180,8 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                     ),
                                   ),
                                 ),
-
                               ],
-                            ),
+                            )
                           ),
                         ),
                       )

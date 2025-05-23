@@ -1,5 +1,5 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartCMonitoringQualityandLabInfrastructure.dart';
+import 'package:cno_inspection/views/InteractionDWSM/PartDOperationandMaintenance.dart';
 import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
@@ -15,25 +15,22 @@ import '../schemeInfo/PartBSchemePlanningScreen.dart';
 import 'DashboardDWSM.dart';
 
 
-class SourceSustainablitiyWasterConservation extends StatefulWidget {
-  const SourceSustainablitiyWasterConservation({Key? key}) : super(key: key);
+class MonitioringQuality extends StatefulWidget {
+  const MonitioringQuality({Key? key}) : super(key: key);
 
   @override
-  _SourceSustainablitiyWasterConservation createState() => _SourceSustainablitiyWasterConservation();
+  _MonitioringQuality createState() => _MonitioringQuality();
 }
 
-class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiyWasterConservation> {
-  String? sourceSustainability; // Actively, Limited, Not Promoted
-  String? groundwaterProtection; // Yes, Partially, No
-  String? rechargeStructureImplemented; // Yes, In Progress, No
-  String? rechargeReason = ""; // only if 'No' selected here
-  String? impactStudies; // Yes - Completed, Planned, No
-
-  TextEditingController rechargeReasonController = TextEditingController();
+class _MonitioringQuality extends State<MonitioringQuality> {
+// State variables
+  String? assetsGeotagged; // "All", "Partially", "Not Done"
+  String? hasNablLab; // "Yes", "No"
+  TextEditingController testingManagedController = TextEditingController();
 
   @override
   void dispose() {
-    rechargeReasonController.dispose();
+    testingManagedController.dispose();
     super.dispose();
   }
 
@@ -105,7 +102,7 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       NewScreenPoints(
-                        no: 2,
+                        no: 3,
                       ),
                       Card(
                         elevation: 5,
@@ -128,48 +125,32 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Customradiobttn(
-                                question: "Are source sustainability measures being promoted (e.g., groundwater recharge, reuse of treated wastewater)?",
-                                options: ["Actively", "Limited", "Not Promoted"],
-                                selectedOption: sourceSustainability,
-                                onChanged: (val) => setState(() => sourceSustainability = val),
+                                question: "Are water supply assets (OHTs, WTPs, Pump Houses, etc.) geotagged?",
+                                options: ["All", "Partially", "Not Done"],
+                                selectedOption: assetsGeotagged,
+                                onChanged: (val) => setState(() => assetsGeotagged = val),
                               ),
                               SizedBox(height: 12),
                               Customradiobttn(
-                                question: "Are piped water schemes based on groundwater sources protected from contamination?",
-                                options: ["Yes", "Partially", "No"],
-                                selectedOption: groundwaterProtection,
-                                onChanged: (val) => setState(() => groundwaterProtection = val),
-                              ),
-                              SizedBox(height: 12),
-                              Customradiobttn(
-                                question: "Is at least one recharge structure per groundwater source implemented?",
-                                options: ["Yes", "In Progress", "No"],
-                                selectedOption: rechargeStructureImplemented,
+                                question: "Does the district have an NABL-accredited lab or equivalent for water quality testing?",
+                                options: ["Yes", "No"],
+                                selectedOption: hasNablLab,
                                 onChanged: (val) {
                                   setState(() {
-                                    rechargeStructureImplemented = val;
+                                    hasNablLab = val;
                                     if (val != "No") {
-                                      rechargeReasonController.clear();
+                                      testingManagedController.clear();
                                     }
                                   });
                                 },
                               ),
-                              if (rechargeStructureImplemented == "No")
+                              if (hasNablLab == "No")
                                 Customtxtfeild(
-                                  label: "If no, reason:",
-                                  controller: rechargeReasonController,
+                                  label: "If no, how is testing managed?",
+                                  controller: testingManagedController,
                                   maxLines: 2,
                                 ),
-                              SizedBox(height: 12),
-                              Customradiobttn(
-                                question: "Are any impact studies or assessments conducted on source sustainability efforts?",
-                                options: ["Yes – Completed", "Planned", "No"],
-                                selectedOption: impactStudies,
-                                onChanged: (val) => setState(() => impactStudies = val),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
+
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: SizedBox(
@@ -182,7 +163,7 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                                       ),
                                     ),
                                     onPressed: () {
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MonitioringQuality()),);
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartDoperationandmaintenance()),);
 
                                     },
                                     child: Text(
@@ -197,11 +178,10 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                                 ),
                               ),
                             ],
-                          ),
+                          )
 
                         ),
-
-                      ),
+                      )
                     ],
                   ),
                 ),

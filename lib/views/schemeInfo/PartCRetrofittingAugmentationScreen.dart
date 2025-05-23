@@ -7,6 +7,9 @@ import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
+import '../../utils/customcheckquestion.dart';
+import '../../utils/customradiobttn.dart';
+import '../../utils/customtxtfeild.dart';
 import 'PartDSchemeImplementationScreen.dart';
 import 'PartBSchemePlanningScreen.dart';
 
@@ -105,138 +108,104 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
                       Card(
                         elevation: 5,
                         child: Container(
-                          padding: EdgeInsets.all(8),
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 5,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.deepOrangeAccent, width: 1.4),
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12.withOpacity(0.06),
+                                blurRadius: 6,
+                                offset: const Offset(0, 3),
                               ),
-                              Text(
-                                "C.Additional information for Retrofitting/Augmentation Schemes only",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: Colors.orange),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                color: Colors.black38, // Color of the line
-                                height: 1.0,
-                                width: double.infinity, // Thickness of the line
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-
-
-                              CustomRadioQuestion(
-                                questionText: "1.	Whether the condition assessment of the legacy infrastructure done before scheme planning?",
-                                options: const ['Yes', 'No'], // You can pass more options if needed
-                                selectedValue: selectedValueQ1,
-                                onChanged: (val) {
-                                  setState(() {
-                                    selectedValueQ1 = val;
-                                  });
-                                },
-                              ),
-
-
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                // Align text to the left
-                                children: [
-                                  CustomTextField(
-                                    labelText: "2.1 Enter the length of Legacy Transmission Pipelines which has been retrofitted and being used in the scheme (KM) ",
-                                    hintText: 'Enter here',
-                                    controller: householdController,
-                                    isRequired: false,
-                                  ),
-
-                                  SizedBox(
-                                    height: 18,
-                                  ),
-
-                                  CustomTextField(
-                                    labelText: '2.2 Enter the Length of Legacy Distribution Pipelines which has been retrofitted and being used in the scheme (KM) ',
-                                    hintText: 'Enter here',
-                                    controller: householdController,
-                                    isRequired: false,
-                                  ),
-
-                                  SizedBox(
-                                    height: 18,
-                                  ),
-
-                                  CustomTextField(
-                                    labelText: '2.3 Enter the Capacity of WTP which has been retrofitted and being used in the scheme (MLD) ',
-                                    hintText: 'Enter here',
-                                    controller: householdController,
-                                    isRequired: false,
-                                  ),
-
-                                  CustomTextField(
-                                    labelText: '2.4 Enter the number of storage reservoirs and the capacity of each storage reservoir which has been retrofitted and being used in the scheme (in KL) ',
-                                    hintText: 'Enter here',
-                                    controller: householdController,
-                                    isRequired: false,
-                                  ),
-
-                                ],
-                              ),
-
-
-                              CustomRadioQuestion(
-                                questionText: "3. Is the as built drawing of the new infrastructure in conjunction with the existing infrastructure available with the department/agency/GP? Has it been digitized and uploaded on PM Gatishakti?",
-                                options: const ['Yes', 'No'], // You can pass more options if needed
-                                selectedValue: selectedValueQ1,
-                                onChanged: (val) {
-                                  setState(() {
-                                    selectedValueQ1 = val;
-                                  });
-                                },
-                              ),
-
-
-                              Container(
-                                padding: EdgeInsets.all(5),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: SizedBox(
-                                        height: 35,
-                                        child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color(0xffb0D6EFD),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(
-                                                  10), // Adjust the radius as needed
-                                            ),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SchemeImplementationScreen()),);
-                                          },
-                                          child: Text(
-                                            "SAVE & NEXT",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
                             ],
                           ),
+                          padding: EdgeInsets.all(5),
+                          width: double.infinity,
+                          child:  Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  'C. Additional Information for Retrofitting/Augmentation Schemes Only',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.deepOrange,
+                                  ),
+                                ),
+                              ),
+
+                              // 1. Condition assessment done?
+                              Customradiobttn(
+                                question: '1. Whether the condition assessment of the legacy infrastructure done before scheme planning?',
+                                options: const ['Yes', 'No'],
+                                selectedOption: selectedValueQ1,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedValueQ1 = val;
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 10),
+
+                              // 2. Legacy infrastructure usage
+                              const Text(
+                                '2. Legacy infrastructure which has been retrofitted and being used in the scheme under JJM:',
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 6),
+
+                              Customtxtfeild(
+                                label: 'Transmission Pipelines (in Kms)',
+                                controller: TextEditingController(),
+                                keyboardType: TextInputType.number,
+                              ),
+                              const SizedBox(height: 8),
+
+                              Customtxtfeild(
+                                label: 'Distribution Pipelines (in Kms)',
+                                controller: TextEditingController(),
+                                keyboardType: TextInputType.number,
+                              ),
+                              const SizedBox(height: 8),
+
+                              Customtxtfeild(
+                                label: 'WTP Capacity (in MLD)',
+                                controller: TextEditingController(),
+                                keyboardType: TextInputType.number,
+                              ),
+                              const SizedBox(height: 8),
+
+                              Customtxtfeild(
+                                label: 'Storage Structures (Nos./Capacity in KL)',
+                                controller: TextEditingController(),
+                                keyboardType: TextInputType.text,
+                              ),
+                              const SizedBox(height: 10),
+                              
+
+                              // 3. As-built drawing availability
+                              Customradiobttn(
+                                question: '3. Is the as-built drawing of the new infrastructure in conjunction with the existing infrastructure available with the department/agency/GP? Has it been digitized and uploaded on PM Gatishakti?',
+                                options: const ['Yes', 'No'],
+                                selectedOption: selectedOption,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedOption = val;
+                                  });
+                                },
+                              ),
+                              
+                              
+
+
+
+                            ],
+                          )
+
+
                         ),
                       )
                     ],

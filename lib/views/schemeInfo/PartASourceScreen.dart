@@ -5,6 +5,8 @@ import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
+import '../../utils/customradiobttn.dart';
+import '../../utils/customtxtfeild.dart';
 import 'PartBSchemePlanningScreen.dart';
 
 class SourceScreenQuestions extends StatefulWidget {
@@ -20,6 +22,14 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
   final TextEditingController householdController = TextEditingController();
 
   String? SetFreq;
+
+  String? selectedValueQ2;
+  String? selectedValueQ3;
+
+  final TextEditingController safeController = TextEditingController();
+  final TextEditingController criticalController = TextEditingController();
+  final TextEditingController semiCriticalController = TextEditingController();
+  final TextEditingController waterAllocationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +55,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Waster Supply",
+              "Scheme Inspection",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -91,155 +101,138 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                       NewScreenPoints(
                         no: 1,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Card(
-                          elevation: 5,
-                          child: Container(
+                      Card(
+                        elevation: 5,
+                        child: Container(
+
+                          decoration: BoxDecoration(
                             color: Colors.white,
-                            padding: EdgeInsets.all(8),
-                            width: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                 Text(
-                                  "Field visit format for Central Nodal Officers",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18,
-                                      color: Colors.orange),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  color: Colors.black38, // Color of the line
-                                  height: 1.0,
-                                  width: double.infinity, // Thickness of the line
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                CustomRadioQuestion(
-                                  questionText: "1.	If the source is surface water, then, did the Source finding committee recommended the shift to surface water? ",
-                                  options: const ['Yes', 'No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-                                CustomRadioQuestion(
-                                  questionText: "2.Any study done to assess ground water before going for surface water?",
-                                  options: ['Yes', 'No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  // Align text to the left
-                                  children: [
-                                    CustomTextField(
-                                      labelText: '3.1 number of villages falling under the SAFE zones as specified by CGWB',
-                                      hintText: 'Enter here',
-                                      controller: householdController,
-                                      isRequired: false,
-                                    ),
-
-                                    SizedBox(
-                                      height: 18,
-                                    ),
-
-                                    CustomTextField(
-                                      labelText: '3.2 number of villages falling under the CRITICAL / OVER-EXPLOITED zones as specified by CGWB',
-                                      hintText: 'Enter here',
-                                      controller: householdController,
-                                      isRequired: false,
-                                    ),
-
-                                    SizedBox(
-                                      height: 18,
-                                    ),
-
-                                    CustomTextField(
-                                      labelText: '3.3 number of villages falling under the  SEMI-CRITICAL  zones as specified by CGWB',
-                                      hintText: 'Enter here',
-                                      controller: householdController,
-                                      isRequired: false,
-                                    ),
-                                  ],
-                                ),
-
-
-                                CustomRadioQuestion(
-                                  questionText: "4.In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option—treating the contaminated groundwater or switching to a surface water source? ",
-                                  options: ['Yes', 'No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                 CustomRadioQuestion(
-                                  questionText: "5.	Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose?",
-                                  options: ['Yes', 'No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: SizedBox(
-                                          height: 35,
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Color(0xffb0D6EFD),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(
-                                                    10), // Adjust the radius as needed
-                                              ),
-                                            ),
-                                            onPressed: () {
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SchemePlanningScreen()),);
-                                            },
-                                            child: Text(
-                                              "SAVE & NEXT",
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
+                            border: Border.all(color: Colors.blue, width: 1.4),
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12.withOpacity(0.06),
+                                blurRadius: 6,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
                           ),
+                          padding: EdgeInsets.all(5),
+                          width: double.infinity,
+                          child:Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  'A. Source',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                              // 1. Source finding committee recommended shift to surface water? (Yes/No)
+                              Customradiobttn(
+                                question: '1. If the source is surface water, then, did the Source finding committee recommend the shift to surface water?',
+                                options: const ['Yes', 'No'],
+                                selectedOption: selectedValueQ1,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedValueQ1 = val;
+                                  });
+                                },
+                              ),
+
+                              // 2. Study done to assess ground water before going for surface water? (Yes/No)
+                              Customradiobttn(
+                                question: '2. Any study done to assess ground water before going for surface water?',
+                                options: const ['Yes', 'No'],
+                                selectedOption: selectedValueQ2,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedValueQ2 = val;
+                                  });
+                                },
+                              ),
+
+                              // 3. Number of villages falling under critical zones
+                              const Text(
+                                '3. Number of villages falling under the critical zones as mentioned (https://cgwb.gov.in/en/ground-water-resource-assessment-0):',
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 8),
+
+                              Customtxtfeild(
+                                label: 'Safe (Nos)',
+                                controller: safeController,
+                                keyboardType: TextInputType.number,
+                              ),
+                              const SizedBox(height: 8),
+
+                              Customtxtfeild(
+                                label: 'Critical / Over exploited (Nos)',
+                                controller: criticalController,
+                                keyboardType: TextInputType.number,
+                              ),
+                              const SizedBox(height: 8),
+
+                              Customtxtfeild(
+                                label: 'Semi-critical (Nos)',
+                                controller: semiCriticalController,
+                                keyboardType: TextInputType.number,
+                              ),
+                              const SizedBox(height: 12),
+
+                              // 4. Groundwater contamination analysis? (Yes/No)
+                              Customradiobttn(
+                                question: '4. In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option — treating the contaminated groundwater or switching to a surface water source?',
+                                options: const ['Yes', 'No'],
+                                selectedOption: selectedValueQ3,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedValueQ3 = val;
+                                  });
+                                },
+                              ),
+
+                              // 5. Water allocation from State WRD / Irrigation Department (text input)
+                              Customtxtfeild(
+                                label: '5. Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose',
+                                controller: waterAllocationController,
+                                keyboardType: TextInputType.text,
+                              ),
+                              const SizedBox(height: 15),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: SizedBox(
+                                  height: 35,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xffb0D6EFD),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SchemePlanningScreen()),);
+
+                                    },
+                                    child: Text(
+                                      "SAVE & NEXT",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+
                         ),
                       )
                     ],

@@ -103,213 +103,210 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                       NewScreenPoints(
                         no: 4,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Card(
-                          elevation: 5,
-                          child: Container(
-                            color: Colors.white,
-                            padding: EdgeInsets.all(8),
-                            width: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "D.	Scheme implementation",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      color: Colors.orange),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  color: Colors.black38, // Color of the line
-                                  height: 1.0,
-                                  width: double.infinity, // Thickness of the line
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
+                      Card(
+                        elevation: 5,
+                        child: Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.all(8),
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "D.	Scheme implementation",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    color: Colors.orange),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                color: Colors.black38, // Color of the line
+                                height: 1.0,
+                                width: double.infinity, // Thickness of the line
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
 
-                                CustomCheckboxQuestion(
-                                  questionText: "1.	What are the reason(s) for delay after award of work: Please select that are relatable:-",
-                                  options: ['Delay in DPR approval ', 'Land/site issues ', 'Clearances from Highway/ Forest/ ', 'Contractor delay ',
-                                  'Weather/natural calamities','Design changes during execution','Inter-departmental coordination',
-                                  'Material shortage','Others'],
+                              CustomCheckboxQuestion(
+                                questionText: "1.	What are the reason(s) for delay after award of work: Please select that are relatable:-",
+                                options: ['Delay in DPR approval ', 'Land/site issues ', 'Clearances from Highway/ Forest/ ', 'Contractor delay ',
+                                'Weather/natural calamities','Design changes during execution','Inter-departmental coordination',
+                                'Material shortage','Others'],
 
-                                  selectedValues: selectedInstitutions,
-                                  onChanged: (newSelected) {
-                                    setState(() {
-                                      selectedInstitutions = newSelected;
-                                    });
-                                  },
-                                ),
+                                selectedValues: selectedInstitutions,
+                                onChanged: (newSelected) {
+                                  setState(() {
+                                    selectedInstitutions = newSelected;
+                                  });
+                                },
+                              ),
 
 
 
-                          CustomRadioQuestion(
-                                  questionText: "2.	Cost overrun ?",
-                                  options: const ['<10% ', '10–25% ','>25% ','No overrun'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
+                        CustomRadioQuestion(
+                                questionText: "2.	Cost overrun ?",
+                                options: const ['<10% ', '10–25% ','>25% ','No overrun'], // You can pass more options if needed
+                                selectedValue: selectedValueQ1,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedValueQ1 = val;
+                                  });
+                                },
+                              ),
 
-                        CustomCheckboxQuestion(
-                          questionText: "3.	Reason(s) for cost overrun (Select all that apply):",
-                          options: ['Price escalation of materials', 'Logistic/transportation constraints','Additional scope of work added',
-                          'Poor estimation at DPR stage','Delay in project execution leading','Revision in technical design',
-                          'Change in site conditions or','Contractor claim settlement','Others'],
+                      CustomCheckboxQuestion(
+                        questionText: "3.	Reason(s) for cost overrun (Select all that apply):",
+                        options: ['Price escalation of materials', 'Logistic/transportation constraints','Additional scope of work added',
+                        'Poor estimation at DPR stage','Delay in project execution leading','Revision in technical design',
+                        'Change in site conditions or','Contractor claim settlement','Others'],
 
-                          selectedValues: selectedInstitutions,
-                          onChanged: (newSelected) {
-                            setState(() {
-                              selectedInstitutions = newSelected;
-                            });
-                          },
-                        ),
-
-
-                                CustomRadioQuestion(
-                                  questionText: "4.	Has the scheme approved cost been revised before award of work: ?",
-                                  options: const ['Yes', 'No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
+                        selectedValues: selectedInstitutions,
+                        onChanged: (newSelected) {
+                          setState(() {
+                            selectedInstitutions = newSelected;
+                          });
+                        },
+                      ),
 
 
-                                Column(
-                                  children: [
-                                    Align(alignment: Alignment.centerLeft,
-                                        child: Text("5.	Whether revised cost have been approved by SLSSC?",
-                                          style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),)),
-                                    RadioListTile<String>(
-                                      title: Text("No"),
-                                      value: 'option1',
-                                      groupValue: selectedOption,
-                                      onChanged: (value) {
+                              CustomRadioQuestion(
+                                questionText: "4.	Has the scheme approved cost been revised before award of work: ?",
+                                options: const ['Yes', 'No'], // You can pass more options if needed
+                                selectedValue: selectedValueQ1,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedValueQ1 = val;
+                                  });
+                                },
+                              ),
+
+
+                              Column(
+                                children: [
+                                  Align(alignment: Alignment.centerLeft,
+                                      child: Text("5.	Whether revised cost have been approved by SLSSC?",
+                                        style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),)),
+                                  RadioListTile<String>(
+                                    title: Text("No"),
+                                    value: 'option1',
+                                    groupValue: selectedOption,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedOption = value;
+                                      });
+                                    },
+                                  ),
+                                  RadioListTile<String>(
+                                    title: Text("Yes"),
+                                    value: 'option2',
+                                    groupValue: selectedOption,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedOption = value;
+                                      });
+                                    },
+                                  ),
+                                  if (selectedOption == 'option2') ...[
+                                    CustomRadioQuestion(
+                                      questionText: "5.1 If yes :",
+                                      options: const ['<10%', '10–25%','>25%'], // You can pass more options if needed
+                                      selectedValue: selectedValueQ1,
+                                      onChanged: (val) {
                                         setState(() {
-                                          selectedOption = value;
+                                          selectedValueQ1 = val;
                                         });
                                       },
                                     ),
-                                    RadioListTile<String>(
-                                      title: Text("Yes"),
-                                      value: 'option2',
-                                      groupValue: selectedOption,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          selectedOption = value;
-                                        });
-                                      },
-                                    ),
-                                    if (selectedOption == 'option2') ...[
-                                      CustomRadioQuestion(
-                                        questionText: "5.1 If yes :",
-                                        options: const ['<10%', '10–25%','>25%'], // You can pass more options if needed
-                                        selectedValue: selectedValueQ1,
-                                        onChanged: (val) {
-                                          setState(() {
-                                            selectedValueQ1 = val;
-                                          });
-                                        },
-                                      ),
 
-                                      //TODO : Date Selector add here
+                                    //TODO : Date Selector add here
 
-                                    ],
-                                    SizedBox(height: 20),
-                                    /*   ElevatedButton(
-                                      onPressed: () {
-                                        String result = selectedOption == 'option1'
-                                            ? 'Selected: Option 1'
-                                            : 'Selected: Option 2, Input: ${textController.text}';
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(content: Text(result)));
-                                      },
-                                      child: Text("Submit"),
-                                    ),*/
                                   ],
-                                ),
+                                  SizedBox(height: 20),
+                                  /*   ElevatedButton(
+                                    onPressed: () {
+                                      String result = selectedOption == 'option1'
+                                          ? 'Selected: Option 1'
+                                          : 'Selected: Option 2, Input: ${textController.text}';
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(content: Text(result)));
+                                    },
+                                    child: Text("Submit"),
+                                  ),*/
+                                ],
+                              ),
 
 
-                                CustomCheckboxQuestion(
-                                  questionText: "6.	Reason(s) for revision (Select all that apply):",
-                                  options: ['Price rise of materials','Additional scope of work ','Change in site conditions ','Others'],
+                              CustomCheckboxQuestion(
+                                questionText: "6.	Reason(s) for revision (Select all that apply):",
+                                options: ['Price rise of materials','Additional scope of work ','Change in site conditions ','Others'],
 
-                                  selectedValues: selectedInstitutions,
-                                  onChanged: (newSelected) {
-                                    setState(() {
-                                      selectedInstitutions = newSelected;
-                                    });
-                                  },
-                                ),
-
-
-
-
-                                CustomCheckboxQuestion(
-                                  questionText: "8.	Components of scheme planned or mapped on the PM-Gati Shakti?",
-                                  options: ['WTP','OHSR/GSR/OHT/ESR/MBR','Source','Pipeline'],
-
-                                  selectedValues: selectedInstitutions,
-                                  onChanged: (newSelected) {
-                                    setState(() {
-                                      selectedInstitutions = newSelected;
-                                    });
-                                  },
-                                ),
+                                selectedValues: selectedInstitutions,
+                                onChanged: (newSelected) {
+                                  setState(() {
+                                    selectedInstitutions = newSelected;
+                                  });
+                                },
+                              ),
 
 
 
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: SizedBox(
-                                          height: 35,
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Color(0xffb0D6EFD),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(
-                                                    10), // Adjust the radius as needed
-                                              ),
+
+                              CustomCheckboxQuestion(
+                                questionText: "8.	Components of scheme planned or mapped on the PM-Gati Shakti?",
+                                options: ['WTP','OHSR/GSR/OHT/ESR/MBR','Source','Pipeline'],
+
+                                selectedValues: selectedInstitutions,
+                                onChanged: (newSelected) {
+                                  setState(() {
+                                    selectedInstitutions = newSelected;
+                                  });
+                                },
+                              ),
+
+
+
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color(0xffb0D6EFD),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
                                             ),
-                                            onPressed: () {
-                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => VisualInspectionScreen()),);
-                                            },
-                                            child: Text(
-                                              "SAVE & NEXT",
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                              ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => VisualInspectionScreen()),);
+                                          },
+                                          child: Text(
+                                            "SAVE & NEXT",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       )

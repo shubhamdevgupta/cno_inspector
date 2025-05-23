@@ -40,6 +40,10 @@ class AppConstants {
   static const String navigateToDashboardDWSM = '/dashboarddwsm';
 
   static const String navigateToCoordinationPlanningScreen = '/CoordinationPlanningScreen';
+  static const String navigateToSourceSustainablitiyWasterConservation = '/SourceSustainablitiyWasterConservation';
+  static const String navigateToMonitoringQuality = '/MonitioringQuality';
+  static const String navigateToQualityAssurance = '/PartEQualityAssuranceCommissioning';
+  static const String navigateToOperationandMaintance = '/PartDoperationandmaintenance';
 
 
   ////vwsc

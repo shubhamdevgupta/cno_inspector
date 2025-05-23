@@ -29,7 +29,7 @@ class _Loginscreen extends State<Loginscreen> {
                 gradient: LinearGradient(
                   colors: [
                     Color(0xFF096DA8), // Dark blue color
-                    Color(0xFF589569),
+                    Colors.white,
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,

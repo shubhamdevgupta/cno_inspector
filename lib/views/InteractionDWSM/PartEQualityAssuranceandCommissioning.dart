@@ -1,32 +1,44 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
+import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
+import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
+import '../../utils/CustomTextField.dart';
 import '../../utils/MultiSelectionlist.dart';
-import 'DashboardVWSC.dart';
+import '../../utils/customcheckquestion.dart';
+import '../../utils/customtxtfeild.dart';
+import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import 'DashboardDWSM.dart';
 
-class GrievancePartE extends StatefulWidget {
+
+class PartEQualityAssuranceCommissioning extends StatefulWidget {
+  const PartEQualityAssuranceCommissioning({Key? key}) : super(key: key);
+
   @override
-  State<GrievancePartE> createState() => _GrievancePartE();
+  _PartEQualityAssuranceCommissioning createState() => _PartEQualityAssuranceCommissioning();
 }
 
-class _GrievancePartE extends State<GrievancePartE> {
-  String? selectedGrievanceMechanism; // Yes / No
+class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCommissioning> {
+// State variables
+  // State variables
+  List<String> authorizedInspectors = [];
+  String? commissioningProtocolFollowed;
+  List<String> commissioningPresence = [];
+  String? thirdPartyAssessment;
 
-  List<String> grievanceRegistrationMethods = [];
-  String? selectedTurnAroundTime; // Same day / Two days / Three days / More than three days
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         // Replace the current route with a new one
-        /*   Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => VillageList()),
-        );*/
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => Dashboarddwsm()),
+        );
 
         // Return false to prevent the default back navigation behavior
         return false;
@@ -43,7 +55,7 @@ class _GrievancePartE extends State<GrievancePartE> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Interaction with VWSC",
+              "Scheme Inspection Form",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -55,7 +67,7 @@ class _GrievancePartE extends State<GrievancePartE> {
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardvwsc()),
+                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
                         (route) => false,
                   );
                 }
@@ -81,17 +93,17 @@ class _GrievancePartE extends State<GrievancePartE> {
             children: [
               SingleChildScrollView(
                 child: Container(
+                  padding: const EdgeInsets.only(
+                      top: 20, left: 6, right: 6, bottom: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       NewScreenPoints(
-                        no: 5,
+                        no: 4,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          elevation: 5,
-                          child: Container(
+                      Card(
+                        elevation: 5,
+                        child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.green, width: 1.4),
@@ -104,49 +116,72 @@ class _GrievancePartE extends State<GrievancePartE> {
                                 ),
                               ],
                             ),
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(5),
                             width: double.infinity,
-                            child:Column(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // 1. Grievance redressal mechanism available
-                                Customradiobttn(
-                                  question: "1. Grievance redressal mechanism available:",
-                                  options: ["Yes", "No"],
-                                  selectedOption: selectedGrievanceMechanism,
-                                  onChanged: (val) => setState(() => selectedGrievanceMechanism = val),
-                                ),
 
-                                SizedBox(height: 16),
-
-                                // 2. How grievances are registered by villagers (multi-select)
+                                // Authorized inspectors
                                 CustomMultiSelectChipQuestion(
-                                  question: "2. How grievances are registered by the villagers:",
+                                  question: "Who all are authorized to inspect and measure works during field inspection?",
                                   options: [
-                                    "Toll free number",
-                                    "Web based portal",
-                                    "Mobile application",
-                                    "Public grievance registration center",
-                                    "Directly calling to PHED/Contractor/O&M agency",
+                                    "PHED Engineer",
+                                    "PMC/PMU",
+                                    "TPIA",
+                                    "VWSC",
+                                    "Contractor Representative",
+                                    "Others"
                                   ],
-                                  selectedValues: grievanceRegistrationMethods,
-                                  onSelectionChanged: (selectedList) {
+                                  selectedValues: authorizedInspectors,
+                                  onSelectionChanged: (values) {
                                     setState(() {
-                                      grievanceRegistrationMethods = selectedList;
+                                      authorizedInspectors = values;
                                     });
                                   },
                                 ),
 
+                                const SizedBox(height: 10),
 
-                                SizedBox(height: 20),
-
-                                // 3. Turn around time for grievance
+                                // Commissioning protocol followed
                                 Customradiobttn(
-                                  question: "3. Turn around time for grievance:",
-                                  options: ["Same day", "Two days", "Three days", "More than three days"],
-                                  selectedOption: selectedTurnAroundTime,
-                                  onChanged: (val) => setState(() => selectedTurnAroundTime = val),
+                                  question: "Is the commissioning protocol being followed?",
+                                  options: ["Yes", "No"],
+                                  selectedOption: commissioningProtocolFollowed,
+                                  onChanged: (val) => setState(() => commissioningProtocolFollowed = val),
                                 ),
+
+                                const SizedBox(height: 10),
+
+                                // Presence during commissioning
+                                CustomMultiSelectChipQuestion(
+                                  question: "During commissioning of schemes, who are generally present?",
+                                  options: [
+                                    "PHED",
+                                    "VWSC Members",
+                                    "PRI Representatives",
+                                    "ISA",
+                                    "TPIA",
+                                    "Community Members"
+                                  ],
+                                  selectedValues: commissioningPresence,
+                                  onSelectionChanged: (values) {
+                                    setState(() {
+                                      commissioningPresence = values;
+                                    });
+                                  },
+                                ),
+
+                                const SizedBox(height: 10),
+
+                                // Assessment of TPIAs
+                                Customradiobttn(
+                                  question: "Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?",
+                                  options: ["Yes – Regularly", "Occasionally", "Not Done"],
+                                  selectedOption: thirdPartyAssessment,
+                                  onChanged: (val) => setState(() => thirdPartyAssessment = val),
+                                ),
+
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
@@ -159,11 +194,11 @@ class _GrievancePartE extends State<GrievancePartE> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardvwsc()),);
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboarddwsm()),);
 
                                       },
                                       child: Text(
-                                        "SAVE",
+                                        "SAVE & NEXT",
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -175,72 +210,14 @@ class _GrievancePartE extends State<GrievancePartE> {
                                 ),
                               ],
                             )
-                            ,
-                          ),
                         ),
                       )
                     ],
                   ),
                 ),
-              ),
+              )
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildRadioGroup(
-    String title,
-    List<String> options,
-    String? groupValue,
-    void Function(String?) onChanged,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 12),
-        Text(title),
-        ...options.map(
-          (value) => RadioListTile<String>(
-            title: Text(value),
-            value: value,
-            groupValue: groupValue,
-            onChanged: onChanged,
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget buildTextFormField({
-    required TextEditingController controller,
-    required String hint,
-    required IconData icon,
-    TextInputType keyboardType = TextInputType.text,
-    bool obscureText = false,
-    Widget? suffixIcon,
-    List<TextInputFormatter>? inputFormatters,
-  }) {
-    return TextFormField(
-      controller: controller,
-      obscureText: obscureText,
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: Colors.blueGrey),
-        suffixIcon: suffixIcon,
-        filled: true,
-        fillColor: Color(0xFFF5F7FA),
-        hintText: hint,
-        contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 16),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
         ),
       ),
     );

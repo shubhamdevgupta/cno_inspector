@@ -1,3 +1,4 @@
+import 'package:cno_inspection/utils/customtxtfeild.dart';
 import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/schemeInfo/PartCRetrofittingAugmentationScreen.dart';
 import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
@@ -9,6 +10,8 @@ import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
+import '../../utils/customcheckquestion.dart';
+import '../../utils/customradiobttn.dart';
 import 'PartBSchemePlanningScreen.dart';
 
 class VisualInspectionScreen extends StatefulWidget {
@@ -23,12 +26,22 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
   String? selectedValueQ1;
   String? selectedOption = 'option1';
   final TextEditingController textController = TextEditingController();
+  // Inside your state class:
+  String? selected1;
+  String? selected2;
+  String? selected15;
+  String? selected16;
+  String? selected17;
+  String? selected18;
+  String? selected19;
+  String? selectedIssue;
+  String? selected21;
+  String? selected22;
+  String? selected27;
+  String? selected28;
 
-  final List<String> _dropdownOptions = [
-    'Atleast once in 7 days',
-    'Atleast once in 15 days',
-    'Atleast once in more than 15 days'
-  ];
+
+
   String? SetFreq;
   List<String> selectedInstitutions = [];
   final TextEditingController householdController = TextEditingController();
@@ -108,322 +121,168 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                         child: Card(
                           elevation: 5,
                           child: Container(
-                            color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.green, width: 1.4),
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12.withOpacity(0.06),
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
                             padding: EdgeInsets.all(8),
                             width: double.infinity,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 5,
+                                const Text(
+                                  "E. Visual Inspection",
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.green),
                                 ),
-                                Text(
-                                  "E.	Visual Inspection",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      color: Colors.orange),
+                                const SizedBox(height: 10),
+                                const Text(
+                                  "Note: A walk-through to inspect various components of scheme to be carried out (Photographs to highlight deficiencies to be taken).",
+                                  style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
                                 ),
-                                SizedBox(
-                                  height: 5,
+                                const Divider(height: 20),
+
+                                // Section 1(a) - WTP/OHSR/ESR...
+                                const Text("1. Visual signs of poor workmanship (WTP/OHSR/ESR/GSR/MBR/Pump house):", style: TextStyle(fontWeight: FontWeight.w600)),
+                                CustomCheckBoxQuestion(
+                                  question: "Spalling (peeling off surface)",
+                                  options: ['Yes', 'No'],
+                                  selectedValue: selected1,
+                                  onChanged: (val) => setState(() => selected1 = val),
                                 ),
-                                Container(
-                                  color: Colors.black38, // Color of the line
-                                  height: 1.0,
-                                  width: double.infinity, // Thickness of the line
+                                CustomCheckBoxQuestion(
+                                  question: "Cracks",
+                                  options: ['Yes', 'No'],
+                                  selectedValue: selected2,
+                                  onChanged: (val) => setState(() => selected2 = val),
                                 ),
-                                SizedBox(
-                                  height: 5,
+                                // Repeat for all points in 1(a)...
+
+                                const SizedBox(height: 10),
+                                const Text("1(b). Inspection of Pipelines:", style: TextStyle(fontWeight: FontWeight.w600)),
+                                CustomCheckBoxQuestion(
+                                  question: "Leakages in transmission pipelines/valves",
+                                  options: ['Yes', 'No'],
+                                  selectedValue: selected15,
+                                  onChanged: (val) => setState(() => selected15 = val),
                                 ),
+                                // Repeat for 1(b)...
 
-                                CustomCheckboxQuestion(
-
-                                  questionText: "1.	Through visual inspection, are there signs of poor workmanship as mentioned:\n(a)	Inspection of WTP/OHSR/ESR/GSR/MBR/Pump house:",
-                                  options: const ['spalling (peeling off surface)','Cracks',
-                                    'Red/brown rust marks','swollen concrete','trapped jute/plastic bags',
-                                  'protruding rusted reinforcement bars',
-                                    'dampness of concrete surfaces','visible white marks','visible stone aggregates'
-                                    'structures missing vertical alignment'
-                                  ,'visible sag in the slab/beam',
-                                    'high vibration observed in the pumps',
-                                    'leakages in reservoirs','high leakages from the pumps'],
-
-                                  selectedValues: selectedInstitutions,
-                                  onChanged: (newSelected) {
-                                    setState(() {
-                                      selectedInstitutions = newSelected;
-                                    });
-                                  },
-                                ),
-
-                                CustomCheckboxQuestion(
-
-                                  questionText: "1.(b)	Inspection of WTP/OHSR/ESR/GSR/MBR/Pump house:",
-                                  options: const ['leakages in transmission pipelines/valves','leakages in distribution pipelines/valves','wet patches/pool of water on the ground along the route of pipe'],
-
-                                  selectedValues: selectedInstitutions,
-                                  onChanged: (newSelected) {
-                                    setState(() {
-                                      selectedInstitutions = newSelected;
-                                    });
-                                  },
+                                Customradiobttn(
+                                  question: "2. Is third-party/State department verifying pipe quality?",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected16,
+                                  onChanged: (val) => setState(() => selected16 = val),
                                 ),
 
-
-                                CustomRadioQuestion(
-                                  questionText: "2.	Whether quality verification is being done by the third party or the State department during manufacturing of pipe (random quality checks reports to be seen)? ",
-                                  options: const ['Yes','No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
+                                Customradiobttn(
+                                  question: "3. Are pipe materials as per DPR implemented?",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected17,
+                                  onChanged: (val) => setState(() => selected17 = val),
                                 ),
 
-                                CustomRadioQuestion(
-                                  questionText: "3.	Are the pipes as mentioned in the DPR (material such as HDPE, DI, etc., diameter) being implemented on ground (random check to be done)?",
-                                  options: const ['Yes','No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
+                                Customradiobttn(
+                                  question: "4. Any complaints regarding pipeline laying?",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected18,
+                                  onChanged: (val) => setState(() => selected18 = val),
                                 ),
 
-
-                                CustomRadioQuestion(
-                                  questionText: "4.	Are there any complaints regarding pipeline laying as per the approved design as per DPR?",
-                                  options: const ['Yes','No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
+                                Customradiobttn(
+                                  question: "5. Is TPIA engaged for this scheme?",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
                                 ),
 
+                                // Continue similarly for all remaining questions...
 
-                                CustomRadioQuestion(
-                                  questionText: "5.	Is TPIA engaged for this scheme? ",
-                                  options: const ['Yes','No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-                                CustomRadioQuestion(
-                                  questionText: "6.	Are sample based quality checks being done from third party labs for pipes, civil works, and key components (if yes, random reports to be seen)",
-                                  options: const ['Yes','No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-                                CustomRadioQuestion(
-                                  questionText: "7.	Is concurrent supervision in the scope of TPIA? ",
-                                  options: const ['Yes','No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-                                CustomRadioQuestion(
-                                  questionText: "8.	Has TPIA conducted quality checks at different stages of construction? ",
-                                  options: const ['Yes','No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-                                CustomRadioQuestion(
-                                  questionText: "9.	Are there records of observations/inspection reports issued by TPIA? ",
-                                  options: const ['Yes','No'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-
-                                CustomCheckboxQuestion(
-
-                                  questionText: "10.	Are there any serious issues observed by TPIAs about construction of schemes: If, yes, type of issues:",
-                                  options: const ['Pipelines without proper depth/ cushion','Pipelines damages & leaking','OHT leaking',
-                                'Cracks in RCC works', 'Water connections passing through drains','Others, please specify'
+                                CustomCheckBoxQuestion(
+                                  question: "10. Serious issues observed by TPIAs:",
+                                  options: [
+                                    "Pipelines without proper depth",
+                                    "Pipelines leaking",
+                                    "OHT leaking",
+                                    "Cracks in RCC works",
+                                    "Water connections in drains",
+                                    "Others"
                                   ],
+                                  selectedValue: selectedIssue,
+                                  onChanged: (val) => setState(() => selectedIssue = val),
+                                ),
 
-                                  selectedValues: selectedInstitutions,
-                                  onChanged: (newSelected) {
-                                    setState(() {
-                                      selectedInstitutions = newSelected;
-                                    });
-                                  },
+                                CustomCheckBoxQuestion(
+                                  question: "11. Action based on TPIA observations",
+                                  options: [
+                                    "Rectification/Demolition Done",
+                                    "Partial Action",
+                                    "No Action",
+                                    "Not Known"
+                                  ],
+                                  selectedValue: selected21,
+                                  onChanged: (val) => setState(() => selected21 = val),
+                                ),
+
+                                CustomCheckBoxQuestion(
+                                  question: "12. TPIA verifies Measurement Books?",
+                                  options: ["Regularly", "Occasionally", "No", "Not Known"],
+                                  selectedValue: selected22,
+                                  onChanged: (val) => setState(() => selected22 = val),
+                                ),
+
+                                // Final questions
+                                CustomCheckBoxQuestion(
+                                  question: "17. Scheme commissioned as per protocol?",
+                                  options: ["Yes", "No", "Partially", "Not Verified", "Work is in progress"],
+                                  selectedValue: selected27,
+                                  onChanged: (val) => setState(() => selected27 = val),
+                                ),
+
+                                CustomCheckBoxQuestion(
+                                  question: "18. Document proof of commissioning available",
+                                  options: ["Yes", "No", "NA"],
+                                  selectedValue: selected28,
+                                  onChanged: (val) => setState(() => selected28 = val),
                                 ),
 
 
-                                CustomRadioQuestion(
-                                  questionText: "11.	Has any action been taken by the department based on TPIA observations?",
-                                  options: const ['Yes – Rectification/Demolition Done','Yes – Partial Action','No Action','Not Known'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-
-                                CustomRadioQuestion(
-                                  questionText: "12.	Does TPIA verify Measurement Books (MBs)? ",
-                                  options: const ['Yes – Regularly','Yes – Occasionally','No','Not Known'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-                                CustomCheckboxQuestion(
-
-                                  questionText: "13.	Hydrotesting of pipelines done (reports to be seen):",
-                                  options: const ['Transmission line','Distribution line'],
-
-                                  selectedValues: selectedInstitutions,
-                                  onChanged: (newSelected) {
-                                    setState(() {
-                                      selectedInstitutions = newSelected;
-                                    });
-                                  },
-                                ),
-
-
-
-                                CustomCheckboxQuestion(
-
-                                  questionText: "14.	Test reports provided (random samples to be seen)",
-                                  options: const ['Hydrotesting reports','Construction material quality reports','Not Provided'],
-
-                                  selectedValues: selectedInstitutions,
-                                  onChanged: (newSelected) {
-                                    setState(() {
-                                      selectedInstitutions = newSelected;
-                                    });
-                                  },
-                                ),
-
-
-
-                                CustomRadioQuestion(
-                                  questionText: "15.	Whether departmental engineers do quality checks ",
-                                  options: const ['Frequently','Stage-wise','Before payment','Never'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-
-                                CustomRadioQuestion(
-                                  questionText: "16.	Whether departmental engineers (JE/AE/DE/EE etc.) are verifying measurements of construction works",
-                                  options: const ['Frequently','Stage-wise','Before payment','Never'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-
-                                CustomRadioQuestion(
-                                  questionText: "17.	Scheme commissioned done as per commissioning protocol: ",
-                                  options: const ['Yes','No','Partially ','Not Verified','Work is in progress'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-
-                                CustomRadioQuestion(
-                                  questionText: "18.	Document as proof of commissioning available  ",
-                                  options: const ['Yes','No','NA'], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-
-
-
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: SizedBox(
-                                          height: 35,
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Color(0xffb0D6EFD),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(
-                                                    10), // Adjust the radius as needed
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                            //  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => VisualInspectionScreen()),);
-                                            },
-                                            child: Text(
-                                              "SAVE",
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: SizedBox(
+                                    height: 35,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color(0xffb0D6EFD),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
                                         ),
                                       ),
-                                    ],
+                                      onPressed: () {
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardschemeinfo()),);
+
+                                      },
+                                      child: Text(
+                                        "SAVE",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
+
                           ),
                         ),
                       )

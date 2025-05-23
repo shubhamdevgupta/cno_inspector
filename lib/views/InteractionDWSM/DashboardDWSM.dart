@@ -106,6 +106,8 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                   color: Colors.orangeAccent,
                   onTap: () {
                     // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToSourceSustainablitiyWasterConservation);
                   },
                 ),
 
@@ -118,6 +120,8 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                   color: Colors.deepOrangeAccent,
                   onTap: () {
                     // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToMonitoringQuality);
                   },
                 ),
 
@@ -130,6 +134,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                   color: Colors.lightGreen,
                   onTap: () {
                     // Your onTap logic
+                    Navigator.pushReplacementNamed(context, AppConstants.navigateToQualityAssurance);
                   },
                 ),
 
@@ -143,18 +148,20 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                   color: Colors.green,
                   onTap: () {
                     // Your onTap logic
-                  },
+
+                    Navigator.pushReplacementNamed(context, AppConstants.navigateToQualityAssurance);                  },
                 ), SizedBox(height: 10,),
 
-                buildSampleCard(
+         /*       buildSampleCard(
                   qnumber: "F.",
                   title: "Public Complaints and Grievance Redressal",
 
                   color: Colors.green,
                   onTap: () {
                     // Your onTap logic
+
                   },
-                ),
+                ),*/
 
 
               ],
