@@ -1,6 +1,6 @@
-import 'package:cno_inspection/repository/dwsmRepo/DWSMRepositoy.dart';
 import 'package:flutter/cupertino.dart';
+import '../../repository/vwscInfoRepo/VwscRepository.dart';
 
-class Dwsmprovider extends ChangeNotifier {
-  final DWSMRepositoy _dwsmRepositoy = DWSMRepositoy();
+class Vwscprovider extends ChangeNotifier {
+  final VwscRepository _vwscRepository = VwscRepository();
 }

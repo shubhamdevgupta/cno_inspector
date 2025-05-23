@@ -1,6 +1,6 @@
 import 'package:cno_inspection/model/DashboardResponse/DashboardResponse.dart';
 
-import '../model/BaseResponse.dart';
+import '../model/BaseResponseModel.dart';
 import '../services/BaseApiService.dart';
 
 class DashboardRepository {
