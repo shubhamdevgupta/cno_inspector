@@ -1,4 +1,5 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
+import 'package:cno_inspection/views/InteractionDWSM/PartFPublicComplaintsandGrievance.dart';
 import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
@@ -194,7 +195,7 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboarddwsm()),);
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartFPublicCompliant()),);
 
                                       },
                                       child: Text(

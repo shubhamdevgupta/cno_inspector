@@ -1,5 +1,4 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartEQualityAssuranceandCommissioning.dart';
 import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
@@ -9,34 +8,29 @@ import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
+import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
 import '../schemeInfo/PartBSchemePlanningScreen.dart';
 import 'DashboardDWSM.dart';
 
 
-class PartDoperationandmaintenance extends StatefulWidget {
-  const PartDoperationandmaintenance({Key? key}) : super(key: key);
+class PartFPublicCompliant extends StatefulWidget {
+  const PartFPublicCompliant({Key? key}) : super(key: key);
 
   @override
-  _PartDoperationandmaintenance createState() => _PartDoperationandmaintenance();
+  _PartFPublicCompliant createState() => _PartFPublicCompliant();
 }
 
-class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> {
+class _PartFPublicCompliant extends State<PartFPublicCompliant> {
 // State variables
-  String? handoverProtocol; // "Yes", "No", "Partially"
-  TextEditingController manpowerPercentController = TextEditingController();
-  TextEditingController waterFeeController = TextEditingController();
-  String? feeBasis; // "Uniform", "Volumetric"
-  TextEditingController userFeePercentController = TextEditingController();
-
-  @override
-  void dispose() {
-    manpowerPercentController.dispose();
-    waterFeeController.dispose();
-    userFeePercentController.dispose();
-    super.dispose();
-  }
+  // State variables
+  String? grievanceMechanismAvailable;
+  List<String> grievanceRegistrationMethods = [];
+  String? complaintsReceived;
+  List<String> complaintTypes = [];
+  TextEditingController avgResolutionTimeController = TextEditingController();
+  TextEditingController actionTakenController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -106,14 +100,14 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       NewScreenPoints(
-                        no: 4h,
+                        no: 4,
                       ),
                       Card(
                         elevation: 5,
                         child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              border: Border.all(color: Colors.lightGreen, width: 1.4),
+                              border: Border.all(color: Colors.deepPurpleAccent, width: 1.4),
                               borderRadius: BorderRadius.circular(14),
                               boxShadow: [
                                 BoxShadow(
@@ -125,75 +119,107 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
                             ),
                             padding: EdgeInsets.all(5),
                             width: double.infinity,
-                            child: Column(
+                            child:Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
-                                // Protocol for handing over infrastructure
+                                // Grievance mechanism available
                                 Customradiobttn(
-                                  question: "Is a protocol for handing over in-village infrastructure in place?",
-                                  options: ["Yes", "No", "Partially"],
-                                  selectedOption: handoverProtocol,
-                                  onChanged: (val) => setState(() => handoverProtocol = val),
+                                  question: "Grievance Redressal mechanism available:",
+                                  options: ["Yes", "No"],
+                                  selectedOption: grievanceMechanismAvailable,
+                                  onChanged: (val) => setState(() => grievanceMechanismAvailable = val),
                                 ),
 
                                 const SizedBox(height: 10),
 
-                                // Percentage of villages with trained manpower
-                                Customtxtfeild(
-                                  label: "Percentage of villages where trained multi-skilled manpower available for O&M",
-                                  controller: manpowerPercentController,
-                                  keyboardType: TextInputType.number,
+                                // How grievances are registered
+                                CustomMultiSelectChipQuestion(
+                                  question: "How grievances are registered by the villagers:",
+                                  options: [
+                                    "Toll free number",
+                                    "Web based portal",
+                                    "Mobile application",
+                                    "Public grievance registration center",
+                                    "Directly calling to PHED/Contractor/O&M agency"
+                                  ],
+                                  selectedValues: grievanceRegistrationMethods,
+                                  onSelectionChanged: (values) {
+                                    setState(() {
+                                      grievanceRegistrationMethods = values;
+                                    });
+                                  },
                                 ),
 
                                 const SizedBox(height: 10),
 
-                                // Water fee amount
-                                Customtxtfeild(
-                                  label: "Water fee amount (₹/month or per connection)",
-                                  controller: waterFeeController,
-                                  keyboardType: TextInputType.number,
-                                ),
-
-                                const SizedBox(height: 10),
-
-                                // Fee basis: Uniform or Volumetric
+                                // Are complaints received
                                 Customradiobttn(
-                                  question: "Is the fee uniform or based on consumption?",
-                                  options: ["Uniform", "Volumetric"],
-                                  selectedOption: feeBasis,
-                                  onChanged: (val) => setState(() => feeBasis = val),
+                                  question: "Are complaints received from public regarding JJM schemes?",
+                                  options: ["Yes", "No"],
+                                  selectedOption: complaintsReceived,
+                                  onChanged: (val) => setState(() => complaintsReceived = val),
                                 ),
 
-                                const SizedBox(height: 10),
+                                if (complaintsReceived == "Yes") ...[
+                                  const SizedBox(height: 10),
 
-                                // User fee collection percentage
-                                Customtxtfeild(
-                                  label: "Percentage of villages where User Fee is being collected",
-                                  controller: userFeePercentController,
-                                  keyboardType: TextInputType.number,
-                                ),
+                                  // Type of complaints
+                                  CustomMultiSelectChipQuestion(
+                                    question: "If yes, type of complaints (tick all applicable):",
+                                    options: [
+                                      "Poor water quality",
+                                      "Incomplete connections",
+                                      "Delay in commissioning",
+                                      "No water supply",
+                                      "Faulty construction",
+                                      "Others"
+                                    ],
+                                    selectedValues: complaintTypes,
+                                    onSelectionChanged: (values) {
+                                      setState(() {
+                                        complaintTypes = values;
+                                      });
+                                    },
+                                  ),
 
-                                SizedBox(
-                                  height: 10,
-                                ),
+                                  const SizedBox(height: 10),
+
+                                  // Average resolution time
+                                  Customtxtfeild(
+                                    label: "What is the average time of resolution:",
+                                    controller: avgResolutionTimeController,
+                                  ),
+
+                                  const SizedBox(height: 10),
+
+                                  // Action taken
+                                  Customtxtfeild(
+                                    label: "Action taken by department:",
+                                    controller: actionTakenController,
+                                  ),
+
+
+                                ],
+
+                                SizedBox(height: 10,),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     height: 35,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.lightGreen,
+                                        backgroundColor: Colors.deepPurpleAccent,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartEQualityAssuranceCommissioning()),);
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboarddwsm()),);
 
                                       },
                                       child: Text(
-                                        "SAVE & NEXT",
+                                        "SAVE",
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -205,7 +231,6 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
                                 ),
                               ],
                             )
-
                         ),
                       )
                     ],

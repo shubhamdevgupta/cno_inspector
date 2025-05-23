@@ -12,6 +12,7 @@ import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
 import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 
 
@@ -101,9 +102,9 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
-                        no: 3,
-                      ),
+                    Dwsmcommonclass(
+                    no: 3,
+                  ),
                       Card(
                         elevation: 5,
                         child: Container(

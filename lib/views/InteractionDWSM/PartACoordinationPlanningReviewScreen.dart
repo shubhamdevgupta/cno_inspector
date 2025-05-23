@@ -12,6 +12,7 @@ import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
 import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import 'DWSMCommonClass.dart';
 import 'PartBSourceSustainabilityWaterConservation.dart';
 
 
@@ -104,7 +105,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Dwsmcommonclass(
                         no: 1,
                       ),
                       Card(
