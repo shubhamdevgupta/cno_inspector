@@ -78,7 +78,97 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
             ),
             elevation: 5,
           ),
-          body: Consumer<DashboardProvider>(
+/*
+
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                buildSampleCard(
+                  qnumber: "A.",
+                  title: "Coordination, Planning & Review Mechanism",
+
+                  color: Colors.blue,
+                  onTap: () {
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToCoordinationPlanningScreen);
+                  },
+                ),
+
+
+                SizedBox(height: 10,),
+                buildSampleCard(
+                  qnumber: "B.",
+                  title: "Source Sustainability and Water Conservation",
+
+                  color: Colors.orangeAccent,
+                  onTap: () {
+                    // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToSourceSustainablitiyWasterConservation);
+                  },
+                ),
+
+
+                SizedBox(height: 10,),
+                buildSampleCard(
+                  qnumber: "C.",
+                  title: "Monitoring, Quality and Lab Infrastructure",
+
+                  color: Colors.deepOrangeAccent,
+                  onTap: () {
+                    // Your onTap logic
+                    Navigator.pushReplacementNamed(
+                        context, AppConstants.navigateToMonitoringQuality);
+                  },
+                ),
+
+
+                SizedBox(height: 10,),
+                buildSampleCard(
+                  qnumber: "D.",
+                  title: "Operation & Maintenance (O&M)",
+
+                  color: Colors.lightGreen,
+                  onTap: () {
+                    // Your onTap logic
+                    Navigator.pushReplacementNamed(context, AppConstants.navigateToQualityAssurance);
+                  },
+                ),
+
+
+                SizedBox(height: 10,),
+
+                buildSampleCard(
+                  qnumber: "E.",
+                  title: "Quality Assurance and Commissioning",
+
+                  color: Colors.green,
+                  onTap: () {
+                    // Your onTap logic
+
+                    Navigator.pushReplacementNamed(context, AppConstants.navigateToQualityAssurance);                  },
+                ), SizedBox(height: 10,),
+
+         /*       buildSampleCard(
+                  qnumber: "F.",
+                  title: "Public Complaints and Grievance Redressal",
+
+                  color: Colors.green,
+                  onTap: () {
+                    // Your onTap logic
+
+                  },
+                ),*/
+
+
+              ],
+            ),
+          )
+      ),
+*/          body: Consumer<DashboardProvider>(
               builder: (context, dashboardProvider, child) {
             if (dashboardProvider.isLoading) {
               return const Center(child: CircularProgressIndicator());

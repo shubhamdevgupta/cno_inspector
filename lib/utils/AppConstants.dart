@@ -27,8 +27,11 @@ class AppConstants {
 
   ////////////schemeinfo
   static const String navigateToDashboardSchemeInfo = '/dashboardschemeinfo';
-
+  static const String navigateToSourceScreenQuestions = '/SourceScreenQuestions';
   static const String navigateToSchemePlanningScreen = '/SchemePlanningScreen';
+  static const String navigateToRetrofittingAugmentationScreen = '/RetrofittingAugmentationScreen';
+  static const String navigateToSchemeImplementationScreen = '/SchemeImplementationScreen';
+  static const String navigateToVisualInspectionScreen = '/VisualInspectionScreen';
 
 
 
@@ -37,6 +40,10 @@ class AppConstants {
   static const String navigateToDashboardDWSM = '/dashboarddwsm';
 
   static const String navigateToCoordinationPlanningScreen = '/CoordinationPlanningScreen';
+  static const String navigateToSourceSustainablitiyWasterConservation = '/SourceSustainablitiyWasterConservation';
+  static const String navigateToMonitoringQuality = '/MonitioringQuality';
+  static const String navigateToQualityAssurance = '/PartEQualityAssuranceCommissioning';
+  static const String navigateToOperationandMaintance = '/PartDoperationandmaintenance';
 
 
   ////vwsc

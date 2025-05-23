@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomRadioQuestion.dart';
+import '../../utils/MultiSelectionlist.dart';
+import '../../utils/customradiobttn.dart';
+import '../../utils/customtxtfeild.dart';
 
 class WaterSupplyPartA extends StatefulWidget {
   const WaterSupplyPartA({Key? key}) : super(key: key);
@@ -15,10 +18,13 @@ class WaterSupplyPartA extends StatefulWidget {
 }
 
 class _WaterSupplyPartA extends State<WaterSupplyPartA> {
-  String? selectedValueQ1;
-  String? SetFreq;
+  List<String> selectedFrequency = [];
+  String? selectedHouseholdWater;
+  String? selectedRemoteGroups;
+  TextEditingController reasonRemoteGroupsController = TextEditingController();
+  String? selectedTailEnd;
+  String? selectedSchemeStatus;
   List<String> selectedInstitutions = [];
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -43,8 +49,8 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Waster Supply",
-              style: AppStyles.appBarTitle,
+              "Water Supply Functionality",
+              style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold),
             ),
             leading: IconButton(
 
@@ -95,123 +101,94 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                       Card(
                         elevation: 5,
                         child: Container(
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.blue, width: 1.4),
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12.withOpacity(0.06),
+                                blurRadius: 6,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
                           padding: EdgeInsets.all(8),
                           width: double.infinity,
                           child: Container(
 
                             child: Column(
+
+
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Water Supply Functionality",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      color: Colors.orange),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  color: Colors.black38, // Color of the line
-                                  height: 1.0,
-                                  width: double.infinity, // Thickness of the line
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                CustomRadioQuestion(
-                                  questionText: "1.	Water supply frequency?",
+
+
+                                CustomMultiSelectChipQuestion(
+                                  question: "1. Water supply frequency:",
                                   options: [
-                                    'Daily',
-                                    'Once in two days',
-                                    ' Once in three days ',
-                                    'Irregular',
-                                    'Not functional'
-                                  ], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                CustomRadioQuestion(
-                                  questionText:
-                                      "2.	Is adequate water quantity reaching all the households: ",
-                                  options: ['Yes', 'No'],
-                                  // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                CustomRadioQuestion(
-                                  questionText:
-                                      "3.	Is adequate water quantity reaching to remote/SC/ST/PVTG groups: ",
-                                  options: ['Yes', 'No'],
-                                  // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                CustomRadioQuestion(
-                                  questionText:
-                                      "4.	Whether water reaches tail-end households: ",
-                                  options: const [
-                                    'Yes – Consistently',
-                                    'Occasionally',
-                                    'No',
-                                    'Not Verified'
-                                  ], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                CustomRadioQuestion(
-                                  questionText:
-                                      "5.	Scheme operational status since commissioning: ",
-                                  options: [
-                                    'Fully operational >3 months ',
-                                    'Operational but with interruptions',
-                                    'Non-functional',
-                                    'Partially commissioned'
-                                  ], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                CustomCheckboxQuestion(
-                                  questionText:
-                                      "6. Whether piped water supply services available at institutions:",
-                                  options: [
-                                    'Schools',
-                                    'Anganwadi’s',
-                                    'PHCs',
-                                    'Not Applicable'
+                                    "Daily",
+                                    "Once in two days",
+                                    "Once in three days",
+                                    "Irregular",
+                                    "Not functional"
                                   ],
+                                  selectedValues: selectedFrequency,
+                                  onSelectionChanged: (val) => setState(() => selectedFrequency = val),
+                                ),
+
+
+                                Customradiobttn(
+                                  question: "2. Is adequate water quantity reaching all the households?",
+                                  options: ["Yes", "No"],
+                                  selectedOption: selectedHouseholdWater,
+                                  onChanged: (val) => setState(() => selectedHouseholdWater = val),
+                                ),
+
+                                Customradiobttn(
+                                  question: "3. Is adequate water quantity reaching to remote/SC/ST/PVTG groups?",
+                                  options: ["Yes", "No"],
+                                  selectedOption: selectedRemoteGroups,
+                                  onChanged: (val) => setState(() => selectedRemoteGroups = val),
+                                ),
+
+                                if (selectedRemoteGroups == "No")
+                                  Customtxtfeild(
+                                    label: "If no, please provide the reasons",
+                                    controller: reasonRemoteGroupsController,
+                                  ),
+
+
+                                Customradiobttn(
+                                  question: "4. Whether water reaches tail-end households:",
+                                  options: ["Yes – Consistently", "Occasionally", "No", "Not Verified"],
+                                  selectedOption: selectedTailEnd,
+                                  onChanged: (val) => setState(() => selectedTailEnd = val),
+                                ),
+
+                                Customradiobttn(
+                                  question: "5. Scheme operational status since commissioning:",
+                                  options: [
+                                    "Fully operational >3 months",
+                                    "Operational but with interruptions",
+                                    "Non-functional",
+                                    "Partially commissioned"
+                                  ],
+                                  selectedOption: selectedSchemeStatus,
+                                  onChanged: (val) => setState(() => selectedSchemeStatus = val),
+                                ),
+
+                                CustomMultiSelectChipQuestion(
+                                  question: "6. Whether piped water supply services available at institutions:",
+                                  options: ["Schools", "Anganwadi’s", "PHCs", "Not Applicable"],
                                   selectedValues: selectedInstitutions,
-                                  onChanged: (newSelected) {
+                                  onSelectionChanged: (selectedList) {
                                     setState(() {
-                                      selectedInstitutions = newSelected;
+                                      selectedInstitutions = selectedList;
                                     });
                                   },
                                 ),
+
 
                                 Align(
                                   alignment: Alignment.centerRight,
@@ -226,6 +203,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                       ),
                                       onPressed: () {
                                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => CommunityInvolvementPartB()),);
+
                                       },
                                       child: Text(
                                         "SAVE & NEXT",

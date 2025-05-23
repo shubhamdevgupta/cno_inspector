@@ -1,3 +1,4 @@
+import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomRadioQuestion.dart';
+import '../../utils/customtxtfeild.dart';
 import 'DashboardVWSC.dart';
 
 class WaterQualityPartD extends StatefulWidget {
@@ -13,10 +15,13 @@ class WaterQualityPartD extends StatefulWidget {
 }
 
 class _WaterQualityPartD extends State<WaterQualityPartD> {
-  String? selectedValueQ1;
-  List<String> selectedInstitutions = [];
-  String? selectedFrequency;
-  TextEditingController phoneController = TextEditingController();
+// State variables (add inside your StatefulWidget's State):
+  String? selectedFTKAvailability;  // Yes/No
+  String? selectedFTKTestingFrequency; // Regularly tested / Occasionally / Not tested / No FTK
+  TextEditingController womenTrainedController = TextEditingController();
+  TextEditingController testerNameController = TextEditingController();
+  String? selectedDisinfectionDone;  // Yes/No
+  String? selectedFRCLevel;  // Available / Occasionally / Not Available / Not Tested
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +47,7 @@ class _WaterQualityPartD extends State<WaterQualityPartD> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Waster Supply",
+              "Interaction with VWSC",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -93,159 +98,60 @@ class _WaterQualityPartD extends State<WaterQualityPartD> {
                         child: Card(
                           elevation: 5,
                           child: Container(
-                            color: Colors.white,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.lightGreen, width: 1.4),
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12.withOpacity(0.06),
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
                             padding: EdgeInsets.all(8),
                             width: double.infinity,
-                            child: Column(
+                            child:Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 5,
+                                Customradiobttn(
+                                  question: "1. Availability of FTK:",
+                                  options: ["Yes", "No"],
+                                  selectedOption: selectedFTKAvailability,
+                                  onChanged: (val) => setState(() => selectedFTKAvailability = val),
                                 ),
-                                Text(
-                                  "Water Quality Monitoring",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      color: Colors.orange),
+
+                                Customradiobttn(
+                                  question: "2. Water testing using FTKs:",
+                                  options: ["Regularly tested", "Occasionally", "Not tested", "No FTK"],
+                                  selectedOption: selectedFTKTestingFrequency,
+                                  onChanged: (val) => setState(() => selectedFTKTestingFrequency = val),
                                 ),
-                                SizedBox(
-                                  height: 5,
+
+                                Customtxtfeild(
+                                  label: "3. Number of women trained in water testing through FTKs:",
+                                  controller: womenTrainedController,
+                                  keyboardType: TextInputType.number,
                                 ),
-                                Container(
-                                  color: Colors.black38, // Color of the line
-                                  height: 1.0,
-                                  width: double.infinity, // Thickness of the line
+
+                                Customtxtfeild(
+                                  label: "4. Who is doing the water quality testing through FTKs:",
+                                  controller: testerNameController,
                                 ),
-                                SizedBox(
-                                  height: 5,
+
+                                Customradiobttn(
+                                  question: "5. Disinfection/chlorination done:",
+                                  options: ["Yes", "No"],
+                                  selectedOption: selectedDisinfectionDone,
+                                  onChanged: (val) => setState(() => selectedDisinfectionDone = val),
                                 ),
-                                CustomRadioQuestion(
-                                  questionText: "1.	Availability of FTK: ",
-                                  options: [
-                                    'Yes',
-                                    'No',
-                                  ], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                CustomRadioQuestion(
-                                  questionText: "2.	Water testing using FTKs: ",
-                                  options: [
-                                    'Regularly tested ',
-                                    'Occasionally ',
-                                    'Not tested  ',
-                                    'No FTK ',
-                                  ], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                CustomRadioQuestion(
-                                  questionText:
-                                      "3.	Number of women trained in water testing through FTKs: ",
-                                  options: [
-                                    'Yes',
-                                    'No',
-                                    'Partially',
-                                  ], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  '3.	Number of women trained in water testing through FTKs',
-                                  style: const TextStyle(
-                                      fontSize: 14, fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                TextFormField(
-                                    controller: phoneController,
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Color(0xFFF5F7FA),
-                                      hintText: "Input FTK",
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 18, horizontal: 16),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide:
-                                            BorderSide(color: Colors.grey.shade300),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide:
-                                            BorderSide(color: Colors.grey.shade300),
-                                      ),
-                                    )),
-                                Text(
-                                  '4.	Who is doing the water quality testing through FTKs: ',
-                                  style: const TextStyle(
-                                      fontSize: 14, fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                TextFormField(
-                                    controller: phoneController,
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Color(0xFFF5F7FA),
-                                      hintText: "Input FTK",
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 18, horizontal: 16),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide:
-                                            BorderSide(color: Colors.grey.shade300),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide:
-                                            BorderSide(color: Colors.grey.shade300),
-                                      ),
-                                    )),
-                                CustomRadioQuestion(
-                                  questionText:
-                                  "5.	Disinfection/chlorination done",
-                                  options: [
-                                    'Yes',
-                                    'No',
-                                  ], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
-                                ),
-                                CustomRadioQuestion(
-                                  questionText:
-                                  "6.	Free Residual Chlorine Level (FRC) at tail ends: ",
-                                  options: [
-                                    'Available ',
-                                    'Occasionally ',
-                                    'Not Available  ',
-                                    'Not Tested ',
-                                  ], // You can pass more options if needed
-                                  selectedValue: selectedValueQ1,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      selectedValueQ1 = val;
-                                    });
-                                  },
+
+                                Customradiobttn(
+                                  question: "6. Free Residual Chlorine Level (FRC) at tail ends:",
+                                  options: ["Available", "Occasionally", "Not Available", "Not Tested"],
+                                  selectedOption: selectedFRCLevel,
+                                  onChanged: (val) => setState(() => selectedFRCLevel = val),
                                 ),
 
                                 Align(
@@ -254,13 +160,14 @@ class _WaterQualityPartD extends State<WaterQualityPartD> {
                                     height: 35,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xffb0D6EFD),
+                                        backgroundColor: Colors.lightGreen,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
                                         ),
                                       ),
                                       onPressed: () {
                                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => GrievancePartE()),);
+
                                       },
                                       child: Text(
                                         "SAVE & NEXT",
@@ -274,7 +181,7 @@ class _WaterQualityPartD extends State<WaterQualityPartD> {
                                   ),
                                 ),
                               ],
-                            ),
+                            )
                           ),
                         ),
                       )
