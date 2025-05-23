@@ -1,4 +1,3 @@
-// views/DashboardScreen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +16,6 @@ class Dashboardscreen extends StatefulWidget {
 }
 
 class _DashboardscreenState extends State<Dashboardscreen> {
-  final LocalStorageService _localStorage = LocalStorageService();
 
 late DashboardProvider dashboardProvider;
   @override
