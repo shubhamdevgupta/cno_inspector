@@ -12,6 +12,7 @@ import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
 import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 
 
@@ -105,8 +106,8 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
-                        no: 4h,
+                      Dwsmcommonclass(
+                        no: 4,
                       ),
                       Card(
                         elevation: 5,

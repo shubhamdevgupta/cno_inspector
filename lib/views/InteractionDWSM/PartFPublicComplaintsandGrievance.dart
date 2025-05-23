@@ -12,6 +12,7 @@ import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
 import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 
 
@@ -99,8 +100,8 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
-                        no: 4,
+                      Dwsmcommonclass(
+                        no: 6,
                       ),
                       Card(
                         elevation: 5,

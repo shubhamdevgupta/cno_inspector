@@ -21,17 +21,17 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _navigateToNextScreen() async {
     await Future.delayed(Duration(seconds: 1)); // Optional splash delay
 
-    final authProvider = Provider.of<AuthenticationProvider>(
+    /*final authProvider = Provider.of<AuthenticationProvider>(
         context, listen: false);
     await authProvider.checkLoginStatus();
     print("login statin-->>${authProvider.isLoggedIn}");
-    if (authProvider.isLoggedIn) {
+    if (authProvider.isLoggedIn) {*/
       Navigator.pushReplacementNamed(
           context, AppConstants.navigateToDashboard);
-    }else{
+    /*}else{
       Navigator.pushReplacementNamed(
           context, AppConstants.navigateToLogin);
-    }
+    }*/
   }
 
   @override
