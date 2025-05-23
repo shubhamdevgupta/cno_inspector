@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import 'PartACoordinationPlanningReviewScreen.dart';
-import 'PartCMonitoringQualityLabInfrastructure.dart';
+import 'PartDOperationMaintenance.dart';
 
-class SourceSustainabilityWaterConservation extends StatefulWidget {
-  const SourceSustainabilityWaterConservation({Key? key}) : super(key: key);
+class PartCMonitoringQualityLabInfrastructure extends StatefulWidget {
+  const PartCMonitoringQualityLabInfrastructure({Key? key}) : super(key: key);
 
   @override
-  _SourceSustainabilityWaterConservation createState() => _SourceSustainabilityWaterConservation();
+  _PartCMonitoringQualityLabInfrastructure createState() => _PartCMonitoringQualityLabInfrastructure();
 }
 
-class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityWaterConservation> {
+class _PartCMonitoringQualityLabInfrastructure extends State<PartCMonitoringQualityLabInfrastructure> {
   String _selectedValue = 'yes'; // Default selected value
   String? selectedValueQ1;
   final TextEditingController householdController = TextEditingController();
@@ -36,7 +36,7 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           title: const Text(
-            'Part-2 Interaction with DWSM ',
+            'Part-2C Interaction with DWSM ',
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
@@ -64,7 +64,7 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                               height: 5,
                             ),
                             const Text(
-                              "B. Source Sustainability and Water Conservation",
+                              "C. Monitoring, Quality and Lab Infrastructure",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -83,19 +83,8 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                             ),
 
                             CustomRadioQuestion(
-                              questionText: "1.	Are source sustainability measures being promoted (e.g., groundwater recharge, reuse of treated wastewater)?",
-                              options: const ['Actively', 'Limited','Not Promoted'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-
-                            CustomRadioQuestion(
-                              questionText: "2.	Are piped water schemes based on groundwater sources protected from contamination?",
-                              options: const ['Yes', 'Partially','No'], // You can pass more options if needed
+                              questionText: "1.	Are water supply assets (OHTs, WTPs, Pump Houses, etc.) geotagged?",
+                              options: const ['All', 'Partially','Not Done'], // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
                                 setState(() {
@@ -109,7 +98,7 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                             Column(
                               children: [
                                 const Align(alignment: Alignment.centerLeft,
-                                    child: Text("3. Is at least one recharge structure per groundwater source implemented?",
+                                    child: Text("2. Does the district have an NABL-accredited lab or equivalent for water quality testing?",
                                       style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),)),
                                 RadioListTile<String>(
                                   title: Text("Yes"),
@@ -121,8 +110,9 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                                     });
                                   },
                                 ),
+
                                 RadioListTile<String>(
-                                  title: Text("In Progress "),
+                                  title: Text("No"),
                                   value: 'option2',
                                   groupValue: selectedOption,
                                   onChanged: (value) {
@@ -131,22 +121,12 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                                     });
                                   },
                                 ),
-                                RadioListTile<String>(
-                                  title: Text("No"),
-                                  value: 'option3',
-                                  groupValue: selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedOption = value;
-                                    });
-                                  },
-                                ),
                                 SizedBox(height: 5),
-                                if (selectedOption == 'option3') ...[
+                                if (selectedOption == 'option2') ...[
                                   TextField(
                                     controller: textController,
                                     decoration: const InputDecoration(
-                                      labelText: "If no, enter reason",
+                                      labelText: "If no, how is testing managed? ",
                                       border: OutlineInputBorder(),
                                     ),
                                   ),
@@ -169,17 +149,6 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                               ],
                             ),
 
-                            CustomRadioQuestion(
-                              questionText: "4.	Are any impact studies or assessments conducted on source sustainability efforts?",
-                              options: const ['Yes-Completed', 'Planned','No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
-
 
 
                             Container(
@@ -200,7 +169,7 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                                           ),
                                         ),
                                         onPressed: () {
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartCMonitoringQualityLabInfrastructure()),);
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartDOperationMaintenance()),);
                                         },
                                         child: const Text(
                                           "SAVE & NEXT",

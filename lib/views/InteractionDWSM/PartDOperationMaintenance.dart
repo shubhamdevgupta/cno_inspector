@@ -1,19 +1,21 @@
 import 'package:cno_inspection/views/InteractionDWSM/DashboardDWSM.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import 'PartACoordinationPlanningReviewScreen.dart';
 import 'PartCMonitoringQualityLabInfrastructure.dart';
+import 'PartFQualityAssuranceCommissioning.dart';
 
-class SourceSustainabilityWaterConservation extends StatefulWidget {
-  const SourceSustainabilityWaterConservation({Key? key}) : super(key: key);
+class PartDOperationMaintenance extends StatefulWidget {
+  const PartDOperationMaintenance({Key? key}) : super(key: key);
 
   @override
-  _SourceSustainabilityWaterConservation createState() => _SourceSustainabilityWaterConservation();
+  _PartDOperationMaintenance createState() => _PartDOperationMaintenance();
 }
 
-class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityWaterConservation> {
+class _PartDOperationMaintenance extends State<PartDOperationMaintenance> {
   String _selectedValue = 'yes'; // Default selected value
   String? selectedValueQ1;
   final TextEditingController householdController = TextEditingController();
@@ -21,12 +23,17 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
   final TextEditingController textController = TextEditingController();
   String? SetFreq;
 
+
+
+  bool isWaterCharged = false;
+  TextEditingController feeController = TextEditingController();
+  String? chargeType; // 'Uniform' or 'Volumetric'
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => CoordinationPlanningScreen()),
+          MaterialPageRoute(builder: (_) => PartCMonitoringQualityLabInfrastructure()),
         );
         // Return false to prevent the default back navigation behavior
         return false;
@@ -36,7 +43,7 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           title: const Text(
-            'Part-2 Interaction with DWSM ',
+            'Part-2D Interaction with DWSM ',
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
@@ -64,7 +71,7 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                               height: 5,
                             ),
                             const Text(
-                              "B. Source Sustainability and Water Conservation",
+                              "D(i.e  E). Operation & Maintenance (O&M)",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -83,8 +90,8 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                             ),
 
                             CustomRadioQuestion(
-                              questionText: "1.	Are source sustainability measures being promoted (e.g., groundwater recharge, reuse of treated wastewater)?",
-                              options: const ['Actively', 'Limited','Not Promoted'], // You can pass more options if needed
+                              questionText: "1.	Is a protocol for handing over in-village infrastructure in place?",
+                              options: const ['Yes', 'No','Partially'], // You can pass more options if needed
                               selectedValue: selectedValueQ1,
                               onChanged: (val) {
                                 setState(() {
@@ -93,92 +100,84 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                               },
                             ),
 
-                            CustomRadioQuestion(
-                              questionText: "2.	Are piped water schemes based on groundwater sources protected from contamination?",
-                              options: const ['Yes', 'Partially','No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
+                            CustomTextField(
+                              labelText: '2.	Percentage of villages where trained multi-skilled manpower available for O&M: ',
+                              hintText: 'Enter here',
+                              controller: householdController,
+                              isRequired: false,
+                            ),
+
+
+
+
+
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CheckboxListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text('3. Is water charged from households?'),
+                              value: isWaterCharged,
+                              onChanged: (value) {
                                 setState(() {
-                                  selectedValueQ1 = val;
+                                  isWaterCharged = value ?? false;
+                                  if (!isWaterCharged) {
+                                    feeController.clear();
+                                    chargeType = null;
+                                  }
                                 });
                               },
                             ),
-
-
-
-                            Column(
-                              children: [
-                                const Align(alignment: Alignment.centerLeft,
-                                    child: Text("3. Is at least one recharge structure per groundwater source implemented?",
-                                      style: TextStyle(fontSize: 15,fontWeight: FontWeight.normal),)),
-                                RadioListTile<String>(
-                                  title: Text("Yes"),
-                                  value: 'option1',
-                                  groupValue: selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedOption = value;
-                                    });
-                                  },
+                            if (isWaterCharged) ...[
+                              SizedBox(height: 1),
+                              TextFormField(
+                                controller: feeController,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Fee amount (₹ per month/per connection)',
+                                  border: OutlineInputBorder(),
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                                 ),
-                                RadioListTile<String>(
-                                  title: Text("In Progress "),
-                                  value: 'option2',
-                                  groupValue: selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedOption = value;
-                                    });
-                                  },
-                                ),
-                                RadioListTile<String>(
-                                  title: Text("No"),
-                                  value: 'option3',
-                                  groupValue: selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedOption = value;
-                                    });
-                                  },
-                                ),
-                                SizedBox(height: 5),
-                                if (selectedOption == 'option3') ...[
-                                  TextField(
-                                    controller: textController,
-                                    decoration: const InputDecoration(
-                                      labelText: "If no, enter reason",
-                                      border: OutlineInputBorder(),
-                                    ),
-                                  ),
-
-                                  SizedBox(height: 10),
+                              ),
+                              SizedBox(height: 10),
+                              const Text(
+                                '3.1. Is it uniform or based on consumption?',
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                              RadioListTile<String>(
+                                contentPadding: EdgeInsets.zero,
+                                title: Text('Uniform'),
+                                value: 'Uniform',
+                                groupValue: chargeType,
+                                onChanged: (value) {
+                                  setState(() => chargeType = value);
+                                },
+                              ),
+                              RadioListTile<String>(
+                                contentPadding: EdgeInsets.zero,
+                                title: Text('Volumetric'),
+                                value: 'Volumetric',
+                                groupValue: chargeType,
+                                onChanged: (value) {
+                                  setState(() => chargeType = value);
+                                },
+                              ),
+                            ],
+                          ],
+                        ),
 
 
-                                ],
-                                SizedBox(height: 10),
-                                /*   ElevatedButton(
-                                  onPressed: () {
-                                    String result = selectedOption == 'option1'
-                                        ? 'Selected: Option 1'
-                                        : 'Selected: Option 2, Input: ${textController.text}';
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(content: Text(result)));
-                                  },
-                                  child: Text("Submit"),
-                                ),*/
-                              ],
+
+                            CustomTextField(
+                              labelText: '4. Percentage of villages where User Fee being is collected',
+                              hintText: 'Enter here',
+                              controller: householdController,
+                              isRequired: false,
                             ),
 
-                            CustomRadioQuestion(
-                              questionText: "4.	Are any impact studies or assessments conducted on source sustainability efforts?",
-                              options: const ['Yes-Completed', 'Planned','No'], // You can pass more options if needed
-                              selectedValue: selectedValueQ1,
-                              onChanged: (val) {
-                                setState(() {
-                                  selectedValueQ1 = val;
-                                });
-                              },
-                            ),
+
+
 
 
 
@@ -200,7 +199,7 @@ class _SourceSustainabilityWaterConservation extends State<SourceSustainabilityW
                                           ),
                                         ),
                                         onPressed: () {
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartCMonitoringQualityLabInfrastructure()),);
+                                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartFQualityAssuranceCommissioning()),);
                                         },
                                         child: const Text(
                                           "SAVE & NEXT",
