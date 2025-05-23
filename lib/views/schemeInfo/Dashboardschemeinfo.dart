@@ -141,7 +141,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           color: Colors.blue,
                           onTap: () {
                             Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToSchemePlanningScreen);
+                                AppConstants.navigateToSourceScreenQuestions);
                           },
                         ),
                         SizedBox(
@@ -152,6 +152,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           title: "Scheme Planning",
                           color: Colors.orangeAccent,
                           onTap: () {
+                            Navigator.pushReplacementNamed(context,
+                                AppConstants.navigateToSchemePlanningScreen);
                             // Your onTap logic
                           },
                         ),
@@ -164,6 +166,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           color: Colors.deepOrangeAccent,
                           onTap: () {
                             // Your onTap logic
+                            Navigator.pushReplacementNamed(context,
+                                AppConstants.navigateToRetrofittingAugmentationScreen);
                           },
                         ),
                         SizedBox(
@@ -175,6 +179,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           color: Colors.lightGreen,
                           onTap: () {
                             // Your onTap logic
+                            Navigator.pushReplacementNamed(context,
+                                AppConstants.navigateToSchemeImplementationScreen);
                           },
                         ),
                         SizedBox(
@@ -186,87 +192,12 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           color: Colors.green,
                           onTap: () {
                             // Your onTap logic
+                            Navigator.pushReplacementNamed(context,
+                                AppConstants.navigateToVisualInspectionScreen);
                           },
                         ),
                       ],
                     ),
-
-/*
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                buildSampleCard(
-                  qnumber: "A.",
-                  title: "Source",
-
-                  color: Colors.blue,
-                  onTap: () {
-                    //
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToSourceScreenQuestions);
-
-                  },
-                ),
-
-
-                SizedBox(height: 10,),
-                buildSampleCard(
-                  qnumber: "B.",
-                  title: "Scheme Planning",
-
-                  color: Colors.orangeAccent,
-                  onTap: () {
-                    // Your onTap logic
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToSchemePlanningScreen);
-                  },
-                ),
-
-
-                SizedBox(height: 10,),
-                buildSampleCard(
-                  qnumber: "C.",
-                  title: "Additional information for Retrofitting",
-
-                  color: Colors.deepOrangeAccent,
-                  onTap: () {
-                    // Your onTap logic
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToRetrofittingAugmentationScreen);
-                  },
-                ),
-
-
-                SizedBox(height: 10,),
-                buildSampleCard(
-                  qnumber: "D.",
-                  title: "Scheme implementation",
-
-                  color: Colors.lightGreen,
-                  onTap: () {
-                    // Your onTap logic
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToSchemeImplementationScreen);
-                  },
-                ),
-
-
-                SizedBox(height: 10,),
-
-                buildSampleCard(
-                  qnumber: "E.",
-                  title: "Visual Inspection",
-
-                  color: Colors.green,
-                  onTap: () {
-                    // Your onTap logic
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToVisualInspectionScreen);
-                  },
-*/
                   ],
 
                 ),
