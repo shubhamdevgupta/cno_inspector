@@ -1,41 +1,117 @@
-class Dashboardresponse {
-  final int totalSamplesSubmitted;
-  final int samplesPhysicallySubmitted;
-  final int totalSamplesTested;
-  final int totalRetest;
-  final int status;
-  final String? message;
+class CnoDashboardResponse {
+  final bool status;
+  final String message;
+  final List<CnoDashboardItem> result;
 
-  Dashboardresponse({
-    required this.totalSamplesSubmitted,
-    required this.samplesPhysicallySubmitted,
-    required this.totalSamplesTested,
-    required this.totalRetest,
+  CnoDashboardResponse({
     required this.status,
-    this.message,
+    required this.message,
+    required this.result,
   });
 
-  // Factory constructor to create an instance from JSON
-  factory Dashboardresponse.fromJson(Map<String, dynamic> json) {
-    return Dashboardresponse(
-      totalSamplesSubmitted: json['Total_Samples_Submitted'] ?? 0,
-      samplesPhysicallySubmitted: json['Samples_Physically_Submitted'] ?? 0,
-      totalSamplesTested: json['TotalSamplesTested'] ?? 0,
-      totalRetest: json['TotalRetest'] ?? 0,
-      status: json['Status'] ?? 0,
-      message: json['Message'], // Can be null
+  factory CnoDashboardResponse.fromJson(Map<String, dynamic> json) {
+    return CnoDashboardResponse(
+      status: json['Status'] ?? false,
+      message: json['Message'] ?? '',
+      result: (json['Result'] as List<dynamic>?)
+          ?.map((e) => CnoDashboardItem.fromJson(e))
+          .toList() ??
+          [],
     );
   }
+}
 
-  // Convert an instance to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'Total_Samples_Submitted': totalSamplesSubmitted,
-      'Samples_Physically_Submitted': samplesPhysicallySubmitted,
-      'TotalSamplesTested': totalSamplesTested,
-      'TotalRetest': totalRetest,
-      'Status': status,
-      'Message': message,
-    };
+class CnoDashboardItem {
+  final int userid;
+  final String? userName;
+  final String? designation;
+  final String? mobileNumber;
+
+  final int totalSchemes;
+  final int pendingSchemes;
+  final int underProcessScheme;
+
+  final int totalDistricts;
+  final int pendingDistricts;
+  final int underProcessDistricts;
+
+  final int totalVillages;
+  final int pendingVillages;
+  final int underProcessVillages;
+
+  final int schemeId;
+  final String schemeName;
+
+  final int stateId;
+  final String? stateName;
+
+  final int districtId;
+  final String? districtName;
+
+  final int blockId;
+  final String? blockName;
+
+  final int panchayatId;
+  final String? panchayatName;
+
+  final int villageId;
+  final String? villageName;
+
+  CnoDashboardItem({
+    required this.userid,
+    this.userName,
+    this.designation,
+    this.mobileNumber,
+    required this.totalSchemes,
+    required this.pendingSchemes,
+    required this.underProcessScheme,
+    required this.totalDistricts,
+    required this.pendingDistricts,
+    required this.underProcessDistricts,
+    required this.totalVillages,
+    required this.pendingVillages,
+    required this.underProcessVillages,
+    required this.schemeId,
+    required this.schemeName,
+    required this.stateId,
+    this.stateName,
+    required this.districtId,
+    this.districtName,
+    required this.blockId,
+    this.blockName,
+    required this.panchayatId,
+    this.panchayatName,
+    required this.villageId,
+    this.villageName,
+  });
+
+  factory CnoDashboardItem.fromJson(Map<String, dynamic> json) {
+    return CnoDashboardItem(
+      userid: json['userid'] ?? 0,
+      userName: json['userName'],
+      designation: json['Designation'],
+      mobileNumber: json['MobileNumber'],
+      totalSchemes: json['total_schemes'] ?? 0,
+      pendingSchemes: json['pending_schemes'] ?? 0,
+      underProcessScheme: json['under_process_scheme'] ?? 0,
+      totalDistricts: json['total_districts'] ?? 0,
+      pendingDistricts: json['pending_districts'] ?? 0,
+      underProcessDistricts: json['under_process_districts'] ?? 0,
+      totalVillages: json['total_villages'] ?? 0,
+      pendingVillages: json['pending_villages'] ?? 0,
+      underProcessVillages: json['under_process_villages'] ?? 0,
+      schemeId: json['SchemeId'] ?? 0,
+      schemeName: json['SchemeName'] ?? '',
+      stateId: json['stateid'] ?? 0,
+      stateName: json['StateName'],
+      districtId: json['districtid'] ?? 0,
+      districtName: json['DistrictName'],
+      blockId: json['BlockId'] ?? 0,
+      blockName: json['BlockName'],
+      panchayatId: json['PanchayatId'] ?? 0,
+      panchayatName: json['PanchayatName'],
+      villageId: json['VillageId'] ?? 0,
+      villageName: json['VillageName'],
+    );
   }
 }
