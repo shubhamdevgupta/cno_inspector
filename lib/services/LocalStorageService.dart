@@ -21,6 +21,11 @@ class LocalStorageService {
     await _preferences?.setString(key, value);
   }
 
+  // Save Data
+  Future<void> saveInt(String key, int value) async {
+    await _preferences?.setInt(key, value);
+  }
+
   Future<void> saveBool(String key, bool value) async {
     await _preferences?.setBool(key, value);
   }
@@ -28,6 +33,10 @@ class LocalStorageService {
   // Retrieve Data
   String? getString(String key) {
     return _preferences?.getString(key);
+  }
+
+  int? getInt(String key) {
+    return _preferences?.getInt(key);
   }
 
   bool? getBool(String key) {

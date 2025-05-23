@@ -1,14 +1,14 @@
 // views/DashboardScreen.dart
+import 'package:cno_inspection/model/DashboardResponse/DashboardResponse.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/authentication_provider.dart';
 import '../../provider/dashboardProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
+import '../../utils/CustomSearchableDropdown.dart';
 import '../auth/DashboardScreen.dart';
-
 
 class Dashboardvwsc extends StatefulWidget {
   const Dashboardvwsc({super.key});
@@ -21,10 +21,16 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
   final LocalStorageService _localStorage = LocalStorageService();
 
   late DashboardProvider dashboardProvider;
+  String? path;
+
   @override
   void initState() {
     super.initState();
-
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      dashboardProvider =
+          Provider.of<DashboardProvider>(context, listen: false);
+      await dashboardProvider.fetchDashboardData(34483, 3);
+    });
   }
 
   @override
@@ -45,7 +51,6 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
-
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 if (Navigator.of(context).canPop()) {
@@ -54,7 +59,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => Dashboardscreen()),
-                        (route) => false,
+                    (route) => false,
                   );
                 }
               },
@@ -75,84 +80,216 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
             ),
             elevation: 5,
           ),
+          body: Consumer<DashboardProvider>(
+              builder: (context, dashboardProvider, child) {
+            if (dashboardProvider.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Select VWSC",
+                        style: TextStyle(
+                          fontSize: 16, fontFamily: 'OpenSans',
+                          fontWeight: FontWeight.bold,
+                          color: Colors
+                              .black87, // Dark text for better readability
+                        ),
+                      ),
 
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+                      const Divider(
+                        height: 10,
+                        color: Colors.grey,
+                        thickness: 1,
+                      ),
+                      SizedBox(height: 4),
+                      // Space between title and dropdown
+                      CustomSearchableDropdown(
+                        title: 'Select VWSC',
+                        value: dashboardProvider.dashboardList
+                                .firstWhere(
+                                  (village) =>
+                                      village.villageId ==
+                                      dashboardProvider.selectedVwsc,
+                                  orElse: () => CnoDashboardItem(
+                                    userid: 0,
+                                    totalSchemes: 0,
+                                    pendingSchemes: 0,
+                                    underProcessScheme: 0,
+                                    totalDistricts: 0,
+                                    pendingDistricts: 0,
+                                    underProcessDistricts: 0,
+                                    totalVillages: 0,
+                                    pendingVillages: 0,
+                                    underProcessVillages: 0,
+                                    schemeId: 0,
+                                    schemeName: '',
+                                    stateId: 0,
+                                    districtId: 0,
+                                    blockId: 0,
+                                    panchayatId: 0,
+                                    villageId: 0,
+                                  ),
+                                )
+                                .villageName ??
+                            'Select Village',
+                        items: dashboardProvider.dashboardList
+                            .map((item) => item.villageName ?? '')
+                            .where((name) => name.isNotEmpty)
+                            .toSet()
+                            .toList(), // Ensure uniqueness
+                        onChanged: (selectedVillageName) {
+                          if (selectedVillageName == null) return;
 
-                buildSampleCard(
-                  qnumber: "A.",
-                  title: "Water Supply Functionality",
+                          final selectedItem =
+                              dashboardProvider.dashboardList.firstWhere(
+                            (item) => item.villageName == selectedVillageName,
+                            orElse: () => CnoDashboardItem(
+                              userid: 0,
+                              totalSchemes: 0,
+                              pendingSchemes: 0,
+                              underProcessScheme: 0,
+                              totalDistricts: 0,
+                              pendingDistricts: 0,
+                              underProcessDistricts: 0,
+                              totalVillages: 0,
+                              pendingVillages: 0,
+                              underProcessVillages: 0,
+                              schemeId: 0,
+                              schemeName: '',
+                              stateId: 0,
+                              districtId: 0,
+                              blockId: 0,
+                              panchayatId: 0,
+                              villageId: 0,
+                            ),
+                          );
 
-                  color: Colors.blue,
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToWaterSupplyPartA);
+                          dashboardProvider.setSelectedVWSC(
+                              selectedItem.villageId.toString());
 
+                          path = _buildLocationPath([
+                            selectedItem.stateName ?? '',
+                            selectedItem.districtName ?? '',
+                            selectedItem.blockName ?? '',
+                            selectedItem.panchayatName ?? '',
+                            selectedItem.villageName ?? '',
+                          ]);
+                        },
+                      ),
+                    ],
+                  ),
+                  if (dashboardProvider.selectedVwsc != null &&
+                      dashboardProvider.selectedVwsc!.isNotEmpty)
+                    SizedBox(
+                      height: 20,
+                    ),
+                  Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _iconCircle(Icons.location_on, Colors.red),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              path.toString(),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      buildSampleCard(
+                        qnumber: "A.",
+                        title: "Water Supply Functionality",
+                        color: Colors.blue,
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                              context, AppConstants.navigateToWaterSupplyPartA);
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      buildSampleCard(
+                        qnumber: "B.",
+                        title: "Community Involvement & VWSC Functionality",
+                        color: Colors.orangeAccent,
+                        onTap: () {
+                          Navigator.pushReplacementNamed(context,
+                              AppConstants.navigateToCommunityInvolvementPartB);
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      buildSampleCard(
+                        qnumber: "C.",
+                        title: "Community feedback on quality of construction",
+                        color: Colors.deepOrangeAccent,
+                        onTap: () {
+                          Navigator.pushReplacementNamed(context,
+                              AppConstants.navigateToCommunityFeedbackPartC);
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      buildSampleCard(
+                        qnumber: "D.",
+                        title: "Water Quality Monitoring",
+                        color: Colors.lightGreen,
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                              context, AppConstants.navigateToQulityPartD);
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      buildSampleCard(
+                        qnumber: "E.",
+                        title: "Grievance Redressal",
+                        color: Colors.green,
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                              context, AppConstants.navigateToGrievancePartE);
+                        },
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
+          })),
+    );
+  }
 
-                  },
-                ),
+  String _buildLocationPath(List<String?> parts) {
+    return parts.where((e) => e != null && e.isNotEmpty).join(" > ");
+  }
 
-
-                SizedBox(height: 10,),
-                buildSampleCard(
-                  qnumber: "B.",
-                  title: "Community Involvement & VWSC Functionality",
-
-                  color: Colors.orangeAccent,
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToCommunityInvolvementPartB);
-                  },
-                ),
-
-
-                SizedBox(height: 10,),
-                buildSampleCard(
-                  qnumber: "C.",
-                  title: "Community feedback on quality of construction",
-
-                  color: Colors.deepOrangeAccent,
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToCommunityFeedbackPartC);
-                  },
-                ),
-
-
-                SizedBox(height: 10,),
-                buildSampleCard(
-                  qnumber: "D.",
-                  title: "Water Quality Monitoring",
-
-                  color: Colors.lightGreen,
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToQulityPartD);
-                  },
-                ),
-
-
-                SizedBox(height: 10,),
-
-                buildSampleCard(
-                  qnumber: "E.",
-                  title: "Grievance Redressal",
-
-                  color: Colors.green,
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToGrievancePartE);
-                  },
-                ),
-
-
-              ],
-            ),
-          )
+  Widget _iconCircle(IconData icon, Color bgColor) {
+    return Container(
+      padding: const EdgeInsets.all(6),
+      decoration: BoxDecoration(
+        color: bgColor.withOpacity(0.2),
+        shape: BoxShape.circle,
       ),
+      child: Icon(icon, color: bgColor, size: 18),
     );
   }
 
@@ -186,7 +323,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
               children: [
                 // QNumber badge
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: color.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(6),
@@ -215,7 +353,6 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                 ),
 
                 // Count badge
-
               ],
             ),
             const SizedBox(height: 14),
@@ -225,10 +362,14 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: onTap,
-                icon: const Icon(Icons.arrow_forward, size: 18, color: Colors.white),
+                icon: const Icon(Icons.arrow_forward,
+                    size: 18, color: Colors.white),
                 label: const Text(
                   "Continue",
-                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: color,
@@ -245,6 +386,4 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
       ),
     );
   }
-
-
 }

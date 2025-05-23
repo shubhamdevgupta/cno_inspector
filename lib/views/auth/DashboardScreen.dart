@@ -7,7 +7,6 @@ import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 
-
 class Dashboardscreen extends StatefulWidget {
   const Dashboardscreen({super.key});
 
@@ -16,26 +15,28 @@ class Dashboardscreen extends StatefulWidget {
 }
 
 class _DashboardscreenState extends State<Dashboardscreen> {
+  late DashboardProvider dashboardProvider;
+  final LocalStorageService _localStorage = LocalStorageService();
 
-late DashboardProvider dashboardProvider;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-    //  await dashboardProvider.loadDashboardData();
+      await dashboardProvider.fetchDashboardData(34483, 0);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
-      ),
-      child: Scaffold(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/icons/header_bg.png'),
+              fit: BoxFit.cover),
+        ),
+        child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -55,20 +56,6 @@ late DashboardProvider dashboardProvider;
                 );
               },
             ),
-            actions: [
-              Stack(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.refresh,
-                        color: Colors.white),
-                    // Cart icon
-                    onPressed: () {
-                   //   dashboardProvider.loadDashboardData();
-                    },
-                  )
-                ],
-              ),
-            ],
             //elevation
             flexibleSpace: Container(
               decoration: const BoxDecoration(
@@ -96,7 +83,7 @@ late DashboardProvider dashboardProvider;
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                       "kkk=",
+                        "kkk=",
                         style: AppStyles.appBarTitle,
                       ),
                       Text(
@@ -135,220 +122,214 @@ late DashboardProvider dashboardProvider;
               ],
             ),
           ),
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 10),
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      // Profile Picture
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.blue.shade300,
-                              Colors.blue.shade800
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+          body: Consumer<DashboardProvider>(
+            builder: (context, dashboardProvider, child) {
+              if (dashboardProvider.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.08),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
                           ),
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        // Border-like effect
-                        child: CircleAvatar(
-                          radius: 32,
-                          backgroundColor: Colors.grey[100],
-                          backgroundImage:
-                          const AssetImage('assets/icons/user.png'),
-                        ),
+                        ],
                       ),
-                      const SizedBox(width: 16),
-
-                      // User Info
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Welcome Text
-                            Text(
-                              'Welcome',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'OpenSans',
-                                color: Colors.grey.shade700,
+                      child: Row(
+                        children: [
+                          // Profile Picture
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.blue.shade300,
+                                  Colors.blue.shade800
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
                             ),
-                            Text(
-                              "userName",
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'OpenSans',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
+                            padding: const EdgeInsets.all(2),
+                            // Border-like effect
+                            child: CircleAvatar(
+                              radius: 32,
+                              backgroundColor: Colors.grey[100],
+                              backgroundImage:
+                                  const AssetImage('assets/icons/user.png'),
                             ),
+                          ),
+                          const SizedBox(width: 16),
 
-                            const SizedBox(height: 4),
-
-                            // Department and Phone
-                            Row(
+                          // User Info
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(Icons.account_balance_sharp,
-                                    size: 18, color: Colors.teal),
-                                const SizedBox(width: 6),
+                                // Welcome Text
                                 Text(
-                                  'Departmental User',
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: 'OpenSans',
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-
-                            const SizedBox(height: 6),
-
-                            Row(
-                              children: [
-                                const Icon(Icons.phone_android,
-                                    size: 18, color: Colors.teal),
-                                const SizedBox(width: 6),
-                                Flexible(
-                                  child: Text(
-                                    "mobile",
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: 'OpenSans',
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                  'Welcome',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'OpenSans',
+                                    color: Colors.grey.shade700,
                                   ),
                                 ),
+                                Text(
+                                  dashboardProvider.dashboardList.first.userName??'username',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: 'OpenSans',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+
+                                const SizedBox(height: 4),
+
+                                // Department and Phone
+                                Row(
+                                  children: [
+                                    const Icon(Icons.account_balance_sharp,
+                                        size: 18, color: Colors.teal),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      dashboardProvider.dashboardList.first.designation??'designation',
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: 'OpenSans',
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+
+                                const SizedBox(height: 6),
+
+                                Row(
+                                  children: [
+                                    const Icon(Icons.phone_android,
+                                        size: 18, color: Colors.teal),
+                                    const SizedBox(width: 6),
+                                    Flexible(
+                                      child: Text(
+                                        dashboardProvider.dashboardList.first.mobileNumber??'mobile number',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: 'OpenSans',
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 15),
-
-
-                Container(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child:buildAssessmentCard(
-                      title: "Scheme Inspection Form",
-                      baselineStatus: "In-Progress",
-                      baselineColor: Colors.orangeAccent,
-                      latestStatus: "Pending",
-                      latestColor: Colors.redAccent,
-                      odfStatus: "Non-ODF Plus",
-                      odfColor: Colors.redAccent,
-                      backgroundColor: Color(0xFFE3F2FD),
-                      borderColor: Color(0xFF2196F3),
-                      buttonColor: Color(0xFF2196F3),
-                      onStartPressed: () {
-                        Navigator.pushReplacementNamed(context, AppConstants.navigateToDashboardSchemeInfo);
-                      },
-                    )
-                  ),
-                ),
-
-
-                const SizedBox(height: 10),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child:buildAssessmentCard(
-                    title: "Interaction with DWSM",
-                    baselineStatus: "In-Progress",
-                    baselineColor: Colors.orangeAccent,
-                    latestStatus: "Pending",
-                    latestColor: Colors.redAccent,
-                    odfStatus: "Non-ODF Plus",
-                    odfColor: Colors.redAccent,
-                    backgroundColor: Color(0xFFE3F2FD),
-                    borderColor: Color(0xFF2196F3),
-                    buttonColor: Color(0xFF2196F3),
-                    onStartPressed: () {
-                      Navigator.pushReplacementNamed(context, AppConstants.navigateToDashboardDWSM);
-                    },
-                  )
-                ),
-
-                const SizedBox(height:10),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: buildAssessmentCard(
-                    title: "Interaction with VWSC ",
-                    baselineStatus: "In-Progress",
-                    baselineColor: Colors.orangeAccent,
-                    latestStatus: "Pending",
-                    latestColor: Colors.redAccent,
-                    odfStatus: "Non-ODF Plus",
-                    odfColor: Colors.redAccent,
-                    backgroundColor: Color(0xFFE3F2FD),
-                    borderColor: Color(0xFF2196F3),
-                    buttonColor: Color(0xFF2196F3),
-                    onStartPressed: () {
-                      Navigator.pushReplacementNamed(context, AppConstants.navigateToDashboardVWSC);
-                    },
-                  )
-                ),
-
-
-                Container(
-
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFe0f7fa), Color(0xFFFFFFFF)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
                     ),
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 16,
-                        offset: const Offset(0, 6),
+                    const SizedBox(height: 15),
+                    Container(
+                      child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: buildAssessmentCard(
+                            title: "Scheme Inspection Form",
+                            baselineStatus: "In-Progress",
+                            baselineColor: Colors.orangeAccent,
+                            latestStatus: "Pending",
+                            latestColor: Colors.redAccent,
+                            odfStatus: "Non-ODF Plus",
+                            odfColor: Colors.redAccent,
+                            backgroundColor: Color(0xFFE3F2FD),
+                            borderColor: Color(0xFF2196F3),
+                            buttonColor: Color(0xFF2196F3),
+                            onStartPressed: () {
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToDashboardSchemeInfo);
+                            },
+                          )),
+                    ),
+                    const SizedBox(height: 10),
+                    Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: buildAssessmentCard(
+                          title: "Interaction with DWSM",
+                          baselineStatus: "In-Progress",
+                          baselineColor: Colors.orangeAccent,
+                          latestStatus: "Pending",
+                          latestColor: Colors.redAccent,
+                          odfStatus: "Non-ODF Plus",
+                          odfColor: Colors.redAccent,
+                          backgroundColor: Color(0xFFE3F2FD),
+                          borderColor: Color(0xFF2196F3),
+                          buttonColor: Color(0xFF2196F3),
+                          onStartPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, AppConstants.navigateToDashboardDWSM);
+                          },
+                        )),
+                    const SizedBox(height: 10),
+                    Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: buildAssessmentCard(
+                          title: "Interaction with VWSC ",
+                          baselineStatus: "In-Progress",
+                          baselineColor: Colors.orangeAccent,
+                          latestStatus: "Pending",
+                          latestColor: Colors.redAccent,
+                          odfStatus: "Non-ODF Plus",
+                          odfColor: Colors.redAccent,
+                          backgroundColor: Color(0xFFE3F2FD),
+                          borderColor: Color(0xFF2196F3),
+                          buttonColor: Color(0xFF2196F3),
+                          onStartPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, AppConstants.navigateToDashboardVWSC);
+                          },
+                        )),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFe0f7fa), Color(0xFFFFFFFF)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(24),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 16,
+                            offset: const Offset(0, 6),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                    ],
-                  ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [],
+                      ),
+                    ),
+                  ],
                 ),
-
-              ],
-            ),
-          )
-      ),
-    );
+              );
+            },
+          ),
+        ));
   }
-
 
   Widget buildAssessmentCard({
     required String title,
@@ -520,6 +501,4 @@ late DashboardProvider dashboardProvider;
       ),
     );
   }
-
-
 }
