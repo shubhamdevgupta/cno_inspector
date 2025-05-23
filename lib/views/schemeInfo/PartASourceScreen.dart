@@ -8,6 +8,7 @@ import '../../utils/CustomTextField.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import 'PartBSchemePlanningScreen.dart';
+import 'SchemeInfoCommonScreen.dart';
 
 class SourceScreenQuestions extends StatefulWidget {
   const SourceScreenQuestions({Key? key}) : super(key: key);
@@ -98,7 +99,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Schemeinfocommonscreen(
                         no: 1,
                       ),
                       Card(

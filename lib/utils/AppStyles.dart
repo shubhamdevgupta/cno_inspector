@@ -6,7 +6,7 @@ import 'Appcolor.dart';
 
 class AppStyles {
   static TextStyle appBarTitle = const TextStyle(
-    fontSize: 20, fontFamily: 'OpenSans',
+    fontSize: 18, fontFamily: 'OpenSans',
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );

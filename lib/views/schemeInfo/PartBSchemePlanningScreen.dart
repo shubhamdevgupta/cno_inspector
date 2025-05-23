@@ -11,6 +11,7 @@ import '../../utils/customcheckquestion.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import 'PartCRetrofittingAugmentationScreen.dart';
+import 'SchemeInfoCommonScreen.dart';
 
 class SchemePlanningScreen extends StatefulWidget {
   const SchemePlanningScreen({Key? key}) : super(key: key);
@@ -101,7 +102,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Schemeinfocommonscreen(
                         no: 2,
                       ),
                       Card(
@@ -257,7 +258,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                   height: 35,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xffb0D6EFD),
+                                      backgroundColor: Colors.orangeAccent,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
                                       ),

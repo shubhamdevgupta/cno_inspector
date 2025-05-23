@@ -13,6 +13,7 @@ import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customradiobttn.dart';
 import 'PartBSchemePlanningScreen.dart';
+import 'SchemeInfoCommonScreen.dart';
 
 class VisualInspectionScreen extends StatefulWidget {
   const VisualInspectionScreen({Key? key}) : super(key: key);
@@ -113,7 +114,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Schemeinfocommonscreen(
                         no: 5,
                       ),
                       Padding(
@@ -256,7 +257,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                     height: 35,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xffb0D6EFD),
+                                        backgroundColor: Colors.green,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
                                         ),

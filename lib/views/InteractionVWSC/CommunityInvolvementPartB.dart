@@ -8,6 +8,7 @@ import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/MultiSelectionlist.dart';
 import 'DashboardVWSC.dart';
+import 'VWSCCommonClass.dart';
 
 class CommunityInvolvementPartB extends StatefulWidget {
 
@@ -96,7 +97,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                    crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
 
-                     NewScreenPoints(
+                     Vwsccommonclass(
                        no: 2,
                      ),
                      Padding(

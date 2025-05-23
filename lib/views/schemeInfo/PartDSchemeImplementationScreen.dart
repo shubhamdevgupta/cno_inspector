@@ -10,6 +10,7 @@ import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import 'PartBSchemePlanningScreen.dart';
 import 'PartEVisual Inspection.dart';
+import 'SchemeInfoCommonScreen.dart';
 
 class SchemeImplementationScreen extends StatefulWidget {
   const SchemeImplementationScreen({Key? key}) : super(key: key);
@@ -100,7 +101,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Schemeinfocommonscreen(
                         no: 4,
                       ),
                       Card(

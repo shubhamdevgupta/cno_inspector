@@ -12,6 +12,7 @@ import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import 'PartDSchemeImplementationScreen.dart';
 import 'PartBSchemePlanningScreen.dart';
+import 'SchemeInfoCommonScreen.dart';
 
 class RetrofittingAugmentationScreen extends StatefulWidget {
   const RetrofittingAugmentationScreen({Key? key}) : super(key: key);
@@ -102,7 +103,7 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Schemeinfocommonscreen(
                         no: 3,
                       ),
                       Card(
@@ -193,7 +194,7 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
                                   height: 35,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xffb0D6EFD),
+                                      backgroundColor:Colors.deepOrangeAccent,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
                                       ),

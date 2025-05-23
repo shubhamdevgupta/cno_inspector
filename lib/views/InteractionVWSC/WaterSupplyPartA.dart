@@ -9,6 +9,7 @@ import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
+import 'VWSCCommonClass.dart';
 
 class WaterSupplyPartA extends StatefulWidget {
   const WaterSupplyPartA({Key? key}) : super(key: key);
@@ -94,7 +95,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
 
-                      NewScreenPoints(
+                      Vwsccommonclass(
                         no: 1,
                       ),
 
