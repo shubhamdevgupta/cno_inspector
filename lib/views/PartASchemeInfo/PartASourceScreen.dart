@@ -220,12 +220,9 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                         ),
                                       ),
                                       onPressed: () async {
-                                        await LoaderUtils.conditionalLoader(
-                                            isLoading:
-                                                schemeProvider.isLoading);
+                                        await LoaderUtils.conditionalLoader(isLoading: schemeProvider.isLoading);
                                         await schemeProvider.saveSourceSurvey(
-                                            userId: _localStorageService.getInt(
-                                                AppConstants.prefUserId)!,
+                                            userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                             stateId: schemeProvider.stateId!,
                                             schemeId: schemeProvider.schemeId!,
                                             isRecommendShiftToSurface: schemeProvider
