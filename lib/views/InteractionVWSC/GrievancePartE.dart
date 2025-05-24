@@ -154,7 +154,14 @@ class _GrievancePartE extends State<GrievancePartE> {
                                           createdBy: _localStorageService.getInt(AppConstants.prefUserId)!);
                                       if(vwscProvider.status!){
                                         ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.green);
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardvwsc()),);
+                                       // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardvwsc()),);
+
+
+                                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => Dashboardvwsc()),
+                                              (Route<dynamic> route) => false,
+                                        );
+
+
                                       }else{
                                         ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.red);
                                       }
