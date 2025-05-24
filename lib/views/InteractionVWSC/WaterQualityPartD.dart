@@ -159,8 +159,8 @@ LocalStorageService _localStorageService =LocalStorageService();
                                     onPressed: () async{
                                       await LoaderUtils.conditionalLoader(isLoading: vwscProvider.isLoading);
 
-                                      await vwscProvider.saveWaterQualityMonitoring(userId:_localStorageService.getInt(AppConstants.prefUserId)!, stateId: 32,
-                                          villageId: 7878, isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,
+                                      await vwscProvider.saveWaterQualityMonitoring(userId:_localStorageService.getInt(AppConstants.prefUserId)!, stateId: vwscProvider.stateId!,
+                                          villageId: vwscProvider.villageId!, isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,
                                           ftkTestingPeriod: vwscProvider.selectedFTKTestingFrequencyId, numberWomenTrainedFtk: int.parse(vwscProvider.womenTrainedController.text),
                                           whoTestFtk: vwscProvider.testerNameController.text, isChlorinationDone: vwscProvider.selectedDisinfectionDoneId,
                                           frcAvailableAtEnd: vwscProvider.selectedFRCLevelId, createdBy: _localStorageService.getInt(AppConstants.prefUserId)!);

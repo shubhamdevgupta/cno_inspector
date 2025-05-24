@@ -7,6 +7,7 @@ import 'package:cno_inspection/views/InteractionVWSC/DashboardVWSC.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/AppConstants.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
@@ -230,8 +231,8 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                         LoaderUtils.conditionalLoader(
                                             isLoading: vwscProvider.isLoading);
                                         print('selected village ${vwscProvider.villageId}');
-                                        /*            await vwscProvider.saveVwscWaterSupply(userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                            stateId: 32, villageId: vwscProvider.villageId!,
+                                                    await vwscProvider.saveVwscWaterSupply(userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                            stateId: vwscProvider.stateId!, villageId: vwscProvider.villageId!,
                                             waterSupplyFrequency: 1,
                                             adequateWaterToHH: vwscProvider.selectedHouseholdWaterId,
                                             adequateWaterToRemote: vwscProvider.selectedPvtgGroupsId,
@@ -251,7 +252,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                           ToastHelper.showToastMessage(
                                               vwscProvider.message!,
                                               backgroundColor: Colors.red);
-                                        }*/
+                                        }
                                       },
                                       child: Text(
                                         "SAVE & NEXT",
