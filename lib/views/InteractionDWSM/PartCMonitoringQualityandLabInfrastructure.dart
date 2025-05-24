@@ -1,7 +1,7 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/views/InteractionDWSM/PartDOperationandMaintenance.dart';
-import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/AppStyles.dart';
@@ -11,7 +11,7 @@ import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
-import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import '../PartASchemeInfo/PartBSchemePlanningScreen.dart';
 import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 
@@ -126,14 +126,14 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Customradiobttn(
-                                question: "Are water supply assets (OHTs, WTPs, Pump Houses, etc.) geotagged?",
+                                question: "1. Are water supply assets (OHTs, WTPs, Pump Houses, etc.) geotagged?",
                                 options: ["All", "Partially", "Not Done"],
                                 selectedOption: assetsGeotagged,
                                 onChanged: (val) => setState(() => assetsGeotagged = val),
                               ),
                               SizedBox(height: 12),
                               Customradiobttn(
-                                question: "Does the district have an NABL-accredited lab or equivalent for water quality testing?",
+                                question: "2. Does the district have an NABL-accredited lab or equivalent for water quality testing?",
                                 options: ["Yes", "No"],
                                 selectedOption: hasNablLab,
                                 onChanged: (val) {
@@ -147,7 +147,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                               ),
                               if (hasNablLab == "No")
                                 Customtxtfeild(
-                                  label: "If no, how is testing managed?",
+                                  label: "2.1 If no, how is testing managed?",
                                   controller: testingManagedController,
                                   maxLines: 2,
                                 ),

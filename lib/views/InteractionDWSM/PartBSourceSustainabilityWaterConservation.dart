@@ -1,7 +1,7 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/views/InteractionDWSM/PartCMonitoringQualityandLabInfrastructure.dart';
-import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/AppStyles.dart';
@@ -11,7 +11,7 @@ import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
-import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import '../PartASchemeInfo/PartBSchemePlanningScreen.dart';
 import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 
@@ -129,21 +129,21 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Customradiobttn(
-                                question: "Are source sustainability measures being promoted (e.g., groundwater recharge, reuse of treated wastewater)?",
+                                question: "1. Are source sustainability measures being promoted (e.g., groundwater recharge, reuse of treated wastewater)?",
                                 options: ["Actively", "Limited", "Not Promoted"],
                                 selectedOption: sourceSustainability,
                                 onChanged: (val) => setState(() => sourceSustainability = val),
                               ),
                               SizedBox(height: 12),
                               Customradiobttn(
-                                question: "Are piped water schemes based on groundwater sources protected from contamination?",
+                                question: "2. Are piped water schemes based on groundwater sources protected from contamination?",
                                 options: ["Yes", "Partially", "No"],
                                 selectedOption: groundwaterProtection,
                                 onChanged: (val) => setState(() => groundwaterProtection = val),
                               ),
                               SizedBox(height: 12),
                               Customradiobttn(
-                                question: "Is at least one recharge structure per groundwater source implemented?",
+                                question: "3. Is at least one recharge structure per groundwater source implemented?",
                                 options: ["Yes", "In Progress", "No"],
                                 selectedOption: rechargeStructureImplemented,
                                 onChanged: (val) {
@@ -163,7 +163,7 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                                 ),
                               SizedBox(height: 12),
                               Customradiobttn(
-                                question: "Are any impact studies or assessments conducted on source sustainability efforts?",
+                                question: "4. Are any impact studies or assessments conducted on source sustainability efforts?",
                                 options: ["Yes – Completed", "Planned", "No"],
                                 selectedOption: impactStudies,
                                 onChanged: (val) => setState(() => impactStudies = val),

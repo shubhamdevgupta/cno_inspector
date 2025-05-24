@@ -1,7 +1,7 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/views/InteractionDWSM/PartEQualityAssuranceandCommissioning.dart';
-import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/AppStyles.dart';
@@ -11,7 +11,7 @@ import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
-import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import '../PartASchemeInfo/PartBSchemePlanningScreen.dart';
 import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 
@@ -132,7 +132,7 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
 
                                 // Protocol for handing over infrastructure
                                 Customradiobttn(
-                                  question: "Is a protocol for handing over in-village infrastructure in place?",
+                                  question: "1. Is a protocol for handing over in-village infrastructure in place?",
                                   options: ["Yes", "No", "Partially"],
                                   selectedOption: handoverProtocol,
                                   onChanged: (val) => setState(() => handoverProtocol = val),
@@ -142,7 +142,7 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
 
                                 // Percentage of villages with trained manpower
                                 Customtxtfeild(
-                                  label: "Percentage of villages where trained multi-skilled manpower available for O&M",
+                                  label: "2. Percentage of villages where trained multi-skilled manpower available for O&M",
                                   controller: manpowerPercentController,
                                   keyboardType: TextInputType.number,
                                 ),
@@ -151,7 +151,7 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
 
                                 // Water fee amount
                                 Customtxtfeild(
-                                  label: "Water fee amount (₹/month or per connection)",
+                                  label: "3. Water fee amount (₹/month or per connection)",
                                   controller: waterFeeController,
                                   keyboardType: TextInputType.number,
                                 ),
@@ -160,7 +160,7 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
 
                                 // Fee basis: Uniform or Volumetric
                                 Customradiobttn(
-                                  question: "Is the fee uniform or based on consumption?",
+                                  question: "4. Is the fee uniform or based on consumption?",
                                   options: ["Uniform", "Volumetric"],
                                   selectedOption: feeBasis,
                                   onChanged: (val) => setState(() => feeBasis = val),
@@ -170,7 +170,7 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
 
                                 // User fee collection percentage
                                 Customtxtfeild(
-                                  label: "Percentage of villages where User Fee is being collected",
+                                  label: "5. Percentage of villages where User Fee is being collected",
                                   controller: userFeePercentController,
                                   keyboardType: TextInputType.number,
                                 ),

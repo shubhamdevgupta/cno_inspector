@@ -24,12 +24,12 @@ import 'package:cno_inspection/views/InteractionVWSC/DashboardVWSC.dart';
 import 'package:cno_inspection/views/auth/DashboardScreen.dart';
 import 'package:cno_inspection/views/auth/AuthScreen.dart';
 import 'package:cno_inspection/views/auth/SplashScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
-import 'package:cno_inspection/views/schemeInfo/PartBSchemePlanningScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/PartCRetrofittingAugmentationScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/PartDSchemeImplementationScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/PartEVisual%20Inspection.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartBSchemePlanningScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartCRetrofittingAugmentationScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartDSchemeImplementationScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartEVisual%20Inspection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

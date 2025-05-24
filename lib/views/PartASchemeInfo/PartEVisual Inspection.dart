@@ -1,8 +1,8 @@
 import 'package:cno_inspection/utils/customtxtfeild.dart';
-import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
-import 'package:cno_inspection/views/schemeInfo/PartCRetrofittingAugmentationScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/PartDSchemeImplementationScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartCRetrofittingAugmentationScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartDSchemeImplementationScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/AppStyles.dart';
