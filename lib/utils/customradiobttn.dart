@@ -5,6 +5,7 @@ class Customradiobttn extends StatelessWidget {
   final List<String> options;
   final String? selectedOption;
   final ValueChanged<String?> onChanged;
+  final Axis orientation; // <--- New optional parameter
 
   const Customradiobttn({
     Key? key,
@@ -12,6 +13,7 @@ class Customradiobttn extends StatelessWidget {
     required this.options,
     required this.selectedOption,
     required this.onChanged,
+    this.orientation = Axis.horizontal, // <--- Default to horizontal
   }) : super(key: key);
 
   @override
@@ -27,11 +29,27 @@ class Customradiobttn extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 6),
-        Wrap(
+        orientation == Axis.horizontal
+            ? Wrap(
           spacing: 20,
           children: options.map((option) {
             return Row(
               mainAxisSize: MainAxisSize.min,
+              children: [
+                Radio<String>(
+                  value: option,
+                  groupValue: selectedOption,
+                  onChanged: onChanged,
+                  activeColor: Colors.deepOrangeAccent,
+                ),
+                Text(option),
+              ],
+            );
+          }).toList(),
+        )
+            : Column(
+          children: options.map((option) {
+            return Row(
               children: [
                 Radio<String>(
                   value: option,
