@@ -1,37 +1,29 @@
 import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
-import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/utils/AppConstants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
-import '../../utils/CommonScreen.dart';
-import '../../utils/CustomCheckBoxQuestion.dart';
-import '../../utils/CustomRadioQuestion.dart';
-import '../../utils/CustomTextField.dart';
 import '../../utils/LoaderUtils.dart';
-import '../../utils/customcheckquestion.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
+import 'Dashboardschemeinfo.dart';
 import 'PartBSchemePlanningScreen.dart';
-import 'PartDSchemeImplementationScreen.dart';
 import 'SchemeInfoCommonScreen.dart';
 
-class RetrofittingAugmentationScreen extends StatefulWidget {
-  const RetrofittingAugmentationScreen({Key? key}) : super(key: key);
+class SourceScreenQuestions extends StatefulWidget {
+  const SourceScreenQuestions({Key? key}) : super(key: key);
 
   @override
-  _RetrofittingAugmentationScreen createState() =>
-      _RetrofittingAugmentationScreen();
+  _SourceScreenQuestions createState() => _SourceScreenQuestions();
 }
 
-class _RetrofittingAugmentationScreen
-    extends State<RetrofittingAugmentationScreen> {
 
+class _SourceScreenQuestions extends State<SourceScreenQuestions> {
   LocalStorageService _localStorageService = LocalStorageService();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -64,8 +56,8 @@ class _RetrofittingAugmentationScreen
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Additional info for Retrofitting/Augmentation Schemes only",
-              style: AppStyles.appBarTitleSmallText,
+              "Source",
+              style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -108,15 +100,15 @@ class _RetrofittingAugmentationScreen
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Schemeinfocommonscreen(
-                        no: 3,
+                        no: 1,
                       ),
                       Card(
                         elevation: 5,
                         child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              border: Border.all(
-                                  color: Colors.deepOrangeAccent, width: 1.4),
+                              border:
+                                  Border.all(color: Colors.blue, width: 1.4),
                               borderRadius: BorderRadius.circular(14),
                               boxShadow: [
                                 BoxShadow(
@@ -131,101 +123,91 @@ class _RetrofittingAugmentationScreen
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // 1. Radio Button: Legacy Infra Assessment
+                                // 1. Source finding committee recommended shift to surface water? (Yes/No)
                                 Customradiobttn(
                                   question:
-                                      '1. Whether the condition assessment of the legacy infrastructure done before scheme planning?',
+                                      '1. If the source is surface water, then, did the Source finding committee recommend the shift to surface water?',
                                   options:
                                       schemeProvider.yesNoMap.keys.toList(),
                                   selectedOption:
-                                      schemeProvider.legacyInfraAssessment,
-                                  onChanged: (val) => schemeProvider
-                                      .legacyInfraAssessment = val,
+                                      schemeProvider.selectedValueQ1,
+                                  onChanged: (val) {
+                                    schemeProvider.selectedValueQ1 = val;
+                                  },
                                 ),
-                                const SizedBox(height: 2),
 
-                                // 2. Text Fields for Legacy Infrastructure Usage
+                                Customradiobttn(
+                                  question:
+                                      '2. Any study done to assess ground water before going for surface water?',
+                                  options:
+                                      schemeProvider.yesNoMap.keys.toList(),
+                                  selectedOption:
+                                      schemeProvider.selectedValueQ2,
+                                  onChanged: (val) {
+                                    schemeProvider.selectedValueQ2 = val;
+                                  },
+                                ),
+
+                                // 3. Number of villages falling under critical zones
                                 const Text(
-                                  '2. Legacy infrastructure which has been retrofitted and being used in the scheme under JJM:',
+                                  '3. Number of villages falling under the critical zones as mentioned (https://cgwb.gov.in/en/ground-water-resource-assessment-0):',
                                   style: TextStyle(fontWeight: FontWeight.w600),
                                 ),
-                                const SizedBox(height: 6),
+                                const SizedBox(height: 8),
 
                                 Customtxtfeild(
-                                  label: '2.1 Transmission Pipelines (in Kms)',
-                                  controller: schemeProvider
-                                      .transmissionPipelineKmController,
+                                  label: '3.1 Safe (Nos)',
+                                  controller: schemeProvider.safeController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
-                                  label: '2.2 Distribution Pipelines (in Kms)',
-                                  controller: schemeProvider
-                                      .distributionPipelineKmController,
+                                  label: '3.2 Critical / Over exploited (Nos)',
+                                  controller: schemeProvider.criticalController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
-                                  label: '2.3 WTP Capacity (in MLD)',
+                                  label: '3.3 Semi-critical (Nos)',
                                   controller:
-                                      schemeProvider.wtpCapacityMldController,
+                                      schemeProvider.semiCriticalController,
                                   keyboardType: TextInputType.number,
                                 ),
-                                const SizedBox(height: 8),
+                                const SizedBox(height: 12),
 
-                                Customtxtfeild(
-                                  label:
-                                      '2.4 Storage Structures (Nos./Capacity in KL)',
-                                  controller: schemeProvider
-                                      .storageStructureDetailsController,
-                                  keyboardType: TextInputType.text,
-                                ),
-                                const SizedBox(height: 10),
-
-                                // 3. Radio Button: As-built Drawing Availability
+                                // 4. Groundwater contamination analysis? (Yes/No)
                                 Customradiobttn(
                                   question:
-                                      '3. Is the as-built drawing of the new infrastructure in conjunction with the existing infrastructure available with the department/agency/GP?',
+                                      '4. In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option — treating the contaminated groundwater or switching to a surface water source?',
                                   options:
                                       schemeProvider.yesNoMap.keys.toList(),
                                   selectedOption:
-                                      schemeProvider.asBuiltDrawingAvailability,
-                                  onChanged: (val) => schemeProvider
-                                      .asBuiltDrawingAvailability = val,
+                                      schemeProvider.selectedValueQ3,
+                                  onChanged: (val) {
+                                    schemeProvider.selectedValueQ3 = val;
+                                    print(
+                                        'val----- ${schemeProvider.selectedValueQ3Id}');
+                                  },
                                 ),
-                                const SizedBox(height: 20),
 
-
-                                if(schemeProvider.asBuiltDrawingAvailabilityID==1)
-                                Customradiobttn(
-                                  question:
-                                  '4. Has it been digitized and uploaded on PM Gatishakti? ',
-                                  options:
-                                  schemeProvider.yesNoMap.keys.toList(),
-                                  selectedOption:
-                                  schemeProvider.onPmGatiShakti,
-                                  onChanged: (val) => schemeProvider
-                                      .onPmGatiShakti = val,
-                                ),
-                                if(schemeProvider.onPmGatishaktiID==2)
+                                // 5. Water allocation from State WRD / Irrigation Department (text input)
                                 Customtxtfeild(
                                   label:
-                                  '4.1 Reason',
-                                  controller: schemeProvider
-                                      .reasonController,
-                                  keyboardType: TextInputType.text,
+                                      '5. Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose',
+                                  controller:
+                                      schemeProvider.waterAllocationController,
+                                  keyboardType: TextInputType.number,
                                 ),
-                                SizedBox(height: 20,),
+                                const SizedBox(height: 15),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     height: 35,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            Colors.deepOrangeAccent,
+                                        backgroundColor: Color(0xffb0D6EFD),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                               10), // Adjust the radius as needed
@@ -235,23 +217,29 @@ class _RetrofittingAugmentationScreen
                                         await LoaderUtils.conditionalLoader(
                                             isLoading:
                                                 schemeProvider.isLoading);
-                                        await schemeProvider.saveRetrofitAdditionalInfo(
-                                                userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                                stateId: schemeProvider.stateId!,
-                                                schemeId: schemeProvider.schemeId!,
-                                                isAssessmentDone:
-                                                schemeProvider.selectedLegacyInfraAssessmentId,
-                                                assessmentMethod: '',
-                                                assessmentReason: '',//not found
-                                                pipelineKms: double.parse(schemeProvider.transmissionPipelineKmController.text),
-                                                distributionKms:
-                                                    double.parse(schemeProvider.distributionPipelineKmController.text),
-                                                wtpCapacity: double.parse(schemeProvider.wtpCapacityMldController.text),
-                                                structureNos: int.parse(schemeProvider.storageStructureDetailsController.text),
-                                                structureCapacity: 0.0, // not found
-                                                buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
-                                                onPMGati: schemeProvider.onPmGatishaktiID,
-                                                noReason: schemeProvider.reasonController.text);
+                                        await schemeProvider.saveSourceSurvey(
+                                            userId: _localStorageService.getInt(
+                                                AppConstants.prefUserId)!,
+                                            stateId: schemeProvider.stateId!,
+                                            schemeId: schemeProvider.schemeId!,
+                                            isRecommendShiftToSurface: schemeProvider
+                                                .selectedValueQ1Id,
+                                            studyAccessGroundBeforeSurface:
+                                                schemeProvider
+                                                    .selectedValueQ2Id,
+                                            safeZoneVillages: int.parse(schemeProvider
+                                                .safeController.text),
+                                            criticalZoneVillages: int.parse(
+                                                schemeProvider
+                                                    .criticalController.text),
+                                            semiCriticalZoneVillages: int.parse(
+                                                schemeProvider
+                                                    .semiCriticalController
+                                                    .text),
+                                            groundWaterAnalysisConducted:
+                                                schemeProvider.selectedValueQ3Id,
+                                            waterAllocationFromWRD: int.parse(schemeProvider.waterAllocationController.text));
+
                                         if (schemeProvider.status!) {
                                           ToastHelper.showToastMessage(
                                               schemeProvider.message!,
@@ -259,7 +247,7 @@ class _RetrofittingAugmentationScreen
                                           Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (_) =>
-                                                    SchemeImplementationScreen()),
+                                                    SchemePlanningScreen()),
                                           );
                                         } else {
                                           ToastHelper.showToastMessage(

@@ -48,13 +48,16 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
       final stateId = args['stateId'] as int?;
 
       // You can now use them, or set them in your provider
-      final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
-      if (villageId != null) {
-        vwscProvider.setVillageId(villageId);
-      }
-      if (stateId != null) {
-        vwscProvider.setStateId(stateId);
-      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
+        if (villageId != null) {
+          vwscProvider.setVillageId(villageId);
+        }
+        if (stateId != null) {
+          vwscProvider.setStateId(stateId);
+        }
+      });
     }
   }
 
@@ -142,18 +145,17 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CustomMultiSelectChipQuestion(
+                                Customradiobttn(
                                   question: "1. Water supply frequency:",
-                                  options:
-                                      vwscProvider.waterSupplyFrequencyOptions,
-                                  selectedValues:
-                                      vwscProvider.selectedFrequency,
-                                  onSelectionChanged: (val) {
-                                    vwscProvider.selectedFrequency = val;
-                                    print(
-                                        '------- ${vwscProvider.selectedFrequencyIds}');
-                                  },
+                                  options: vwscProvider.FrequencyLabelOption,
+                                  selectedOption: vwscProvider.selectedFrequency,
+                                  onChanged: (val) {vwscProvider.selectedFrequency = val;
+                                    print('-------selectedFrequencyID ${vwscProvider.selectedFrequencyID}');},
                                 ),
+
+
+
+
                                 Customradiobttn(
                                   question:
                                       "2. Is adequate water quantity reaching all the households?",
@@ -170,10 +172,8 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                   question:
                                       "3. Is adequate water quantity reaching to remote/SC/ST/PVTG groups?",
                                   options: vwscProvider.yesNoOptions,
-                                  selectedOption:
-                                      vwscProvider.selectedPvtgGroups,
-                                  onChanged: (val) {
-                                    vwscProvider.selectedPvtgGroups = val;
+                                  selectedOption: vwscProvider.selectedPvtgGroups,
+                                  onChanged: (val) {vwscProvider.selectedPvtgGroups = val;
                                     print(
                                         'selectedPvtgGroups------- ${vwscProvider.selectedPvtgGroupsId}');
                                   },
@@ -233,7 +233,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                       ),
                                       onPressed: ()async {
                                          LoaderUtils. showLoadingWithMessage(context, isLoading: true, message: "Water Supply Functionality");
-                                        print('selected village ${vwscProvider.villageId}');
+                                        print('selected village ${vwscProvider.villageId} and state ${vwscProvider.stateId}');
                                                     await vwscProvider.saveVwscWaterSupply(userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                             stateId: vwscProvider.stateId!, villageId: vwscProvider.villageId!,
                                             waterSupplyFrequency: 1,

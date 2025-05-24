@@ -1,7 +1,7 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/views/InteractionDWSM/DashboardDWSM.dart';
-import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/AppStyles.dart';
@@ -11,7 +11,7 @@ import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
-import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import '../PartASchemeInfo/PartBSchemePlanningScreen.dart';
 import 'DWSMCommonClass.dart';
 import 'PartBSourceSustainabilityWaterConservation.dart';
 
@@ -130,7 +130,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                             children: [
 
                               Customradiobttn(
-                                question: 'Are monthly DWSM meetings on progress of JJM works being held?',
+                                question: '1. Are monthly DWSM meetings on progress of JJM works being held?',
                                 options: const ['Yes', 'No'],
                                 onChanged: (value) {
                                   setState(() {
@@ -142,13 +142,13 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                               if (selectedValueQ1 == 'Yes') ...[
                                 const SizedBox(height: 8),
                                 Customtxtfeild(
-                                  label: 'How many meetings were held in the last six months?',
+                                  label: '1.1 How many meetings were held in the last six months?',
                                   controller: textController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
                                 CustomCheckBoxQuestion(
-                                  question: 'Quality of Meeting and Record maintenance:',
+                                  question: '1.2 Quality of Meeting and Record maintenance:',
                                   options: const [
                                     'Proper Documentation with actionable decision',
                                     'Partial Documentation',
@@ -164,7 +164,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                               ],
                               const SizedBox(height: 16),
                               CustomCheckBoxQuestion(
-                                question: 'Are District Development Coordination and Monitoring Committee (DISHA) meetings being held regularly?',
+                                question: '2. Are District Development Coordination and Monitoring Committee (DISHA) meetings being held regularly?',
                                 options: const ['Yes', 'No'],
                                 onChanged: (value) {
                                   setState(() {
