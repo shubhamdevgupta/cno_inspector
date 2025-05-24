@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Customtxtfeild extends StatelessWidget {
   final String label;
@@ -20,6 +21,9 @@ class Customtxtfeild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Determine if numeric input
+    final isNumericKeyboard = keyboardType == TextInputType.number;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,6 +37,9 @@ class Customtxtfeild extends StatelessWidget {
           readOnly: readOnly,
           maxLines: maxLines,
           keyboardType: keyboardType,
+          inputFormatters: isNumericKeyboard
+              ? [FilteringTextInputFormatter.digitsOnly]
+              : [],
           decoration: InputDecoration(
             hintText: hintText ?? '',
             contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
