@@ -145,8 +145,8 @@ class _GrievancePartE extends State<GrievancePartE> {
                                     ),
                                     onPressed: () async{
                                       await LoaderUtils.conditionalLoader(isLoading: vwscProvider.isLoading);
-                                      await vwscProvider.saveGrievanceRedressal(userId: _localStorageService.getInt(AppConstants.prefUserId)!, stateId: 32,
-                                          villageId: 21, grievanceMechanismAvailable: vwscProvider.selectedGrievanceMechanismId,
+                                      await vwscProvider.saveGrievanceRedressal(userId: _localStorageService.getInt(AppConstants.prefUserId)!, stateId: vwscProvider.stateId!,
+                                          villageId: vwscProvider.villageId!, grievanceMechanismAvailable: vwscProvider.selectedGrievanceMechanismId,
                                           grievanceTurnAroundTime: vwscProvider.selectedTurnAroundTimeId, registrationTypes: vwscProvider.selectedGrievanceMethodIds,
                                           createdBy: _localStorageService.getInt(AppConstants.prefUserId)!);
                                       if(vwscProvider.status!){
@@ -238,5 +238,25 @@ class _GrievancePartE extends State<GrievancePartE> {
         ),
       ),
     );
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    if (args != null) {
+      final villageId = args['villageId'] as int?;
+      final stateId = args['stateId'] as int?;
+
+      // You can now use them, or set them in your provider
+      final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
+      if (villageId != null) {
+        vwscProvider.setVillageId(villageId);
+      }
+      if (stateId != null) {
+        vwscProvider.setStateId(stateId);
+      }
+    }
   }
 }

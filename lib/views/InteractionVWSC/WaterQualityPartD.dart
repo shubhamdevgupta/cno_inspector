@@ -253,4 +253,25 @@ LocalStorageService _localStorageService =LocalStorageService();
       ),
     );
   }
+
+@override
+void didChangeDependencies() {
+  super.didChangeDependencies();
+
+  final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+  if (args != null) {
+    final villageId = args['villageId'] as int?;
+    final stateId = args['stateId'] as int?;
+
+    // You can now use them, or set them in your provider
+    final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
+    if (villageId != null) {
+      vwscProvider.setVillageId(villageId);
+    }
+    if (stateId != null) {
+      vwscProvider.setStateId(stateId);
+    }
+  }
+}
 }
