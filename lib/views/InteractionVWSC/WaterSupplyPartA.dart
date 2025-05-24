@@ -231,10 +231,8 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                               10), // Adjust the radius as needed
                                         ),
                                       ),
-
-                                      onPressed: () async {
-                                        LoaderUtils.conditionalLoader(
-                                            isLoading: vwscProvider.isLoading);
+                                      onPressed: ()async {
+                                         LoaderUtils. showLoadingWithMessage(context, isLoading: true, message: "Water Supply Functionality");
                                         print('selected village ${vwscProvider.villageId}');
                                                     await vwscProvider.saveVwscWaterSupply(userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                             stateId: vwscProvider.stateId!, villageId: vwscProvider.villageId!,
@@ -259,7 +257,6 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                               vwscProvider.message!,
                                               backgroundColor: Colors.red);
                                         }
-
                                       },
                                       child: Text(
                                         "SAVE & NEXT",
@@ -282,7 +279,8 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                 ),
               );
             },
-          )),
+          )
+      ),
     );
   }
 }

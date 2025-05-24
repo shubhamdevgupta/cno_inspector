@@ -46,7 +46,8 @@ class AuthenticationProvider extends ChangeNotifier {
   Timer? _timer;
 
   Future<void> checkLoginStatus() async {
-    _isLoggedIn = _localStorage.getBool(AppConstants.prefIsLoggedIn) ?? false;
+   // _isLoggedIn = _localStorage.getBool(AppConstants.prefIsLoggedIn) ?? false;
+    _isLoggedIn = true;
     notifyListeners();
   }
 
