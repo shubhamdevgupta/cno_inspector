@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/vwscInfoProvider/VwscProvider.dart';
+import '../../services/LocalStorageService.dart';
+import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
@@ -14,12 +16,14 @@ import 'DashboardVWSC.dart';
 import 'VWSCCommonClass.dart';
 
 class CommunityInvolvementPartB extends StatefulWidget {
+
   @override
   State<CommunityInvolvementPartB> createState() =>
       _CommunityInvolvementPartBState();
 }
 
 class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
+  final LocalStorageService _localStorage = LocalStorageService();
 
   @override
   Widget build(BuildContext context) {
@@ -264,9 +268,9 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                           LoaderUtils. showLoadingWithMessage(context, isLoading: true, message: "Community Involvement & VWSC Functionality");
                                           await vwscProvider
                                               .saveVwscCommunityInvolvement(
-                                              userId: 34483,
-                                              stateId: 32,
-                                              villageId: 503655,
+                                              userId:   _localStorage.getInt(AppConstants.prefUserId)!,
+                                              stateId: vwscProvider.stateId!,
+                                              villageId: vwscProvider.villageId!,
                                               isPaniSamitiFormed: vwscProvider
                                                   .selectedVWSCFormedID,
                                               isVwscBankAccount: vwscProvider
@@ -290,8 +294,9 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                                   .selectedCommunityAwarenessID,
                                               communitySatisfactionWithWq: vwscProvider
                                                   .selectedWaterQualitySatisfactionID,
-                                              createdBy: 34483
+                                              createdBy: _localStorage.getInt(AppConstants.prefUserId)!
                                           );
+
 
 
                                           if (vwscProvider.status!) {

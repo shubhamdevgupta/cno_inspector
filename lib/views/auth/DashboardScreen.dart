@@ -24,7 +24,7 @@ class _DashboardscreenState extends State<Dashboardscreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(34483, 0);
+      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!, 0);
     });
   }
 

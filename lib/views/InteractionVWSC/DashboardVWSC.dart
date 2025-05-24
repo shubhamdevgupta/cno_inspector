@@ -29,7 +29,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(34483, 3);
+
+      await dashboardProvider.fetchDashboardData( _localStorage.getInt(AppConstants.prefUserId)!, 3);
       _localStorage.saveInt("villageId", dashboardProvider.dashboardList.first.villageId);
     });
   }
