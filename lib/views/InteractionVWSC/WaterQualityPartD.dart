@@ -8,6 +8,7 @@ import '../../utils/CommonScreen.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/customtxtfeild.dart';
 import 'DashboardVWSC.dart';
+import 'VWSCCommonClass.dart';
 
 class WaterQualityPartD extends StatefulWidget {
   @override
@@ -47,7 +48,7 @@ class _WaterQualityPartD extends State<WaterQualityPartD> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Interaction with VWSC",
+              "Water Quality Monitoring",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -89,7 +90,7 @@ class _WaterQualityPartD extends State<WaterQualityPartD> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Vwsccommonclass(
                         no: 4,
                       ),
 

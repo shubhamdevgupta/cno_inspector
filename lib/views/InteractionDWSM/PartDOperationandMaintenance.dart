@@ -12,6 +12,7 @@ import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
 import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 
 
@@ -62,7 +63,7 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
+              "Operation & Maintenance (O&M)",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -74,7 +75,7 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
+                    MaterialPageRoute(builder: (context) => Dashboarddwsm()),
                         (route) => false,
                   );
                 }
@@ -105,7 +106,7 @@ class _PartDoperationandmaintenance extends State<PartDoperationandmaintenance> 
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Dwsmcommonclass(
                         no: 4,
                       ),
                       Card(

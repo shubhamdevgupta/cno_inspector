@@ -7,6 +7,7 @@ import '../../utils/CommonScreen.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/MultiSelectionlist.dart';
 import 'DashboardVWSC.dart';
+import 'VWSCCommonClass.dart';
 
 class GrievancePartE extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _GrievancePartE extends State<GrievancePartE> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Interaction with VWSC",
+              "Grievance Redressal",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -84,7 +85,7 @@ class _GrievancePartE extends State<GrievancePartE> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Vwsccommonclass(
                         no: 5,
                       ),
                       Padding(

@@ -8,6 +8,7 @@ import '../../utils/CustomTextField.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import 'PartBSchemePlanningScreen.dart';
+import 'SchemeInfoCommonScreen.dart';
 
 class SourceScreenQuestions extends StatefulWidget {
   const SourceScreenQuestions({Key? key}) : super(key: key);
@@ -55,7 +56,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection",
+              "Source",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -98,7 +99,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Schemeinfocommonscreen(
                         no: 1,
                       ),
                       Card(
@@ -122,18 +123,6 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                           child:Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  'A. Source',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ),
-                              // 1. Source finding committee recommended shift to surface water? (Yes/No)
                               Customradiobttn(
                                 question: '1. If the source is surface water, then, did the Source finding committee recommend the shift to surface water?',
                                 options: const ['Yes', 'No'],

@@ -12,6 +12,7 @@ import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
 import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 
 
@@ -61,7 +62,7 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
+              "Source Sustainability and Water Conservation",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -73,7 +74,7 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
+                    MaterialPageRoute(builder: (context) => Dashboarddwsm()),
                         (route) => false,
                   );
                 }
@@ -104,7 +105,7 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Dwsmcommonclass(
                         no: 2,
                       ),
                       Card(

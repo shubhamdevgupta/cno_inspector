@@ -8,6 +8,7 @@ import 'package:cno_inspection/views/InteractionDWSM/PartBSourceSustainabilityWa
 import 'package:cno_inspection/views/InteractionDWSM/PartCMonitoringQualityandLabInfrastructure.dart';
 import 'package:cno_inspection/views/InteractionDWSM/PartDOperationandMaintenance.dart';
 import 'package:cno_inspection/views/InteractionDWSM/PartEQualityAssuranceandCommissioning.dart';
+import 'package:cno_inspection/views/InteractionDWSM/PartFPublicComplaintsandGrievance.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityFeedbackPartC.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
 import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
@@ -81,6 +82,7 @@ class MyApp extends StatelessWidget {
         AppConstants.navigateToMonitoringQuality: (context) => MonitioringQuality(),
         AppConstants.navigateToOperationandMaintance: (context) => PartDoperationandmaintenance(),
         AppConstants.navigateToQualityAssurance: (context) => PartEQualityAssuranceCommissioning(),
+        AppConstants.navigateToPartFPublicCompliant: (context) => PartFPublicCompliant(),
 
         AppConstants.navigateToWaterSupplyPartA: (context) => WaterSupplyPartA(),
         AppConstants.navigateToCommunityInvolvementPartB: (context) => CommunityInvolvementPartB(),
