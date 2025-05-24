@@ -30,6 +30,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
       await dashboardProvider.fetchDashboardData(34483, 3);
+      _localStorage.saveInt("villageId", dashboardProvider.dashboardList.first.villageId);
     });
   }
 

@@ -1,6 +1,7 @@
 import 'package:cno_inspection/provider/authentication_provider.dart';
 import 'package:cno_inspection/provider/dashboardProvider.dart';
 import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
+
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
@@ -45,6 +46,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProvider(create: (_) => Vwscprovider()),
         ChangeNotifierProvider(create: (_) => Schemeprovider()),
+
       ],
       child: MyApp(),
     ),
