@@ -17,6 +17,7 @@ class Vwscprovider extends ChangeNotifier {
 
   BaseResponse? baseResponse;
 
+
   int? _villageId;
 
   int? get villageId => _villageId;
@@ -45,8 +46,9 @@ class Vwscprovider extends ChangeNotifier {
   };
 
   // 2. Expose just the labels for the UI
-  List<String> get waterSupplyFrequencyOptions =>
-      waterSupplyFrequencyMap.keys.toList();
+
+  List<String> get waterSupplyFrequencyOptions => waterSupplyFrequencyMap.keys.toList();
+
 
   // 3. Track selected labels
   List<String> _selectedFrequencyLabels = [];
@@ -74,6 +76,224 @@ class Vwscprovider extends ChangeNotifier {
   List<String> get yesNoOptions => yesNoMap.keys.toList();
 
   // Selected value for household water adequacy (label)
+
+
+
+////////
+  String? _selectedVWSCFormed; // Yes / No
+
+  String? get selectedVWSCFormed => _selectedVWSCFormed;
+
+  set selectedVWSCFormed(String? value) {
+    _selectedVWSCFormed = value;
+    notifyListeners();
+  }
+
+  //
+  int get selectedVWSCFormedID => yesNoMap[_selectedVWSCFormed] ?? 0;
+
+
+
+    String? _selectedVWSCBankAccount; // Yes / No
+
+  String? get selectedVWSCBankAccount => _selectedVWSCBankAccount;
+
+  set selectedVWSCBankAccount(String? value) {
+    _selectedVWSCBankAccount = value;
+    notifyListeners();
+  }
+
+  //
+  int get selectedVWSCBankAccountID => yesNoMap[_selectedVWSCBankAccount] ?? 0;
+
+
+
+
+    String? _selectedAsBuiltDrawing; // Yes / No
+
+  String? get selectedAsBuiltDrawing => _selectedAsBuiltDrawing;
+
+  set selectedAsBuiltDrawing(String? value) {
+    _selectedAsBuiltDrawing = value;
+    notifyListeners();
+  }
+
+  //
+  int get selectedAsBuiltDrawingID => yesNoMap[_selectedAsBuiltDrawing] ?? 0;
+
+
+
+  String? _selectedVWSCMeetingConducted; // Yes / No
+
+  String? get selectedVWSCMeetingConducted => _selectedVWSCMeetingConducted;
+
+  set selectedVWSCMeetingConducted(String? value) {
+    _selectedVWSCMeetingConducted = value;
+    notifyListeners();
+  }
+
+  //
+  int get selectedVWSCMeetingConductedID => yesNoMap[_selectedAsBuiltDrawing] ?? 0;
+
+
+
+
+  String? _selectedVWSCInvolvement; // Yes / No
+
+  String? get selectedVWSCInvolvement => _selectedVWSCInvolvement;
+
+  set selectedVWSCInvolvement(String? value) {
+    _selectedVWSCInvolvement = value;
+    notifyListeners();
+  }
+  //
+  final Map<String, int> VwscGPInvolment = {
+    "Active": 1,
+    "Limited": 2,"No Involvement": 3,"VWSC not found": 4,
+  };
+
+  //
+  int get selectedVWSCInvolvementID => VwscGPInvolment[_selectedVWSCInvolvement] ?? 0;
+
+
+  String? _selectedVWSCRecordsAvailable; // Yes / No
+
+  String? get selectedVWSCRecordsAvailable => _selectedVWSCRecordsAvailable;
+
+  set selectedVWSCRecordsAvailable(String? value) {
+    _selectedVWSCRecordsAvailable = value;
+    notifyListeners();
+  }
+
+
+  //
+  int get selectedVWSCRecordsAvailableID => yesNoMap[_selectedVWSCRecordsAvailable] ?? 0;
+
+
+
+  String? _selectedVWSCOMInvolved; // Yes / No
+
+  String? get selectedVWSCOMInvolved => _selectedVWSCOMInvolved;
+
+  set selectedVWSCOMInvolved(String? value) {
+    _selectedVWSCOMInvolved = value;
+    notifyListeners();
+  }
+
+
+  final Map<String, int> VWSCOMInvolvedID = {
+    "Active": 1,
+    "Limited": 2,"No": 3,"Not Applicable": 4,
+  };
+  //
+  int get selectedVWSCOMInvolvedID => VWSCOMInvolvedID[_selectedVWSCOMInvolved] ?? 0;
+
+
+  String? _selectedSchemeHandover; // Yes / No
+
+  String? get selectedSchemeHandover => _selectedSchemeHandover;
+
+  set selectedSchemeHandover(String? value) {
+    _selectedSchemeHandover = value;
+    notifyListeners();
+  }
+
+
+  final Map<String, int> SchemeHandover = {
+    "Yes": 1,
+    "No": 2,"Not Applicable": 3,
+  };
+  //
+  int get selectedSchemeHandoverID => SchemeHandover[_selectedSchemeHandover] ?? 0;
+
+
+
+  String? _selectedOMArrangements; // Yes / No
+
+  String? get selectedOMArrangements => _selectedOMArrangements;
+
+  set selectedOMArrangements(String? value) {
+    _selectedOMArrangements = value;
+    notifyListeners();
+  }
+
+
+  final Map<String, int> OMArrangements = {
+    "VWSC": 1,
+    "PHED": 2,"Outsourced": 3,"No arrangement": 4,
+  };
+  //
+  int get selectedOMArrangementsID => OMArrangements[_selectedOMArrangements] ?? 0;
+
+
+
+
+  String? _selectedCommunityAwareness; // Yes / No
+
+  String? get selectedCommunityAwareness => _selectedOMArrangements;
+
+  set selectedCommunityAwareness(String? value) {
+    _selectedCommunityAwareness = value;
+    notifyListeners();
+  }
+
+
+  final Map<String, int> CommunityAwarenessID = {
+    "Well informed": 1,
+    "Some awareness": 2,"No awareness": 3
+  };
+  //
+  int get selectedCommunityAwarenessID => CommunityAwarenessID[_selectedCommunityAwareness] ?? 0;
+
+
+
+
+
+  String? _selectedVWSCMeetingFrequency; // Yes / No
+
+  String? get selectedVWSCMeetingFrequency => _selectedVWSCMeetingFrequency;
+
+  set selectedVWSCMeetingFrequency(String? value) {
+    _selectedVWSCMeetingFrequency = value;
+    notifyListeners();
+  }
+
+  //
+  final Map<String, int> VWSCMeetingFrequency = {
+    "Weekly": 1,
+    "Monthly": 2,"Quarterly": 3,"Other": 4,
+  };
+  int get selectedVWSCMeetingFrequencyID => VWSCMeetingFrequency[_selectedVWSCMeetingFrequency] ?? 0;
+
+
+
+
+  String? _selectedWaterQualitySatisfaction; // Yes / No
+
+  String? get selectedWaterQualitySatisfaction => _selectedWaterQualitySatisfaction;
+
+  set selectedWaterQualitySatisfaction(String? value) {
+    _selectedWaterQualitySatisfaction = value;
+    notifyListeners();
+  }
+
+  //
+  final Map<String, int> WaterQualitySatisfaction = {
+    "Satisfied": 1,
+    "Partially Satisfied": 2,"Dissatisfied": 3,"Not Interacted": 4,
+  };
+  int get selectedWaterQualitySatisfactionID => WaterQualitySatisfaction[_selectedWaterQualitySatisfaction] ?? 0;
+
+
+
+
+
+
+
+
+
+
+
   String? _selectedHouseholdWater;
   String? get selectedHouseholdWater => _selectedHouseholdWater;
 
@@ -306,6 +526,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
 
+
   Map<String, int> ftkTestingFrequencyMap = {
     'Regularly tested': 1,
     'Occasionally': 2,
@@ -454,8 +675,6 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
   int get selectedTurnAroundTimeId => turnAroundTimeMap[_selectedTurnAroundTime] ?? 0;
-
-
 
   Future<bool> saveGrievanceRedressal({
     required int userId,

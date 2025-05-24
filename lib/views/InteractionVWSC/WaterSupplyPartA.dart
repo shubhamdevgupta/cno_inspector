@@ -1,5 +1,7 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
+
 import 'package:cno_inspection/services/LocalStorageService.dart';
+
 import 'package:cno_inspection/utils/LoaderUtils.dart';
 import 'package:cno_inspection/utils/toast_helper.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/AppConstants.dart';
+
 import '../../utils/CommonScreen.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
@@ -184,6 +187,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                 Customradiobttn(
                                   question:
                                       "4. Whether water reaches tail-end households:",
+
                                   options: vwscProvider.tailEndOptions,
                                   selectedOption: vwscProvider.selectedTailEnd,
                                   onChanged: (val) {
@@ -227,6 +231,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                               10), // Adjust the radius as needed
                                         ),
                                       ),
+
                                       onPressed: () async {
                                         LoaderUtils.conditionalLoader(
                                             isLoading: vwscProvider.isLoading);
@@ -243,6 +248,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                           ToastHelper.showToastMessage(
                                               vwscProvider.message!,
                                               backgroundColor: Colors.green);
+
                                           Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (_) =>
@@ -253,6 +259,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                               vwscProvider.message!,
                                               backgroundColor: Colors.red);
                                         }
+
                                       },
                                       child: Text(
                                         "SAVE & NEXT",
