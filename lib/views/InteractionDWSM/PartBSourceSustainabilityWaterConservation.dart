@@ -3,7 +3,9 @@ import 'package:cno_inspection/views/InteractionDWSM/PartCMonitoringQualityandLa
 import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
@@ -24,18 +26,25 @@ class SourceSustainablitiyWasterConservation extends StatefulWidget {
 }
 
 class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiyWasterConservation> {
-  String? sourceSustainability; // Actively, Limited, Not Promoted
-  String? groundwaterProtection; // Yes, Partially, No
-  String? rechargeStructureImplemented; // Yes, In Progress, No
-  String? rechargeReason = ""; // only if 'No' selected here
-  String? impactStudies; // Yes - Completed, Planned, No
-
-  TextEditingController rechargeReasonController = TextEditingController();
 
   @override
-  void dispose() {
-    rechargeReasonController.dispose();
-    super.dispose();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final args =
+    ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    if (args != null) {
+      final districtid = args['districtid'] as int?;
+      final stateId = args['stateId'] as int?;
+      final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+      if (districtid != null) {
+        dwsmProvider.setDistrictId(districtid);
+      }
+      if (stateId != null) {
+        dwsmProvider.setStateId(stateId);
+      }
+    }
   }
 
   @override
@@ -96,9 +105,9 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
             ),
             elevation: 5,
           ),
-          body: Stack(
-            children: [
-              SingleChildScrollView(
+          body: Consumer<Dwsmprovider>(
+            builder: (context,dwsmProvider,child){
+              return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
                       top: 20, left: 6, right: 6, bottom: 5),
@@ -130,43 +139,43 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                             children: [
                               Customradiobttn(
                                 question: "1. Are source sustainability measures being promoted (e.g., groundwater recharge, reuse of treated wastewater)?",
-                                options: ["Actively", "Limited", "Not Promoted"],
-                                selectedOption: sourceSustainability,
-                                onChanged: (val) => setState(() => sourceSustainability = val),
+                                options: dwsmProvider.sourceSustainabilityMap.keys.toList(),
+                                selectedOption: dwsmProvider.sourceSustainability,
+                                onChanged: (val) => dwsmProvider.sourceSustainability = val,
                               ),
-                              SizedBox(height: 12),
+                              const SizedBox(height: 12),
+
+                              // Q2
                               Customradiobttn(
                                 question: "2. Are piped water schemes based on groundwater sources protected from contamination?",
                                 options: ["Yes", "Partially", "No"],
-                                selectedOption: groundwaterProtection,
-                                onChanged: (val) => setState(() => groundwaterProtection = val),
+                                selectedOption: dwsmProvider.groundwaterProtection,
+                                onChanged: (val) => dwsmProvider.groundwaterProtection = val,
                               ),
-                              SizedBox(height: 12),
+                              const SizedBox(height: 12),
+
+                              // Q3
                               Customradiobttn(
                                 question: "3. Is at least one recharge structure per groundwater source implemented?",
                                 options: ["Yes", "In Progress", "No"],
-                                selectedOption: rechargeStructureImplemented,
-                                onChanged: (val) {
-                                  setState(() {
-                                    rechargeStructureImplemented = val;
-                                    if (val != "No") {
-                                      rechargeReasonController.clear();
-                                    }
-                                  });
-                                },
+                                selectedOption: dwsmProvider.rechargeStructureImplemented,
+                                onChanged: (val) => dwsmProvider.rechargeStructureImplemented = val,
                               ),
-                              if (rechargeStructureImplemented == "No")
+                              if (dwsmProvider.rechargeStructureImplemented == "No") ...[
+                                const SizedBox(height: 8),
                                 Customtxtfeild(
                                   label: "If no, reason:",
-                                  controller: rechargeReasonController,
-                                  maxLines: 2,
+                                  controller: dwsmProvider.rechargeReasonController,
                                 ),
-                              SizedBox(height: 12),
+                              ],
+                              const SizedBox(height: 12),
+
+                              // Q4
                               Customradiobttn(
                                 question: "4. Are any impact studies or assessments conducted on source sustainability efforts?",
                                 options: ["Yes – Completed", "Planned", "No"],
-                                selectedOption: impactStudies,
-                                onChanged: (val) => setState(() => impactStudies = val),
+                                selectedOption: dwsmProvider.impactStudies,
+                                onChanged: (val) => dwsmProvider.impactStudies = val,
                               ),
                               SizedBox(
                                 height: 10,
@@ -206,9 +215,10 @@ class _SourceSustainablitiyWasterConservation extends State<SourceSustainablitiy
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
+              );
+            },
+
+          )
         ),
       ),
     );
