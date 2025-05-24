@@ -3,7 +3,9 @@ import 'package:cno_inspection/views/InteractionDWSM/PartDOperationandMaintenanc
 import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
@@ -33,6 +35,25 @@ class _MonitioringQuality extends State<MonitioringQuality> {
   void dispose() {
     testingManagedController.dispose();
     super.dispose();
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final args =
+    ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    if (args != null) {
+      final districtid = args['districtid'] as int?;
+      final stateId = args['stateId'] as int?;
+      final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+      if (districtid != null) {
+        dwsmProvider.setDistrictId(districtid);
+      }
+      if (stateId != null) {
+        dwsmProvider.setStateId(stateId);
+      }
+    }
   }
 
   @override

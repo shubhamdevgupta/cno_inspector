@@ -5,18 +5,22 @@ class Schemeprovider extends ChangeNotifier {
   final SchemeRepositoy _schemeRepositoy = SchemeRepositoy();
 
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   String? _message;
+
   String? get message => _message;
 
   bool? _status;
+
   bool? get status => _status;
 
   final Map<String, int> yesNoMap = {
     "Yes": 1,
     "No": 2,
   };
+
   // Private variables to hold selected values
   String? _selectedValueQ1;
   String? _selectedValueQ2;
@@ -48,25 +52,32 @@ class Schemeprovider extends ChangeNotifier {
     _selectedValueQ3 = value;
     notifyListeners();
   }
-  int get selectedValueQ3Id => yesNoMap[_selectedValueQ3] ?? 0;
-  int get selectedValueQ2Id => yesNoMap[_selectedValueQ2] ?? 0;
-  int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? 0;
 
+  int get selectedValueQ3Id => yesNoMap[_selectedValueQ3] ?? 0;
+
+  int get selectedValueQ2Id => yesNoMap[_selectedValueQ2] ?? 0;
+
+  int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? 0;
 
   final TextEditingController safeController = TextEditingController();
   final TextEditingController criticalController = TextEditingController();
   final TextEditingController semiCriticalController = TextEditingController();
-  final TextEditingController waterAllocationController = TextEditingController();
+  final TextEditingController waterAllocationController =
+      TextEditingController();
 
   int? _schemeId;
+
   int? get schemeId => _schemeId;
+
   void setSchemeId(int id) {
     _schemeId = id;
     notifyListeners();
   }
 
   int? _stateId;
+
   int? get stateId => _stateId;
+
   void setStateId(int id) {
     _stateId = id;
     notifyListeners();
@@ -121,31 +132,39 @@ class Schemeprovider extends ChangeNotifier {
   String? _noSurvey;
 
   String? get topoSurvey => _topoSurvey;
+
   set topoSurvey(String? value) {
     _topoSurvey = value;
     notifyListeners();
   }
 
   String? get gpsSurvey => _gpsSurvey;
+
   set gpsSurvey(String? value) {
     _gpsSurvey = value;
     notifyListeners();
   }
 
   String? get googleEarthSurvey => _googleEarthSurvey;
+
   set googleEarthSurvey(String? value) {
     _googleEarthSurvey = value;
     notifyListeners();
   }
 
   String? get noSurvey => _noSurvey;
+
   set noSurvey(String? value) {
     _noSurvey = value;
     notifyListeners();
   }
+
   int get topoSurveyID => yesNoMap[_topoSurvey] ?? 0;
+
   int get gpsSurveyID => yesNoMap[_gpsSurvey] ?? 0;
+
   int get googleEarthSurveyID => yesNoMap[_googleEarthSurvey] ?? 0;
+
   int get noSurveyID => yesNoMap[_noSurvey] ?? 0;
 
   // --------------------
@@ -159,21 +178,26 @@ class Schemeprovider extends ChangeNotifier {
 
   // --------------------
   // 4. Pipe Material Selection (Text Fields)
-  final TextEditingController rockyPipeMaterialController = TextEditingController();
-  final TextEditingController soilPipeMaterialController = TextEditingController();
+  final TextEditingController rockyPipeMaterialController =
+      TextEditingController();
+  final TextEditingController soilPipeMaterialController =
+      TextEditingController();
 
   // --------------------
   // 5. On-Spot Excavation Check (Radio + Conditional Text)
   String? _onSpotExcavation;
+
   String? get onSpotExcavation => _onSpotExcavation;
+
   set onSpotExcavation(String? value) {
     _onSpotExcavation = value;
     notifyListeners();
   }
+
   int get onSpotExcavationID => yesNoMap[_onSpotExcavation] ?? 0;
 
-
-  final TextEditingController deviationReasonController = TextEditingController();
+  final TextEditingController deviationReasonController =
+      TextEditingController();
 
   Future<bool> saveSchemePlanning({
     required int userId,
@@ -224,42 +248,54 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
-
   // Radio 1: Legacy Infrastructure Assessment
   String? _legacyInfraAssessment;
+
   String? get legacyInfraAssessment => _legacyInfraAssessment;
+
   set legacyInfraAssessment(String? value) {
     _legacyInfraAssessment = value;
     notifyListeners();
   }
-  int get selectedLegacyInfraAssessmentId => yesNoMap[_legacyInfraAssessment] ?? 0;
+
+  int get selectedLegacyInfraAssessmentId =>
+      yesNoMap[_legacyInfraAssessment] ?? 0;
 
   // TextField Controllers: Legacy Infrastructure Usage
-  final TextEditingController transmissionPipelineKmController = TextEditingController();
-  final TextEditingController distributionPipelineKmController = TextEditingController();
-  final TextEditingController wtpCapacityMldController = TextEditingController();
-  final TextEditingController storageStructureDetailsController = TextEditingController();
+  final TextEditingController transmissionPipelineKmController =
+      TextEditingController();
+  final TextEditingController distributionPipelineKmController =
+      TextEditingController();
+  final TextEditingController wtpCapacityMldController =
+      TextEditingController();
+  final TextEditingController storageStructureDetailsController =
+      TextEditingController();
 
   // Radio 2: As-built Drawing Availability
   String? _asBuiltDrawingAvailability;
+
   String? get asBuiltDrawingAvailability => _asBuiltDrawingAvailability;
+
   set asBuiltDrawingAvailability(String? value) {
     _asBuiltDrawingAvailability = value;
     notifyListeners();
   }
 
-  int get asBuiltDrawingAvailabilityID => yesNoMap[_asBuiltDrawingAvailability] ?? 0;
+  int get asBuiltDrawingAvailabilityID =>
+      yesNoMap[_asBuiltDrawingAvailability] ?? 0;
 
   // Radio 3: Has it been digitized and uploaded on PM Gatishakti?
   String? _onPmGatishakti;
+
   String? get onPmGatiShakti => _onPmGatishakti;
+
   set onPmGatiShakti(String? value) {
     _onPmGatishakti = value;
     notifyListeners();
   }
+
   int get onPmGatishaktiID => yesNoMap[_onPmGatishakti] ?? 0;
   final TextEditingController reasonController = TextEditingController();
-
 
   Future<bool> saveRetrofitAdditionalInfo({
     required int userId,
@@ -830,6 +866,445 @@ class Schemeprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  String? _quesPartEa1;
+  String? _quesPartEa2;
+  String? _quesPartEa3;
+  String? _quesPartEa4;
+  String? _quesPartEa5;
+  String? _quesPartEa6;
+  String? _quesPartEa7;
+  String? _quesPartEa8;
+  String? _quesPartEa9;
+  String? _quesPartEa10;
+  String? _quesPartEa11;
+  String? _quesPartEa12;
+  String? _quesPartEa13;
+  String? _quesPartEa14;
+  String? _quesPartEa15;
+
+  String? _quesPartEb1;
+  String? _quesPartEb2;
+  String? _quesPartEb3;
+
+  String? _quesPartE2;
+  String? _quesPartE3;
+  String? _quesPartE4;
+  String? _quesPartE5;
+  String? _quesPartE6;
+  String? _quesPartE7;
+  String? _quesPartE8;
+  String? _quesPartE9;
+
+  String? get getSelectedPartEa1 => _quesPartEa1;
+
+  String? get getSelectedPartEa2 => _quesPartEa2;
+
+  String? get getSelectedPartEa3 => _quesPartEa3;
+
+  String? get getSelectedPartEa4 => _quesPartEa4;
+
+  String? get getSelectedPartEa5 => _quesPartEa5;
+
+  String? get getSelectedPartEa6 => _quesPartEa6;
+
+  String? get getSelectedPartEa7 => _quesPartEa7;
+
+  String? get getSelectedPartEa8 => _quesPartEa8;
+
+  String? get getSelectedPartEa9 => _quesPartEa9;
+
+  String? get getSelectedPartEa10 => _quesPartEa10;
+
+  String? get getSelectedPartEa11 => _quesPartEa11;
+
+  String? get getSelectedPartEa12 => _quesPartEa12;
+
+  String? get getSelectedPartEa13 => _quesPartEa13;
+
+  String? get getSelectedPartEa14 => _quesPartEa14;
+
+  String? get getSelectedPartEa15 => _quesPartEa15;
+
+  String? get getSelectedPartEb1 => _quesPartEb1;
+
+  String? get getSelectedPartEb2 => _quesPartEb2;
+
+  String? get getSelectedPartEb3 => _quesPartEb3;
+
+  String? get getSelectedPartE2 => _quesPartE2;
+
+  String? get getSelectedPartE3 => _quesPartE3;
+
+  String? get getSelectedPartE4 => _quesPartE4;
+
+  String? get getSelectedPartE5 => _quesPartE5;
+
+  String? get getSelectedPartE6 => _quesPartE6;
+
+  String? get getSelectedPartE7 => _quesPartE7;
+
+  String? get getSelectedPartE8 => _quesPartE8;
+
+  String? get getSelectedPartE9 => _quesPartE9;
+
+  set setQuesPartEa1(String? value) {
+    _quesPartEa1 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa2(String? value) {
+    _quesPartEa2 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa3(String? value) {
+    _quesPartEa3 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa4(String? value) {
+    _quesPartEa4 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa5(String? value) {
+    _quesPartEa5 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa6(String? value) {
+    _quesPartEa6 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa7(String? value) {
+    _quesPartEa7 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa8(String? value) {
+    _quesPartEa8 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa9(String? value) {
+    _quesPartEa9 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa10(String? value) {
+    _quesPartEa10 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa11(String? value) {
+    _quesPartEa11 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa12(String? value) {
+    _quesPartEa12 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa13(String? value) {
+    _quesPartEa13 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa14(String? value) {
+    _quesPartEa14 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEa15(String? value) {
+    _quesPartEa15 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEb1(String? value) {
+    _quesPartEb1 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEb2(String? value) {
+    _quesPartEb2 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartEb3(String? value) {
+    _quesPartEb3 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartE2(String? value) {
+    _quesPartE2 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartE3(String? value) {
+    _quesPartE3 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartE4(String? value) {
+    _quesPartE4 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartE5(String? value) {
+    _quesPartE5 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartE6(String? value) {
+    _quesPartE6 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartE7(String? value) {
+    _quesPartE7 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartE8(String? value) {
+    _quesPartE8 = value;
+    notifyListeners();
+  }
+
+  set setQuesPartE9(String? value) {
+    _quesPartE9 = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partEa1 => yesNoMap[_quesPartEa1] ?? 0;
+
+  int get selectedId_partEa2 => yesNoMap[_quesPartEa2] ?? 0;
+
+  int get selectedId_partEa3 => yesNoMap[_quesPartEa3] ?? 0;
+
+  int get selectedId_partEa4 => yesNoMap[_quesPartEa4] ?? 0;
+
+  int get selectedId_partEa5 => yesNoMap[_quesPartEa5] ?? 0;
+
+  int get selectedId_partEa6 => yesNoMap[_quesPartEa6] ?? 0;
+
+  int get selectedId_partEa7 => yesNoMap[_quesPartEa7] ?? 0;
+
+  int get selectedId_partEa8 => yesNoMap[_quesPartEa8] ?? 0;
+
+  int get selectedId_partEa9 => yesNoMap[_quesPartEa9] ?? 0;
+
+  int get selectedId_partEa10 => yesNoMap[_quesPartEa10] ?? 0;
+
+  int get selectedId_partEa11 => yesNoMap[_quesPartEa11] ?? 0;
+
+  int get selectedId_partEa12 => yesNoMap[_quesPartEa12] ?? 0;
+
+  int get selectedId_partEa13 => yesNoMap[_quesPartEa13] ?? 0;
+
+  int get selectedId_partEa14 => yesNoMap[_quesPartEa14] ?? 0;
+
+  int get selectedId_partEa15 => yesNoMap[_quesPartEa15] ?? 0;
+
+  int get selectedId_partEb1 => yesNoMap[_quesPartEb1] ?? 0;
+
+  int get selectedId_partEb2 => yesNoMap[_quesPartEb2] ?? 0;
+
+  int get selectedId_partEb3 => yesNoMap[_quesPartEb3] ?? 0;
+
+  int get selectedId_partE2 => yesNoMap[_quesPartE2] ?? 0;
+
+  int get selectedId_partE3 => yesNoMap[_quesPartE3] ?? 0;
+
+  int get selectedId_partE4 => yesNoMap[_quesPartE4] ?? 0;
+
+  int get selectedId_partE5 => yesNoMap[_quesPartE5] ?? 0;
+
+  int get selectedId_partE6 => yesNoMap[_quesPartE6] ?? 0;
+
+  int get selectedId_partE7 => yesNoMap[_quesPartE7] ?? 0;
+
+  int get selectedId_partE8 => yesNoMap[_quesPartE8] ?? 0;
+
+  int get selectedId_partE9 => yesNoMap[_quesPartE9] ?? 0;
+
+  final Map<String, int> question10Map = {
+    "Pipelines without proper depth": 1,
+    "Pipelines leaking": 2,
+    "OHT leaking": 3,
+    "Cracks in RCC works": 4,
+    "Water connections in drains": 5,
+    "Others": 6
+  };
+
+  String? _quesPartE10;
+
+  String? get getSelectedPartE10 => _quesPartE10;
+
+  set selectedPartE10(String? value) {
+    _quesPartE10 = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partE10 => question10Map[_quesPartE10] ?? 0;
+
+  final Map<String, int> question11Map = {
+    "Rectification/Demolition Done": 1,
+    "Partial Action": 2,
+    "No Action": 3,
+    "Not Known": 4
+  };
+  String? _quesPartE11;
+
+  String? get getSelectedPartE11 => _quesPartE11;
+
+  set selectedPartE11(String? value) {
+    _quesPartE11 = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partE11 => question11Map[_quesPartE11] ?? 0;
+
+  final Map<String, int> question12Map = {
+    "Regularly": 1,
+    "Occasionally": 2,
+    "No": 3,
+    "Not Known": 4
+  };
+
+  String? _quesPartE12;
+
+  String? get getSelectedPartE12 => _quesPartE12;
+
+  set selectedPartE12(String? value) {
+    _quesPartE12 = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partE12 => question12Map[_quesPartE12] ?? 0;
+
+  String? _quesPartE13a;
+
+  String? get getSelectedPartE13a => _quesPartE13a;
+
+  set selectedPartE13a(String? value) {
+    _quesPartE13a = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partE13a => yesNoMap[_quesPartE13a] ?? 0;
+
+  //
+
+  String? _quesPartE13b;
+
+  String? get quesPartE13b => _quesPartE13b;
+
+  set quesPartE13b(String? value) {
+    _quesPartE13b = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partE13b => yesNoMap[_quesPartE13b] ?? 0;
+
+  final Map<String, int> question14Map = {
+    "Hydrotesting reports": 1,
+    "Construction material quality reports ": 2,
+    "Not Provided": 3,
+  };
+
+  String? _quesPartE14;
+
+  String? get quesPartE14 => _quesPartE14;
+
+  set quesPartE14(String? value) {
+    _quesPartE14 = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partE14 => question14Map[_quesPartE14] ?? 0;
+
+  final Map<String, int> question15Map = {
+    "Frequently ": 1,
+    "Stage-wise ": 2,
+    "Before payment ": 3,
+    "Never": 4,
+  };
+
+  String? _quesPartE15;
+
+  String? get quesPartE15 => _quesPartE15;
+
+  set quesPartE15(String? value) {
+    _quesPartE15 = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partE15 => question15Map[_quesPartE15] ?? 0;
+
+  ////
+  final Map<String, int> question16Map = {
+    "Frequently ": 1,
+    "Stage-wise ": 2,
+    "Before payment ": 3,
+    "Never": 4,
+  };
+
+  String? _quesPartE16;
+
+  String? get quesPartE16 => _quesPartE16;
+
+  set quesPartE16(String? value) {
+    _quesPartE16 = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partE16 => question16Map[_quesPartE16] ?? 0;
+
+
+  ////
+  final Map<String, int> question17Map = {
+
+      "Yes":1,
+      "No":2,
+      "Partially":3,
+      "Not Verified":4,
+      "Work is in progress":5
+
+  };
+
+  String? _quesPartE17;
+
+  String? get quesPartE17 => _quesPartE17;
+
+  set quesPartE17(String? value) {
+    _quesPartE17 = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partE17 => question17Map[_quesPartE17] ?? 0;
+
+
+
+  ////
+  final Map<String, int> question18Map = {
+
+    "Yes":1, "No":2, "NA":3
+
+  };
+
+  String? _quesPartE18;
+
+  String? get quesPartE18 => _quesPartE18;
+
+  set quesPartE18(String? value) {
+    _quesPartE18 = value;
+    notifyListeners();
+  }
+
+  int get selectedId_partE18 => question18Map[_quesPartE18] ?? 0;
 
 
 

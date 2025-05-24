@@ -27,7 +27,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(34483, 2);
+      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!, 2);
     });
   }
 
@@ -145,7 +145,12 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             Navigator.pushReplacementNamed(
                                 context,
                                 AppConstants
-                                    .navigateToCoordinationPlanningScreen);
+                                    .navigateToCoordinationPlanningScreen,
+                                arguments: {
+                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
+                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                }
+                            );
                           },
                         ),
                         SizedBox(
@@ -160,7 +165,11 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             Navigator.pushReplacementNamed(
                                 context,
                                 AppConstants
-                                    .navigateToSourceSustainablitiyWasterConservation);
+                                    .navigateToSourceSustainablitiyWasterConservation,
+                                arguments: {
+                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
+                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                });
                           },
                         ),
                         SizedBox(
@@ -173,7 +182,11 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                           onTap: () {
                             // Your onTap logic
                             Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToMonitoringQuality);
+                                AppConstants.navigateToMonitoringQuality,
+                                arguments: {
+                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
+                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                });
                           },
                         ),
                         SizedBox(
@@ -186,7 +199,11 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                           onTap: () {
                             // Your onTap logic
                             Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToOperationandMaintance);
+                                AppConstants.navigateToOperationandMaintance,
+                                arguments: {
+                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
+                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                });
                           },
                         ),
                         SizedBox(
@@ -199,7 +216,11 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                           onTap: () {
                             // Your onTap logic
                             Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToQualityAssurance);
+                                AppConstants.navigateToQualityAssurance,
+                                arguments: {
+                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
+                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                });
                           },
                         ),
                         SizedBox(
@@ -213,7 +234,11 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                           onTap: () {
                             // Your onTap logic
                             Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToPartFPublicCompliant);
+                                AppConstants.navigateToPartFPublicCompliant,
+                                arguments: {
+                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
+                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                });
                           },
                         ),
                       ],

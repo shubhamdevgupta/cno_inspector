@@ -33,13 +33,17 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
     if (args != null) {
       final schemeId = args['schemeId'] as int?;
       final stateId = args['stateId'] as int?;
-      final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);
-      if (schemeId != null) {
-        schemeProvider.setSchemeId(schemeId);
-      }
-      if (stateId != null) {
-        schemeProvider.setStateId(stateId);
-      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);
+        if (schemeId != null) {
+          schemeProvider.setSchemeId(schemeId);
+        }
+        if (stateId != null) {
+          schemeProvider.setStateId(stateId);
+        }
+      });
+
     }
   }
   @override
@@ -92,6 +96,8 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
           ),
           body: Consumer<Schemeprovider>(
             builder: (context, schemeProvider, child) {
+
+
               return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
@@ -270,8 +276,14 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                   ),
                 ),
               );
+
+
             },
-          )),
+          )
+
+
+      ),
+
     );
   }
 }
