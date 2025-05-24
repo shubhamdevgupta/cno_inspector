@@ -1,10 +1,3 @@
-/*{
-"Status": true,
-"LoginId": "9871544420",
-"Message": "Sucess",
-"UserId": 34483
-}*/
-
 
 class VerifyOtpResponse {
   final bool? Status;
