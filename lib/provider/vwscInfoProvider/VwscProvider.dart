@@ -465,7 +465,7 @@ class Vwscprovider extends ChangeNotifier {
         communitySatisfactionWithWq: communitySatisfactionWithWq,
         createdBy: createdBy,
       );
-
+      _status=response.status;
       _message = response.message;
       return response.status ?? false;
     } catch (e) {
@@ -600,6 +600,7 @@ class Vwscprovider extends ChangeNotifier {
         createdBy: createdBy,
       );
 
+      _status=response.status;
       _message = response.message;
       return response.status ?? false;
     } catch (e) {
@@ -684,7 +685,7 @@ class Vwscprovider extends ChangeNotifier {
         registrationTypes: registrationTypes,
         createdBy: createdBy,
       );
-
+      _status=response.status;
       _message = response.message;
       return response.status ?? false;
     } catch (e) {
