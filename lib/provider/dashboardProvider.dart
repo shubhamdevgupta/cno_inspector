@@ -22,7 +22,7 @@ class DashboardProvider extends ChangeNotifier {
   Future<void> fetchDashboardData(int userId,int action) async {
     _isLoading = true;
     notifyListeners();
-   // int userId = _localStorage.getInt(AppConstants.prefUserId) ?? 0;
+    int userId = _localStorage.getInt(AppConstants.prefUserId) ?? 0;
     try {
      final rawDashboardList = await _dashboardRepository.fetchDashboardData(userId, action);
      if(rawDashboardList.status==true){

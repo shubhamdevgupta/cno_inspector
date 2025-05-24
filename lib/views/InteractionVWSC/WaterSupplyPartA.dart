@@ -1,11 +1,12 @@
-import 'package:cno_inspection/utils/CustomCheckBoxQuestion.dart';
+import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
+import 'package:cno_inspection/utils/LoaderUtils.dart';
+import 'package:cno_inspection/utils/toast_helper.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
 import 'package:cno_inspection/views/InteractionVWSC/DashboardVWSC.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
-import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
@@ -19,31 +20,14 @@ class WaterSupplyPartA extends StatefulWidget {
 }
 
 class _WaterSupplyPartA extends State<WaterSupplyPartA> {
-  List<String> selectedFrequency = [];
-  String? selectedHouseholdWater;
-  String? selectedRemoteGroups;
-  TextEditingController reasonRemoteGroupsController = TextEditingController();
-  String? selectedTailEnd;
-  String? selectedSchemeStatus;
-  List<String> selectedInstitutions = [];
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        // Replace the current route with a new one
-        /*   Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => VillageList()),
-        );*/
-
-        // Return false to prevent the default back navigation behavior
-        return false;
-      },
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
-        ),
-        child: Scaffold(
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
+      ),
+      child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -51,10 +35,12 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
             centerTitle: true,
             title: Text(
               "Water Supply Functionality",
-              style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
             ),
             leading: IconButton(
-
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 if (Navigator.of(context).canPop()) {
@@ -63,7 +49,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => Dashboardvwsc()),
-                        (route) => false,
+                    (route) => false,
                   );
                 }
               },
@@ -84,21 +70,18 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
             ),
             elevation: 5,
           ),
-          body: Stack(
-            children: [
-
-              SingleChildScrollView(
+          body: Consumer<Vwscprovider>(
+            builder: (context, vwscProvider, child) {
+              return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
                       top: 20, left: 6, right: 6, bottom: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Vwsccommonclass(
                         no: 1,
                       ),
-
                       Card(
                         elevation: 5,
                         child: Container(
@@ -117,80 +100,78 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                           padding: EdgeInsets.all(8),
                           width: double.infinity,
                           child: Container(
-
                             child: Column(
-
-
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
-
                                 CustomMultiSelectChipQuestion(
                                   question: "1. Water supply frequency:",
-                                  options: [
-                                    "Daily",
-                                    "Once in two days",
-                                    "Once in three days",
-                                    "Irregular",
-                                    "Not functional"
-                                  ],
-                                  selectedValues: selectedFrequency,
-                                  onSelectionChanged: (val) => setState(() => selectedFrequency = val),
+                                  options: vwscProvider.waterSupplyFrequencyOptions,
+                                  selectedValues: vwscProvider.selectedFrequency,
+                                  onSelectionChanged: (val) {
+                                    vwscProvider.selectedFrequency = val;
+                                    print('------- ${vwscProvider.selectedFrequencyIds}');
+                                  },
                                 ),
-
-
                                 Customradiobttn(
                                   question: "2. Is adequate water quantity reaching all the households?",
-                                  options: ["Yes", "No"],
-                                  selectedOption: selectedHouseholdWater,
-                                  onChanged: (val) => setState(() => selectedHouseholdWater = val),
-                                ),
+                                  options: vwscProvider.yesNoOptions,
+                                  selectedOption: vwscProvider.selectedHouseholdWater,
+                                  onChanged: (val) {
+                                    vwscProvider.selectedHouseholdWater = val;
+                                    print('selectedHouseholdWater------- ${vwscProvider.selectedHouseholdWaterId}');
 
-                                Customradiobttn(
-                                  question: "3. Is adequate water quantity reaching to remote/SC/ST/PVTG groups?",
-                                  options: ["Yes", "No"],
-                                  selectedOption: selectedRemoteGroups,
-                                  onChanged: (val) => setState(() => selectedRemoteGroups = val),
-                                ),
-
-                                if (selectedRemoteGroups == "No")
-                                  Customtxtfeild(
-                                    label: "If no, please provide the reasons",
-                                    controller: reasonRemoteGroupsController,
-                                  ),
-
-
-                                Customradiobttn(
-                                  question: "4. Whether water reaches tail-end households:",
-                                  options: ["Yes – Consistently", "Occasionally", "No", "Not Verified"],
-                                  selectedOption: selectedTailEnd,
-                                  onChanged: (val) => setState(() => selectedTailEnd = val),
-                                ),
-
-                                Customradiobttn(
-                                  question: "5. Scheme operational status since commissioning:",
-                                  options: [
-                                    "Fully operational >3 months",
-                                    "Operational but with interruptions",
-                                    "Non-functional",
-                                    "Partially commissioned"
-                                  ],
-                                  selectedOption: selectedSchemeStatus,
-                                  onChanged: (val) => setState(() => selectedSchemeStatus = val),
-                                ),
-
-                                CustomMultiSelectChipQuestion(
-                                  question: "6. Whether piped water supply services available at institutions:",
-                                  options: ["Schools", "Anganwadi’s", "PHCs", "Not Applicable"],
-                                  selectedValues: selectedInstitutions,
-                                  onSelectionChanged: (selectedList) {
-                                    setState(() {
-                                      selectedInstitutions = selectedList;
-                                    });
                                   },
                                 ),
 
+                                Customradiobttn(
+                                  question:
+                                      "3. Is adequate water quantity reaching to remote/SC/ST/PVTG groups?",
+                                  options:vwscProvider.yesNoOptions,
+                                  selectedOption: vwscProvider.selectedPvtgGroups,
+                                  onChanged: (val){
+                                    vwscProvider.selectedPvtgGroups=val;
+                                    print('selectedPvtgGroups------- ${vwscProvider.selectedPvtgGroupsId}');
 
+                                  },
+                                ),
+                                if (vwscProvider.selectedPvtgGroups == "No")
+                                  Customtxtfeild(
+                                    label: "If no, please provide the reasons",
+                                    controller: vwscProvider.reasonRemoteGroupsController,
+                                  ),
+                                Customradiobttn(
+                                  question:
+                                      "4. Whether water reaches tail-end households:",
+                                  options:vwscProvider.tailEndOptions,
+                                  selectedOption: vwscProvider.selectedTailEnd,
+                                  onChanged: (val){
+                                    vwscProvider.selectedTailEnd=val;
+                                    print('selectedTailEnd------- ${vwscProvider.selectedTailEndId}');
+
+                                  },
+                                ),
+                                Customradiobttn(
+                                  question:
+                                      "5. Scheme operational status since commissioning:",
+                                  options: vwscProvider.schemeStatusOptions,
+                                  selectedOption: vwscProvider.selectedschemeStatus,
+                                  onChanged: (val) {
+                                    vwscProvider.selectedschemeStatus=val;
+                                    print('selectedTailEnd------- ${vwscProvider.selectedschemeStatusId}');
+
+                                  }
+                                ),
+                                CustomMultiSelectChipQuestion(
+                                  question:
+                                      "6. Whether piped water supply services available at institutions:",
+                                  options:vwscProvider.institutionsOptions,
+                                  selectedValues: vwscProvider.selectedinstitutions,
+                                  onSelectionChanged: (val) {
+                                    vwscProvider.selectedinstitutions=val;
+                                    print('selectedTailEnd------- ${vwscProvider.selectedinstitutionsIds}');
+
+                                  },
+                                ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
@@ -199,12 +180,32 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Color(0xffb0D6EFD),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                                          borderRadius: BorderRadius.circular(
+                                              10), // Adjust the radius as needed
                                         ),
                                       ),
-                                      onPressed: () {
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => CommunityInvolvementPartB()),);
+                                      onPressed: ()async {
+                                         LoaderUtils.showLoadingWithMessage(context,message: "Water Supply Functionality");
 
+                                        await vwscProvider.saveVwscWaterSupply(userId: 34483,
+                                            stateId: 32, villageId: 503655,
+                                            waterSupplyFrequency: 1,
+                                            adequateWaterToHH: vwscProvider.selectedHouseholdWaterId,
+                                            adequateWaterToRemote: vwscProvider.selectedPvtgGroupsId,
+                                            remoteReason: vwscProvider.reasonRemoteGroupsController.text, tailEndWaterReach: vwscProvider.selectedTailEndId,
+                                            schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
+                                            pwsReachInstitutions: vwscProvider.selectedinstitutionsIds, createdBy:34483 );
+                                        if(vwscProvider.status!){
+                                          ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.green);
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    CommunityInvolvementPartB()),
+                                          );
+                                        }else{
+                                          ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.red);
+                                        }
+                                         LoaderUtils.hideLoaderDialog(context);
                                       },
                                       child: Text(
                                         "SAVE & NEXT",
@@ -217,7 +218,6 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                     ),
                                   ),
                                 ),
-
                               ],
                             ),
                           ),
@@ -226,11 +226,9 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              );
+            },
+          )),
     );
   }
 }
