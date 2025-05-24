@@ -1,59 +1,63 @@
+import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
+import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
+import '../../utils/LoaderUtils.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
-import 'PartDSchemeImplementationScreen.dart';
+import '../../utils/toast_helper.dart';
 import 'PartBSchemePlanningScreen.dart';
+import 'PartDSchemeImplementationScreen.dart';
 import 'SchemeInfoCommonScreen.dart';
 
 class RetrofittingAugmentationScreen extends StatefulWidget {
   const RetrofittingAugmentationScreen({Key? key}) : super(key: key);
 
   @override
-  _RetrofittingAugmentationScreen createState() => _RetrofittingAugmentationScreen();
+  _RetrofittingAugmentationScreen createState() =>
+      _RetrofittingAugmentationScreen();
 }
 
-class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScreen> {
-  String _selectedValue = 'yes'; // Default selected value
-  String? selectedValueQ1;
-  String? selectedOption = 'option1';
-  final TextEditingController textController = TextEditingController();
+class _RetrofittingAugmentationScreen
+    extends State<RetrofittingAugmentationScreen> {
 
-  final List<String> _dropdownOptions = [
-    'Atleast once in 7 days',
-    'Atleast once in 15 days',
-    'Atleast once in more than 15 days'
-  ];
-  String? SetFreq;
-  List<String> selectedInstitutions = [];
-  final TextEditingController householdController = TextEditingController();
+  LocalStorageService _localStorageService = LocalStorageService();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    if (args != null) {
+      final schemeId = args['schemeId'] as int?;
+      final stateId = args['stateId'] as int?;
+      final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);
+      if (schemeId != null) {
+        schemeProvider.setSchemeId(schemeId);
+      }
+      if (stateId != null) {
+        schemeProvider.setStateId(stateId);
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        // Replace the current route with a new one
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => SchemePlanningScreen()),
-        );
-
-        // Return false to prevent the default back navigation behavior
-        return false;
-      },
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
-        ),
-        child: Scaffold(
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
+      ),
+      child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -64,7 +68,6 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
               style: AppStyles.appBarTitleSmallText,
             ),
             leading: IconButton(
-
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 if (Navigator.of(context).canPop()) {
@@ -72,8 +75,9 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
-                        (route) => false,
+                    MaterialPageRoute(
+                        builder: (context) => Dashboardschemeinfo()),
+                    (route) => false,
                   );
                 }
               },
@@ -94,9 +98,9 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
             ),
             elevation: 5,
           ),
-          body: Stack(
-            children: [
-              SingleChildScrollView(
+          body: Consumer<Schemeprovider>(
+            builder: (context, schemeProvider, child) {
+              return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
                       top: 20, left: 6, right: 6, bottom: 5),
@@ -109,126 +113,180 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
                       Card(
                         elevation: 5,
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.deepOrangeAccent, width: 1.4),
-                            borderRadius: BorderRadius.circular(14),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12.withOpacity(0.06),
-                                blurRadius: 6,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          padding: EdgeInsets.all(5),
-                          width: double.infinity,
-                          child:  Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Customradiobttn(
-                                question: '1. Whether the condition assessment of the legacy infrastructure done before scheme planning?',
-                                options: const ['Yes', 'No'],
-                                selectedOption: selectedValueQ1,
-                                onChanged: (val) {
-                                  setState(() {
-                                    selectedValueQ1 = val;
-                                  });
-                                },
-                              ),
-                              const SizedBox(height: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                  color: Colors.deepOrangeAccent, width: 1.4),
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12.withOpacity(0.06),
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(5),
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // 1. Radio Button: Legacy Infra Assessment
+                                Customradiobttn(
+                                  question:
+                                      '1. Whether the condition assessment of the legacy infrastructure done before scheme planning?',
+                                  options:
+                                      schemeProvider.yesNoMap.keys.toList(),
+                                  selectedOption:
+                                      schemeProvider.legacyInfraAssessment,
+                                  onChanged: (val) => schemeProvider
+                                      .legacyInfraAssessment = val,
+                                ),
+                                const SizedBox(height: 2),
 
-                              // 2. Legacy infrastructure usage
-                              const Text(
-                                '2. Legacy infrastructure which has been retrofitted and being used in the scheme under JJM:',
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 6),
+                                // 2. Text Fields for Legacy Infrastructure Usage
+                                const Text(
+                                  '2. Legacy infrastructure which has been retrofitted and being used in the scheme under JJM:',
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(height: 6),
 
-                              Customtxtfeild(
-                                label: '2.1 Transmission Pipelines (in Kms)',
-                                controller: TextEditingController(),
-                                keyboardType: TextInputType.number,
-                              ),
-                              const SizedBox(height: 8),
+                                Customtxtfeild(
+                                  label: '2.1 Transmission Pipelines (in Kms)',
+                                  controller: schemeProvider
+                                      .transmissionPipelineKmController,
+                                  keyboardType: TextInputType.number,
+                                ),
+                                const SizedBox(height: 8),
 
-                              Customtxtfeild(
-                                label: '2.2 Distribution Pipelines (in Kms)',
-                                controller: TextEditingController(),
-                                keyboardType: TextInputType.number,
-                              ),
-                              const SizedBox(height: 8),
+                                Customtxtfeild(
+                                  label: '2.2 Distribution Pipelines (in Kms)',
+                                  controller: schemeProvider
+                                      .distributionPipelineKmController,
+                                  keyboardType: TextInputType.number,
+                                ),
+                                const SizedBox(height: 8),
 
-                              Customtxtfeild(
-                                label: '2.3 WTP Capacity (in MLD)',
-                                controller: TextEditingController(),
-                                keyboardType: TextInputType.number,
-                              ),
-                              const SizedBox(height: 8),
+                                Customtxtfeild(
+                                  label: '2.3 WTP Capacity (in MLD)',
+                                  controller:
+                                      schemeProvider.wtpCapacityMldController,
+                                  keyboardType: TextInputType.number,
+                                ),
+                                const SizedBox(height: 8),
 
-                              Customtxtfeild(
-                                label: '2.4 Storage Structures (Nos./Capacity in KL)',
-                                controller: TextEditingController(),
-                                keyboardType: TextInputType.text,
-                              ),
-                              const SizedBox(height: 10),
-                              
+                                Customtxtfeild(
+                                  label:
+                                      '2.4 Storage Structures (Nos./Capacity in KL)',
+                                  controller: schemeProvider
+                                      .storageStructureDetailsController,
+                                  keyboardType: TextInputType.text,
+                                ),
+                                const SizedBox(height: 10),
 
-                              // 3. As-built drawing availability
-                              Customradiobttn(
-                                question: '3. Is the as-built drawing of the new infrastructure in conjunction with the existing infrastructure available with the department/agency/GP? Has it been digitized and uploaded on PM Gatishakti?',
-                                options: const ['Yes', 'No'],
-                                selectedOption: selectedOption,
-                                onChanged: (val) {
-                                  setState(() {
-                                    selectedOption = val;
-                                  });
-                                },
-                              ),
+                                // 3. Radio Button: As-built Drawing Availability
+                                Customradiobttn(
+                                  question:
+                                      '3. Is the as-built drawing of the new infrastructure in conjunction with the existing infrastructure available with the department/agency/GP?',
+                                  options:
+                                      schemeProvider.yesNoMap.keys.toList(),
+                                  selectedOption:
+                                      schemeProvider.asBuiltDrawingAvailability,
+                                  onChanged: (val) => schemeProvider
+                                      .asBuiltDrawingAvailability = val,
+                                ),
+                                const SizedBox(height: 20),
 
-                              const SizedBox(height: 20),
 
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
-                                  height: 35,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:Colors.deepOrangeAccent,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                                if(schemeProvider.asBuiltDrawingAvailabilityID==1)
+                                Customradiobttn(
+                                  question:
+                                  '4. Has it been digitized and uploaded on PM Gatishakti? ',
+                                  options:
+                                  schemeProvider.yesNoMap.keys.toList(),
+                                  selectedOption:
+                                  schemeProvider.onPmGatiShakti,
+                                  onChanged: (val) => schemeProvider
+                                      .onPmGatiShakti = val,
+                                ),
+                                if(schemeProvider.onPmGatishaktiID==2)
+                                Customtxtfeild(
+                                  label:
+                                  '4.1 Reason',
+                                  controller: schemeProvider
+                                      .reasonController,
+                                  keyboardType: TextInputType.text,
+                                ),
+                                SizedBox(height: 20,),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: SizedBox(
+                                    height: 35,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            Colors.deepOrangeAccent,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              10), // Adjust the radius as needed
+                                        ),
                                       ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SchemeImplementationScreen()),);
-
-                                    },
-                                    child: Text(
-                                      "SAVE & NEXT",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
+                                      onPressed: () async {
+                                        await LoaderUtils.conditionalLoader(
+                                            isLoading:
+                                                schemeProvider.isLoading);
+                                        await schemeProvider.saveRetrofitAdditionalInfo(
+                                                userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                                stateId: schemeProvider.stateId!,
+                                                schemeId: schemeProvider.schemeId!,
+                                                isAssessmentDone:
+                                                schemeProvider.selectedLegacyInfraAssessmentId,
+                                                assessmentMethod: '',
+                                                assessmentReason: '',//not found
+                                                pipelineKms: double.parse(schemeProvider.transmissionPipelineKmController.text),
+                                                distributionKms:
+                                                    double.parse(schemeProvider.distributionPipelineKmController.text),
+                                                wtpCapacity: double.parse(schemeProvider.wtpCapacityMldController.text),
+                                                structureNos: int.parse(schemeProvider.storageStructureDetailsController.text),
+                                                structureCapacity: 0.0, // not found
+                                                buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
+                                                onPMGati: schemeProvider.onPmGatishaktiID,
+                                                noReason: schemeProvider.reasonController.text);
+                                        if (schemeProvider.status!) {
+                                          ToastHelper.showToastMessage(
+                                              schemeProvider.message!,
+                                              backgroundColor: Colors.green);
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    SchemeImplementationScreen()),
+                                          );
+                                        } else {
+                                          ToastHelper.showToastMessage(
+                                              schemeProvider.message!,
+                                              backgroundColor: Colors.red);
+                                        }
+                                      },
+                                      child: Text(
+                                        "SAVE & NEXT",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-
-                            ],
-                          )
-
-
-                        ),
+                              ],
+                            )),
                       )
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              );
+            },
+          )),
     );
   }
 }
