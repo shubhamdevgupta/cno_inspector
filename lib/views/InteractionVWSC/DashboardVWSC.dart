@@ -21,7 +21,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
   final LocalStorageService _localStorage = LocalStorageService();
 
   late DashboardProvider dashboardProvider;
-  String? path;
+  String path='';
 
   @override
   void initState() {
@@ -117,7 +117,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                                 .firstWhere(
                                   (village) =>
                                       village.villageId ==
-                                      dashboardProvider.selectedVwsc,
+                                      dashboardProvider.selectedVwscId,
                                   orElse: () => CnoDashboardItem(
                                     userid: 0,
                                     totalSchemes: 0,
@@ -173,7 +173,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                           );
 
                           dashboardProvider.setSelectedVWSC(
-                              selectedItem.villageId.toString());
+                              selectedItem.villageId);
+                          print('village id ${dashboardProvider.selectedVwscId}');
 
                           path = _buildLocationPath([
                             selectedItem.stateName ?? '',
@@ -186,28 +187,28 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                       ),
                     ],
                   ),
-                  if (dashboardProvider.selectedVwsc != null &&
-                      dashboardProvider.selectedVwsc!.isNotEmpty &&
-                      path != null)
-                    SizedBox(height: 12,),
+                  if (dashboardProvider.selectedVwscId !=0)
                   Column(
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _iconCircle(Icons.location_on, Colors.red),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              path.toString(),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
+                      Visibility(
+                        visible: path.isNotEmpty,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _iconCircle(Icons.location_on, Colors.red),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                '---${dashboardProvider.selectedVwscId}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black87,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 8,
@@ -217,8 +218,15 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Water Supply Functionality",
                         color: Colors.blue,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
+                          final stateId = dashboardProvider.dashboardList.first.stateId;
+
                           Navigator.pushReplacementNamed(
-                              context, AppConstants.navigateToWaterSupplyPartA);
+                              context, AppConstants.navigateToWaterSupplyPartA,
+                              arguments: {
+                                'villageId': selectedVillageId,
+                                'stateId': stateId,
+                              }                          );
                         },
                       ),
                       SizedBox(
@@ -229,8 +237,14 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Community Involvement & VWSC Functionality",
                         color: Colors.orangeAccent,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
+                          final stateId = dashboardProvider.dashboardList.first.stateId;
                           Navigator.pushReplacementNamed(context,
-                              AppConstants.navigateToCommunityInvolvementPartB);
+                              AppConstants.navigateToCommunityInvolvementPartB,
+                              arguments: {
+                                'villageId': selectedVillageId,
+                                'stateId': stateId,
+                              }                          );
                         },
                       ),
                       SizedBox(
@@ -241,8 +255,14 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Community feedback on quality of construction",
                         color: Colors.deepOrangeAccent,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
+                          final stateId = dashboardProvider.dashboardList.first.stateId;
                           Navigator.pushReplacementNamed(context,
-                              AppConstants.navigateToCommunityFeedbackPartC);
+                              AppConstants.navigateToCommunityFeedbackPartC,
+                              arguments: {
+                                'villageId': selectedVillageId,
+                                'stateId': stateId,
+                              }                          );
                         },
                       ),
                       SizedBox(
@@ -253,8 +273,14 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Water Quality Monitoring",
                         color: Colors.lightGreen,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
+                          final stateId = dashboardProvider.dashboardList.first.stateId;
                           Navigator.pushReplacementNamed(
-                              context, AppConstants.navigateToQulityPartD);
+                              context, AppConstants.navigateToQulityPartD,
+                              arguments: {
+                                'villageId': selectedVillageId,
+                                'stateId': stateId,
+                              }                          );
                         },
                       ),
                       SizedBox(
@@ -265,8 +291,14 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Grievance Redressal",
                         color: Colors.green,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
+                          final stateId = dashboardProvider.dashboardList.first.stateId;
                           Navigator.pushReplacementNamed(
-                              context, AppConstants.navigateToGrievancePartE);
+                              context, AppConstants.navigateToGrievancePartE,
+                              arguments: {
+                                'villageId': selectedVillageId,
+                                'stateId': stateId,
+                              }                          );
                         },
                       ),
                     ],

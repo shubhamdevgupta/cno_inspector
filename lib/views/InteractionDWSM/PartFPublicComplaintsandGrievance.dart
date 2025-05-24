@@ -1,5 +1,4 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartFPublicComplaintsandGrievance.dart';
 import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
@@ -17,21 +16,22 @@ import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 
 
-class PartEQualityAssuranceCommissioning extends StatefulWidget {
-  const PartEQualityAssuranceCommissioning({Key? key}) : super(key: key);
+class PartFPublicCompliant extends StatefulWidget {
+  const PartFPublicCompliant({Key? key}) : super(key: key);
 
   @override
-  _PartEQualityAssuranceCommissioning createState() => _PartEQualityAssuranceCommissioning();
+  _PartFPublicCompliant createState() => _PartFPublicCompliant();
 }
 
-class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCommissioning> {
+class _PartFPublicCompliant extends State<PartFPublicCompliant> {
 // State variables
   // State variables
-  List<String> authorizedInspectors = [];
-  String? commissioningProtocolFollowed;
-  List<String> commissioningPresence = [];
-  String? thirdPartyAssessment;
-
+  String? grievanceMechanismAvailable;
+  List<String> grievanceRegistrationMethods = [];
+  String? complaintsReceived;
+  List<String> complaintTypes = [];
+  TextEditingController avgResolutionTimeController = TextEditingController();
+  TextEditingController actionTakenController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Quality Assurance and Commissioning",
+              "Public Complaints and Grievance Redressal",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -101,14 +101,14 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Dwsmcommonclass(
-                        no: 5,
+                        no: 6,
                       ),
                       Card(
                         elevation: 5,
                         child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              border: Border.all(color: Colors.green, width: 1.4),
+                              border: Border.all(color: Colors.deepPurpleAccent, width: 1.4),
                               borderRadius: BorderRadius.circular(14),
                               boxShadow: [
                                 BoxShadow(
@@ -120,87 +120,107 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
                             ),
                             padding: EdgeInsets.all(5),
                             width: double.infinity,
-                            child: Column(
+                            child:Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
-                                // Authorized inspectors
-                                CustomMultiSelectChipQuestion(
-                                  question: "Who all are authorized to inspect and measure works during field inspection?",
-                                  options: [
-                                    "PHED Engineer",
-                                    "PMC/PMU",
-                                    "TPIA",
-                                    "VWSC",
-                                    "Contractor Representative",
-                                    "Others"
-                                  ],
-                                  selectedValues: authorizedInspectors,
-                                  onSelectionChanged: (values) {
-                                    setState(() {
-                                      authorizedInspectors = values;
-                                    });
-                                  },
-                                ),
-
-                                const SizedBox(height: 10),
-
-                                // Commissioning protocol followed
+                                // Grievance mechanism available
                                 Customradiobttn(
-                                  question: "Is the commissioning protocol being followed?",
+                                  question: "Grievance Redressal mechanism available:",
                                   options: ["Yes", "No"],
-                                  selectedOption: commissioningProtocolFollowed,
-                                  onChanged: (val) => setState(() => commissioningProtocolFollowed = val),
+                                  selectedOption: grievanceMechanismAvailable,
+                                  onChanged: (val) => setState(() => grievanceMechanismAvailable = val),
                                 ),
 
                                 const SizedBox(height: 10),
 
-                                // Presence during commissioning
+                                // How grievances are registered
                                 CustomMultiSelectChipQuestion(
-                                  question: "During commissioning of schemes, who are generally present?",
+                                  question: "How grievances are registered by the villagers:",
                                   options: [
-                                    "PHED",
-                                    "VWSC Members",
-                                    "PRI Representatives",
-                                    "ISA",
-                                    "TPIA",
-                                    "Community Members"
+                                    "Toll free number",
+                                    "Web based portal",
+                                    "Mobile application",
+                                    "Public grievance registration center",
+                                    "Directly calling to PHED/Contractor/O&M agency"
                                   ],
-                                  selectedValues: commissioningPresence,
+                                  selectedValues: grievanceRegistrationMethods,
                                   onSelectionChanged: (values) {
                                     setState(() {
-                                      commissioningPresence = values;
+                                      grievanceRegistrationMethods = values;
                                     });
                                   },
                                 ),
 
                                 const SizedBox(height: 10),
 
-                                // Assessment of TPIAs
+                                // Are complaints received
                                 Customradiobttn(
-                                  question: "Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?",
-                                  options: ["Yes – Regularly", "Occasionally", "Not Done"],
-                                  selectedOption: thirdPartyAssessment,
-                                  onChanged: (val) => setState(() => thirdPartyAssessment = val),
+                                  question: "Are complaints received from public regarding JJM schemes?",
+                                  options: ["Yes", "No"],
+                                  selectedOption: complaintsReceived,
+                                  onChanged: (val) => setState(() => complaintsReceived = val),
                                 ),
 
+                                if (complaintsReceived == "Yes") ...[
+                                  const SizedBox(height: 10),
+
+                                  // Type of complaints
+                                  CustomMultiSelectChipQuestion(
+                                    question: "If yes, type of complaints (tick all applicable):",
+                                    options: [
+                                      "Poor water quality",
+                                      "Incomplete connections",
+                                      "Delay in commissioning",
+                                      "No water supply",
+                                      "Faulty construction",
+                                      "Others"
+                                    ],
+                                    selectedValues: complaintTypes,
+                                    onSelectionChanged: (values) {
+                                      setState(() {
+                                        complaintTypes = values;
+                                      });
+                                    },
+                                  ),
+
+                                  const SizedBox(height: 10),
+
+                                  // Average resolution time
+                                  Customtxtfeild(
+                                    label: "What is the average time of resolution:",
+                                    controller: avgResolutionTimeController,
+                                  ),
+
+                                  const SizedBox(height: 10),
+
+                                  // Action taken
+                                  Customtxtfeild(
+                                    label: "Action taken by department:",
+                                    controller: actionTakenController,
+                                  ),
+
+
+                                ],
+
+                                SizedBox(height: 10,),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     height: 35,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.green,
+                                        backgroundColor: Colors.deepPurpleAccent,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartFPublicCompliant()),);
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboarddwsm()),);
 
                                       },
                                       child: Text(
-                                        "SAVE & NEXT",
+                                        "SAVE",
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,

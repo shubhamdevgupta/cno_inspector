@@ -12,6 +12,7 @@ import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
 import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 
 
@@ -58,7 +59,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection Form",
+              "Monitoring, Quality and Lab Infrastructure",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -70,7 +71,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
+                    MaterialPageRoute(builder: (context) => Dashboarddwsm()),
                         (route) => false,
                   );
                 }
@@ -101,9 +102,9 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
-                        no: 3,
-                      ),
+                    Dwsmcommonclass(
+                    no: 3,
+                  ),
                       Card(
                         elevation: 5,
                         child: Container(

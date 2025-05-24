@@ -1,3 +1,4 @@
+import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/views/InteractionVWSC/WaterQualityPartD.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'CommunityInvolvementPartB.dart';
 import 'DashboardVWSC.dart';
+import 'VWSCCommonClass.dart';
 
 class CommunityFeedbackPartC extends StatefulWidget {
   @override
@@ -116,6 +118,7 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                           offset: const Offset(0, 3),
                                         ),
                                       ],
+
                                     ),
                                     padding: EdgeInsets.all(8),
                                     width: double.infinity,
@@ -283,5 +286,25 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
         )
       ],
     );
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    if (args != null) {
+      final villageId = args['villageId'] as int?;
+      final stateId = args['stateId'] as int?;
+
+      // You can now use them, or set them in your provider
+      final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
+      if (villageId != null) {
+        vwscProvider.setVillageId(villageId);
+      }
+      if (stateId != null) {
+        vwscProvider.setStateId(stateId);
+      }
+    }
   }
 }

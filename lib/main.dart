@@ -1,5 +1,7 @@
 import 'package:cno_inspection/provider/authentication_provider.dart';
 import 'package:cno_inspection/provider/dashboardProvider.dart';
+import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
+
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
@@ -8,6 +10,7 @@ import 'package:cno_inspection/views/InteractionDWSM/PartBSourceSustainabilityWa
 import 'package:cno_inspection/views/InteractionDWSM/PartCMonitoringQualityandLabInfrastructure.dart';
 import 'package:cno_inspection/views/InteractionDWSM/PartDOperationandMaintenance.dart';
 import 'package:cno_inspection/views/InteractionDWSM/PartEQualityAssuranceandCommissioning.dart';
+import 'package:cno_inspection/views/InteractionDWSM/PartFPublicComplaintsandGrievance.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityFeedbackPartC.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
 import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
@@ -42,6 +45,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProvider(create: (_) => Vwscprovider()),
+        ChangeNotifierProvider(create: (_) => Schemeprovider()),
+
       ],
       child: MyApp(),
     ),
@@ -81,6 +86,7 @@ class MyApp extends StatelessWidget {
         AppConstants.navigateToMonitoringQuality: (context) => MonitioringQuality(),
         AppConstants.navigateToOperationandMaintance: (context) => PartDoperationandmaintenance(),
         AppConstants.navigateToQualityAssurance: (context) => PartEQualityAssuranceCommissioning(),
+        AppConstants.navigateToPartFPublicCompliant: (context) => PartFPublicCompliant(),
 
         AppConstants.navigateToWaterSupplyPartA: (context) => WaterSupplyPartA(),
         AppConstants.navigateToCommunityInvolvementPartB: (context) => CommunityInvolvementPartB(),

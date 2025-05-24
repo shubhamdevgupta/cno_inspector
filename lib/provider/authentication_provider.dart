@@ -87,7 +87,7 @@ class AuthenticationProvider extends ChangeNotifier {
     try {
       _verifyOtpResponse = await _authRepository.verifyOtp(loginId, otp);
       if (_verifyOtpResponse!.Status == true) {
-        _localStorage.saveInt(AppConstants.prefIsLoggedIn, _verifyOtpResponse!.UserId!);
+        _localStorage.saveInt(AppConstants.prefUserId, _verifyOtpResponse!.UserId!);
         onSuccess();
       } else {
         errorMsg = _verifyOtpResponse!.Message!;
