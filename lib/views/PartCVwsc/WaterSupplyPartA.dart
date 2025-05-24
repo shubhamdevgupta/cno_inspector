@@ -4,8 +4,6 @@ import 'package:cno_inspection/services/LocalStorageService.dart';
 
 import 'package:cno_inspection/utils/LoaderUtils.dart';
 import 'package:cno_inspection/utils/toast_helper.dart';
-import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
-import 'package:cno_inspection/views/InteractionVWSC/DashboardVWSC.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +13,8 @@ import '../../utils/CommonScreen.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
+import 'CommunityInvolvementPartB.dart';
+import 'DashboardVWSC.dart';
 import 'VWSCCommonClass.dart';
 
 class WaterSupplyPartA extends StatefulWidget {

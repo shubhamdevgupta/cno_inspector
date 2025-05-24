@@ -1,6 +1,5 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
-import 'package:cno_inspection/views/InteractionVWSC/WaterQualityPartD.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +16,7 @@ import '../../utils/toast_helper.dart';
 import 'CommunityInvolvementPartB.dart';
 import 'DashboardVWSC.dart';
 import 'VWSCCommonClass.dart';
+import 'WaterQualityPartD.dart';
 
 class CommunityFeedbackPartC extends StatefulWidget {
   @override
