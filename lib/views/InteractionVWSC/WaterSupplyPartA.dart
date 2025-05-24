@@ -48,13 +48,16 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
       final stateId = args['stateId'] as int?;
 
       // You can now use them, or set them in your provider
-      final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
-      if (villageId != null) {
-        vwscProvider.setVillageId(villageId);
-      }
-      if (stateId != null) {
-        vwscProvider.setStateId(stateId);
-      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
+        if (villageId != null) {
+          vwscProvider.setVillageId(villageId);
+        }
+        if (stateId != null) {
+          vwscProvider.setStateId(stateId);
+        }
+      });
     }
   }
 
@@ -233,7 +236,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                       ),
                                       onPressed: ()async {
                                          LoaderUtils. showLoadingWithMessage(context, isLoading: true, message: "Water Supply Functionality");
-                                        print('selected village ${vwscProvider.villageId}');
+                                        print('selected village ${vwscProvider.villageId} and state ${vwscProvider.stateId}');
                                                     await vwscProvider.saveVwscWaterSupply(userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                             stateId: vwscProvider.stateId!, villageId: vwscProvider.villageId!,
                                             waterSupplyFrequency: 1,

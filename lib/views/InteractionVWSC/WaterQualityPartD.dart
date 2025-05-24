@@ -38,7 +38,7 @@ LocalStorageService _localStorageService =LocalStorageService();
           // Removes the default back button
           centerTitle: true,
           title: Text(
-            "Interaction with VWSC",
+            "Water Quality Monitoring",
             style: AppStyles.appBarTitle,
           ),
           leading: IconButton(
@@ -268,13 +268,16 @@ void didChangeDependencies() {
     final stateId = args['stateId'] as int?;
 
     // You can now use them, or set them in your provider
-    final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
-    if (villageId != null) {
-      vwscProvider.setVillageId(villageId);
-    }
-    if (stateId != null) {
-      vwscProvider.setStateId(stateId);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
+      if (villageId != null) {
+        vwscProvider.setVillageId(villageId);
+      }
+      if (stateId != null) {
+        vwscProvider.setStateId(stateId);
+      }
+    });
+
   }
 }
 }

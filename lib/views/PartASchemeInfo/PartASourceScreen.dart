@@ -1,7 +1,6 @@
 import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
-import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +10,7 @@ import '../../utils/LoaderUtils.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
+import 'Dashboardschemeinfo.dart';
 import 'PartBSchemePlanningScreen.dart';
 import 'SchemeInfoCommonScreen.dart';
 

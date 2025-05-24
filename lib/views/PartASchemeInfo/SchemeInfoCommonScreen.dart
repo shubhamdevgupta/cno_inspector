@@ -4,11 +4,11 @@ import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.d
 import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
 import 'package:cno_inspection/views/InteractionVWSC/WaterQualityPartD.dart';
 import 'package:cno_inspection/views/InteractionVWSC/WaterSupplyPartA.dart';
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/PartBSchemePlanningScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/PartCRetrofittingAugmentationScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/PartDSchemeImplementationScreen.dart';
-import 'package:cno_inspection/views/schemeInfo/PartEVisual%20Inspection.dart';
+import 'package:cno_inspection/views/PArtASchemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/PArtASchemeInfo/PartBSchemePlanningScreen.dart';
+import 'package:cno_inspection/views/PArtASchemeInfo/PartCRetrofittingAugmentationScreen.dart';
+import 'package:cno_inspection/views/PArtASchemeInfo/PartDSchemeImplementationScreen.dart';
+import 'package:cno_inspection/views/PArtASchemeInfo/PartEVisual%20Inspection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
