@@ -133,9 +133,11 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedVWSCMeetingConductedID => yesNoMap[_selectedAsBuiltDrawing] ?? 0;
+  int get selectedVWSCMeetingConductedID => yesNoMap[_selectedVWSCMeetingConducted] ?? 0;
 
 
+
+  TextEditingController FrequencyController = TextEditingController();
 
 
   String? _selectedVWSCInvolvement; // Yes / No
@@ -232,7 +234,7 @@ class Vwscprovider extends ChangeNotifier {
 
   String? _selectedCommunityAwareness; // Yes / No
 
-  String? get selectedCommunityAwareness => _selectedOMArrangements;
+  String? get selectedCommunityAwareness => _selectedCommunityAwareness;
 
   set selectedCommunityAwareness(String? value) {
     _selectedCommunityAwareness = value;

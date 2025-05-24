@@ -1,11 +1,13 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
+import 'package:cno_inspection/utils/customtxtfeild.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityFeedbackPartC.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/vwscInfoProvider/VwscProvider.dart';
 import '../../utils/AppStyles.dart';
+import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/toast_helper.dart';
 import 'DashboardVWSC.dart';
@@ -137,8 +139,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   Customradiobttn(
                                     question: "4. As-built Drawing of Pipelines available with GP office:",
                                     options: vwscProvider.yesNoMap.keys.toList(),
-                                    selectedOption: vwscProvider
-                                        .selectedAsBuiltDrawing,
+                                    selectedOption: vwscProvider.selectedAsBuiltDrawing,
                                     onChanged: (val) {
                                       vwscProvider
                                           .selectedAsBuiltDrawing = val;
@@ -157,25 +158,13 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                     },
                                   ),
                                   if (vwscProvider.selectedVWSCMeetingConductedID == 1)
-                                    Customradiobttn(
-                                      question: "If meeting held yes, Frequency:",
-                                      options: [
-                                        "Weekly",
-                                        "Monthly",
-                                        "Quarterly",
-                                        "Other"
-                                      ],
-                                      selectedOption: vwscProvider
-                                          .selectedVWSCMeetingFrequency,
-                                      onChanged: (val) {
-                                        vwscProvider
-                                            .selectedVWSCMeetingFrequency =
-                                            val;
-                                        print(
-                                            'selectedVWSCMeetingFrequencyID------- ${vwscProvider
-                                                .selectedVWSCMeetingFrequencyID}');
-                                      },
+
+                                    Customtxtfeild(
+                                      label: 'If meeting held yes, Frequency:',
+                                      controller: vwscProvider.FrequencyController,
+                                      keyboardType: TextInputType.text,
                                     ),
+
                                   Customradiobttn(
                                     question: "6. Whether records of VWSC meetings are available?",
                                     options: vwscProvider.yesNoMap.keys.toList(),
@@ -233,7 +222,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
 
                                   Customradiobttn(
                                     question: "10. Community awareness about scheme features:",
-                                    options:  vwscProvider.CommunityAwarenessID.keys.toList(),
+                                    options:  vwscProvider.CommunityAwarenessOptions,
                                     selectedOption: vwscProvider.selectedCommunityAwareness,
                                     onChanged: (val) {
                                       vwscProvider.selectedCommunityAwareness = val;
@@ -270,6 +259,8 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                           ),
                                         ),
                                         onPressed: () async {
+
+                                          LoaderUtils. showLoadingWithMessage(context, isLoading: true, message: "Community Involvement & VWSC Functionality");
                                           await vwscProvider
                                               .saveVwscCommunityInvolvement(
                                               userId: 34483,
@@ -285,7 +276,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                                   .selectedAsBuiltDrawingID,
                                               isVwscMeetingPeriodic: vwscProvider
                                                   .selectedVWSCMeetingConductedID,
-                                              meetingHeldFrequency: "Reuglar",
+                                              meetingHeldFrequency:vwscProvider.FrequencyController.text,
                                               isVwscMeetingRecordAvl: vwscProvider
                                                   .selectedVWSCRecordsAvailableID,
                                               vwscInvolvementOM: vwscProvider
