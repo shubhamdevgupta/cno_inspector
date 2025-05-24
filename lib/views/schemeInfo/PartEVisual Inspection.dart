@@ -147,9 +147,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                 const Divider(height: 20),
 
                                 // Section 1(a) - WTP/OHSR/ESR...
-                                const Text("1. Visual signs of poor workmanship (WTP/OHSR/ESR/GSR/MBR/Pump house):", style: TextStyle(fontWeight: FontWeight.w600)),
+                                const Text("1. Through visual inspection, are there signs of poor workmanship as mentioned:", style: TextStyle(fontWeight: FontWeight.w600)),
                                 CustomCheckBoxQuestion(
-                                  question: "Spalling (peeling off surface)",
+                                  question: " Spalling (peeling off surface)",
                                   options: ['Yes', 'No'],
                                   selectedValue: selected1,
                                   onChanged: (val) => setState(() => selected1 = val),
@@ -200,6 +200,34 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   onChanged: (val) => setState(() => selected19 = val),
                                 ),
 
+                                Customradiobttn(
+                                  question: "6.	Are sample based quality checks being done from third party labs for pipes, civil works, and key components (if yes, random reports to be seen)",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+
+                                Customradiobttn(
+                                  question: "7.	Is concurrent supervision in the scope of TPIA? ",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+
+                                Customradiobttn(
+                                  question: "8.	Has TPIA conducted quality checks at different stages of construction? ",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+
+                                Customradiobttn(
+                                  question: "9.	Are there records of observations/inspection reports issued by TPIA?",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+
                                 // Continue similarly for all remaining questions...
 
                                 CustomCheckBoxQuestion(
@@ -234,6 +262,76 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   selectedValue: selected22,
                                   onChanged: (val) => setState(() => selected22 = val),
                                 ),
+
+
+                                const Text(
+                                  '13. Hydrotesting of pipelines done (reports to be seen)',
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(height: 6),
+                                Customradiobttn(
+                                  question: 'Transmission line',
+                                  options: const ['Yes', 'No'],
+                                  selectedOption: _selectedValue,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _selectedValue = val!;
+                                    });
+                                  },
+                                ),
+                                Customradiobttn(
+                                  question: 'Distribution line',
+                                  options: const ['Yes', 'No'],
+                                  selectedOption: _selectedValue,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _selectedValue = val!;
+                                    });
+                                  },
+                                ),
+
+
+
+                                CustomCheckBoxQuestion(
+                                  question: "14. Test reports provided (random samples to be seen)",
+                                  options: [
+                                    "Hydrotesting reports",
+                                    "Construction material quality reports ",
+                                    "Not Provided",
+                                  ],
+                                  selectedValue: selectedIssue,
+                                  onChanged: (val) => setState(() => selectedIssue = val),
+                                ),
+
+
+                                CustomCheckBoxQuestion(
+                                  question: "15. Whether departmental engineers do quality checks",
+                                  options: [
+                                    "Frequently ",
+                                    "Stage-wise ",
+                                    "Before payment ",
+                                    "Never",
+                                  ],
+                                  selectedValue: selectedIssue,
+                                  onChanged: (val) => setState(() => selectedIssue = val),
+                                ),
+
+
+                                CustomCheckBoxQuestion(
+                                  question: "16. Whether departmental engineers (JE/AE/DE/EE etc.) are verifying measurements of construction works",
+                                  options: [
+                                    "Frequently ",
+                                    "Stage-wise ",
+                                    "Before payment ",
+                                    "Never",
+                                  ],
+                                  selectedValue: selectedIssue,
+                                  onChanged: (val) => setState(() => selectedIssue = val),
+                                ),
+
+
+
+
 
                                 // Final questions
                                 CustomCheckBoxQuestion(
