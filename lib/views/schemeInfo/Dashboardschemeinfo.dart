@@ -141,7 +141,12 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           color: Colors.blue,
                           onTap: () {
                             Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToSourceScreenQuestions);
+                                AppConstants.navigateToSourceScreenQuestions,
+                                arguments: {
+                                'schemeId': int.parse(dashboardProvider.selectedScheme!),
+                                'stateId': dashboardProvider.dashboardList.first.stateId,
+                                }
+                            );
                           },
                         ),
                         SizedBox(
@@ -153,7 +158,11 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           color: Colors.orangeAccent,
                           onTap: () {
                             Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToSchemePlanningScreen);
+                                AppConstants.navigateToSchemePlanningScreen,
+                                arguments: {
+                                  'schemeId': int.parse(dashboardProvider.selectedScheme!),
+                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                });
                             // Your onTap logic
                           },
                         ),
@@ -167,7 +176,11 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           onTap: () {
                             // Your onTap logic
                             Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToRetrofittingAugmentationScreen);
+                                AppConstants.navigateToRetrofittingAugmentationScreen,
+                                arguments: {
+                                  'schemeId': int.parse(dashboardProvider.selectedScheme!),
+                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                });
                           },
                         ),
                         SizedBox(
@@ -180,7 +193,11 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           onTap: () {
                             // Your onTap logic
                             Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToSchemeImplementationScreen);
+                                AppConstants.navigateToSchemeImplementationScreen,
+                                arguments: {
+                                  'schemeId': int.parse(dashboardProvider.selectedScheme!),
+                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                });
                           },
                         ),
                         SizedBox(
@@ -193,7 +210,11 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           onTap: () {
                             // Your onTap logic
                             Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToVisualInspectionScreen);
+                                AppConstants.navigateToVisualInspectionScreen,
+                                arguments: {
+                                  'schemeId': int.parse(dashboardProvider.selectedScheme!),
+                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                });
                           },
                         ),
                       ],

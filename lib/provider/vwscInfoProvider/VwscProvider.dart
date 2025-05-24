@@ -32,7 +32,7 @@ class Vwscprovider extends ChangeNotifier {
   int? get stateId => _stateId;
 
   void setStateId(int id) {
-    _villageId = id;
+    _stateId = id;
     notifyListeners();
   }
 
