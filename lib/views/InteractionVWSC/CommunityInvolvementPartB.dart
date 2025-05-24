@@ -106,7 +106,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   SizedBox(height: 10,),
                                   Customradiobttn(
                                     question: "1. Is VWSC or Pani samiti formed:",
-                                    options: ["Yes", "No"],
+                                    options: vwscProvider.yesNoMap.keys.toList(),
                                     selectedOption: vwscProvider.selectedVWSCFormed,
                                     onChanged: (val) {
                                       vwscProvider.selectedVWSCFormed = val;
@@ -126,17 +126,9 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
 
                                   Customradiobttn(
                                     question: "3. VWSC/GP involvement in scheme operations:",
-                                    options: [
-                                      "Active",
-                                      "Limited",
-                                      "No Involvement",
-                                      "VWSC not formed"
-                                    ],
-                                    selectedOption: vwscProvider
-                                        .selectedVWSCInvolvement,
-                                    onChanged: (val) {
-                                      vwscProvider
-                                          .selectedVWSCInvolvement = val;
+                                    options: vwscProvider.VwscGPInvolmentOptions,
+                                    selectedOption: vwscProvider.selectedVWSCInvolvement,
+                                    onChanged: (val) {vwscProvider.selectedVWSCInvolvement = val;
                                       print(
                                           'selectedVWSCInvolvementID------- ${vwscProvider
                                               .selectedVWSCInvolvementID}');
@@ -144,7 +136,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                   Customradiobttn(
                                     question: "4. As-built Drawing of Pipelines available with GP office:",
-                                    options: ["Yes", "No"],
+                                    options: vwscProvider.yesNoMap.keys.toList(),
                                     selectedOption: vwscProvider
                                         .selectedAsBuiltDrawing,
                                     onChanged: (val) {
@@ -157,16 +149,11 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                   Customradiobttn(
                                     question: "5. Whether meetings of VWSC are conducted in a periodic manner?",
-                                    options: ["Yes", "No"],
-                                    selectedOption: vwscProvider
-                                        .selectedVWSCMeetingConducted,
+                                    options:vwscProvider.yesNoMap.keys.toList(),
+                                    selectedOption: vwscProvider.selectedVWSCMeetingConducted,
                                     onChanged: (val) {
-                                      vwscProvider
-                                          .selectedVWSCMeetingConducted =
-                                          val;
-                                      print(
-                                          'selectedVWSCMeetingConductedID------- ${vwscProvider
-                                              .selectedVWSCMeetingConductedID}');
+                                      vwscProvider.selectedVWSCMeetingConducted = val;
+                                      print('selectedVWSCMeetingConductedID------- ${vwscProvider.selectedVWSCMeetingConductedID}');
                                     },
                                   ),
                                   if (vwscProvider.selectedVWSCMeetingConductedID == 1)
@@ -191,7 +178,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                     ),
                                   Customradiobttn(
                                     question: "6. Whether records of VWSC meetings are available?",
-                                    options: ["Yes", "No"],
+                                    options: vwscProvider.yesNoMap.keys.toList(),
                                     selectedOption: vwscProvider
                                         .selectedVWSCRecordsAvailable,
                                     onChanged: (val) {
@@ -218,11 +205,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                   Customradiobttn(
                                     question: "8. Scheme formally handed over to GP/VWSC:",
-                                    options: [
-                                      "Yes",
-                                      "No",
-                                      "Not Applicable"
-                                    ],
+                                    options:  vwscProvider.SchemeHandoverOptions,
                                     selectedOption: vwscProvider
                                         .selectedSchemeHandover,
                                     onChanged: (val) {
@@ -236,12 +219,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
 
                                   Customradiobttn(
                                     question: "9. Operation & Maintenance arrangements:",
-                                    options: [
-                                      "VWSC",
-                                      "PHED",
-                                      "Outsourced Contractor",
-                                      "No arrangement"
-                                    ],
+                                    options: vwscProvider.OMArrangementsOptions,
                                     selectedOption: vwscProvider
                                         .selectedOMArrangements,
                                     onChanged: (val) {
@@ -254,18 +232,6 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
 
                                   Customradiobttn(
-                                    question:
-                                    "2. Is adequate water quantity reaching all the households?",
-                                    options: vwscProvider.yesNoOptions,
-                                    selectedOption:
-                                    vwscProvider.selectedHouseholdWater,
-                                    onChanged: (val) {
-                                      vwscProvider.selectedHouseholdWater = val;
-                                      print(
-                                          'selectedHouseholdWater------- ${vwscProvider.selectedHouseholdWaterId}');
-                                    },
-                                  ),
-                                  Customradiobttn(
                                     question: "10. Community awareness about scheme features:",
                                     options:  vwscProvider.CommunityAwarenessID.keys.toList(),
                                     selectedOption: vwscProvider.selectedCommunityAwareness,
@@ -276,12 +242,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                   Customradiobttn(
                                     question: "11. Community satisfaction with water quality:",
-                                    options: [
-                                      "Satisfied",
-                                      "Partially Satisfied",
-                                      "Dissatisfied",
-                                      "Not Interacted"
-                                    ],
+                                    options: vwscProvider.WaterQualitySatisfactionOptions,
                                     selectedOption: vwscProvider
                                         .selectedWaterQualitySatisfaction,
                                     onChanged: (val) {

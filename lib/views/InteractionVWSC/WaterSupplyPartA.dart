@@ -147,13 +147,10 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                               children: [
                                 Customradiobttn(
                                   question: "1. Water supply frequency:",
-                                  options: vwscProvider.,
+                                  options: vwscProvider.FrequencyLabelOption,
                                   selectedOption: vwscProvider.selectedFrequency,
-                                  onChanged: (val) {
-                                    vwscProvider.selectedFrequency = val;
-                                    print(
-                                        '------- ${vwscProvider.selectedFrequencyIds}');
-                                  },
+                                  onChanged: (val) {vwscProvider.selectedFrequency = val;
+                                    print('-------selectedFrequencyID ${vwscProvider.selectedFrequencyID}');},
                                 ),
 
 

@@ -37,22 +37,6 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   // 1. Define the options map
-
-
-  // 2. Expose just the labels for the UI
-
-
-
-
-  // 3. Track selected labels
-  String? _selectedFrequencyLabels;
-
-  String? get selectedFrequency => _selectedFrequencyLabels;
-
-  set selectedFrequency(String? values) {
-    _selectedFrequencyLabels = values;
-    notifyListeners();
-  }
   final Map<String, int> FrequencyLabels = {
     "Daily": 1,
     "Once in two days": 2,
@@ -60,6 +44,24 @@ class Vwscprovider extends ChangeNotifier {
     "Irregular": 4,
     "Not functional": 5,
   };
+
+  List<String> get FrequencyLabelOption => FrequencyLabels.keys.toList();
+
+  // 2. Expose just the labels for the UI
+
+
+  String? _selectedFrequencyLabels;
+
+  String? get selectedFrequency => _selectedFrequencyLabels;
+
+  // 3. Track selected labels
+
+
+  set selectedFrequency(String? values) {
+    _selectedFrequencyLabels = values;
+    notifyListeners();
+  }
+
   int get selectedFrequencyID => FrequencyLabels[_selectedFrequencyLabels] ?? 0;
   // 4. Convert selected labels to their mapped integer values (for API)
 
@@ -149,6 +151,7 @@ class Vwscprovider extends ChangeNotifier {
     "Active": 1,
     "Limited": 2,"No Involvement": 3,"VWSC not found": 4,
   };
+  List<String> get VwscGPInvolmentOptions => VwscGPInvolment.keys.toList();
 
   //
   int get selectedVWSCInvolvementID => VwscGPInvolment[_selectedVWSCInvolvement] ?? 0;
@@ -201,6 +204,8 @@ class Vwscprovider extends ChangeNotifier {
     "Yes": 1,
     "No": 2,"Not Applicable": 3,
   };
+
+  List<String> get SchemeHandoverOptions => SchemeHandover.keys.toList();
   //
   int get selectedSchemeHandoverID => SchemeHandover[_selectedSchemeHandover] ?? 0;
 
@@ -220,6 +225,8 @@ class Vwscprovider extends ChangeNotifier {
     "VWSC": 1,
     "PHED": 2,"Outsourced": 3,"No arrangement": 4,
   };
+
+  List<String> get OMArrangementsOptions => OMArrangements.keys.toList();
   //
   int get selectedOMArrangementsID => OMArrangements[_selectedOMArrangements] ?? 0;
 
@@ -276,6 +283,8 @@ class Vwscprovider extends ChangeNotifier {
     "Satisfied": 1,
     "Partially Satisfied": 2,"Dissatisfied": 3,"Not Interacted": 4,
   };
+
+  List<String> get WaterQualitySatisfactionOptions => WaterQualitySatisfaction.keys.toList();
   int get selectedWaterQualitySatisfactionID => WaterQualitySatisfaction[_selectedWaterQualitySatisfaction] ?? 0;
 
 
