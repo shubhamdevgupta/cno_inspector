@@ -30,7 +30,6 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
       await dashboardProvider.fetchDashboardData(34483, 3);
-      _localStorage.saveInt("villageId", dashboardProvider.dashboardList.first.villageId);
     });
   }
 
@@ -117,7 +116,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                                 .firstWhere(
                                   (village) =>
                                       village.villageId ==
-                                      dashboardProvider.selectedVwsc,
+                                      dashboardProvider.selectedVwscId,
                                   orElse: () => CnoDashboardItem(
                                     userid: 0,
                                     totalSchemes: 0,
@@ -173,7 +172,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                           );
 
                           dashboardProvider.setSelectedVWSC(
-                              selectedItem.villageId.toString());
+                              selectedItem.villageId);
+                          print('village id ${dashboardProvider.selectedVwscId}');
 
                           path = _buildLocationPath([
                             selectedItem.stateName ?? '',
@@ -186,9 +186,9 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                       ),
                     ],
                   ),
-                  if (dashboardProvider.selectedVwsc != null &&
+               /*   if (dashboardProvider.selectedVwsc != null &&
                       dashboardProvider.selectedVwsc!.isNotEmpty &&
-                      path != null)
+                      path != null)*/
                     SizedBox(height: 12,),
                   Column(
                     children: [
@@ -217,8 +217,15 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Water Supply Functionality",
                         color: Colors.blue,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
+                          final stateId = dashboardProvider.dashboardList.first.stateId;
+
                           Navigator.pushReplacementNamed(
-                              context, AppConstants.navigateToWaterSupplyPartA);
+                              context, AppConstants.navigateToWaterSupplyPartA,
+                              arguments: {
+                                'villageId': selectedVillageId,
+                                'stateId': stateId,
+                              }                          );
                         },
                       ),
                       SizedBox(
@@ -229,8 +236,14 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Community Involvement & VWSC Functionality",
                         color: Colors.orangeAccent,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
+                          final stateId = dashboardProvider.dashboardList.first.stateId;
                           Navigator.pushReplacementNamed(context,
-                              AppConstants.navigateToCommunityInvolvementPartB);
+                              AppConstants.navigateToCommunityInvolvementPartB,
+                              arguments: {
+                                'villageId': selectedVillageId,
+                                'stateId': stateId,
+                              }                          );
                         },
                       ),
                       SizedBox(
@@ -241,8 +254,14 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Community feedback on quality of construction",
                         color: Colors.deepOrangeAccent,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
+                          final stateId = dashboardProvider.dashboardList.first.stateId;
                           Navigator.pushReplacementNamed(context,
-                              AppConstants.navigateToCommunityFeedbackPartC);
+                              AppConstants.navigateToCommunityFeedbackPartC,
+                              arguments: {
+                                'villageId': selectedVillageId,
+                                'stateId': stateId,
+                              }                          );
                         },
                       ),
                       SizedBox(
@@ -253,8 +272,14 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Water Quality Monitoring",
                         color: Colors.lightGreen,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
+                          final stateId = dashboardProvider.dashboardList.first.stateId;
                           Navigator.pushReplacementNamed(
-                              context, AppConstants.navigateToQulityPartD);
+                              context, AppConstants.navigateToQulityPartD,
+                              arguments: {
+                                'villageId': selectedVillageId,
+                                'stateId': stateId,
+                              }                          );
                         },
                       ),
                       SizedBox(
@@ -265,8 +290,14 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         title: "Grievance Redressal",
                         color: Colors.green,
                         onTap: () {
+                          final selectedVillageId = dashboardProvider.selectedVwscId;
+                          final stateId = dashboardProvider.dashboardList.first.stateId;
                           Navigator.pushReplacementNamed(
-                              context, AppConstants.navigateToGrievancePartE);
+                              context, AppConstants.navigateToGrievancePartE,
+                              arguments: {
+                                'villageId': selectedVillageId,
+                                'stateId': stateId,
+                              }                          );
                         },
                       ),
                     ],

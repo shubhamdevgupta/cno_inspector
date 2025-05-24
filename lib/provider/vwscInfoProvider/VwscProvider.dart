@@ -17,6 +17,23 @@ class Vwscprovider extends ChangeNotifier {
 
   BaseResponse? baseResponse;
 
+  int? _villageId;
+
+  int? get villageId => _villageId;
+
+  void setVillageId(int id) {
+    _villageId = id;
+    notifyListeners();
+  }
+
+  int? _stateId;
+
+  int? get stateId => _stateId;
+
+  void setStateId(int id) {
+    _villageId = id;
+    notifyListeners();
+  }
 
   // 1. Define the options map
   final Map<String, int> waterSupplyFrequencyMap = {
@@ -288,6 +305,65 @@ class Vwscprovider extends ChangeNotifier {
     }
   }
 
+
+  Map<String, int> ftkTestingFrequencyMap = {
+    'Regularly tested': 1,
+    'Occasionally': 2,
+    'Not tested': 3,
+    'No FTK': 4,
+  };
+
+  Map<String, int> frcLevelMap = {
+    'Available': 1,
+    'Occasionally': 2,
+    'Not Available': 3,
+    'Not Tested': 4,
+  };
+
+
+  // 1. FTK Availability
+  String? _selectedFTKAvailability;
+  String? get selectedFTKAvailability => _selectedFTKAvailability;
+  set selectedFTKAvailability(String? value) {
+    _selectedFTKAvailability = value;
+    notifyListeners();
+  }
+  int get selectedFTKAvailabilityId => yesNoMap[_selectedFTKAvailability] ?? 0;
+
+  // 2. FTK Testing Frequency
+  String? _selectedFTKTestingFrequency;
+  String? get selectedFTKTestingFrequency => _selectedFTKTestingFrequency;
+  set selectedFTKTestingFrequency(String? value) {
+    _selectedFTKTestingFrequency = value;
+    notifyListeners();
+  }
+  int get selectedFTKTestingFrequencyId => ftkTestingFrequencyMap[_selectedFTKTestingFrequency] ?? 0;
+
+  // 3. Women Trained in FTK Testing
+  TextEditingController womenTrainedController=TextEditingController();
+
+  // 4. Who is doing water quality testing
+  TextEditingController testerNameController = TextEditingController();
+
+  // 5. Disinfection Done
+  String? _selectedDisinfectionDone;
+  String? get selectedDisinfectionDone => _selectedDisinfectionDone;
+  set selectedDisinfectionDone(String? value) {
+    _selectedDisinfectionDone = value;
+    notifyListeners();
+  }
+  int get selectedDisinfectionDoneId => yesNoMap[_selectedDisinfectionDone] ?? 0;
+
+  // 6. FRC Level
+  String? _selectedFRCLevel;
+  String? get selectedFRCLevel => _selectedFRCLevel;
+  set selectedFRCLevel(String? value) {
+    _selectedFRCLevel = value;
+    notifyListeners();
+  }
+  int get selectedFRCLevelId => frcLevelMap[_selectedFRCLevel] ?? 0;
+
+
   Future<bool> saveWaterQualityMonitoring({
     required int userId,
     required int stateId,
@@ -327,6 +403,59 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+
+
+  Map<String, int> turnAroundTimeMap = {
+    'Same day': 1,
+    'Two days': 2,
+    'Three days': 3,
+    'More than three days': 4,
+  };
+
+  final Map<String, int> grievanceRegistrationMethodMap = {
+    "Toll free number": 1,
+    "Web based portal": 2,
+    "Mobile application": 3,
+    "Public grievance registration center": 4,
+    "Directly calling to PHED/Contractor/O&M agency": 5,
+  };
+
+
+// 7. Grievance redressal mechanism available
+  String? _selectedGrievanceMechanism;
+  String? get selectedGrievanceMechanism => _selectedGrievanceMechanism;
+  set selectedGrievanceMechanism(String? value) {
+    _selectedGrievanceMechanism = value;
+    notifyListeners();
+  }
+  int get selectedGrievanceMechanismId => yesNoMap[_selectedGrievanceMechanism] ?? 0;
+
+// 8. Grievance registration methods (multi-select)
+  List<String> _selectedGrievanceMethods = [];
+
+  List<String> get grievanceRegistrationMethods => _selectedGrievanceMethods;
+
+  set grievanceRegistrationMethods(List<String> values) {
+    _selectedGrievanceMethods = values;
+    notifyListeners();
+  }
+
+// Expose selected IDs (mapped from selected labels)
+  List<int> get selectedGrievanceMethodIds =>
+      _selectedGrievanceMethods.map((e) => grievanceRegistrationMethodMap[e] ?? 0).toList();
+
+
+// 9. Turn around time for grievance
+  String? _selectedTurnAroundTime;
+  String? get selectedTurnAroundTime => _selectedTurnAroundTime;
+  set selectedTurnAroundTime(String? value) {
+    _selectedTurnAroundTime = value;
+    notifyListeners();
+  }
+  int get selectedTurnAroundTimeId => turnAroundTimeMap[_selectedTurnAroundTime] ?? 0;
+
+
 
   Future<bool> saveGrievanceRedressal({
     required int userId,
