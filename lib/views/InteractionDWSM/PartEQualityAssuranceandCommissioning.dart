@@ -1,7 +1,7 @@
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/views/InteractionDWSM/PartFPublicComplaintsandGrievance.dart';
-import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/AppStyles.dart';
@@ -12,7 +12,7 @@ import '../../utils/CustomTextField.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
-import '../schemeInfo/PartBSchemePlanningScreen.dart';
+import '../PartASchemeInfo/PartBSchemePlanningScreen.dart';
 import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 

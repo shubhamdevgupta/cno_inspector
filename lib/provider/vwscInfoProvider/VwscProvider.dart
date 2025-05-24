@@ -223,9 +223,6 @@ class Vwscprovider extends ChangeNotifier {
   //
   int get selectedOMArrangementsID => OMArrangements[_selectedOMArrangements] ?? 0;
 
-
-
-
   String? _selectedCommunityAwareness; // Yes / No
 
   String? get selectedCommunityAwareness => _selectedOMArrangements;
@@ -240,12 +237,11 @@ class Vwscprovider extends ChangeNotifier {
     "Well informed": 1,
     "Some awareness": 2,"No awareness": 3
   };
+
+  List<String> get CommunityAwarenessOptions => CommunityAwarenessID.keys.toList();
+
   //
   int get selectedCommunityAwarenessID => CommunityAwarenessID[_selectedCommunityAwareness] ?? 0;
-
-
-
-
 
   String? _selectedVWSCMeetingFrequency; // Yes / No
 
@@ -281,14 +277,6 @@ class Vwscprovider extends ChangeNotifier {
     "Partially Satisfied": 2,"Dissatisfied": 3,"Not Interacted": 4,
   };
   int get selectedWaterQualitySatisfactionID => WaterQualitySatisfaction[_selectedWaterQualitySatisfaction] ?? 0;
-
-
-
-
-
-
-
-
 
 
 

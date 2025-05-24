@@ -1,11 +1,10 @@
-import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
-import 'package:cno_inspection/views/schemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
-import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customradiobttn.dart';
