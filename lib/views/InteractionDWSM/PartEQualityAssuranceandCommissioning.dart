@@ -126,7 +126,7 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
 
                                 // Authorized inspectors
                                 CustomMultiSelectChipQuestion(
-                                  question: "Who all are authorized to inspect and measure works during field inspection?",
+                                  question: "1. Who all are authorized to inspect and measure works during field inspection?",
                                   options: [
                                     "PHED Engineer",
                                     "PMC/PMU",
@@ -147,7 +147,7 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
 
                                 // Commissioning protocol followed
                                 Customradiobttn(
-                                  question: "Is the commissioning protocol being followed?",
+                                  question: "2. Is the commissioning protocol being followed?",
                                   options: ["Yes", "No"],
                                   selectedOption: commissioningProtocolFollowed,
                                   onChanged: (val) => setState(() => commissioningProtocolFollowed = val),
@@ -157,7 +157,7 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
 
                                 // Presence during commissioning
                                 CustomMultiSelectChipQuestion(
-                                  question: "During commissioning of schemes, who are generally present?",
+                                  question: "3. During commissioning of schemes, who are generally present?",
                                   options: [
                                     "PHED",
                                     "VWSC Members",
@@ -178,7 +178,7 @@ class _PartEQualityAssuranceCommissioning extends State<PartEQualityAssuranceCom
 
                                 // Assessment of TPIAs
                                 Customradiobttn(
-                                  question: "Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?",
+                                  question: "4. Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?",
                                   options: ["Yes – Regularly", "Occasionally", "Not Done"],
                                   selectedOption: thirdPartyAssessment,
                                   onChanged: (val) => setState(() => thirdPartyAssessment = val),

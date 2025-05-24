@@ -175,10 +175,6 @@ class Schemeprovider extends ChangeNotifier {
 
   final TextEditingController deviationReasonController = TextEditingController();
 
-
-
-
-
   Future<bool> saveSchemePlanning({
     required int userId,
     required int stateId,
@@ -227,6 +223,43 @@ class Schemeprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+
+  // Radio 1: Legacy Infrastructure Assessment
+  String? _legacyInfraAssessment;
+  String? get legacyInfraAssessment => _legacyInfraAssessment;
+  set legacyInfraAssessment(String? value) {
+    _legacyInfraAssessment = value;
+    notifyListeners();
+  }
+  int get selectedLegacyInfraAssessmentId => yesNoMap[_legacyInfraAssessment] ?? 0;
+
+  // TextField Controllers: Legacy Infrastructure Usage
+  final TextEditingController transmissionPipelineKmController = TextEditingController();
+  final TextEditingController distributionPipelineKmController = TextEditingController();
+  final TextEditingController wtpCapacityMldController = TextEditingController();
+  final TextEditingController storageStructureDetailsController = TextEditingController();
+
+  // Radio 2: As-built Drawing Availability
+  String? _asBuiltDrawingAvailability;
+  String? get asBuiltDrawingAvailability => _asBuiltDrawingAvailability;
+  set asBuiltDrawingAvailability(String? value) {
+    _asBuiltDrawingAvailability = value;
+    notifyListeners();
+  }
+
+  int get asBuiltDrawingAvailabilityID => yesNoMap[_asBuiltDrawingAvailability] ?? 0;
+
+  // Radio 3: Has it been digitized and uploaded on PM Gatishakti?
+  String? _onPmGatishakti;
+  String? get onPmGatiShakti => _onPmGatishakti;
+  set onPmGatiShakti(String? value) {
+    _onPmGatishakti = value;
+    notifyListeners();
+  }
+  int get onPmGatishaktiID => yesNoMap[_onPmGatishakti] ?? 0;
+  final TextEditingController reasonController = TextEditingController();
+
 
   Future<bool> saveRetrofitAdditionalInfo({
     required int userId,

@@ -1,11 +1,13 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
+import 'package:cno_inspection/utils/customtxtfeild.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityFeedbackPartC.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/vwscInfoProvider/VwscProvider.dart';
 import '../../utils/AppStyles.dart';
+import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/toast_helper.dart';
 import 'DashboardVWSC.dart';
@@ -106,7 +108,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   SizedBox(height: 10,),
                                   Customradiobttn(
                                     question: "1. Is VWSC or Pani samiti formed:",
-                                    options: ["Yes", "No"],
+                                    options: vwscProvider.yesNoMap.keys.toList(),
                                     selectedOption: vwscProvider.selectedVWSCFormed,
                                     onChanged: (val) {
                                       vwscProvider.selectedVWSCFormed = val;
@@ -126,17 +128,9 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
 
                                   Customradiobttn(
                                     question: "3. VWSC/GP involvement in scheme operations:",
-                                    options: [
-                                      "Active",
-                                      "Limited",
-                                      "No Involvement",
-                                      "VWSC not formed"
-                                    ],
-                                    selectedOption: vwscProvider
-                                        .selectedVWSCInvolvement,
-                                    onChanged: (val) {
-                                      vwscProvider
-                                          .selectedVWSCInvolvement = val;
+                                    options: vwscProvider.VwscGPInvolmentOptions,
+                                    selectedOption: vwscProvider.selectedVWSCInvolvement,
+                                    onChanged: (val) {vwscProvider.selectedVWSCInvolvement = val;
                                       print(
                                           'selectedVWSCInvolvementID------- ${vwscProvider
                                               .selectedVWSCInvolvementID}');
@@ -144,9 +138,8 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                   Customradiobttn(
                                     question: "4. As-built Drawing of Pipelines available with GP office:",
-                                    options: ["Yes", "No"],
-                                    selectedOption: vwscProvider
-                                        .selectedAsBuiltDrawing,
+                                    options: vwscProvider.yesNoMap.keys.toList(),
+                                    selectedOption: vwscProvider.selectedAsBuiltDrawing,
                                     onChanged: (val) {
                                       vwscProvider
                                           .selectedAsBuiltDrawing = val;
@@ -157,41 +150,25 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                   Customradiobttn(
                                     question: "5. Whether meetings of VWSC are conducted in a periodic manner?",
-                                    options: ["Yes", "No"],
-                                    selectedOption: vwscProvider
-                                        .selectedVWSCMeetingConducted,
+                                    options:vwscProvider.yesNoMap.keys.toList(),
+                                    selectedOption: vwscProvider.selectedVWSCMeetingConducted,
                                     onChanged: (val) {
-                                      vwscProvider
-                                          .selectedVWSCMeetingConducted =
-                                          val;
-                                      print(
-                                          'selectedVWSCMeetingConductedID------- ${vwscProvider
-                                              .selectedVWSCMeetingConductedID}');
+                                      vwscProvider.selectedVWSCMeetingConducted = val;
+                                      print('selectedVWSCMeetingConductedID------- ${vwscProvider.selectedVWSCMeetingConductedID}');
                                     },
                                   ),
                                   if (vwscProvider.selectedVWSCMeetingConductedID == 1)
-                                    Customradiobttn(
-                                      question: "If meeting held yes, Frequency:",
-                                      options: [
-                                        "Weekly",
-                                        "Monthly",
-                                        "Quarterly",
-                                        "Other"
-                                      ],
-                                      selectedOption: vwscProvider
-                                          .selectedVWSCMeetingFrequency,
-                                      onChanged: (val) {
-                                        vwscProvider
-                                            .selectedVWSCMeetingFrequency =
-                                            val;
-                                        print(
-                                            'selectedVWSCMeetingFrequencyID------- ${vwscProvider
-                                                .selectedVWSCMeetingFrequencyID}');
-                                      },
+
+
+                                    Customtxtfeild(
+                                      label: 'If meeting held yes, Frequency:',
+                                      controller: vwscProvider.FrequencyController,
+                                      keyboardType: TextInputType.text,
                                     ),
+
                                   Customradiobttn(
                                     question: "6. Whether records of VWSC meetings are available?",
-                                    options: ["Yes", "No"],
+                                    options: vwscProvider.yesNoMap.keys.toList(),
                                     selectedOption: vwscProvider
                                         .selectedVWSCRecordsAvailable,
                                     onChanged: (val) {
@@ -218,11 +195,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                   Customradiobttn(
                                     question: "8. Scheme formally handed over to GP/VWSC:",
-                                    options: [
-                                      "Yes",
-                                      "No",
-                                      "Not Applicable"
-                                    ],
+                                    options:  vwscProvider.SchemeHandoverOptions,
                                     selectedOption: vwscProvider
                                         .selectedSchemeHandover,
                                     onChanged: (val) {
@@ -234,15 +207,9 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                     },
                                   ),
 
-
                                   Customradiobttn(
                                     question: "9. Operation & Maintenance arrangements:",
-                                    options: [
-                                      "VWSC",
-                                      "PHED",
-                                      "Outsourced Contractor",
-                                      "No arrangement"
-                                    ],
+                                    options: vwscProvider.OMArrangementsOptions,
                                     selectedOption: vwscProvider
                                         .selectedOMArrangements,
                                     onChanged: (val) {
@@ -255,20 +222,8 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
 
                                   Customradiobttn(
-                                    question:
-                                    "2. Is adequate water quantity reaching all the households?",
-                                    options: vwscProvider.yesNoOptions,
-                                    selectedOption:
-                                    vwscProvider.selectedHouseholdWater,
-                                    onChanged: (val) {
-                                      vwscProvider.selectedHouseholdWater = val;
-                                      print(
-                                          'selectedHouseholdWater------- ${vwscProvider.selectedHouseholdWaterId}');
-                                    },
-                                  ),
-                                  Customradiobttn(
                                     question: "10. Community awareness about scheme features:",
-                                    options:  vwscProvider.CommunityAwarenessID.keys.toList(),
+                                    options:  vwscProvider.CommunityAwarenessOptions,
                                     selectedOption: vwscProvider.selectedCommunityAwareness,
                                     onChanged: (val) {
                                       vwscProvider.selectedCommunityAwareness = val;
@@ -277,12 +232,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                   Customradiobttn(
                                     question: "11. Community satisfaction with water quality:",
-                                    options: [
-                                      "Satisfied",
-                                      "Partially Satisfied",
-                                      "Dissatisfied",
-                                      "Not Interacted"
-                                    ],
+                                    options: vwscProvider.WaterQualitySatisfactionOptions,
                                     selectedOption: vwscProvider
                                         .selectedWaterQualitySatisfaction,
                                     onChanged: (val) {
@@ -310,6 +260,8 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                           ),
                                         ),
                                         onPressed: () async {
+
+                                          LoaderUtils. showLoadingWithMessage(context, isLoading: true, message: "Community Involvement & VWSC Functionality");
                                           await vwscProvider
                                               .saveVwscCommunityInvolvement(
                                               userId: 34483,
@@ -325,7 +277,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                                   .selectedAsBuiltDrawingID,
                                               isVwscMeetingPeriodic: vwscProvider
                                                   .selectedVWSCMeetingConductedID,
-                                              meetingHeldFrequency: "Reuglar",
+                                              meetingHeldFrequency:vwscProvider.FrequencyController.text,
                                               isVwscMeetingRecordAvl: vwscProvider
                                                   .selectedVWSCRecordsAvailableID,
                                               vwscInvolvementOM: vwscProvider

@@ -37,7 +37,7 @@ class _GrievancePartE extends State<GrievancePartE> {
           // Removes the default back button
           centerTitle: true,
           title: Text(
-            "Interaction with VWSC",
+            "Grievance Redressal",
             style: AppStyles.appBarTitle,
           ),
           leading: IconButton(
@@ -147,14 +147,21 @@ class _GrievancePartE extends State<GrievancePartE> {
                                       ),
                                     ),
                                     onPressed: () async{
-                                      await LoaderUtils.conditionalLoader(isLoading: vwscProvider.isLoading);
+                                       LoaderUtils.showLoadingWithMessage(context ,isLoading: true,message: "Grievance Redressal");
                                       await vwscProvider.saveGrievanceRedressal(userId: _localStorageService.getInt(AppConstants.prefUserId)!, stateId: vwscProvider.stateId!,
                                           villageId: vwscProvider.villageId!, grievanceMechanismAvailable: vwscProvider.selectedGrievanceMechanismId,
                                           grievanceTurnAroundTime: vwscProvider.selectedTurnAroundTimeId, registrationTypes: vwscProvider.selectedGrievanceMethodIds,
                                           createdBy: _localStorageService.getInt(AppConstants.prefUserId)!);
                                       if(vwscProvider.status!){
                                         ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.green);
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardvwsc()),);
+                                       // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardvwsc()),);
+
+
+                                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => Dashboardvwsc()),
+                                              (Route<dynamic> route) => false,
+                                        );
+
+
                                       }else{
                                         ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.red);
                                       }

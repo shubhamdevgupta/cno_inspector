@@ -199,7 +199,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                             const SizedBox(width: 10),
                             Expanded(
                               child: Text(
-                                '---${dashboardProvider.selectedVwscId}',
+                                path,
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,

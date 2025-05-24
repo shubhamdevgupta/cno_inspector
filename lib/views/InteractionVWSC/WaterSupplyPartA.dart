@@ -145,18 +145,17 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CustomMultiSelectChipQuestion(
+                                Customradiobttn(
                                   question: "1. Water supply frequency:",
-                                  options:
-                                      vwscProvider.waterSupplyFrequencyOptions,
-                                  selectedValues:
-                                      vwscProvider.selectedFrequency,
-                                  onSelectionChanged: (val) {
-                                    vwscProvider.selectedFrequency = val;
-                                    print(
-                                        '------- ${vwscProvider.selectedFrequencyIds}');
-                                  },
+                                  options: vwscProvider.FrequencyLabelOption,
+                                  selectedOption: vwscProvider.selectedFrequency,
+                                  onChanged: (val) {vwscProvider.selectedFrequency = val;
+                                    print('-------selectedFrequencyID ${vwscProvider.selectedFrequencyID}');},
                                 ),
+
+
+
+
                                 Customradiobttn(
                                   question:
                                       "2. Is adequate water quantity reaching all the households?",
@@ -173,10 +172,8 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                   question:
                                       "3. Is adequate water quantity reaching to remote/SC/ST/PVTG groups?",
                                   options: vwscProvider.yesNoOptions,
-                                  selectedOption:
-                                      vwscProvider.selectedPvtgGroups,
-                                  onChanged: (val) {
-                                    vwscProvider.selectedPvtgGroups = val;
+                                  selectedOption: vwscProvider.selectedPvtgGroups,
+                                  onChanged: (val) {vwscProvider.selectedPvtgGroups = val;
                                     print(
                                         'selectedPvtgGroups------- ${vwscProvider.selectedPvtgGroupsId}');
                                   },

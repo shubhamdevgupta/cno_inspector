@@ -37,7 +37,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   // 1. Define the options map
-  final Map<String, int> waterSupplyFrequencyMap = {
+  final Map<String, int> FrequencyLabels = {
     "Daily": 1,
     "Once in two days": 2,
     "Once in three days": 3,
@@ -45,26 +45,26 @@ class Vwscprovider extends ChangeNotifier {
     "Not functional": 5,
   };
 
+  List<String> get FrequencyLabelOption => FrequencyLabels.keys.toList();
+
   // 2. Expose just the labels for the UI
 
-  List<String> get waterSupplyFrequencyOptions => waterSupplyFrequencyMap.keys.toList();
 
+  String? _selectedFrequencyLabels;
+
+  String? get selectedFrequency => _selectedFrequencyLabels;
 
   // 3. Track selected labels
-  List<String> _selectedFrequencyLabels = [];
 
-  List<String> get selectedFrequency => _selectedFrequencyLabels;
 
-  set selectedFrequency(List<String> values) {
+  set selectedFrequency(String? values) {
     _selectedFrequencyLabels = values;
     notifyListeners();
   }
 
+  int get selectedFrequencyID => FrequencyLabels[_selectedFrequencyLabels] ?? 0;
   // 4. Convert selected labels to their mapped integer values (for API)
-  List<int> get selectedFrequencyIds => _selectedFrequencyLabels
-      .map((label) => waterSupplyFrequencyMap[label])
-      .whereType<int>()
-      .toList();
+
 
   // Yes/No options with mappings
   // question 2222222222222222
@@ -133,9 +133,11 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedVWSCMeetingConductedID => yesNoMap[_selectedAsBuiltDrawing] ?? 0;
+  int get selectedVWSCMeetingConductedID => yesNoMap[_selectedVWSCMeetingConducted] ?? 0;
 
 
+
+  TextEditingController FrequencyController = TextEditingController();
 
 
   String? _selectedVWSCInvolvement; // Yes / No
@@ -151,6 +153,7 @@ class Vwscprovider extends ChangeNotifier {
     "Active": 1,
     "Limited": 2,"No Involvement": 3,"VWSC not found": 4,
   };
+  List<String> get VwscGPInvolmentOptions => VwscGPInvolment.keys.toList();
 
   //
   int get selectedVWSCInvolvementID => VwscGPInvolment[_selectedVWSCInvolvement] ?? 0;
@@ -203,6 +206,8 @@ class Vwscprovider extends ChangeNotifier {
     "Yes": 1,
     "No": 2,"Not Applicable": 3,
   };
+
+  List<String> get SchemeHandoverOptions => SchemeHandover.keys.toList();
   //
   int get selectedSchemeHandoverID => SchemeHandover[_selectedSchemeHandover] ?? 0;
 
@@ -222,12 +227,14 @@ class Vwscprovider extends ChangeNotifier {
     "VWSC": 1,
     "PHED": 2,"Outsourced": 3,"No arrangement": 4,
   };
+
+  List<String> get OMArrangementsOptions => OMArrangements.keys.toList();
   //
   int get selectedOMArrangementsID => OMArrangements[_selectedOMArrangements] ?? 0;
 
   String? _selectedCommunityAwareness; // Yes / No
 
-  String? get selectedCommunityAwareness => _selectedOMArrangements;
+  String? get selectedCommunityAwareness => _selectedCommunityAwareness;
 
   set selectedCommunityAwareness(String? value) {
     _selectedCommunityAwareness = value;
@@ -278,6 +285,8 @@ class Vwscprovider extends ChangeNotifier {
     "Satisfied": 1,
     "Partially Satisfied": 2,"Dissatisfied": 3,"Not Interacted": 4,
   };
+
+  List<String> get WaterQualitySatisfactionOptions => WaterQualitySatisfaction.keys.toList();
   int get selectedWaterQualitySatisfactionID => WaterQualitySatisfaction[_selectedWaterQualitySatisfaction] ?? 0;
 
 
@@ -465,7 +474,7 @@ class Vwscprovider extends ChangeNotifier {
         communitySatisfactionWithWq: communitySatisfactionWithWq,
         createdBy: createdBy,
       );
-
+      _status=response.status;
       _message = response.message;
       return response.status ?? false;
     } catch (e) {
@@ -600,6 +609,7 @@ class Vwscprovider extends ChangeNotifier {
         createdBy: createdBy,
       );
 
+      _status=response.status;
       _message = response.message;
       return response.status ?? false;
     } catch (e) {
@@ -684,7 +694,7 @@ class Vwscprovider extends ChangeNotifier {
         registrationTypes: registrationTypes,
         createdBy: createdBy,
       );
-
+      _status=response.status;
       _message = response.message;
       return response.status ?? false;
     } catch (e) {
