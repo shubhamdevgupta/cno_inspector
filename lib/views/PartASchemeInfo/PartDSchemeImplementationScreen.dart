@@ -237,7 +237,6 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       ),
                                     ),
 
-
                                     CustomMultiSelectChipQuestion(
                                       question: '6. Reason(s) for revision:',
                                       options:  schemeProvider.revisionReasonsIDOptions,
