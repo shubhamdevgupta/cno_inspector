@@ -205,13 +205,15 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                         SizedBox(
                           height: 10,
                         ),
-                        //todo
+
                         buildSampleCard(
                           qnumber: "F.",
                           title: "Public Complaints and Grievance Redressal",
-                          color: Colors.green,
+                          color: Colors.deepPurpleAccent,
                           onTap: () {
                             // Your onTap logic
+                            Navigator.pushReplacementNamed(context,
+                                AppConstants.navigateToPartFPublicCompliant);
                           },
                         ),
                       ],

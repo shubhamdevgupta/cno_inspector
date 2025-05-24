@@ -10,6 +10,7 @@ import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/MultiSelectionlist.dart';
 import 'DashboardVWSC.dart';
+import 'VWSCCommonClass.dart';
 
 class CommunityInvolvementPartB extends StatefulWidget {
 
@@ -56,8 +57,8 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Interaction with VWSC",
-              style: AppStyles.appBarTitle,
+              "Community Involvement & VWSC Functionality",
+              style: AppStyles.appBarTitleSmallText,
             ),
             leading: IconButton(
 
@@ -98,7 +99,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                    crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
 
-                     NewScreenPoints(
+                     Vwsccommonclass(
                        no: 2,
                      ),
                      Padding(
@@ -123,17 +124,6 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                            child: Column(
                              crossAxisAlignment: CrossAxisAlignment.start,
                              children: [
-                               Padding(
-                                 padding: EdgeInsets.symmetric(vertical: 8.0),
-                                 child: Text(
-                                   'B. Community Involvement & VWSC Functionality',
-                                   style: TextStyle(
-                                     fontWeight: FontWeight.bold,
-                                     fontSize: 16,
-                                     color: Colors.orangeAccent,
-                                   ),
-                                 ),
-                               ),
                                SizedBox(height: 10,),
                                Customradiobttn(
                                  question: "1. Is VWSC or Pani samiti formed:",

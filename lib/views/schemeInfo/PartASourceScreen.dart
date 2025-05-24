@@ -12,6 +12,7 @@ import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'PartBSchemePlanningScreen.dart';
+import 'SchemeInfoCommonScreen.dart';
 
 class SourceScreenQuestions extends StatefulWidget {
   const SourceScreenQuestions({Key? key}) : super(key: key);
@@ -37,7 +38,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
             // Removes the default back button
             centerTitle: true,
             title: Text(
-              "Scheme Inspection",
+              "Source",
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
@@ -80,7 +81,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Schemeinfocommonscreen(
                         no: 1,
                       ),
                       Card(

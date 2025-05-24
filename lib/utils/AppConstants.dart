@@ -44,6 +44,7 @@ class AppConstants {
   static const String navigateToMonitoringQuality = '/MonitioringQuality';
   static const String navigateToQualityAssurance = '/PartEQualityAssuranceCommissioning';
   static const String navigateToOperationandMaintance = '/PartDoperationandmaintenance';
+  static const String navigateToPartFPublicCompliant = '/PartFPublicCompliant';
 
 
   ////vwsc

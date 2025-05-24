@@ -12,6 +12,7 @@ import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
 import 'DashboardVWSC.dart';
+import 'VWSCCommonClass.dart';
 
 class CommunityFeedbackPartC extends StatefulWidget {
 
@@ -92,7 +93,7 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                   child:  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      NewScreenPoints(
+                      Vwsccommonclass(
                         no: 3,
                       ),
                       Padding(
