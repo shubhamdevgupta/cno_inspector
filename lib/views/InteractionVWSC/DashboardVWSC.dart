@@ -186,10 +186,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                       ),
                     ],
                   ),
-               /*   if (dashboardProvider.selectedVwsc != null &&
-                      dashboardProvider.selectedVwsc!.isNotEmpty &&
-                      path != null)*/
-                    SizedBox(height: 12,),
+                  if (dashboardProvider.selectedVwscId != null)
+                    SizedBox(height: 10,),
                   Column(
                     children: [
                       Row(
