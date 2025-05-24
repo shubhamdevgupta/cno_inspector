@@ -126,7 +126,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
 
                                 // Grievance mechanism available
                                 Customradiobttn(
-                                  question: "Grievance Redressal mechanism available:",
+                                  question: "1. Grievance Redressal mechanism available:",
                                   options: ["Yes", "No"],
                                   selectedOption: grievanceMechanismAvailable,
                                   onChanged: (val) => setState(() => grievanceMechanismAvailable = val),
@@ -136,7 +136,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
 
                                 // How grievances are registered
                                 CustomMultiSelectChipQuestion(
-                                  question: "How grievances are registered by the villagers:",
+                                  question: "2. How grievances are registered by the villagers:",
                                   options: [
                                     "Toll free number",
                                     "Web based portal",
@@ -156,7 +156,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
 
                                 // Are complaints received
                                 Customradiobttn(
-                                  question: "Are complaints received from public regarding JJM schemes?",
+                                  question: "3. Are complaints received from public regarding JJM schemes?",
                                   options: ["Yes", "No"],
                                   selectedOption: complaintsReceived,
                                   onChanged: (val) => setState(() => complaintsReceived = val),
@@ -167,7 +167,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
 
                                   // Type of complaints
                                   CustomMultiSelectChipQuestion(
-                                    question: "If yes, type of complaints (tick all applicable):",
+                                    question: "3.1 If yes, type of complaints (tick all applicable):",
                                     options: [
                                       "Poor water quality",
                                       "Incomplete connections",
@@ -188,7 +188,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
 
                                   // Average resolution time
                                   Customtxtfeild(
-                                    label: "What is the average time of resolution:",
+                                    label: "3.2 What is the average time of resolution:",
                                     controller: avgResolutionTimeController,
                                   ),
 
@@ -196,7 +196,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
 
                                   // Action taken
                                   Customtxtfeild(
-                                    label: "Action taken by department:",
+                                    label: "3.3 Action taken by department:",
                                     controller: actionTakenController,
                                   ),
 
