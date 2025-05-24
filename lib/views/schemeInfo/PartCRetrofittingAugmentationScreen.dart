@@ -146,28 +146,28 @@ class _RetrofittingAugmentationScreen extends State<RetrofittingAugmentationScre
                               const SizedBox(height: 6),
 
                               Customtxtfeild(
-                                label: 'Transmission Pipelines (in Kms)',
+                                label: '2.1 Transmission Pipelines (in Kms)',
                                 controller: TextEditingController(),
                                 keyboardType: TextInputType.number,
                               ),
                               const SizedBox(height: 8),
 
                               Customtxtfeild(
-                                label: 'Distribution Pipelines (in Kms)',
+                                label: '2.2 Distribution Pipelines (in Kms)',
                                 controller: TextEditingController(),
                                 keyboardType: TextInputType.number,
                               ),
                               const SizedBox(height: 8),
 
                               Customtxtfeild(
-                                label: 'WTP Capacity (in MLD)',
+                                label: '2.3 WTP Capacity (in MLD)',
                                 controller: TextEditingController(),
                                 keyboardType: TextInputType.number,
                               ),
                               const SizedBox(height: 8),
 
                               Customtxtfeild(
-                                label: 'Storage Structures (Nos./Capacity in KL)',
+                                label: '2.4 Storage Structures (Nos./Capacity in KL)',
                                 controller: TextEditingController(),
                                 keyboardType: TextInputType.text,
                               ),

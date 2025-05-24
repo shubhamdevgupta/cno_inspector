@@ -125,17 +125,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  'B. Scheme Planning',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Colors.deepOrange,
-                                  ),
-                                ),
-                              ),
+
 
                               // 1. Survey questions
                               const Text(
@@ -145,7 +135,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               const SizedBox(height: 6),
 
                               CustomCheckBoxQuestion(
-                                question: 'Topographical survey',
+                                question: '1.1 Topographical survey',
                                 options: const ['Yes', 'No'],
                                 onChanged: (value) {
                                 setState(() {
@@ -154,7 +144,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               },
                               ),
                               CustomCheckBoxQuestion(
-                                question: 'GPS/physical survey done',
+                                question: '1.2 GPS/physical survey done',
                                 options: const ['Yes', 'No'],
                                 onChanged: (value) {
                                   setState(() {
@@ -163,7 +153,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                 },
                               ),
                               CustomCheckBoxQuestion(
-                                question: 'Google Earth/Maps survey',
+                                question: '1.3 Google Earth/Maps survey',
                                 options: const ['Yes', 'No'],
                                 onChanged: (value) {
                                   setState(() {
@@ -172,7 +162,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                 },
                               ),
                               CustomCheckBoxQuestion(
-                                question: 'No survey done',
+                                question: '1.4 No survey done',
                                 options: const ['Yes', 'No'],
                                 onChanged: (value) {
                                   setState(() {
@@ -197,13 +187,13 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               ),
                               const SizedBox(height: 6),
                               Customtxtfeild(
-                                label: 'OHSR/OHT/ESR (in hrs)',
+                                label: '3.1 OHSR/OHT/ESR (in hrs)',
                                 controller: TextEditingController(),
                                 keyboardType: TextInputType.number,
                               ),
                               const SizedBox(height: 6),
                               Customtxtfeild(
-                                label: 'MBR (in hrs)',
+                                label: '3.2 MBR (in hrs)',
                                 controller: TextEditingController(),
                                 keyboardType: TextInputType.number,
                               ),
@@ -216,13 +206,13 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               ),
                               const SizedBox(height: 6),
                               Customtxtfeild(
-                                label: 'Rocky Strata - Pipe Material Used',
+                                label: '4.1 Rocky Strata - Pipe Material Used',
                                 controller: TextEditingController(),
                                 keyboardType: TextInputType.text,
                               ),
                               const SizedBox(height: 6),
                               Customtxtfeild(
-                                label: 'Soil Strata - Pipe Material Used',
+                                label: '4.2 Soil Strata - Pipe Material Used',
                                 controller: TextEditingController(),
                                 keyboardType: TextInputType.text,
                               ),
@@ -245,6 +235,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                 },
                               ),
 
+                             if (_selectedValue == "Yes")
                               Customtxtfeild(
                                 label: 'If deviation found, provide reason',
                                 controller: TextEditingController(),

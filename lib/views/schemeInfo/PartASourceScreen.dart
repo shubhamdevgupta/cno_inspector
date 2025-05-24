@@ -105,17 +105,6 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                                  child: Text(
-                                    'A. Source',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                ),
                                 // 1. Source finding committee recommended shift to surface water? (Yes/No)
                                 Customradiobttn(
                                   question:
@@ -149,21 +138,21 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
-                                  label: 'Safe (Nos)',
+                                  label: '3.1 Safe (Nos)',
                                   controller: schemeProvider.safeController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
-                                  label: 'Critical / Over exploited (Nos)',
+                                  label: '3.2 Critical / Over exploited (Nos)',
                                   controller: schemeProvider.criticalController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
-                                  label: 'Semi-critical (Nos)',
+                                  label: '3.3 Semi-critical (Nos)',
                                   controller:
                                       schemeProvider.semiCriticalController,
                                   keyboardType: TextInputType.number,

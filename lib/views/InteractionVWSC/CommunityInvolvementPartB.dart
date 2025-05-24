@@ -224,12 +224,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
 
                                       },
                                     ),
-                             /*       CustomMultiSelectChipQuestion(
-                                      question: "9. Operation & Maintenance arrangements:",
-                                      options: ["VWSC", "PHED", "Outsourced Contractor", "No arrangement"],
-                                      selectedValues: selectedOMArrangements,
-                                      onSelectionChanged: (valList) => setState(() => selectedOMArrangements = valList),
-                                    ),*/
+
 
                                     Customradiobttn(
                                       question: "9. Operation & Maintenance arrangements:",
