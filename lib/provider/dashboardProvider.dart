@@ -16,7 +16,7 @@ class DashboardProvider extends ChangeNotifier {
 
   List<CnoDashboardItem> dashboardList=[];
   String? selectedScheme;
-  String? selectedVwsc;
+  int? selectedVwscId;
   String? selectedDwsm;
 
   Future<void> fetchDashboardData(int userId,int action) async {
@@ -44,8 +44,8 @@ class DashboardProvider extends ChangeNotifier {
     selectedDwsm = dwsmId;
     notifyListeners();
   }
-  void setSelectedVWSC(String? vwscId) {
-    selectedVwsc = vwscId;
+  void setSelectedVWSC(int vwscId) {
+    selectedVwscId = vwscId;
     notifyListeners();
   }
   @override
