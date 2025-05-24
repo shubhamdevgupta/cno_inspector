@@ -1,15 +1,17 @@
+import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
+import 'package:cno_inspection/services/LocalStorageService.dart';
+import 'package:cno_inspection/utils/AppConstants.dart';
+import 'package:cno_inspection/views/schemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/AppStyles.dart';
-import '../../utils/CommonScreen.dart';
-import '../../utils/CustomCheckBoxQuestion.dart';
-import '../../utils/CustomRadioQuestion.dart';
-import '../../utils/CustomTextField.dart';
-import '../../utils/customcheckquestion.dart';
+import '../../utils/LoaderUtils.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
+import '../../utils/toast_helper.dart';
 import 'PartCRetrofittingAugmentationScreen.dart';
 import 'SchemeInfoCommonScreen.dart';
 
@@ -21,38 +23,33 @@ class SchemePlanningScreen extends StatefulWidget {
 }
 
 class _SchemePlanningScreen extends State<SchemePlanningScreen> {
-  String _selectedValue = 'yes'; // Default selected value
-  String? selectedValueQ1;
-  String? selectedOption = 'option1';
-  final TextEditingController textController = TextEditingController();
+  LocalStorageService _localStorageService = LocalStorageService();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-  final List<String> _dropdownOptions = [
-    'Atleast once in 7 days',
-    'Atleast once in 15 days',
-    'Atleast once in more than 15 days'
-  ];
-  String? SetFreq;
-  List<String> selectedInstitutions = [];
-  final TextEditingController householdController = TextEditingController();
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
+    if (args != null) {
+      final schemeId = args['schemeId'] as int?;
+      final stateId = args['stateId'] as int?;
+      final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);
+      if (schemeId != null) {
+        schemeProvider.setSchemeId(schemeId);
+      }
+      if (stateId != null) {
+        schemeProvider.setStateId(stateId);
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        // Replace the current route with a new one
-           Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => SourceScreenQuestions()),
-        );
-
-        // Return false to prevent the default back navigation behavior
-        return false;
-      },
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
-        ),
-        child: Scaffold(
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
+      ),
+      child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -63,7 +60,6 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
               style: AppStyles.appBarTitle,
             ),
             leading: IconButton(
-
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 if (Navigator.of(context).canPop()) {
@@ -71,8 +67,9 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardschemeinfo()),
-                        (route) => false,
+                    MaterialPageRoute(
+                        builder: (context) => Dashboardschemeinfo()),
+                    (route) => false,
                   );
                 }
               },
@@ -93,9 +90,9 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
             ),
             elevation: 5,
           ),
-          body: Stack(
-            children: [
-              SingleChildScrollView(
+          body: Consumer<Schemeprovider>(
+            builder: (context, schemeProvider, child) {
+              return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
                       top: 20, left: 6, right: 6, bottom: 5),
@@ -110,7 +107,8 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            border: Border.all(color: Colors.orangeAccent, width: 1.4),
+                            border: Border.all(
+                                color: Colors.orangeAccent, width: 1.4),
                             borderRadius: BorderRadius.circular(14),
                             boxShadow: [
                               BoxShadow(
@@ -125,131 +123,117 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  'B. Scheme Planning',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Colors.deepOrange,
-                                  ),
-                                ),
-                              ),
-
                               // 1. Survey questions
                               const Text(
                                 '1. Has the surveys done for planning of the scheme:',
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                               const SizedBox(height: 6),
-
-                              CustomCheckBoxQuestion(
-                                question: 'Topographical survey',
-                                options: const ['Yes', 'No'],
+                              Customradiobttn(
+                                question: '1.1 Topographical survey',
+                                options: schemeProvider.yesNoMap.keys.toList(),
+                                selectedOption: schemeProvider.topoSurvey,
                                 onChanged: (value) {
-                                setState(() {
-                                  _selectedValue = value ?? '';
-                                });
-                              },
-                              ),
-                              CustomCheckBoxQuestion(
-                                question: 'GPS/physical survey done',
-                                options: const ['Yes', 'No'],
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedValue = value ?? '';
-                                  });
+                                  schemeProvider.topoSurvey = value;
                                 },
                               ),
-                              CustomCheckBoxQuestion(
-                                question: 'Google Earth/Maps survey',
-                                options: const ['Yes', 'No'],
+                              Customradiobttn(
+                                question: '1.2 GPS/physical survey done',
+                                options: schemeProvider.yesNoMap.keys.toList(),
+                                selectedOption: schemeProvider.gpsSurvey,
                                 onChanged: (value) {
-                                  setState(() {
-                                    _selectedValue = value ?? '';
-                                  });
+                                  schemeProvider.gpsSurvey = value;
                                 },
                               ),
-                              CustomCheckBoxQuestion(
-                                question: 'No survey done',
-                                options: const ['Yes', 'No'],
+                              Customradiobttn(
+                                question: '1.3 Google Earth/Maps survey',
+                                options: schemeProvider.yesNoMap.keys.toList(),
+                                selectedOption:
+                                    schemeProvider.googleEarthSurvey,
                                 onChanged: (value) {
-                                  setState(() {
-                                    _selectedValue = value ?? '';
-                                  });
+                                  schemeProvider.googleEarthSurvey = value;
+                                },
+                              ),
+                              Customradiobttn(
+                                question: '1.4 No survey done',
+                                options: schemeProvider.yesNoMap.keys.toList(),
+                                selectedOption: schemeProvider.noSurvey,
+                                onChanged: (value) {
+                                  schemeProvider.noSurvey = value;
                                 },
                               ),
                               const SizedBox(height: 10),
 
                               // 2. WTP design hours
                               Customtxtfeild(
-                                label: '2. Running hours per day considered for WTP/Transmission main (hrs)',
-                                controller: TextEditingController(),
+                                label:
+                                    '2.	What are the running hours per day considered for designing of WTP/Transmission main?',
+                                controller: schemeProvider.wtpHoursController,
                                 keyboardType: TextInputType.number,
                               ),
                               const SizedBox(height: 10),
 
                               // 3. Retention time
                               const Text(
-                                '3. Retention time considered for design:',
+                                '3.	What is the retention time in hours per day considered for design of ',
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                               const SizedBox(height: 6),
                               Customtxtfeild(
-                                label: 'OHSR/OHT/ESR (in hrs)',
-                                controller: TextEditingController(),
+                                label: '3.1 OHSR/OHT/ESR (in hrs)',
+                                controller: schemeProvider.ohsrTimeController,
                                 keyboardType: TextInputType.number,
                               ),
                               const SizedBox(height: 6),
                               Customtxtfeild(
-                                label: 'MBR (in hrs)',
-                                controller: TextEditingController(),
+                                label: '3.2 MBR (in hrs)',
+                                controller: schemeProvider.mbrTimeController,
                                 keyboardType: TextInputType.number,
                               ),
                               const SizedBox(height: 10),
 
                               // 4. Pipe material selection
                               const Text(
-                                '4. Selection of pipe material with reasons:',
+                                '4.	Please specify the selection of pipe material for distribution network in the following terrain with reasons:',
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                               const SizedBox(height: 6),
                               Customtxtfeild(
-                                label: 'Rocky Strata - Pipe Material Used',
-                                controller: TextEditingController(),
+                                label: '4.1 Rocky Strata - Pipe Material Used',
+                                controller:
+                                    schemeProvider.rockyPipeMaterialController,
                                 keyboardType: TextInputType.text,
                               ),
                               const SizedBox(height: 6),
                               Customtxtfeild(
-                                label: 'Soil Strata - Pipe Material Used',
-                                controller: TextEditingController(),
+                                label: '4.2 Soil Strata - Pipe Material Used',
+                                controller:
+                                    schemeProvider.soilPipeMaterialController,
                                 keyboardType: TextInputType.text,
                               ),
                               const SizedBox(height: 10),
 
-                              // 5. On-spot excavation check
+                              // 5. On-spot excavation check (Radio)
                               const Text(
-                                '5. On-spot excavation and DPR check:',
+                                '5.	Do the on-spot excavation on any sample stretch of pipeline and check for pipe material and dia as per DPR:',
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                               const SizedBox(height: 6),
                               Customradiobttn(
                                 question: 'Your question here?',
-                                options: const ['Yes', 'No'],
-                                selectedOption: _selectedValue,
+                                options: schemeProvider.yesNoMap.keys.toList(),
+                                selectedOption: schemeProvider.onSpotExcavation,
                                 onChanged: (val) {
-                                  setState(() {
-                                    _selectedValue = val!;
-                                  });
+                                  schemeProvider.onSpotExcavation = val;
                                 },
                               ),
 
-                              Customtxtfeild(
-                                label: 'If deviation found, provide reason',
-                                controller: TextEditingController(),
-                                keyboardType: TextInputType.text,
-                              ),
+                              if (schemeProvider.onSpotExcavation == "Yes")
+                                Customtxtfeild(
+                                  label: 'If deviation found, provide reason',
+                                  controller: schemeProvider.deviationReasonController,
+                                  keyboardType: TextInputType.text,
+                                ),
                               const SizedBox(height: 20),
 
                               Align(
@@ -260,12 +244,52 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.orangeAccent,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                                        borderRadius: BorderRadius.circular(
+                                            10), // Adjust the radius as needed
                                       ),
                                     ),
-                                    onPressed: () {
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => RetrofittingAugmentationScreen()),);
-
+                                    onPressed: () async {
+                                      await LoaderUtils.conditionalLoader(
+                                          isLoading: schemeProvider.isLoading);
+                                      await schemeProvider.saveSchemePlanning(
+                                          userId: _localStorageService
+                                              .getInt(AppConstants.prefUserId)!,
+                                          stateId: schemeProvider.stateId!,
+                                          schemeId: schemeProvider.schemeId!,
+                                          topoSurvey:
+                                              schemeProvider.topoSurveyID,
+                                          gpsSurvey: schemeProvider.gpsSurveyID,
+                                          googleSurvey: schemeProvider
+                                              .googleEarthSurveyID,
+                                          numberOfSurveys:
+                                              schemeProvider.noSurveyID,
+                                          designRunningHours: int.parse(schemeProvider
+                                              .wtpHoursController.text),
+                                          retentionTimeOHT: int.parse(schemeProvider
+                                              .ohsrTimeController.text),
+                                          retentionTimeMBR: int.parse(schemeProvider
+                                              .mbrTimeController.text),
+                                          terrainRocky: schemeProvider
+                                              .rockyPipeMaterialController.text,
+                                          terrainSoil: schemeProvider
+                                              .soilPipeMaterialController.text,
+                                          foundAsPerDPR:
+                                              schemeProvider.onSpotExcavationID,
+                                          deviation: schemeProvider.deviationReasonController.text);
+                                      if (schemeProvider.status!) {
+                                        ToastHelper.showToastMessage(
+                                            schemeProvider.message!,
+                                            backgroundColor: Colors.green);
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  RetrofittingAugmentationScreen()),
+                                        );
+                                      } else {
+                                        ToastHelper.showToastMessage(
+                                            schemeProvider.message!,
+                                            backgroundColor: Colors.red);
+                                      }
                                     },
                                     child: Text(
                                       "SAVE & NEXT",
@@ -280,17 +304,14 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               ),
                             ],
                           ),
-
                         ),
                       )
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              );
+            },
+          )),
     );
   }
 }

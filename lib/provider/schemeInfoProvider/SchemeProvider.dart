@@ -40,7 +40,6 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   // Getter for Q3
   String? get selectedValueQ3 => _selectedValueQ3;
 
@@ -58,6 +57,20 @@ class Schemeprovider extends ChangeNotifier {
   final TextEditingController criticalController = TextEditingController();
   final TextEditingController semiCriticalController = TextEditingController();
   final TextEditingController waterAllocationController = TextEditingController();
+
+  int? _schemeId;
+  int? get schemeId => _schemeId;
+  void setSchemeId(int id) {
+    _schemeId = id;
+    notifyListeners();
+  }
+
+  int? _stateId;
+  int? get stateId => _stateId;
+  void setStateId(int id) {
+    _stateId = id;
+    notifyListeners();
+  }
 
   Future<bool> saveSourceSurvey({
     required int userId,
@@ -99,6 +112,72 @@ class Schemeprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // --------------------
+  // 1. Survey Questions (Checkbox Questions)
+  String? _topoSurvey;
+  String? _gpsSurvey;
+  String? _googleEarthSurvey;
+  String? _noSurvey;
+
+  String? get topoSurvey => _topoSurvey;
+  set topoSurvey(String? value) {
+    _topoSurvey = value;
+    notifyListeners();
+  }
+
+  String? get gpsSurvey => _gpsSurvey;
+  set gpsSurvey(String? value) {
+    _gpsSurvey = value;
+    notifyListeners();
+  }
+
+  String? get googleEarthSurvey => _googleEarthSurvey;
+  set googleEarthSurvey(String? value) {
+    _googleEarthSurvey = value;
+    notifyListeners();
+  }
+
+  String? get noSurvey => _noSurvey;
+  set noSurvey(String? value) {
+    _noSurvey = value;
+    notifyListeners();
+  }
+  int get topoSurveyID => yesNoMap[_topoSurvey] ?? 0;
+  int get gpsSurveyID => yesNoMap[_gpsSurvey] ?? 0;
+  int get googleEarthSurveyID => yesNoMap[_googleEarthSurvey] ?? 0;
+  int get noSurveyID => yesNoMap[_noSurvey] ?? 0;
+
+  // --------------------
+  // 2. WTP Design Hours (Text Field)
+  final TextEditingController wtpHoursController = TextEditingController();
+
+  // --------------------
+  // 3. Retention Time (Text Fields)
+  final TextEditingController ohsrTimeController = TextEditingController();
+  final TextEditingController mbrTimeController = TextEditingController();
+
+  // --------------------
+  // 4. Pipe Material Selection (Text Fields)
+  final TextEditingController rockyPipeMaterialController = TextEditingController();
+  final TextEditingController soilPipeMaterialController = TextEditingController();
+
+  // --------------------
+  // 5. On-Spot Excavation Check (Radio + Conditional Text)
+  String? _onSpotExcavation;
+  String? get onSpotExcavation => _onSpotExcavation;
+  set onSpotExcavation(String? value) {
+    _onSpotExcavation = value;
+    notifyListeners();
+  }
+  int get onSpotExcavationID => yesNoMap[_onSpotExcavation] ?? 0;
+
+
+  final TextEditingController deviationReasonController = TextEditingController();
+
+
+
+
 
   Future<bool> saveSchemePlanning({
     required int userId,

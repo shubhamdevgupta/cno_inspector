@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/AppStyles.dart';
-import '../../utils/CommonScreen.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
@@ -21,9 +20,28 @@ class SourceScreenQuestions extends StatefulWidget {
   _SourceScreenQuestions createState() => _SourceScreenQuestions();
 }
 
-class _SourceScreenQuestions extends State<SourceScreenQuestions> {
-  LocalStorageService _localStorageService=LocalStorageService();
 
+class _SourceScreenQuestions extends State<SourceScreenQuestions> {
+  LocalStorageService _localStorageService = LocalStorageService();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    if (args != null) {
+      final schemeId = args['schemeId'] as int?;
+      final stateId = args['stateId'] as int?;
+      final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);
+      if (schemeId != null) {
+        schemeProvider.setSchemeId(schemeId);
+      }
+      if (stateId != null) {
+        schemeProvider.setStateId(stateId);
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -105,17 +123,6 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                                  child: Text(
-                                    'A. Source',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                ),
                                 // 1. Source finding committee recommended shift to surface water? (Yes/No)
                                 Customradiobttn(
                                   question:
@@ -149,21 +156,21 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
-                                  label: 'Safe (Nos)',
+                                  label: '3.1 Safe (Nos)',
                                   controller: schemeProvider.safeController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
-                                  label: 'Critical / Over exploited (Nos)',
+                                  label: '3.2 Critical / Over exploited (Nos)',
                                   controller: schemeProvider.criticalController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
-                                  label: 'Semi-critical (Nos)',
+                                  label: '3.3 Semi-critical (Nos)',
                                   controller:
                                       schemeProvider.semiCriticalController,
                                   keyboardType: TextInputType.number,
@@ -191,7 +198,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                       '5. Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose',
                                   controller:
                                       schemeProvider.waterAllocationController,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 15),
                                 Align(
@@ -211,22 +218,27 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                             isLoading:
                                                 schemeProvider.isLoading);
                                         await schemeProvider.saveSourceSurvey(
-                                            userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                            stateId: 33,
-                                            schemeId: 22,
-                                            isRecommendShiftToSurface:
-                                                schemeProvider.selectedValueQ1Id,
+                                            userId: _localStorageService.getInt(
+                                                AppConstants.prefUserId)!,
+                                            stateId: schemeProvider.stateId!,
+                                            schemeId: schemeProvider.schemeId!,
+                                            isRecommendShiftToSurface: schemeProvider
+                                                .selectedValueQ1Id,
                                             studyAccessGroundBeforeSurface:
-                                                schemeProvider.selectedValueQ2Id,
-                                            safeZoneVillages: int.parse(schemeProvider.safeController.text),
-                                            criticalZoneVillages:
-                                                int.parse(schemeProvider.criticalController.text),
-                                            semiCriticalZoneVillages:
-                                                int.parse(schemeProvider.semiCriticalController.text),
+                                                schemeProvider
+                                                    .selectedValueQ2Id,
+                                            safeZoneVillages: int.parse(schemeProvider
+                                                .safeController.text),
+                                            criticalZoneVillages: int.parse(
+                                                schemeProvider
+                                                    .criticalController.text),
+                                            semiCriticalZoneVillages: int.parse(
+                                                schemeProvider
+                                                    .semiCriticalController
+                                                    .text),
                                             groundWaterAnalysisConducted:
                                                 schemeProvider.selectedValueQ3Id,
-                                            waterAllocationFromWRD:
-                                                int.parse(schemeProvider.waterAllocationController.text));
+                                            waterAllocationFromWRD: int.parse(schemeProvider.waterAllocationController.text));
 
                                         if (schemeProvider.status!) {
                                           ToastHelper.showToastMessage(

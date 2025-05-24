@@ -146,30 +146,111 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                 ),
                                 const Divider(height: 20),
 
-                                // Section 1(a) - WTP/OHSR/ESR...
-                                const Text("1. Visual signs of poor workmanship (WTP/OHSR/ESR/GSR/MBR/Pump house):", style: TextStyle(fontWeight: FontWeight.w600)),
-                                CustomCheckBoxQuestion(
-                                  question: "Spalling (peeling off surface)",
+                                const Text("1. Through visual inspection, are there signs of poor workmanship as mentioned:", style: TextStyle(fontWeight: FontWeight.w600)),
+                                SizedBox(height: 4,),
+                                const Text("1(a)	Inspection of WTP/OHSR/ESR/GSR/MBR/Pump house:", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                                SizedBox(height: 4,),
+                                Customradiobttn(
+                                  question: "a.1 spalling (peeling off surface)",
                                   options: ['Yes', 'No'],
-                                  selectedValue: selected1,
-                                  onChanged: (val) => setState(() => selected1 = val),
-                                ),
-                                CustomCheckBoxQuestion(
-                                  question: "Cracks",
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),     Customradiobttn(
+                                  question: "a.2 cracks",
                                   options: ['Yes', 'No'],
-                                  selectedValue: selected2,
-                                  onChanged: (val) => setState(() => selected2 = val),
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),     Customradiobttn(
+                                  question: "a.3 red/brown rust marks",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),     Customradiobttn(
+                                  question: "a.4 swollen concrete",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),     Customradiobttn(
+                                  question: "a.5 trapped jute/plastic bags",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),     Customradiobttn(
+                                  question: "a.6 protruding rusted reinforcement bars",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),     Customradiobttn(
+                                  question: "a.7 spalling (peeling off surface)",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),     Customradiobttn(
+                                  question: "a.8 dampness of concrete surfaces",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),     Customradiobttn(
+                                  question: "a.9 visible white marks)",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),Customradiobttn(
+                                  question: "a.10 visible stone aggregates)",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),Customradiobttn(
+                                  question: "a.11 structures missing vertical alignment)",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),Customradiobttn(
+                                  question: "a.12 visible sag in the slab/beam)",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),Customradiobttn(
+                                  question: "a.13 high vibration observed in the pumps)",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),Customradiobttn(
+                                  question: "a.14	leakages in reservoirs)",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),Customradiobttn(
+                                  question: "a.15high leakages from the pumps	)",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
                                 ),
-                                // Repeat for all points in 1(a)...
+
 
                                 const SizedBox(height: 10),
-                                const Text("1(b). Inspection of Pipelines:", style: TextStyle(fontWeight: FontWeight.w600)),
-                                CustomCheckBoxQuestion(
-                                  question: "Leakages in transmission pipelines/valves",
+                                const Text("1(b). Inspection of Pipelines:", style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15)),
+                                const SizedBox(height: 4),
+                                Customradiobttn(
+                                  question: "b.1 leakages in transmission pipelines/valves",
                                   options: ['Yes', 'No'],
-                                  selectedValue: selected15,
-                                  onChanged: (val) => setState(() => selected15 = val),
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
                                 ),
+                                Customradiobttn(
+                                  question: "b.2 leakages in distribution pipelines/valves",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+                                 Customradiobttn(
+                                  question: "b.3 wet patches/pool of water on the ground along the route of pipe	",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+
+
                                 // Repeat for 1(b)...
 
                                 Customradiobttn(
@@ -200,9 +281,39 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   onChanged: (val) => setState(() => selected19 = val),
                                 ),
 
+                                Customradiobttn(
+                                  question: "6.	Are sample based quality checks being done from third party labs for pipes, civil works, and key components (if yes, random reports to be seen)",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+
+                                Customradiobttn(
+                                  question: "7.	Is concurrent supervision in the scope of TPIA? ",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+
+                                Customradiobttn(
+                                  question: "8.	Has TPIA conducted quality checks at different stages of construction? ",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+
+                                Customradiobttn(
+                                  question: "9.	Are there records of observations/inspection reports issued by TPIA?",
+                                  options: ['Yes', 'No'],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+
                                 // Continue similarly for all remaining questions...
 
-                                CustomCheckBoxQuestion(
+
+
+                                Customradiobttn(
                                   question: "10. Serious issues observed by TPIAs:",
                                   options: [
                                     "Pipelines without proper depth",
@@ -212,11 +323,13 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                     "Water connections in drains",
                                     "Others"
                                   ],
-                                  selectedValue: selectedIssue,
-                                  onChanged: (val) => setState(() => selectedIssue = val),
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                  orientation: Axis.vertical, // <--- Added to display vertically
                                 ),
 
-                                CustomCheckBoxQuestion(
+
+                                Customradiobttn(
                                   question: "11. Action based on TPIA observations",
                                   options: [
                                     "Rectification/Demolition Done",
@@ -224,30 +337,102 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                     "No Action",
                                     "Not Known"
                                   ],
-                                  selectedValue: selected21,
-                                  onChanged: (val) => setState(() => selected21 = val),
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
                                 ),
 
-                                CustomCheckBoxQuestion(
+
+                                Customradiobttn(
                                   question: "12. TPIA verifies Measurement Books?",
                                   options: ["Regularly", "Occasionally", "No", "Not Known"],
-                                  selectedValue: selected22,
-                                  onChanged: (val) => setState(() => selected22 = val),
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                  orientation: Axis.vertical, // <--- Added to display vertically
                                 ),
 
-                                // Final questions
-                                CustomCheckBoxQuestion(
+
+
+                                const Text(
+                                  '13. Hydrotesting of pipelines done (reports to be seen)',
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(height: 6),
+                                Customradiobttn(
+                                  question: '13.1 Transmission line',
+                                  options: const ['Yes', 'No'],
+                                  selectedOption: _selectedValue,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _selectedValue = val!;
+                                    });
+                                  },
+                                ),
+                                Customradiobttn(
+                                  question: '13.2 Distribution line',
+                                  options: const ['Yes', 'No'],
+                                  selectedOption: _selectedValue,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _selectedValue = val!;
+                                    });
+                                  },
+                                ),
+
+
+
+
+                                Customradiobttn(
+                                  question: "14. Test reports provided (random samples to be seen)",
+                                  options: [
+                                    "Hydrotesting reports",
+                                    "Construction material quality reports ",
+                                    "Not Provided",
+                                  ],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                ),
+
+
+                                Customradiobttn(
+                                  question: "15. Whether departmental engineers do quality checks",
+                                  options: [
+                                    "Frequently ",
+                                    "Stage-wise ",
+                                    "Before payment ",
+                                    "Never",
+                                  ],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                  orientation: Axis.vertical,
+                                ),
+
+                                Customradiobttn(
+                                  question: "16. Whether departmental engineers (JE/AE/DE/EE etc.) are verifying measurements of construction works",
+                                  options: [
+                                    "Frequently ",
+                                    "Stage-wise ",
+                                    "Before payment ",
+                                    "Never",
+                                  ],
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                  orientation: Axis.vertical,
+                                ),
+
+
+                                Customradiobttn(
                                   question: "17. Scheme commissioned as per protocol?",
                                   options: ["Yes", "No", "Partially", "Not Verified", "Work is in progress"],
-                                  selectedValue: selected27,
-                                  onChanged: (val) => setState(() => selected27 = val),
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
+                                  orientation: Axis.vertical,
                                 ),
 
-                                CustomCheckBoxQuestion(
+                                Customradiobttn(
                                   question: "18. Document proof of commissioning available",
                                   options: ["Yes", "No", "NA"],
-                                  selectedValue: selected28,
-                                  onChanged: (val) => setState(() => selected28 = val),
+                                  selectedOption: selected19,
+                                  onChanged: (val) => setState(() => selected19 = val),
                                 ),
 
 
