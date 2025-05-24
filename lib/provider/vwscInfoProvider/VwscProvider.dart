@@ -37,34 +37,32 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   // 1. Define the options map
-  final Map<String, int> waterSupplyFrequencyMap = {
+
+
+  // 2. Expose just the labels for the UI
+
+
+
+
+  // 3. Track selected labels
+  String? _selectedFrequencyLabels;
+
+  String? get selectedFrequency => _selectedFrequencyLabels;
+
+  set selectedFrequency(String? values) {
+    _selectedFrequencyLabels = values;
+    notifyListeners();
+  }
+  final Map<String, int> FrequencyLabels = {
     "Daily": 1,
     "Once in two days": 2,
     "Once in three days": 3,
     "Irregular": 4,
     "Not functional": 5,
   };
-
-  // 2. Expose just the labels for the UI
-
-  List<String> get waterSupplyFrequencyOptions => waterSupplyFrequencyMap.keys.toList();
-
-
-  // 3. Track selected labels
-  List<String> _selectedFrequencyLabels = [];
-
-  List<String> get selectedFrequency => _selectedFrequencyLabels;
-
-  set selectedFrequency(List<String> values) {
-    _selectedFrequencyLabels = values;
-    notifyListeners();
-  }
-
+  int get selectedFrequencyID => FrequencyLabels[_selectedFrequencyLabels] ?? 0;
   // 4. Convert selected labels to their mapped integer values (for API)
-  List<int> get selectedFrequencyIds => _selectedFrequencyLabels
-      .map((label) => waterSupplyFrequencyMap[label])
-      .whereType<int>()
-      .toList();
+
 
   // Yes/No options with mappings
   // question 2222222222222222
