@@ -21,7 +21,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
   final LocalStorageService _localStorage = LocalStorageService();
 
   late DashboardProvider dashboardProvider;
-  String? path;
+  String path='';
 
   @override
   void initState() {
@@ -187,28 +187,28 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                       ),
                     ],
                   ),
-               /*   if (dashboardProvider.selectedVwsc != null &&
-                      dashboardProvider.selectedVwsc!.isNotEmpty &&
-                      path != null)*/
-                    SizedBox(height: 12,),
+                  if (dashboardProvider.selectedVwscId !=0)
                   Column(
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _iconCircle(Icons.location_on, Colors.red),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              path.toString(),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
+                      Visibility(
+                        visible: path.isNotEmpty,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _iconCircle(Icons.location_on, Colors.red),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                '---${dashboardProvider.selectedVwscId}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black87,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 8,

@@ -6,34 +6,35 @@ import 'package:provider/provider.dart';
 
 import '../../provider/vwscInfoProvider/VwscProvider.dart';
 import '../../utils/AppStyles.dart';
-import '../../utils/CommonScreen.dart';
-import '../../utils/CustomCheckBoxQuestion.dart';
-import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/toast_helper.dart';
 import 'DashboardVWSC.dart';
 import 'VWSCCommonClass.dart';
 
 class CommunityInvolvementPartB extends StatefulWidget {
-
-
   @override
-  State<CommunityInvolvementPartB> createState() => _CommunityInvolvementPartBState();
+  State<CommunityInvolvementPartB> createState() =>
+      _CommunityInvolvementPartBState();
 }
 
 class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
 
   String? selectedVWSCBankAccount; // Yes / No
-  String? selectedVWSCInvolvement; // Active / Limited / No Involvement / VWSC not formed
+  String?
+      selectedVWSCInvolvement; // Active / Limited / No Involvement / VWSC not formed
   String? selectedAsBuiltDrawing; // Yes / No
   String? selectedVWSCMeetingConducted; // Yes / No
   String? selectedVWSCMeetingFrequency; // e.g., Weekly / Monthly / Quarterly
   String? selectedVWSCRecordsAvailable; // Yes / No
-  String? selectedVWSCOMInvolved; // Yes – Active / Yes – Limited / No / Not Applicable
+  String?
+      selectedVWSCOMInvolved; // Yes – Active / Yes – Limited / No / Not Applicable
   String? selectedSchemeHandover; // Yes / No / Not Applicable
-  List<String> selectedOMArrangements = []; // VWSC / PHED / Outsourced Contractor / No arrangement
-  String? selectedCommunityAwareness; // Well informed / Some awareness / No awareness
-  String? selectedWaterQualitySatisfaction; // Satisfied / Partially Satisfied / Dissatisfied / Not Interacted
+  List<String> selectedOMArrangements =
+      []; // VWSC / PHED / Outsourced Contractor / No arrangement
+  String?
+      selectedCommunityAwareness; // Well informed / Some awareness / No awareness
+  String?
+      selectedWaterQualitySatisfaction; // Satisfied / Partially Satisfied / Dissatisfied / Not Interacted
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,8 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
+              image: AssetImage('assets/icons/header_bg.png'),
+              fit: BoxFit.cover),
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -63,7 +65,6 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
               style: AppStyles.appBarTitleSmallText,
             ),
             leading: IconButton(
-
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 if (Navigator.of(context).canPop()) {
@@ -72,7 +73,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => Dashboardvwsc()),
-                        (route) => false,
+                    (route) => false,
                   );
                 }
               },
@@ -324,24 +325,25 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                 ],
               );
             })
+
         ),
       ),
     );
   }
 
   Widget buildRadioGroup(
-      String title,
-      List<String> options,
-      String? groupValue,
-      void Function(String?) onChanged,
-      ) {
+    String title,
+    List<String> options,
+    String? groupValue,
+    void Function(String?) onChanged,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 12),
         Text(title),
         ...options.map(
-              (value) => RadioListTile<String>(
+          (value) => RadioListTile<String>(
             title: Text(value),
             value: value,
             groupValue: groupValue,
@@ -351,6 +353,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
       ],
     );
   }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
