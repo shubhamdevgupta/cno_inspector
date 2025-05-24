@@ -19,6 +19,7 @@ class Dashboardschemeinfo extends StatefulWidget {
 
 class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
   late DashboardProvider dashboardProvider;
+   LocalStorageService localStorageService = LocalStorageService();
 
   @override
   void initState() {
@@ -26,7 +27,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(34483, 1);
+      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!, 1);
     });
   }
 
