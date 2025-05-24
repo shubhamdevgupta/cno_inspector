@@ -157,7 +157,7 @@ LocalStorageService _localStorageService =LocalStorageService();
                                       ),
                                     ),
                                     onPressed: () async{
-                                      await LoaderUtils.conditionalLoader(isLoading: vwscProvider.isLoading);
+                                       LoaderUtils.showLoadingWithMessage(context, isLoading: true,message: "Saving Water Quality Monitoring");
 
                                       await vwscProvider.saveWaterQualityMonitoring(userId:_localStorageService.getInt(AppConstants.prefUserId)!, stateId: vwscProvider.stateId!,
                                           villageId: vwscProvider.villageId!, isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,
