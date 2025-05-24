@@ -310,6 +310,333 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+
+
+
+
+
+  // Q1: Delay reasons
+  List<String> _selectedDelayReasons = [];
+  List<String> get selectedDelayReasons => _selectedDelayReasons;
+  set selectedDelayReasons(List<String> value) {
+    _selectedDelayReasons = value;
+    notifyListeners();
+  }
+
+  final Map<String, int> delayReasons = {
+    "Delay in DPR approval": 1,
+    "Contractor delay": 2,
+    "Design changes during execution": 3,
+    "Material shortage": 4,
+    "Land/site issues": 5,
+    "Weather/natural calamities": 6,
+    "Inter-departmental coordination": 7,
+    "Others": 8,
+    "Clearances from Highway/Forest/Railways etc.": 9,
+  };
+
+  List<String> get delayReasonsOptions => delayReasons.keys.toList();
+  List<int> get selectedDelayReasonsID => _selectedDelayReasons.map((e) => delayReasons[e] ?? 0).toList();
+
+  // Q2: Cost overrun (single choice)
+  String? _selectedCostOverrun;
+  String? get selectedCostOverrun => _selectedCostOverrun;
+  set selectedCostOverrun(String? value) {
+    _selectedCostOverrun = value;
+    notifyListeners();
+  }
+
+  final Map<String, int> costOverrun = {
+    "<10%": 1,
+    "10–25%": 2,
+    ">25%": 3,
+    "No overrun": 4,
+  };
+
+  int get selectedCostOverrunID => costOverrun[_selectedCostOverrun] ?? 0;
+
+  // Q3: Reason(s) for cost overrun (multi-select)
+  List<String> _selectedcostOverrunReasons = [];
+  List<String> get selectedcostOverrunReasons => _selectedcostOverrunReasons;
+  set selectedcostOverrunReasons(List<String> value) {
+    _selectedcostOverrunReasons = value;
+    notifyListeners();
+  }
+
+  final Map<String, int> ReasonsOptions = {
+    "Price escalation of materials": 1,
+    "Additional scope of work added post-DPR": 2,
+    "Delay in project execution leading to cost inflation": 3,
+    "Revision in technical design/specifications": 4,
+    "Change in site conditions or unforeseen site challenges": 5,
+    "Contractor claim settlement/additional payments": 6,
+    "Logistic/transportation constraints": 7,
+    "Poor estimation at DPR stage": 8,
+    "Others": 9,
+  };
+
+  List<String> get ReasonsOptionsOptions => ReasonsOptions.keys.toList();
+  List<int> get selectedcostOverrunReasonsID => _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
+
+
+  // Q4: Revised cost approved before award (yes/no)
+  String? _selectedrevisedCostApproved; // Yes / No
+
+  String? get selectedrevisedCostApproved => _selectedrevisedCostApproved;
+
+  set selectedrevisedCostApproved(String? value) {
+    _selectedrevisedCostApproved = value;
+    notifyListeners();
+  }
+
+  // Q5: Cost overrun (single choice)
+  String? _selectedincreaseInCost;
+  String? get selectedincreaseInCost => _selectedincreaseInCost;
+  set selectedincreaseInCost(String? value) {
+    _selectedincreaseInCost = value;
+    notifyListeners();
+  }
+
+  final Map<String, int> increaseInCostID = {
+    "<10%": 1,
+    "10–25%": 2,
+    ">25%": 3,
+    "No overrun": 4,
+  };
+
+  int get selectedincreaseInCostID => increaseInCostID[_selectedincreaseInCost] ?? 0;
+
+
+  //
+  int get selectedrevisedCostApprovedID => yesNoMap[_selectedrevisedCostApproved] ?? 0;
+
+  // Q5.1: Increase in cost (single choice)
+  String? _increaseInCost;
+  String? get increaseInCost => _increaseInCost;
+  set increaseInCost(String? value) {
+    _increaseInCost = value;
+    notifyListeners();
+  }
+
+  // Q5.2: Date of SLSSC approval (text)
+  String? _dateApproval;
+
+  String? get dateApproval => _dateApproval;
+
+  set dateApproval(String? value) {
+    _dateApproval = value;
+    notifyListeners();
+  }
+
+  // Q6: Reason(s) for cost overrun (multi-select)
+  List<String> _selectedrevisionReasons = [];
+  List<String> get selectedrevisionReasons => _selectedrevisionReasons;
+  set selectedrevisionReasons(List<String> value) {
+    _selectedrevisionReasons = value;
+    notifyListeners();
+  }
+
+
+  //Q7
+  Map<String, TextEditingController> costControllers = {};
+
+  // Map for component IDs
+  // Fields for component counts
+  int intakeTubeWellNum;
+  int electroMechanicalNum;
+  int wtpNum;
+  int mbrNum;
+  int transmissionPipelineNum;
+  int distributionPipelineNum;
+  int ohtNum;
+  int disinfectionUnitNum;
+  int iotNum;
+  int roadRestorationNum;
+  int solarComponentNum;
+  int otherComponentsNum;
+
+
+  // Constructor
+  Schemeprovider({
+    this.intakeTubeWellNum = 0,
+    this.electroMechanicalNum = 0,
+    this.wtpNum = 0,
+    this.mbrNum = 0,
+    this.transmissionPipelineNum = 0,
+    this.distributionPipelineNum = 0,
+    this.ohtNum = 0,
+    this.disinfectionUnitNum = 0,
+    this.iotNum = 0,
+    this.roadRestorationNum = 0,
+    this.solarComponentNum = 0,
+    this.otherComponentsNum = 0,
+  }) {
+    // Initialize TextEditingControllers for cost fields
+    _initCostControllers();
+  }
+
+  void _initCostControllers() {
+    costControllers = {
+      'Intake/Tubewell': TextEditingController(),
+      'Electromechanical components': TextEditingController(),
+      'WTP': TextEditingController(),
+      'MBR': TextEditingController(),
+      'Transmission pipeline': TextEditingController(),
+      'Distribution pipeline': TextEditingController(),
+      'OHSR/ESR/OHT/GSR': TextEditingController(),
+      'Disinfection unit': TextEditingController(),
+      'IoT/SCADA': TextEditingController(),
+      'Road Restoration': TextEditingController(),
+      'Solar components': TextEditingController(),
+      'Others (DG sets, HH storage)': TextEditingController(),
+    };
+  }
+
+  /// Example: update logic when cost field changes
+  void updateAdmissibleCost(String component, String val) {
+    // Parse value as integer if needed for numeric updates
+    int? numValue = int.tryParse(val);
+
+    switch (component) {
+      case 'Intake/Tubewell':
+        intakeTubeWellNum = numValue ?? 0;
+        break;
+      case 'Electromechanical components':
+        electroMechanicalNum = numValue ?? 0;
+        break;
+      case 'WTP':
+        wtpNum = numValue ?? 0;
+        break;
+      case 'MBR':
+        mbrNum = numValue ?? 0;
+        break;
+      case 'Transmission pipeline':
+        transmissionPipelineNum = numValue ?? 0;
+        break;
+      case 'Distribution pipeline':
+        distributionPipelineNum = numValue ?? 0;
+        break;
+      case 'OHSR/ESR/OHT/GSR':
+        ohtNum = numValue ?? 0;
+        break;
+      case 'Disinfection unit':
+        disinfectionUnitNum = numValue ?? 0;
+        break;
+      case 'IoT/SCADA':
+        iotNum = numValue ?? 0;
+        break;
+      case 'Road Restoration':
+        roadRestorationNum = numValue ?? 0;
+        break;
+      case 'Solar components':
+        solarComponentNum = numValue ?? 0;
+        break;
+      case 'Others (DG sets, HH storage)':
+        otherComponentsNum = numValue ?? 0;
+        break;
+      default:
+      // Component not recognized
+        break;
+    }
+  }
+
+  /// Optionally, dispose all controllers when done
+  void dispose() {
+    for (var controller in costControllers.values) {
+      controller.dispose();
+    }
+  }
+
+  /// Optional: convert data to JSON
+  Map<String, dynamic> toJson() => {
+    'intakeTubeWellNum': intakeTubeWellNum,
+    'electroMechanicalNum': electroMechanicalNum,
+    'wtpNum': wtpNum,
+    'mbrNum': mbrNum,
+    'transmissionPipelineNum': transmissionPipelineNum,
+    'distributionPipelineNum': distributionPipelineNum,
+    'ohtNum': ohtNum,
+    'disinfectionUnitNum': disinfectionUnitNum,
+    'iotNum': iotNum,
+    'roadRestorationNum': roadRestorationNum,
+    'solarComponentNum': solarComponentNum,
+    'otherComponentsNum': otherComponentsNum,
+    'costControllers': costControllers.map((key, value) => MapEntry(key, value.text)),
+  };
+
+   //Q8.1
+  String? _selectedWTP; // Yes / No
+
+  String? get selectedWTP => _selectedWTP;
+
+  set selectedWTP(String? value) {
+    _selectedWTP = value;
+    notifyListeners();
+  }
+  //
+  int get selectedWTPID => yesNoMap[_selectedWTP] ?? 0;
+   //Q8.2
+  String? _selectedOHSR; // Yes / No
+
+  String? get selectedOHSR => _selectedOHSR;
+
+  set selectedOHSR(String? value) {
+    _selectedOHSR = value;
+    notifyListeners();
+  }
+  //
+  int get selectedOHSRID => yesNoMap[_selectedOHSR] ?? 0;
+   //Q8.3
+  String? _selecteSource; // Yes / No
+
+  String? get selecteSource => _selecteSource;
+
+  set selecteSource(String? value) {
+    _selecteSource = value;
+    notifyListeners();
+  }
+  //
+  int get selecteSourceID => yesNoMap[_selecteSource] ?? 0;
+   //Q8.4
+  String? _selectedPipeline; // Yes / No
+
+  String? get selectedPipeline => _selectedPipeline;
+
+  set selectedPipeline(String? value) {
+    _selectedPipeline = value;
+    notifyListeners();
+  }
+
+
+  //
+  int get selectedPipelineID => yesNoMap[_selectedPipeline] ?? 0;
+
+  // List to store entered [id, value] pairs
+  List<Map<String, dynamic>> admissibleCostsList = [];
+
+  // Initialize the controllers
+  void initializeCostControllers(List<List<String>> rows) {
+    for (var row in rows) {
+      final component = row[0];
+      costControllers[component] = TextEditingController();
+    }
+    notifyListeners();
+  }
+
+
+
+
+  final Map<String, int> revisionReasonsID = {
+    "Price rise of materials": 1,
+    "Additional scope of work ": 2,
+    "Change in site conditions ": 3,
+    "Others": 4,
+  };
+
+  List<String> get revisionReasonsIDOptions => revisionReasonsID.keys.toList();
+  List<int> get selectedrevisionReasonsID => _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
+
+
   Future<bool> saveSchemeImplementation({
     required int userId,
     required int stateId,

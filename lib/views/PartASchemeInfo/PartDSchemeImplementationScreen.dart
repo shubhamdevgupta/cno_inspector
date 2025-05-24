@@ -2,7 +2,11 @@ import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartCRetrofittingAugmentationScreen.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../provider/schemeInfoProvider/SchemeProvider.dart';
+import '../../services/LocalStorageService.dart';
+import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
@@ -25,7 +29,7 @@ class SchemeImplementationScreen extends StatefulWidget {
 class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
   final TextEditingController dateApprovalController = TextEditingController();
   final TextEditingController admissibleCostController = TextEditingController();
-
+  LocalStorageService _localStorageService = LocalStorageService();
   // Selected values
   List<String> delayReasons = [];
   String? costOverrun;
@@ -40,6 +44,13 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
     '8.3 Source': null,
     '8.4 Pipeline': null,
   };
+
+  @override
+  void initState() {
+    super.initState();
+    // rows definition
+
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -98,203 +109,293 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
             ),
             elevation: 5,
           ),
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.only(
-                      top: 20, left: 6, right: 6, bottom: 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Schemeinfocommonscreen(
-                        no: 4,
-                      ),
-                      Card(
-                        elevation: 5,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border:
-                            Border.all(color: Colors.lightGreen, width: 1.4),
-                            borderRadius: BorderRadius.circular(14),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12.withOpacity(0.06),
-                                blurRadius: 6,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          padding: EdgeInsets.all(8),
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomMultiSelectChipQuestion(
-                                question: '1. Reason(s) for delay after award of work:',
-                                options: [
-                                  'Delay in DPR approval',
-                                  'Contractor delay',
-                                  'Design changes during execution',
-                                  'Material shortage',
-                                  'Land/site issues',
-                                  'Weather/natural calamities',
-                                  'Inter-departmental coordination',
-                                  'Others',
-                                  'Clearances from Highway/Forest/Railways etc.',
-                                ],
-                                selectedValues: delayReasons,
-                                onSelectionChanged: (values) {
-                                  setState(() => delayReasons = values);
-                                },
-                              ),
-                              const SizedBox(height: 10),
-
-                              Customradiobttn(
-                                question: '2. Cost overrun:',
-                                options: ['<10%', '10–25%', '>25%', 'No overrun'],
-                                selectedOption: costOverrun,
-                                onChanged: (value) {
-                                  setState(() => costOverrun = value);
-                                },
-                              ),
-
-                              CustomMultiSelectChipQuestion(
-                                question: '3. Reason(s) for cost overrun:',
-                                options: [
-                                  'Price escalation of materials',
-                                  'Additional scope of work added post-DPR',
-                                  'Delay in project execution leading to cost inflation',
-                                  'Revision in technical design/specifications',
-                                  'Change in site conditions or unforeseen site challenges',
-                                  'Contractor claim settlement/additional payments',
-                                  'Logistic/transportation constraints',
-                                  'Poor estimation at DPR stage',
-                                  'Others',
-                                ],
-                                selectedValues: costOverrunReasons,
-                                onSelectionChanged: (values) {
-                                  setState(() => costOverrunReasons = values);
-                                },
-                              ),
-
-                              Customradiobttn(
-                                question:
-                                '4. Has the scheme approved cost been revised before award of work:',
-                                options: ['Yes', 'No'],
-                                selectedOption: revisedCostApproved,
-                                onChanged: (value) {
-                                  setState(() => revisedCostApproved = value);
-                                },
-                              ),
-
-                              const Text(
-                                '5.	Whether revised cost have been approved by SLSSC?',
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                                Customradiobttn(
-                                  question: '5.1 If yes, increase in cost: ',
-                                  options: ['<10%', '10–25%', '>25%'],
-                                  selectedOption: increaseInCost,
-                                  onChanged: (value) {
-                                    setState(() => increaseInCost = value);
-                                  },
+          body: Consumer<Schemeprovider>(
+              builder: (context, schemeProvider, child){
+               return Stack(
+                  children: [
+                    SingleChildScrollView(
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            top: 20, left: 6, right: 6, bottom: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Schemeinfocommonscreen(
+                              no: 4,
+                            ),
+                            Card(
+                              elevation: 5,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border:
+                                  Border.all(color: Colors.lightGreen, width: 1.4),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12.withOpacity(0.06),
+                                      blurRadius: 6,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ],
                                 ),
-                                Customtxtfeild(
-                                  label:
-                                  '5.2 Date of SLSSC approval in seriatim for revised estimate?',
-                                  controller: dateApprovalController,
-                                  keyboardType: TextInputType.datetime,
-                                  hintText: 'dd-mm-yyyy',
-                                ),
+                                padding: EdgeInsets.all(8),
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Q1: Reason(s) for delay
+                                    CustomMultiSelectChipQuestion(
+                                      question: '1. Reason(s) for delay after award of work:',
+                                      options: schemeProvider.delayReasonsOptions,
+                                      selectedValues: schemeProvider.selectedDelayReasons,
+                                      onSelectionChanged: (val) {
+                                        schemeProvider.selectedDelayReasons = val;
+                                        print('SelecteddelayReasons: ${schemeProvider.selectedDelayReasons} : ${schemeProvider.selectedDelayReasonsID}');
+                                      },
+                                    ),
+                                    const SizedBox(height: 10),
 
+                                    // Q2: Cost overrun
+                                    Customradiobttn(
+                                      question: '2. Cost overrun:',
+                                      options: ['<10%', '10–25%', '>25%', 'No overrun'],
+                                      selectedOption: schemeProvider.selectedCostOverrun,
+                                      onChanged: (value) {
+                                        schemeProvider.selectedCostOverrun = value;
+                                        print('selectedCostOverrunID: ${schemeProvider.selectedCostOverrunID} }');
 
-                              CustomMultiSelectChipQuestion(
-                                question: '6. Reason(s) for revision:',
-                                options: [
-                                  'Price rise of materials',
-                                  'Additional scope of work',
-                                  'Change in site conditions',
-                                  'Others',
-                                ],
-                                selectedValues: revisionReasons,
-                                onSelectionChanged: (values) {
-                                  setState(() => revisionReasons = values);
-                                },
-                              ),
+                                      },
+                                    ),
 
-                              const SizedBox(height: 10),
-                              const Text(
-                                '7. What is the admissible cost of the components (CAPEX) in the scheme?',
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 6),
+                                    // Q3: Reason(s) for cost overrun
+                                    CustomMultiSelectChipQuestion(
+                                      question: '3. Reason(s) for cost overrun:',
+                                      options: schemeProvider.ReasonsOptionsOptions,
+                                      selectedValues: schemeProvider.selectedcostOverrunReasons,
+                                      onSelectionChanged: (values) {
+                                        schemeProvider.selectedcostOverrunReasons = values;
+                                        print('selectedcostOverrunReasons:  ${schemeProvider.selectedcostOverrunReasonsID}');
 
-                              _buildAdmissibleCostTable(),
+                                      },
+                                    ),
+                                    const SizedBox(height: 10),
 
-                              const SizedBox(height: 20),
-                              const Text(
-                                '8. Components of scheme planned or mapped on the PM-Gati Shakti?',
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 6),
+                                    // Q4: Revised cost approval
+                                    Customradiobttn(
+                                      question: '4. Has the scheme approved cost been revised before award of work:',
+                                      options:  schemeProvider.yesNoMap.keys.toList(),
+                                      selectedOption: schemeProvider.selectedrevisedCostApproved,
+                                      onChanged: (value) {
+                                        schemeProvider.selectedrevisedCostApproved = value;
 
+                                        print('selectedrevisedCostApproved:  ${schemeProvider.selectedrevisedCostApprovedID}');
+                                      },
+                                    ),
+                                    const SizedBox(height: 10),
 
-                              ...schemeMapping.keys.map((component) {
-                                return Customradiobttn(
-                                  question: component,
-                                  options: ['Yes', 'No'],
-                                  selectedOption: schemeMapping[component],
-                                  onChanged: (value) {
-                                    setState(() => schemeMapping[component] = value);
-                                  },
-                                );
-                              }),
+                                    // Q5: Revised cost by SLSSC
+                                    const Text(
+                                      '5. Whether revised cost has been approved by SLSSC?',
+                                      style: TextStyle(fontWeight: FontWeight.w600),
+                                    ),
+                                    Customradiobttn(
+                                      question: '5.1 If yes, increase in cost:',
+                                      options: schemeProvider.increaseInCostID.keys.toList(),
+                                      selectedOption: schemeProvider.selectedincreaseInCost,
+                                      onChanged: (value) {
+                                        schemeProvider.selectedincreaseInCost = value;
 
-                              const SizedBox(height: 20),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
-                                  height: 35,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.lightGreen,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10), // Adjust the radius as needed
+                                        print('selectedincreaseInCost:  ${schemeProvider.selectedincreaseInCostID}');
+
+                                      },
+                                    ),
+                                    const SizedBox(height: 10),
+
+                                    GestureDetector(
+                                      onTap: () async {
+                                        DateTime? pickedDate = await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(2000),
+                                          lastDate: DateTime(2100),
+                                        );
+
+                                        if (pickedDate != null) {
+                                          // Format the picked date as "dd-mm-yyyy"
+                                          String formattedDate = "${pickedDate.day.toString().padLeft(2, '0')}/${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
+                                          schemeProvider.dateApproval = formattedDate;
+                                        }
+                                      },
+                                      child: AbsorbPointer( // Prevents typing
+                                        child: Customtxtfeild(
+                                          label: '5.2 Date of SLSSC approval in seriatim for revised estimate?',
+                                          controller: TextEditingController(text: schemeProvider.dateApproval ?? ''),
+                                          keyboardType: TextInputType.datetime,
+                                          hintText: 'dd-mm-yyyy',
+                                        ),
                                       ),
                                     ),
-                                    onPressed: () async {
 
-                                    },
-                                    child: Text(
-                                      "SAVE & NEXT",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
+
+                                    CustomMultiSelectChipQuestion(
+                                      question: '6. Reason(s) for revision:',
+                                      options:  schemeProvider.revisionReasonsIDOptions,
+                                      selectedValues: schemeProvider.selectedrevisionReasons,
+                                      onSelectionChanged: (values) {
+                                        setState(() => schemeProvider.selectedrevisionReasons = values);
+                                        print(' schemeProvider.selectedrevisionReasons  ${ schemeProvider.selectedrevisionReasonsID}');
+                                      },
+                                    ),
+
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      '7. What is the admissible cost of the components (CAPEX) in the scheme?',
+                                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                    ),
+                                    const SizedBox(height: 6),
+
+                                    _buildAdmissibleCostTable(context, schemeProvider),
+
+                                    const SizedBox(height: 20),
+                                    const Text(
+                                      '8. Components of scheme planned or mapped on the PM-Gati Shakti?',
+                                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                    ),
+                                    const SizedBox(height: 6),
+
+
+                                    Customradiobttn(
+                                      question: '8.1 WTP',
+                                      options:  schemeProvider.yesNoMap.keys.toList(),
+                                      selectedOption: schemeProvider.selectedWTP,
+                                      onChanged: (value) {
+                                        schemeProvider.selectedWTP = value;
+
+                                        print('selectedWTPID:  ${schemeProvider.selectedWTPID}');
+                                      },
+                                    ),     Customradiobttn(
+                                      question: '8.2 OHSR/GSR/OHT/ESR/MBR',
+                                      options:  schemeProvider.yesNoMap.keys.toList(),
+                                      selectedOption: schemeProvider.selectedOHSR,
+                                      onChanged: (value) {
+                                        schemeProvider.selectedOHSR = value;
+
+                                        print('selectedOHSR:  ${schemeProvider.selectedOHSRID}');
+                                      },
+                                    ),     Customradiobttn(
+                                      question: '8.3 Source',
+                                      options:  schemeProvider.yesNoMap.keys.toList(),
+                                      selectedOption: schemeProvider.selecteSource,
+                                      onChanged: (value) {
+                                        schemeProvider.selecteSource = value;
+
+                                        print('selecteSource:  ${schemeProvider.selecteSourceID}');
+                                      },
+                                    ),Customradiobttn(
+                                      question: '8.4 Pipeline',
+                                      options:  schemeProvider.yesNoMap.keys.toList(),
+                                      selectedOption: schemeProvider.selectedPipeline,
+                                      onChanged: (value) {
+                                        schemeProvider.selectedPipeline = value;
+
+                                        print('selectedPipeline:  ${schemeProvider.selectedPipelineID}');
+                                      },
+                                    ),
+
+
+                                    const SizedBox(height: 20),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.lightGreen,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+
+
+
+                                              await schemeProvider.saveSchemeImplementation(
+                                                userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                                stateId: 4,
+                                                schemeId: 565656565,
+                                                costOverrun: schemeProvider.selectedCostOverrunID,
+                                                costRevisedBeforeWork: schemeProvider.selectedrevisedCostApprovedID,
+                                                revisedCostPercentage: schemeProvider.selectedincreaseInCostID,
+                                                slsscDate: schemeProvider.dateApproval ?? "",
+                                                intakeTubeWellNum: schemeProvider.intakeTubeWellNum,
+                                                intakeTubeWellCost:  double.tryParse(schemeProvider.costControllers['Intake/Tubewell']?.text ?? '') ?? 0.0,
+                                                electroMechanicalNum: schemeProvider.electroMechanicalNum,
+                                                electroMechanicalCost: double.tryParse(schemeProvider.costControllers['Electromechanical components']?.text ?? '') ?? 0.0,
+                                                wtpNum: schemeProvider.wtpNum,
+                                                wtpCost: double.tryParse(schemeProvider.costControllers['WTP']?.text ?? '') ?? 0.0,
+                                                mbrNum: schemeProvider.mbrNum,
+                                                mbrCost: double.tryParse(schemeProvider.costControllers['MBR']?.text ?? '') ?? 0.0,
+                                                transmissionPipelineNum: schemeProvider.transmissionPipelineNum,
+                                                transmissionPipelineCost: double.tryParse(schemeProvider.costControllers['Transmission pipeline']?.text ?? '') ?? 0.0,
+                                                distributionPipelineNum: schemeProvider.distributionPipelineNum,
+                                                distributionPipelineCost: double.tryParse(schemeProvider.costControllers['Distribution pipeline']?.text ?? '') ?? 0.0,
+                                                disinfectionUnitNum: schemeProvider.disinfectionUnitNum,
+                                                disinfectionUnitCost: double.tryParse(schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ?? '') ?? 0.0,
+                                                ohtNum: schemeProvider.ohtNum,
+                                                ohtCost: double.tryParse(schemeProvider.costControllers['Disinfection unit']?.text ?? '') ?? 0.0,
+                                                iotNum: schemeProvider.iotNum,
+                                                iotCost: double.tryParse(schemeProvider.costControllers['IoT/SCADA']?.text ?? '') ?? 0.0,
+                                                roadRestorationNum: schemeProvider.roadRestorationNum,
+                                                roadRestorationCost: double.tryParse(schemeProvider.costControllers['Road Restoration']?.text ?? '') ?? 0.0,
+                                                solarComponentNum: schemeProvider.solarComponentNum,
+                                                solarComponentCost:double.tryParse(schemeProvider.costControllers['Solar components']?.text ?? '') ?? 0.0,
+                                                otherComponentsNum: schemeProvider.otherComponentsNum,
+                                                otherComponentsCost: double.tryParse(schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '') ?? 0.0,
+                                                plannedPTGatiShaktiWTP: schemeProvider.selectedWTPID,
+                                                plannedPTGatiShaktiOHT: schemeProvider.selectedOHSRID,
+                                                plannedPTGatiShaktiSource: schemeProvider.selecteSourceID,
+                                                plannedPTGatiShaktiPipeline: schemeProvider.selectedPipelineID,
+                                                delayReasons: schemeProvider.selectedDelayReasonsID,
+                                                costOverrunReasons: schemeProvider.selectedcostOverrunReasonsID,
+                                                costRevisionReasons: schemeProvider.selectedrevisionReasonsID,
+                                              );
+
+
+
+
+                                          },
+                                          child: Text(
+                                            "SAVE & NEXT",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
+                      ),
+                    )
+                  ],
+                );
+              }
+
           ),
         ),
       ),
     );
   }
 
-  Widget _buildAdmissibleCostTable() {
+  Widget _buildAdmissibleCostTable(BuildContext context, Schemeprovider schemeProvider) {
     final columns = ['Components', 'Unit', 'Capacity', 'Cost (in cr.)'];
     final rows = [
       ['Intake/Tubewell', 'Nos.', 'In LPM', ''],
@@ -333,18 +434,25 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
               .toList(),
         ),
         ...rows.map((row) {
+          final component = row[0];
           return TableRow(
             children: row.map((cell) {
               if (cell == '') {
                 return Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: TextFormField(
+                    controller: schemeProvider.costControllers[component],
                     keyboardType: TextInputType.numberWithOptions(decimal: true),
                     decoration: const InputDecoration(
-                      contentPadding:
-                      EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                      contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                       border: OutlineInputBorder(),
                     ),
+                    onChanged: (val) {
+                      schemeProvider.updateAdmissibleCost(component, val);
+
+                      final id = schemeProvider.costControllers[component] ?? 0;
+                      print("Component: $component, ID: $id, Value: $val");
+                    },
                   ),
                 );
               } else {
@@ -359,6 +467,38 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
       ],
     );
   }
+
+  /// Helper function to collect data from admissible cost fields
+  Map<String, dynamic> collectAdmissibleCostData(Schemeprovider schemeProvider) {
+    return {
+      'intakeTubeWellNum': schemeProvider.intakeTubeWellNum,
+      'intakeTubeWellCost': schemeProvider.costControllers['Intake/Tubewell']?.text ?? '',
+      'electroMechanicalNum': schemeProvider.electroMechanicalNum,
+      'electroMechanicalCost': schemeProvider.costControllers['Electromechanical components']?.text ?? '',
+      'wtpNum': schemeProvider.wtpNum,
+      'wtpCost': schemeProvider.costControllers['WTP']?.text ?? '',
+      'mbrNum': schemeProvider.mbrNum,
+      'mbrCost': schemeProvider.costControllers['MBR']?.text ?? '',
+      'transmissionPipelineNum': schemeProvider.transmissionPipelineNum,
+      'transmissionPipelineCost': schemeProvider.costControllers['Transmission pipeline']?.text ?? '',
+      'distributionPipelineNum': schemeProvider.distributionPipelineNum,
+      'distributionPipelineCost': schemeProvider.costControllers['Distribution pipeline']?.text ?? '',
+      'disinfectionUnitNum': schemeProvider.disinfectionUnitNum,
+      'disinfectionUnitCost': schemeProvider.costControllers['Disinfection unit']?.text ?? '',
+      'ohtNum': schemeProvider.ohtNum,
+      'ohtCost': schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ?? '',
+      'iotNum': schemeProvider.iotNum,
+      'iotCost': schemeProvider.costControllers['IoT/SCADA']?.text ?? '',
+      'roadRestorationNum': schemeProvider.roadRestorationNum,
+      'roadRestorationCost': schemeProvider.costControllers['Road Restoration']?.text ?? '',
+      'solarComponentNum': schemeProvider.solarComponentNum,
+      'solarComponentCost': schemeProvider.costControllers['Solar components']?.text ?? '',
+      'otherComponentsNum': schemeProvider.otherComponentsNum,
+      'otherComponentsCost': schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '',
+    };
+  }
+
+
 
   void _saveFormData() {
     // Collect all data from the form here and process/save

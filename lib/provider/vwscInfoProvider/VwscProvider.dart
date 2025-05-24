@@ -659,8 +659,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
 // Expose selected IDs (mapped from selected labels)
-  List<int> get selectedGrievanceMethodIds =>
-      _selectedGrievanceMethods.map((e) => grievanceRegistrationMethodMap[e] ?? 0).toList();
+  List<int> get selectedGrievanceMethodIds => _selectedGrievanceMethods.map((e) => grievanceRegistrationMethodMap[e] ?? 0).toList();
 
 
 // 9. Turn around time for grievance
