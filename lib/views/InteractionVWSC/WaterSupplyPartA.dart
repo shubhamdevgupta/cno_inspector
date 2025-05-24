@@ -184,7 +184,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                         ),
                                       ),
                                       onPressed: ()async {
-                                         LoaderUtils.showLoadingWithMessage(context,message: "Water Supply Functionality");
+                                         LoaderUtils. showLoadingWithMessage(context, isLoading: true, message: "Water Supply Functionality");
 
                                         await vwscProvider.saveVwscWaterSupply(userId: 34483,
                                             stateId: 32, villageId: 503655,
@@ -204,7 +204,6 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                         }else{
                                           ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.red);
                                         }
-                                         LoaderUtils.hideLoaderDialog(context);
                                       },
                                       child: Text(
                                         "SAVE & NEXT",
@@ -227,7 +226,8 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                 ),
               );
             },
-          )),
+          )
+      ),
     );
   }
 }

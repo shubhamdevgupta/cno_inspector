@@ -73,22 +73,17 @@ class LoaderUtils {
     }
   }
 
-  //////////////////////////////////////////////////////////////
-
-  /// Hides the loading dialog.
-  static void hide(BuildContext context) {
-    Navigator.of(context, rootNavigator: true).pop();
-  }
-
-  /// Shows a loading dialog with an optional custom message.
   static void showLoadingWithMessage(
       BuildContext context, {
+        bool isLoading = true,
         String message = 'Loading...',
       }) {
+    if (!isLoading) return;
+
     showDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: Colors.black45, // semi-transparent background
+      barrierColor: Colors.black45,
       builder: (_) => Center(
         child: Container(
           padding: const EdgeInsets.all(24),
@@ -112,9 +107,8 @@ class LoaderUtils {
         ),
       ),
     );
-
-
   }
+
 
 
 }

@@ -92,7 +92,6 @@ class Vwscprovider extends ChangeNotifier {
     "No": 3,
     "Not Verified": 4,
   };
-
   List<String> get tailEndOptions => tailEndMap.keys.toList();
 
   String? _selectedTailEnd;
@@ -102,9 +101,7 @@ class Vwscprovider extends ChangeNotifier {
     _selectedTailEnd = value;
     notifyListeners();
   }
-
   int get selectedTailEndId => tailEndMap[_selectedTailEnd] ?? 0;
-
   /// 4444444444
 
 
@@ -155,6 +152,7 @@ class Vwscprovider extends ChangeNotifier {
       .toList();
 
 // que 6666666666666666666666666
+
 
 
 
@@ -276,8 +274,8 @@ class Vwscprovider extends ChangeNotifier {
         complaintType: complaintType,
         createdBy: createdBy,
       );
-
       _message = response.message;
+      _status=response.status;
       return response.status ?? false;
     } catch (e) {
       _message = 'Something went wrong';
@@ -361,4 +359,77 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+  ///// ques c 1111111
+  final Map<String, int> complainByCommunityOptMap ={
+    "Yes": 1,
+    "No": 2,
+    "Not Known": 3,
+  };
+  List<String> get complainByCommunityOption => complainByCommunityOptMap.keys.toList();
+
+  String? _selectedComplaintByCommunity;
+  String? get selectedComplaintByCommunity => _selectedComplaintByCommunity;
+
+  set selectedComplaintByCommunity(String? value) {
+    _selectedComplaintByCommunity = value;
+    notifyListeners();
+  }
+
+  int get selectedComplaintByCommunityId => complainByCommunityOptMap[_selectedComplaintByCommunity] ?? 0;
+
+/// 11111111
+
+  ///////////33333333333/////////////
+
+  final Map<String, int> whereComplaintAddressOptMap ={
+    "Yes": 1,
+    "No": 2,
+    "Partially": 3,
+  };
+  List<String> get whereComplaintAddressOpt => whereComplaintAddressOptMap.keys.toList();
+
+  String? _selectedWhereComplaintAddressOpt;
+  String? get selectedWhereComplaintAddress => _selectedWhereComplaintAddressOpt;
+
+  set SetSelectedWhereComplaintAddress(String? value) {
+    _selectedWhereComplaintAddressOpt = value;
+    notifyListeners();
+  }
+
+  int get selectedWhereComplaintAddressOptId => whereComplaintAddressOptMap[_selectedWhereComplaintAddressOpt] ?? 0;
+
+
+  ///////////33333333333/////////////
+
+  /// 222222222
+  final Map<String, int> typeOfComplaintMap = {
+    "Substandard material": 1,
+    "Poor workmanship": 2,
+    "Leakages": 3,
+    "Contamination": 4,
+    "Incomplete structures": 5,
+    "No water": 6,
+    "Water discoloration": 7,
+    "Others": 8,
+  };
+
+  List<String> get typeOfComplaintMapOptions => typeOfComplaintMap.keys.toList();
+
+  List<String> _typeOfComplaintLabels = [];
+
+  List<String> get selectedTypeOfComplaint => _typeOfComplaintLabels;
+
+  set selectedTypeOfComplaint(List<String> values) {
+    _typeOfComplaintLabels = values;
+    notifyListeners();
+  }
+
+  // 4. Convert selected labels to their mapped integer values (for API)
+  List<int> get selectedTypeOfComplaintIds => _typeOfComplaintLabels
+      .map((label) => typeOfComplaintMap[label])
+      .whereType<int>()
+      .toList();
+
+//
+
 }
