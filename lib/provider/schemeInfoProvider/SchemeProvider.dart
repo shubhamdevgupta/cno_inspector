@@ -371,7 +371,7 @@ class Schemeprovider extends ChangeNotifier {
     "Clearances from Highway/Forest/Railways etc.": 9,
   };
 
-  List<String> get delayReasonsOptions => delayReasons.keys.toList();
+      List<String> get delayReasonsOptions => delayReasons.keys.toList();
   List<int> get selectedDelayReasonsID => _selectedDelayReasons.map((e) => delayReasons[e] ?? 0).toList();
 
   // Q2: Cost overrun (single choice)
@@ -476,7 +476,6 @@ class Schemeprovider extends ChangeNotifier {
   //Q7
   Map<String, TextEditingController> costControllers = {};
 
-  // Map for component IDs
   // Fields for component counts
   int intakeTubeWellNum;
   int electroMechanicalNum;
@@ -491,8 +490,6 @@ class Schemeprovider extends ChangeNotifier {
   int solarComponentNum;
   int otherComponentsNum;
 
-
-  // Constructor
   Schemeprovider({
     this.intakeTubeWellNum = 0,
     this.electroMechanicalNum = 0,
@@ -507,7 +504,6 @@ class Schemeprovider extends ChangeNotifier {
     this.solarComponentNum = 0,
     this.otherComponentsNum = 0,
   }) {
-    // Initialize TextEditingControllers for cost fields
     _initCostControllers();
   }
 
@@ -528,60 +524,15 @@ class Schemeprovider extends ChangeNotifier {
     };
   }
 
-  /// Example: update logic when cost field changes
-  void updateAdmissibleCost(String component, String val) {
-    // Parse value as integer if needed for numeric updates
-    int? numValue = int.tryParse(val);
 
-    switch (component) {
-      case 'Intake/Tubewell':
-        intakeTubeWellNum = numValue ?? 0;
-        break;
-      case 'Electromechanical components':
-        electroMechanicalNum = numValue ?? 0;
-        break;
-      case 'WTP':
-        wtpNum = numValue ?? 0;
-        break;
-      case 'MBR':
-        mbrNum = numValue ?? 0;
-        break;
-      case 'Transmission pipeline':
-        transmissionPipelineNum = numValue ?? 0;
-        break;
-      case 'Distribution pipeline':
-        distributionPipelineNum = numValue ?? 0;
-        break;
-      case 'OHSR/ESR/OHT/GSR':
-        ohtNum = numValue ?? 0;
-        break;
-      case 'Disinfection unit':
-        disinfectionUnitNum = numValue ?? 0;
-        break;
-      case 'IoT/SCADA':
-        iotNum = numValue ?? 0;
-        break;
-      case 'Road Restoration':
-        roadRestorationNum = numValue ?? 0;
-        break;
-      case 'Solar components':
-        solarComponentNum = numValue ?? 0;
-        break;
-      case 'Others (DG sets, HH storage)':
-        otherComponentsNum = numValue ?? 0;
-        break;
-      default:
-      // Component not recognized
-        break;
-    }
-  }
 
-  /// Optionally, dispose all controllers when done
-  void dispose() {
+  /// Dispose controllers when done
+  void disposeControllers() {
     for (var controller in costControllers.values) {
       controller.dispose();
     }
   }
+
 
   /// Optional: convert data to JSON
   Map<String, dynamic> toJson() => {
