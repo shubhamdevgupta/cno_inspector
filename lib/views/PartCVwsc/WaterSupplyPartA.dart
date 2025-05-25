@@ -224,14 +224,9 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                         ),
                                       ),
                                       onPressed: () async {
-                                        //todo ask to rishab and shakti
-                                        LoaderUtils.showLoadingWithMessage(
-                                            context,
-                                            isLoading: true,
-                                            message:
-                                                "Water Supply Functionality");
-                                        print(
-                                            'selected village ${vwscProvider.villageId} and state ${vwscProvider.stateId}');
+                                        LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Water Supply Functionality");
+
+
                                         await vwscProvider.saveVwscWaterSupply(
                                             userId: _localStorageService.getInt(
                                                 AppConstants.prefUserId)!,

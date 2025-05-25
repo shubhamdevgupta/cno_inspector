@@ -188,7 +188,7 @@ void initState() {
                                       ),
                                     ),
                                     onPressed: () async{
-                                       LoaderUtils.showLoadingWithMessage(context, isLoading: true,message: "Saving Water Quality Monitoring");
+                                       LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading,message: "Saving Water Quality Monitoring");
 
                                       await vwscProvider.saveWaterQualityMonitoring(userId:_localStorageService.getInt(AppConstants.prefUserId)!, stateId: vwscProvider.stateId!,
                                           villageId: vwscProvider.villageId!, isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,

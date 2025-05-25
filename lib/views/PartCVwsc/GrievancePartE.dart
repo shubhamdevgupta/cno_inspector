@@ -190,7 +190,7 @@ class _GrievancePartE extends State<GrievancePartE> {
                                       onPressed: () async {
                                         LoaderUtils.showLoadingWithMessage(
                                             context,
-                                            isLoading: true,
+                                            isLoading: vwscProvider.isLoading,
                                             message: "Grievance Redressal");
                                         await vwscProvider.saveGrievanceRedressal(
                                             userId: _localStorageService.getInt(
