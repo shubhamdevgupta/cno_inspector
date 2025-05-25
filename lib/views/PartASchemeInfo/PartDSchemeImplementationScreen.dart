@@ -12,6 +12,7 @@ import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
+import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
@@ -318,12 +319,13 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                           ),
                                           onPressed: () async {
 
+                                            LoaderUtils.showLoadingWithMessage(context, isLoading: true,message: "Saving Scheme implementation...");
 
 
                                               await schemeProvider.saveSchemeImplementation(
                                                 userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                                stateId: 4,
-                                                schemeId: 565656565,
+                                                stateId: schemeProvider.stateId!,
+                                                schemeId: schemeProvider.schemeId!,
                                                 costOverrun: schemeProvider.selectedCostOverrunID,
                                                 costRevisedBeforeWork: schemeProvider.selectedrevisedCostApprovedID,
                                                 revisedCostPercentage: schemeProvider.selectedincreaseInCostID,
