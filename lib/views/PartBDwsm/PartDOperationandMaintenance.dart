@@ -55,7 +55,6 @@ class _PartDoperationandmaintenance
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => Dashboarddwsm()),
         );
-
         // Return false to prevent the default back navigation behavior
         return false;
       },
