@@ -1,8 +1,16 @@
 import 'package:cno_inspection/repository/schemeInfoRepo/SchemeRepository.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../model/schemePartA/AdditionalInfoRetrofitResponsePartC.dart';
+import '../../model/schemePartA/SchemeImplementationModelPartD.dart';
+import '../../model/schemePartA/SchemePlanningResponsePartB.dart';
+import '../../model/schemePartA/SchemeVisualInspectionModelPartE.dart';
+import '../../model/schemePartA/SourceSurveyResponsePartA.dart';
+import '../../repository/schemeInfoRepo/fetchSchemeRepo.dart';
+
 class Schemeprovider extends ChangeNotifier {
   final SchemeRepositoy _schemeRepositoy = SchemeRepositoy();
+  final Fetchschemeinfo _fetchschemeinfo = Fetchschemeinfo();
 
   bool _isLoading = false;
 
@@ -63,22 +71,41 @@ class Schemeprovider extends ChangeNotifier {
   final TextEditingController criticalController = TextEditingController();
   final TextEditingController semiCriticalController = TextEditingController();
   final TextEditingController waterAllocationController =
-      TextEditingController();
+  TextEditingController();
 
   int? _schemeId;
+
   int? get schemeId => _schemeId;
+
   void setSchemeId(int id) {
     _schemeId = id;
     notifyListeners();
   }
 
   int? _stateId;
+
   int? get stateId => _stateId;
+
   void setStateId(int id) {
     _stateId = id;
     notifyListeners();
   }
 
+
+  String getRadiobuttonData(int id, Map<String, int> labelMap) {
+    return labelMap.entries
+        .firstWhere((entry) => entry.value == id,
+        orElse: () => const MapEntry('', 0))
+        .key;
+  }
+
+
+  List<String> getCheckBoxData(List<int> ids, Map<String, int> labelMap) {
+    return labelMap.entries
+        .where((entry) => ids.contains(entry.value))
+        .map((entry) => entry.key)
+        .toList();
+  }
   Future<bool> saveSourceSurvey({
     required int userId,
     required int stateId,
@@ -119,6 +146,75 @@ class Schemeprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  //**** fetch api Part A start here ***///
+
+  List<SourceSurveyItem> sourceSurveyData = [];
+
+  Future<void> fetchSourceSurvey(
+      String stateId, String schemeId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response =
+      await _fetchschemeinfo.fetchSourceSurvey(stateId, schemeId, userId);
+      if (response.status) {
+        sourceSurveyData = response.result;
+        _message = '';
+
+        selectedValueQ1 = getRadiobuttonData(sourceSurveyData.first.isRcmndShiftToSurfaceWtr,yesNoMap);
+        print('selectedValueQ1: $selectedValueQ1');
+
+        selectedValueQ2 = getRadiobuttonData(sourceSurveyData.first.anyStudyAccessGwBeforeSw,yesNoMap);
+        print('selectedValueQ2: $selectedValueQ2');
+
+        safeController.text = sourceSurveyData.first.noVillagesSafeZone.toString();
+        print('safeController: ${safeController.text}');
+
+        criticalController.text = sourceSurveyData.first.noVillagesCriticalZone.toString();
+        print('criticalController: ${criticalController.text}');
+
+        semiCriticalController.text = sourceSurveyData.first.noVillagesSemiCriticalZone.toString();
+        print('semiCriticalController: ${semiCriticalController.text}');
+
+        selectedValueQ3 = getRadiobuttonData(sourceSurveyData.first.incaseGwContAnyAnalysisConduct,yesNoMap);
+        print('selectedValueQ3: $selectedValueQ3');
+
+
+        waterAllocationController.text = sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw.toString();
+        print('waterAllocationController: ${waterAllocationController.text}');
+
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch Source Survey data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+
+  void clearfetchSourceSurvey() {
+    // Clear selected radio button values
+    selectedValueQ1 = null;
+    selectedValueQ2 = null;
+    selectedValueQ3 = null;
+
+
+    // Clear frequency text field
+    safeController.clear();
+    criticalController.clear();
+    semiCriticalController.clear();
+    waterAllocationController.clear();
+
+    notifyListeners();
+  }
+
+  //**** fetch api Part B start here ***///
 
   // --------------------
   // 1. Survey Questions (Checkbox Questions)
@@ -175,9 +271,9 @@ class Schemeprovider extends ChangeNotifier {
   // --------------------
   // 4. Pipe Material Selection (Text Fields)
   final TextEditingController rockyPipeMaterialController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController soilPipeMaterialController =
-      TextEditingController();
+  TextEditingController();
 
   // --------------------
   // 5. On-Spot Excavation Check (Radio + Conditional Text)
@@ -193,7 +289,7 @@ class Schemeprovider extends ChangeNotifier {
   int get onSpotExcavationID => yesNoMap[_onSpotExcavation] ?? 0;
 
   final TextEditingController deviationReasonController =
-      TextEditingController();
+  TextEditingController();
 
   Future<bool> saveSchemePlanning({
     required int userId,
@@ -244,6 +340,93 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  //**** fetch api Part B start here ***///
+
+  List<SchemePlanningItem> schemePlanningData = [];
+
+  Future<void> fetchSchemePlanning(
+      String stateId, String schemeId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response =
+      await _fetchschemeinfo.fetchSchemePlanning(stateId, schemeId, userId);
+      if (response.status) {
+        schemePlanningData = response.result;
+        _message = '';
+
+
+        topoSurvey = getRadiobuttonData(schemePlanningData.first.isTopographicalSurvey,yesNoMap);
+        print('topoSurvey: $topoSurvey');
+
+        gpsSurvey = getRadiobuttonData(schemePlanningData.first.isGpsPhysicalSurvey,yesNoMap);
+        print('gpsSurvey: $gpsSurvey');
+
+
+        googleEarthSurvey = getRadiobuttonData(schemePlanningData.first.isGoogleEarthSurvey,yesNoMap);
+        print('googleEarthSurvey: $googleEarthSurvey');
+
+        noSurvey = getRadiobuttonData(schemePlanningData.first.noSurvey,yesNoMap);
+        print('noSurvey: $noSurvey');
+
+        wtpHoursController.text = schemePlanningData.first.runningHrsDesignTransmissionMain.toString();
+        print('wtpHoursController: ${wtpHoursController.text}');
+
+        ohsrTimeController.text = schemePlanningData.first.retentionTimeOSHR.toString();
+        print('ohsrTimeController: ${ohsrTimeController.text}');
+
+
+        mbrTimeController.text = schemePlanningData.first.retentionTimeMBR.toString();
+        print('mbrTimeController: ${mbrTimeController.text}');
+
+        rockyPipeMaterialController.text = schemePlanningData.first.distributionNetwrkTerrianTypeRockyStrata.toString();
+        print('rockyPipeMaterialController: ${rockyPipeMaterialController.text}');
+
+
+        soilPipeMaterialController.text = schemePlanningData.first.distributionNetwrkTerrianTypeSoilStrata.toString();
+        print('soilPipeMaterialController: ${soilPipeMaterialController.text}');
+
+        onSpotExcavation = getRadiobuttonData(schemePlanningData.first.foundAsPerDPR,yesNoMap);
+        print('onSpotExcavation: $onSpotExcavation');
+
+        deviationReasonController.text = schemePlanningData.first.divationIfAny.toString();
+        print('deviationReasonController: ${deviationReasonController.text}');
+
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch Scheme Planning data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+
+  void clearfetchSchemePlanning() {
+    // Clear selected radio button values
+    topoSurvey = null;
+    gpsSurvey = null;
+    googleEarthSurvey = null;
+    noSurvey = null;
+    onSpotExcavation = null;
+
+
+    // Clear frequency text field
+    wtpHoursController.clear();
+    ohsrTimeController.clear();
+    mbrTimeController.clear();
+    waterAllocationController.clear();
+    rockyPipeMaterialController.clear();
+    soilPipeMaterialController.clear();
+    deviationReasonController.clear();
+
+    notifyListeners();
+  }
+  //**** fetch api Part B end here ***///
   // Radio 1: Legacy Infrastructure Assessment
   String? _legacyInfraAssessment;
 
@@ -259,13 +442,13 @@ class Schemeprovider extends ChangeNotifier {
 
   // TextField Controllers: Legacy Infrastructure Usage
   final TextEditingController transmissionPipelineKmController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController distributionPipelineKmController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController wtpCapacityMldController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController storageStructureDetailsController =
-      TextEditingController();
+  TextEditingController();
 
   // Radio 2: As-built Drawing Availability
   String? _asBuiltDrawingAvailability;
@@ -342,14 +525,87 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  //**** fetch api Part C start here ***///
+
+  List<AdditionalInfoRetrofitItem> retrofitInfoData = [];
+
+  Future<void> fetchAdditionalInfoRetrofit(
+      String stateId, String schemeId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchschemeinfo.fetchAdditionalInfoRetrofit(
+          stateId, schemeId, userId);
+      if (response.status) {
+        retrofitInfoData = response.result;
+        _message = '';
+
+        legacyInfraAssessment = getRadiobuttonData(retrofitInfoData.first.whetherAssesmentLegacyDone,yesNoMap);
+        print('legacyInfraAssessment: $legacyInfraAssessment');
+
+
+        transmissionPipelineKmController.text = retrofitInfoData.first.legacyInfrastructureTransmissionPipelineKms.toString();
+        print('transmissionPipelineKmController: ${transmissionPipelineKmController.text}');
+
+        distributionPipelineKmController.text = retrofitInfoData.first.legacyInfrastructureDistributionPipelineKms.toString();
+        print('distributionPipelineKmController: ${distributionPipelineKmController.text}');
+
+        wtpCapacityMldController.text = retrofitInfoData.first.legacyInfrastructureWtpCapacityMld.toString();
+        print('wtpCapacityMldController: ${wtpCapacityMldController.text}');
+
+        storageStructureDetailsController.text = retrofitInfoData.first.legacyInfrastructureStorageStrCapacityKl.toString();
+        print('storageStructureDetailsController: ${storageStructureDetailsController.text}');
 
 
 
+        asBuiltDrawingAvailability = getRadiobuttonData(retrofitInfoData.first.buildDrawingInfrAvailable,yesNoMap);
+        print('legacyInfraAssessment: $asBuiltDrawingAvailability');
 
+        onPmGatiShakti = getRadiobuttonData(retrofitInfoData.first.ifYesIsItOnPMGati,yesNoMap);
+        print('onPmGatiShakti: $onPmGatiShakti');
+
+        reasonController.text = retrofitInfoData.first.ifNoReason.toString();
+        print('reasonController: ${reasonController.text}');
+
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch Retrofit Info data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+
+  void clearfetchAdditionalInfoRetrofit() {
+    // Clear selected radio button values
+    legacyInfraAssessment = null;
+    asBuiltDrawingAvailability = null;
+    onPmGatiShakti = null;
+
+
+
+    // Clear frequency text field
+    transmissionPipelineKmController.clear();
+    distributionPipelineKmController.clear();
+    wtpCapacityMldController.clear();
+    storageStructureDetailsController.clear();
+    reasonController.clear();
+
+
+    notifyListeners();
+  }
+  //**** fetch api Part C end here ***///
 
   // Q1: Delay reasons
   List<String> _selectedDelayReasons = [];
+
   List<String> get selectedDelayReasons => _selectedDelayReasons;
+
   set selectedDelayReasons(List<String> value) {
     _selectedDelayReasons = value;
     notifyListeners();
@@ -367,12 +623,16 @@ class Schemeprovider extends ChangeNotifier {
     "Clearances from Highway/Forest/Railways etc.": 9,
   };
 
-      List<String> get delayReasonsOptions => delayReasons.keys.toList();
-  List<int> get selectedDelayReasonsID => _selectedDelayReasons.map((e) => delayReasons[e] ?? 0).toList();
+  List<String> get delayReasonsOptions => delayReasons.keys.toList();
+
+  List<int> get selectedDelayReasonsID =>
+      _selectedDelayReasons.map((e) => delayReasons[e] ?? 0).toList();
 
   // Q2: Cost overrun (single choice)
   String? _selectedCostOverrun;
+
   String? get selectedCostOverrun => _selectedCostOverrun;
+
   set selectedCostOverrun(String? value) {
     _selectedCostOverrun = value;
     notifyListeners();
@@ -389,7 +649,9 @@ class Schemeprovider extends ChangeNotifier {
 
   // Q3: Reason(s) for cost overrun (multi-select)
   List<String> _selectedcostOverrunReasons = [];
+
   List<String> get selectedcostOverrunReasons => _selectedcostOverrunReasons;
+
   set selectedcostOverrunReasons(List<String> value) {
     _selectedcostOverrunReasons = value;
     notifyListeners();
@@ -408,8 +670,8 @@ class Schemeprovider extends ChangeNotifier {
   };
 
   List<String> get ReasonsOptionsOptions => ReasonsOptions.keys.toList();
-  List<int> get selectedcostOverrunReasonsID => _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
 
+  List<int> get selectedcostOverrunReasonsID => _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
 
   // Q4: Revised cost approved before award (yes/no)
   String? _selectedrevisedCostApproved; // Yes / No
@@ -423,7 +685,9 @@ class Schemeprovider extends ChangeNotifier {
 
   // Q5: Cost overrun (single choice)
   String? _selectedincreaseInCost;
+
   String? get selectedincreaseInCost => _selectedincreaseInCost;
+
   set selectedincreaseInCost(String? value) {
     _selectedincreaseInCost = value;
     notifyListeners();
@@ -438,13 +702,15 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedincreaseInCostID => increaseInCostID[_selectedincreaseInCost] ?? 0;
 
-
   //
-  int get selectedrevisedCostApprovedID => yesNoMap[_selectedrevisedCostApproved] ?? 0;
+  int get selectedrevisedCostApprovedID =>
+      yesNoMap[_selectedrevisedCostApproved] ?? 0;
 
   // Q5.1: Increase in cost (single choice)
   String? _increaseInCost;
+
   String? get increaseInCost => _increaseInCost;
+
   set increaseInCost(String? value) {
     _increaseInCost = value;
     notifyListeners();
@@ -462,12 +728,13 @@ class Schemeprovider extends ChangeNotifier {
 
   // Q6: Reason(s) for cost overrun (multi-select)
   List<String> _selectedrevisionReasons = [];
+
   List<String> get selectedrevisionReasons => _selectedrevisionReasons;
+
   set selectedrevisionReasons(List<String> value) {
     _selectedrevisionReasons = value;
     notifyListeners();
   }
-
 
   //Q7
   Map<String, TextEditingController> costControllers = {};
@@ -520,15 +787,12 @@ class Schemeprovider extends ChangeNotifier {
     };
   }
 
-
-
   /// Dispose controllers when done
   void disposeControllers() {
     for (var controller in costControllers.values) {
       controller.dispose();
     }
   }
-
 
   /// Optional: convert data to JSON
   Map<String, dynamic> toJson() => {
@@ -544,10 +808,11 @@ class Schemeprovider extends ChangeNotifier {
     'roadRestorationNum': roadRestorationNum,
     'solarComponentNum': solarComponentNum,
     'otherComponentsNum': otherComponentsNum,
-    'costControllers': costControllers.map((key, value) => MapEntry(key, value.text)),
+    'costControllers':
+    costControllers.map((key, value) => MapEntry(key, value.text)),
   };
 
-   //Q8.1
+  //Q8.1
   String? _selectedWTP; // Yes / No
 
   String? get selectedWTP => _selectedWTP;
@@ -556,9 +821,11 @@ class Schemeprovider extends ChangeNotifier {
     _selectedWTP = value;
     notifyListeners();
   }
+
   //
   int get selectedWTPID => yesNoMap[_selectedWTP] ?? 0;
-   //Q8.2
+
+  //Q8.2
   String? _selectedOHSR; // Yes / No
 
   String? get selectedOHSR => _selectedOHSR;
@@ -567,9 +834,11 @@ class Schemeprovider extends ChangeNotifier {
     _selectedOHSR = value;
     notifyListeners();
   }
+
   //
   int get selectedOHSRID => yesNoMap[_selectedOHSR] ?? 0;
-   //Q8.3
+
+  //Q8.3
   String? _selecteSource; // Yes / No
 
   String? get selecteSource => _selecteSource;
@@ -578,9 +847,11 @@ class Schemeprovider extends ChangeNotifier {
     _selecteSource = value;
     notifyListeners();
   }
+
   //
   int get selecteSourceID => yesNoMap[_selecteSource] ?? 0;
-   //Q8.4
+
+  //Q8.4
   String? _selectedPipeline; // Yes / No
 
   String? get selectedPipeline => _selectedPipeline;
@@ -589,7 +860,6 @@ class Schemeprovider extends ChangeNotifier {
     _selectedPipeline = value;
     notifyListeners();
   }
-
 
   //
   int get selectedPipelineID => yesNoMap[_selectedPipeline] ?? 0;
@@ -606,9 +876,6 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
-
   final Map<String, int> revisionReasonsID = {
     "Price rise of materials": 1,
     "Additional scope of work ": 2,
@@ -617,8 +884,9 @@ class Schemeprovider extends ChangeNotifier {
   };
 
   List<String> get revisionReasonsIDOptions => revisionReasonsID.keys.toList();
-  List<int> get selectedrevisionReasonsID => _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
 
+  List<int> get selectedrevisionReasonsID =>
+      _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
 
   Future<bool> saveSchemeImplementation({
     required int userId,
@@ -717,6 +985,121 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  //**** fetch api Part D start here ***///
+
+  List<SchemeImplementationModel> schemeImplementationData = [];
+
+  Future<void> fetchSchemeImplementationData(
+      String stateId, String schemeId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchschemeinfo.fetchSchemeImplementation(
+          stateId, schemeId, userId);
+      if (response.status) {
+        schemeImplementationData = response.result;
+        _message = '';
+
+        selectedDelayReasons = getCheckBoxData(schemeImplementationData.first.delayWorkReason,delayReasons);
+        print('selectedDelayReasons: $selectedDelayReasons');
+
+        selectedCostOverrun = getRadiobuttonData(schemeImplementationData.first.costOverrun,costOverrun);
+        print('selectedCostOverrun: $selectedCostOverrun');
+
+        selectedcostOverrunReasons = getCheckBoxData(schemeImplementationData.first.costOverrunReason,ReasonsOptions);
+        print('selectedcostOverrunReasons: $selectedcostOverrunReasons');
+
+        selectedrevisedCostApproved = getRadiobuttonData(schemeImplementationData.first.hasSchemeCostRevisedBeforeWork,yesNoMap);
+        print('selectedrevisedCostApproved: $selectedrevisedCostApproved');
+
+        selectedincreaseInCost = getRadiobuttonData(schemeImplementationData.first.schemeCostRevisedBeforeWorkYesPer,increaseInCostID);
+        print('selectedincreaseInCost: $selectedincreaseInCost');
+ //TODO
+        dateApproval = schemeImplementationData.first.slsscDateForRevisedEstimate;
+        print('dateApproval: $dateApproval');
+
+        selectedrevisionReasons = getCheckBoxData(schemeImplementationData.first.costOverrunReason,revisionReasonsID);
+        print('selectedrevisionReasons: $selectedrevisionReasons');
+
+        selectedrevisionReasons = getCheckBoxData(schemeImplementationData.first.costOverrunReason,revisionReasonsID);
+        print('selectedrevisionReasons: $selectedrevisionReasons');
+
+        //table
+       intakeTubeWellNum = schemeImplementationData.first.numIntakeTubeWell;
+        print('intakeTubeWellNum: $intakeTubeWellNum');
+        electroMechanicalNum = schemeImplementationData.first.numElectroMechanicalInclPump;
+        print('electroMechanicalNum: $electroMechanicalNum');
+        wtpNum = schemeImplementationData.first.numWtp;
+        print('wtpNum: $wtpNum');
+        mbrNum = schemeImplementationData.first.numMbr;
+        print('mbrNum: $mbrNum');
+        transmissionPipelineNum = schemeImplementationData.first.numTransmissionPipeline;
+        print('transmissionPipelineNum: $transmissionPipelineNum');
+        distributionPipelineNum = schemeImplementationData.first.numDistributionPipeline;
+        print('distributionPipelineNum: $intakeTubeWellNum');
+        ohtNum = schemeImplementationData.first.numOshrEsrOhtGsr;
+        print('ohtNum: $intakeTubeWellNum');
+        disinfectionUnitNum = schemeImplementationData.first.numDisinfectionUnit;
+        print('disinfectionUnitNum: $intakeTubeWellNum');
+        iotNum = schemeImplementationData.first.numIoTScada;
+        print('iotNum: $intakeTubeWellNum');
+        roadRestorationNum = schemeImplementationData.first.numRoadRestoration;
+        print('roadRestorationNum: $intakeTubeWellNum');
+        solarComponentNum = schemeImplementationData.first.numSolarComponents;
+        print('solarComponentNum: $intakeTubeWellNum');
+        otherComponentsNum = schemeImplementationData.first.numOtherDgSetHhStorageTanksEtc;
+        print('iotNum: $otherComponentsNum');
+
+
+
+
+        selectedWTP = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedWtp,yesNoMap);
+        print('selectedWTP: $selectedWTP');
+
+        selectedOHSR = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedOshrEsrOhtGsr,yesNoMap);
+        print('selectedOHSR: $selectedOHSR');
+
+        selecteSource = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedSource,yesNoMap);
+        print('selecteSource: $selecteSource');
+
+        selectedPipeline = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedPipeline,yesNoMap);
+        print('selectedPipeline: $selectedPipeline');
+
+
+
+
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch Scheme Implementation data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void ClearfetchSchemeImplementationData() {
+    selectedDelayReasons = [];
+    selectedCostOverrun = null;
+    selectedcostOverrunReasons = [];
+    selectedrevisedCostApproved = null;
+    selectedincreaseInCost = null;
+    dateApproval = null;
+    selectedrevisionReasons = [];
+    selectedWTP = null;
+    selectedOHSR = null;
+    selecteSource = null;
+    selectedPipeline= null;
+    costControllers.clear();
+
+
+  }
+
+  //**** fetch api Part E end here ***///
+
   Future<bool> saveVisualInspection({
     required int userId,
     required int stateId,
@@ -813,6 +1196,36 @@ class Schemeprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  //**** fetch api Part E start here ***///
+
+  List<SchemeVisualInspectionModel> schemeVisualInspectionData = [];
+
+  Future<void> fetchSchemeVisualInspectionData(
+      String stateId, String schemeId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchschemeinfo.fetchSchemeVisualInspection(
+          stateId, schemeId, userId);
+
+      if (response.status) {
+        schemeVisualInspectionData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch Scheme Visual Inspection data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //**** fetch api Part E end here ***///
 
   String? _quesPartEa1;
   String? _quesPartEa2;
@@ -1077,7 +1490,6 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedId_partE9 => yesNoMap[_quesPartE9] ?? 0;
 
-
   final Map<String, int> question10Map = {
     "Pipelines without proper depth": 1,
     "Pipelines leaking": 2,
@@ -1087,18 +1499,16 @@ class Schemeprovider extends ChangeNotifier {
     "Others": 6
   };
   List<String> _quesPartE10 = [];
+
   List<String> get getSelectedPartE10 => _quesPartE10;
+
   set selectedPartE10(List<String> value) {
     _quesPartE10 = value;
     notifyListeners();
   }
 
-
-  List<int> get selectedId_partE10 => _quesPartE10.map((e) => question10Map[e] ?? 0).toList();
-
-
-
-
+  List<int> get selectedId_partE10 =>
+      _quesPartE10.map((e) => question10Map[e] ?? 0).toList();
 
   final Map<String, int> question11Map = {
     "Rectification/Demolition Done": 1,
@@ -1213,16 +1623,13 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedId_partE16 => question16Map[_quesPartE16] ?? 0;
 
-
   ////
   final Map<String, int> question17Map = {
-
-      "Yes":1,
-      "No":2,
-      "Partially":3,
-      "Not Verified":4,
-      "Work is in progress":5
-
+    "Yes": 1,
+    "No": 2,
+    "Partially": 3,
+    "Not Verified": 4,
+    "Work is in progress": 5
   };
 
   String? _quesPartE17;
@@ -1236,14 +1643,8 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedId_partE17 => question17Map[_quesPartE17] ?? 0;
 
-
-
   ////
-  final Map<String, int> question18Map = {
-
-    "Yes":1, "No":2, "NA":3
-
-  };
+  final Map<String, int> question18Map = {"Yes": 1, "No": 2, "NA": 3};
 
   String? _quesPartE18;
 
@@ -1255,7 +1656,4 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   int get selectedId_partE18 => question18Map[_quesPartE18] ?? 0;
-
-
-
 }
