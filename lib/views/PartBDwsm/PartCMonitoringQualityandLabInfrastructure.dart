@@ -22,12 +22,13 @@ class MonitioringQuality extends StatefulWidget {
 
 class _MonitioringQuality extends State<MonitioringQuality> {
   LocalStorageService localStorageService = LocalStorageService();
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
-      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
       if (args != null) {
         final districtid = args['districtid'] as int?;
@@ -39,7 +40,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchCoordinationData("31", "478", "121212");
+        dwsmProvider.fetchMonitoringLabData("31", "478", "121212");
       }
     });
   }
@@ -178,18 +179,17 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                           ),
                                         ),
                                         onPressed: () async {
-
-                                          LoaderUtils.showLoadingWithMessage(context,
-                                          isLoading: dwsmProvider.isLoading,message: "Saving  Monitoring, Quality and Lab Infrastructure");
-
+                                          LoaderUtils.showLoadingWithMessage(context, isLoading: dwsmProvider.isLoading, message: "Saving  Monitoring, Quality and Lab Infrastructure");
                                           await dwsmProvider.saveMonitoringQualityLab(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                               areAssetsGeotagged: dwsmProvider.assetsGeotaggedID, hasNABLLab: dwsmProvider.hasNablLabID,
                                               testingManagementDescription: dwsmProvider.testingManagedController.text);
+
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,
                                                 backgroundColor: Colors.green);
-                                            Navigator.of(context).pushReplacement(
+                                            Navigator.of(context)
+                                                .pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (_) =>
                                                       PartDoperationandmaintenance()),

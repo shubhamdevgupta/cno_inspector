@@ -192,11 +192,11 @@ class _PartDoperationandmaintenance
                                       ),
                                     ),
                                     onPressed: () async {
-
                                       LoaderUtils.showLoadingWithMessage(context,
                                           isLoading: dwsmProvider.isLoading,message: "Saving Operation & Maintenance (O&M)");
-
-                                      await dwsmProvider.saveOperationMaintenance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
+                                      await dwsmProvider.saveOperationMaintenance(
+                                          userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!,
+                                          districtId: dwsmProvider.districtId!,
                                         isProtocolInPlace: dwsmProvider.handoverProtocolID, percentVillagesWithManpower: double.parse(dwsmProvider.manpowerPercentController.text),
                                         isWaterFeeCharged: -1, feeAmountPerMonth: int.parse(dwsmProvider.waterFeeController.text),
                                         isUniformFee: dwsmProvider.feeBasisID,

@@ -26,24 +26,34 @@ class SchemePlanningScreen extends StatefulWidget {
 
 class _SchemePlanningScreen extends State<SchemePlanningScreen> {
   LocalStorageService _localStorageService = LocalStorageService();
+
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
 
-    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args =
+      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      if (args != null) {
+        final schemeId = args['schemeId'] as int?;
+        final stateId = args['stateId'] as int?;
 
-    if (args != null) {
-      final schemeId = args['schemeId'] as int?;
-      final stateId = args['stateId'] as int?;
-      final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);
-      if (schemeId != null) {
-        schemeProvider.setSchemeId(schemeId);
+        final schemeProvider =
+        Provider.of<Schemeprovider>(context, listen: false);
+        if (schemeId != null) {
+          schemeProvider.setSchemeId(schemeId);
+        }
+        if (stateId != null) {
+          schemeProvider.setStateId(stateId);
+        }
+        schemeProvider.fetchSchemePlanning("0", "5343948", "34483");
       }
-      if (stateId != null) {
-        schemeProvider.setStateId(stateId);
-      }
-    }
+    });
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -251,7 +261,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                       ),
                                     ),
                                     onPressed: () async {
-                                      LoaderUtils.showLoadingWithMessage(context, isLoading: true,message: "Saving Scheme Planning...");
+                                      LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Scheme Planning...");
 
                                       await schemeProvider.saveSchemePlanning(
                                           userId: _localStorageService

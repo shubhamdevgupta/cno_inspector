@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../model/UpdateResponse.dart';
+
 class DialogUtils {
-/*
-  static void showUpdateDialog(BuildContext context, Updateresponse updateInfo) {
+  static void showUpdateDialog(
+      BuildContext context, Updateresponse updateInfo) {
     final Color iconColor = Colors.blueAccent; // Or any color you prefer
     showDialog(
       context: context,
@@ -80,25 +82,25 @@ class DialogUtils {
               // Update details (bulleted)
               ...updateInfo.whatsNew.split('\n').map(
                     (line) => Padding(
-                  padding: const EdgeInsets.only(bottom: 6),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("• ", style: TextStyle(fontSize: 14)),
-                      Expanded(
-                        child: Text(
-                          line.trim(),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'OpenSans',
-                            color: Colors.black87,
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("• ", style: TextStyle(fontSize: 14)),
+                          Expanded(
+                            child: Text(
+                              line.trim(),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'OpenSans',
+                                color: Colors.black87,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
 
               const SizedBox(height: 20),
 
@@ -111,16 +113,24 @@ class DialogUtils {
                       backgroundColor: const Color(0xFF0468B1),
                       textStyle: const TextStyle(fontSize: 16),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            8), // ← removes rounding
+                        borderRadius:
+                            BorderRadius.circular(8), // ← removes rounding
                       ),
                     ),
-                    icon: const Icon(Icons.download, size: 18,color: Colors.white,),
-                    label: const Text('Update Now',style: TextStyle(color: Colors.white),),
+                    icon: const Icon(
+                      Icons.download,
+                      size: 18,
+                      color: Colors.white,
+                    ),
+                    label: const Text(
+                      'Update Now',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     onPressed: () async {
                       final url = updateInfo.apkUrl;
                       final uri = Uri.parse(url);
-                      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+                      if (!await launchUrl(uri,
+                          mode: LaunchMode.externalApplication)) {
                         throw 'Could not launch $url';
                       }
                     },
@@ -132,8 +142,5 @@ class DialogUtils {
         ),
       ),
     );
-
   }
-*/
 }
-

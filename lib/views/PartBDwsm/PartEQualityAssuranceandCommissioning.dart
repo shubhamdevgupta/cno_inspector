@@ -199,11 +199,12 @@ class _PartEQualityAssuranceCommissioning
                                           ),
                                         ),
                                         onPressed: ()  async {
-
                                           LoaderUtils.showLoadingWithMessage(context,
                                               isLoading: dwsmProvider.isLoading,message: "Saving Quality Assurance and Commissioning");
 
-                                          await dwsmProvider.saveQualityAssurance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
+                                          await dwsmProvider.saveQualityAssurance(
+                                              userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!,
+                                              districtId: dwsmProvider.districtId!,
                                               inspectionAuthority: dwsmProvider.authorizedInspectorID, isCommissioningProtocolFollowed: dwsmProvider.commissioningProtocolFollowedID,
                                               schemesPresentDuringCommissioning: dwsmProvider.commissioningPresenceID,
                                               districtAssessmentAgencies: dwsmProvider.thirdPartyAssessmentID);

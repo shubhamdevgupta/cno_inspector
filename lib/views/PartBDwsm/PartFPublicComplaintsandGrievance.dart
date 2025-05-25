@@ -220,6 +220,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                         LoaderUtils.showLoadingWithMessage(context,
                                             isLoading: dwsmProvider.isLoading,message: "Saving Public Complaints and Grievance Redressal");
                                         await dwsmProvider.saveGrievanceRedressal(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
+
                                             grievanceMechanismAvailable: dwsmProvider.grievanceMechanismAvailableID, howGrievancesRegistered: dwsmProvider.grievanceRegistrationMethodsID,
                                             complaintsReceived: dwsmProvider.complaintsReceivedID, typeOfComplaints: dwsmProvider.complaintTypesID, otherComplaints: '',
                                             resolutionTime: int.parse(dwsmProvider.avgResolutionTimeController.text), actionTakenByDepartment: int.parse(dwsmProvider.actionTakenController.text));
