@@ -2,7 +2,11 @@ import 'package:cno_inspection/model/BaseResponse.dart';
 import 'package:cno_inspection/repository/vwscInfoRepo/fetchVwscRepo.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../model/vwscPartC/CommunityFeedbackPartCResponse.dart';
+import '../../model/vwscPartC/CommunityInvolmentPartBResponse.dart';
+import '../../model/vwscPartC/VwscGrievancePartEResponse.dart';
 import '../../model/vwscPartC/WaterQualityPartAResponse.dart';
+import '../../model/vwscPartC/WaterQualityPartDResponse.dart';
 import '../../repository/vwscInfoRepo/VwscRepository.dart';
 
 class Vwscprovider extends ChangeNotifier {
@@ -529,16 +533,28 @@ class Vwscprovider extends ChangeNotifier {
   /// get api for que 111
   /// get api for que 222
 
-  Future<void> fetchVwscCommunityInvolvement(String stateId, String villageId, String userId) async {
+  List<CommunityInvolvement> communityInvolvementData = [];
+
+  Future<void> fetchCommunityInvolvement(String stateId, String villageId, String userId) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-
-    }catch(e){
+      final response = await _fetchvwscrepo.fetchCommunityInvolvement(stateId, villageId, userId);
+      if (response.status) {
+        communityInvolvementData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch community involvement data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
-
 
   /// get api for que 222
 
@@ -594,6 +610,35 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+
+  //33
+
+  List<CommunityFeedback> communityFeedbackData = [];
+
+  Future<void> fetchCommunityFeedback(String stateId, String villageId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchvwscrepo.fetchCommunityFeedback(stateId, villageId, userId);
+      if (response.status) {
+        communityFeedbackData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch community feedback.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+
+  //33
 
   Future<bool> saveCommunityFeedback({
     required int userId,
@@ -699,6 +744,35 @@ class Vwscprovider extends ChangeNotifier {
 
   int get selectedFRCLevelId => frcLevelMap[_selectedFRCLevel] ?? 0;
 
+
+  //44
+  List<WaterQualityMonitoring> waterQualityData = [];
+
+  Future<void> fetchWaterQuality(String stateId, String villageId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchvwscrepo.fetchWaterQualityMonitoring(stateId, villageId, userId);
+      if (response.status) {
+        waterQualityData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch water quality monitoring.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+
+
+  ///44
+
   Future<bool> saveWaterQualityMonitoring({
     required int userId,
     required int stateId,
@@ -795,6 +869,33 @@ class Vwscprovider extends ChangeNotifier {
 
   int get selectedTurnAroundTimeId =>
       turnAroundTimeMap[_selectedTurnAroundTime] ?? 0;
+
+  //5
+
+  List<VwscGrievance> vwscGrievanceData = [];
+
+  Future<void> fetchVwscGrievance(String stateId, String villageId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchvwscrepo.fetchVwscGrievance(stateId, villageId, userId);
+      if (response.status) {
+        vwscGrievanceData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch grievance data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //5
 
   Future<bool> saveGrievanceRedressal({
     required int userId,
