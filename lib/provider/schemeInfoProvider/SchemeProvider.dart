@@ -7,6 +7,7 @@ import '../../model/schemePartA/SchemePlanningResponsePartB.dart';
 import '../../model/schemePartA/SchemeVisualInspectionModelPartE.dart';
 import '../../model/schemePartA/SourceSurveyResponsePartA.dart';
 import '../../repository/schemeInfoRepo/fetchSchemeRepo.dart';
+import '../../utils/GlobalExceptionHandler.dart';
 
 
 class Schemeprovider extends ChangeNotifier {
@@ -108,7 +109,7 @@ class Schemeprovider extends ChangeNotifier {
         .map((entry) => entry.key)
         .toList();
   }
-  Future<bool> saveSourceSurvey({
+  Future<void> saveSourceSurvey({
     required int userId,
     required int stateId,
     required int schemeId,
@@ -1088,7 +1089,7 @@ class Schemeprovider extends ChangeNotifier {
 
   //**** fetch api Part E end here ***///
 
-  Future<bool> saveVisualInspection({
+  Future<void> saveVisualInspection({
     required int userId,
     required int stateId,
     required int schemeId,
