@@ -969,11 +969,11 @@ class Schemeprovider extends ChangeNotifier {
         schemeVisualInspectionData = response.result;
 
         if(schemeVisualInspectionData.isNotEmpty){
-        //  setQuesPartEa1 = schemeVisualInspectionData.first.quesPartEa1;
+
+          resetAllPartESelections(schemeVisualInspectionData.first);
         }
 
         _message = response.message;
-        baseStatus = response.status;
       } else {
         _message = response.message;
       }
@@ -985,6 +985,53 @@ class Schemeprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void resetAllPartESelections(SchemeVisualInspectionModel schemeVisualInspectionModel) {
+    setQuesPartEa1 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa2 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa3 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa4 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa5 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa6 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa7 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa8 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa9 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa10 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa11 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa12 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa13 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa14 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa15 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+
+    setQuesPartEb1 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEb2 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEb3 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+
+    setQuesPartE2 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartE3 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartE4 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartE5 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartE6 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartE7 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartE8 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartE9 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+
+    selectedPartE10 = [];
+
+    selectedPartE11 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question11Map);
+    selectedPartE12 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question12Map);
+
+    selectedPartE13a = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    quesPartE13b = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+
+    quesPartE14 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question14Map);
+    quesPartE15 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question15Map);
+    quesPartE16 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question16Map);
+    quesPartE17 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question17Map);
+    quesPartE18 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question18Map);
+  }
+
+
 
   //**** fetch api Part E end here ***///
 
@@ -1409,7 +1456,6 @@ class Schemeprovider extends ChangeNotifier {
 
   String? _quesPartE18;
 
-  bool baseStatus;
 
   String? get quesPartE18 => _quesPartE18;
 
@@ -1419,4 +1465,20 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   int get selectedId_partE18 => question18Map[_quesPartE18] ?? 0;
+
+
+
+  String getRadiobuttonData(int id, Map<String, int> labelMap) {
+    return labelMap.entries
+        .firstWhere((entry) => entry.value == id,
+        orElse: () => const MapEntry('', 0))
+        .key;
+  }
+
+  List<String> getCheckBoxData(List<int> ids, Map<String, int> labelMap) {
+    return labelMap.entries
+        .where((entry) => ids.contains(entry.value))
+        .map((entry) => entry.key)
+        .toList();
+  }
 }
