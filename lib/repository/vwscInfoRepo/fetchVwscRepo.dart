@@ -34,7 +34,7 @@ class Fetchvwscrepo {
       String stateId, String villageId, String userId) async {
     try {
       final response = await _apiService.get(
-          '/api/CNOSurvey/Get_cno_vwsc_community_Involvement?stateid=$stateId&villageid=$villageId&userid=$userId'
+          '/CNOSurvey/Get_cno_vwsc_community_Involvement?stateid=$stateId&villageid=$villageId&userid=$userId'
       );
       return BaseResponseModel<CommunityInvolvement>.fromJson(
           response,
@@ -52,7 +52,7 @@ class Fetchvwscrepo {
       String stateId, String villageId, String userId) async {
     try {
       final response = await _apiService.get(
-          '/api/CNOSurvey/Get_cno_vwsc_community_feedback?stateid=$stateId&villageid=$villageId&userid=$userId'
+          '/CNOSurvey/Get_cno_vwsc_community_feedback?stateid=$stateId&villageid=$villageId&userid=$userId'
       );
       return BaseResponseModel<CommunityFeedback>.fromJson(
           response,
@@ -70,7 +70,7 @@ class Fetchvwscrepo {
       String stateId, String villageId, String userId) async {
     try {
       final response = await _apiService.get(
-          '/api/CNOSurvey/Get_cno_vwsc_wqmis?stateid=$stateId&villageid=$villageId&userid=$userId'
+          '/CNOSurvey/Get_cno_vwsc_wqmis?stateid=$stateId&villageid=$villageId&userid=$userId'
       );
       return BaseResponseModel<WaterQualityMonitoring>.fromJson(
           response,
@@ -87,7 +87,7 @@ class Fetchvwscrepo {
       String stateId, String villageId, String userId) async {
     try {
       final response = await _apiService.get(
-          '/api/CNOSurvey/Get_cno_vwsc_grievance?stateid=$stateId&villageid=$villageId&userid=$userId'
+          '/CNOSurvey/Get_cno_vwsc_grievance?stateid=$stateId&villageid=$villageId&userid=$userId'
       );
       return BaseResponseModel<VwscGrievance>.fromJson(
           response,

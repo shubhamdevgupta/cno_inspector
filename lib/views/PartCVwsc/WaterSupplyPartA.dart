@@ -24,7 +24,6 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
   LocalStorageService _localStorageService = LocalStorageService();
 
   @override
-  @override
   void initState() {
     super.initState();
 
@@ -49,49 +48,6 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
       }
     });
   }
-
-  /*@override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final args = ModalRoute.of(context)?.settings.arguments as int?;
-    if (args != null) {
-      final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
-      vwscProvider.setVillageId(args);
-    }
-  }*/
-/*  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-    if (args != null) {
-      final villageId = args['villageId'] as int?;
-      final stateId = args['stateId'] as int?;
-
-      // You can now use them, or set them in your provider
-
-      WidgetsBinding.instance.addPostFrameCallback((_) async{
-        final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
-        if (villageId != null) {
-          vwscProvider.setVillageId(villageId);
-        }
-        if (stateId != null) {
-          vwscProvider.setStateId(stateId);
-        }
-
-       await vwscProvider.fetchWaterSupply('14', '137397', '34483');
-        print("------ ${vwscProvider.waterSupplyData}");
-        print("------ ${vwscProvider.selectedFTKTestingFrequency}");
-        print("------ ${vwscProvider.selectedHouseholdWater}");
-        print("------ ${vwscProvider.reasonRemoteGroupsController.text}");
-        print("------ ${vwscProvider.message}");
-        print("------ ${vwscProvider.status}");
-
-      });
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {

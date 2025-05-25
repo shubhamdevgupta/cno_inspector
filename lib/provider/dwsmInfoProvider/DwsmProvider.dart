@@ -574,6 +574,7 @@ class Dwsmprovider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
+
     try {
       final response = await _fetchdwsmrepo.fetchOperationMaintenance(
           stateId, districtId, userId);
@@ -582,6 +583,23 @@ class Dwsmprovider extends ChangeNotifier {
         // Example: you can extract data to UI controllers here
         _message = response.message;
         _status = response.status;
+
+
+        handoverProtocol = getRadiobuttonData(operationMaintenanceData.first.isAProtocolHandingInVillageInfrastructurePlace,handoverProtocolMap);
+        print('handoverProtocol: $handoverProtocol');
+
+        manpowerPercentController.text = operationMaintenanceData.first.perOfVillagesWhereTrainedMultiSkilledManpowerAvailable.toString();
+        print('manpowerPercentController: ${manpowerPercentController.text}');
+
+        waterFeeController.text = operationMaintenanceData.first.isWaterFeeChargedFromHouseholds.toString();
+        print('waterFeeController: ${waterFeeController.text}');
+
+        feeBasis = getRadiobuttonData(operationMaintenanceData.first.feeAmountPerMonth,feeBasisMap);
+        print('feeBasis: $feeBasis');
+
+        userFeePercentController.text = operationMaintenanceData.first.perOfVillagesWhereUserFeeCollected.toString();
+        print('userFeePercentController: ${userFeePercentController.text}');
+
       } else {
         _message = response.message;
       }
@@ -592,6 +610,17 @@ class Dwsmprovider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+
+  void clearfetchOperationMaintenanceData() {
+    handoverProtocol = null;
+    feeBasis = null;
+
+    manpowerPercentController.clear();
+    waterFeeController.clear();
+    waterFeeController.clear();
+    notifyListeners();
   }
 
   // fetch for dwsm part D end
@@ -726,6 +755,18 @@ class Dwsmprovider extends ChangeNotifier {
         qualityAssuranceData = response.result;
         _message = response.message;
         _status = response.status;
+
+        authorizedInspectors = getRadiobuttonData(qualityAssuranceData.first.whoAuthorizedInspectMeasureFieldInspection,authorizedInspectorsMap);
+        print('authorizedInspectors: $authorizedInspectors');
+
+        commissioningProtocolFollowed = getRadiobuttonData(qualityAssuranceData.first.isCommissioningProtocolFollowed,yesNoMap);
+        print('commissioningProtocolFollowed: $commissioningProtocolFollowed');
+
+        commissioningPresence = getRadiobuttonData(qualityAssuranceData.first.duringCommissioningSchemesPresent,commissioningPresenceMap);
+        print('commissioningPresence: $commissioningPresence');
+
+        thirdPartyAssessment = getRadiobuttonData(qualityAssuranceData.first.hasDistrictUndertakenAssessmentInspectionAgencies,thirdPartyAssessmentMap);
+        print('thirdPartyAssessment: $thirdPartyAssessment');
       } else {
         _message = response.message;
       }
@@ -738,6 +779,16 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
+
+
+  void clearfetchQualityAssuranceData() {
+    authorizedInspectors = null;
+    commissioningProtocolFollowed = null;
+    commissioningPresence = null;
+    thirdPartyAssessment = null;
+
+
+  }
   // fetch for dwsm part E end
 
   ///FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -870,6 +921,28 @@ class Dwsmprovider extends ChangeNotifier {
         grievanceData = response.result;
         _message = response.message;
         _status = response.status;
+
+        grievanceMechanismAvailable = getRadiobuttonData(grievanceData.first.grievanceRedressalMechanismAvailable,yesNoMap);
+        print('grievanceMechanismAvailable: $grievanceMechanismAvailable');
+
+
+        grievanceRegistrationMethods = getRadiobuttonData(grievanceData.first.howGrievancesRegisteredVillagers,grievanceRegistrationMethodsMap);
+        print('grievanceRegistrationMethods: $grievanceRegistrationMethods');
+
+        complaintsReceived = getRadiobuttonData(grievanceData.first.areComplaintsReceivedPublicRegardingSchemes,yesNoMap);
+        print('complaintsReceived: $complaintsReceived');
+
+        complaintTypes = getRadiobuttonData(grievanceData.first.yesTypeComplaints,complaintTypeMap);
+        print('complaintTypes: $complaintTypes');
+
+
+        avgResolutionTimeController.text = grievanceData.first.yesTypeComplaintsOthersAverageTimeResolution.toString();
+        print('avgResolutionTimeController: ${avgResolutionTimeController.text}');
+
+        actionTakenController.text = grievanceData.first.yesTypeComplaintsOthersActionTakenDepartment;
+        print('actionTakenController: ${actionTakenController.text}');
+
+
       } else {
         _message = response.message;
       }
@@ -881,6 +954,15 @@ class Dwsmprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+  void clearfetchGrievanceRedressalData() {
+    grievanceMechanismAvailable = null;
+    grievanceRegistrationMethods = null;
+    complaintsReceived = null;
+    complaintTypes = null;
 
+    avgResolutionTimeController.clear();
+    actionTakenController.clear();
+
+  }
 // fetch for dwsm part F end
 }

@@ -42,7 +42,7 @@ class _PartDoperationandmaintenance
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchCoordinationData("31", "478", "121212");
+        dwsmProvider.fetchOperationMaintenanceData(stateId.toString(),districtid.toString(),localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -55,7 +55,6 @@ class _PartDoperationandmaintenance
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => Dashboarddwsm()),
         );
-
         // Return false to prevent the default back navigation behavior
         return false;
       },
@@ -193,11 +192,10 @@ class _PartDoperationandmaintenance
                                     ),
                                     onPressed: () async {
 
-                                      LoaderUtils.showLoadingWithMessage(context, isLoading: dwsmProvider.isLoading,message: "Saving Operation & Maintenance (O&M)");
+                                      LoaderUtils.showLoadingWithMessage(context,
+                                          isLoading: dwsmProvider.isLoading,message: "Saving Operation & Maintenance (O&M)");
 
-                                      await dwsmProvider.saveOperationMaintenance(
-                                          userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!,
-                                          districtId: dwsmProvider.districtId!,
+                                      await dwsmProvider.saveOperationMaintenance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                         isProtocolInPlace: dwsmProvider.handoverProtocolID, percentVillagesWithManpower: double.parse(dwsmProvider.manpowerPercentController.text),
                                         isWaterFeeCharged: -1, feeAmountPerMonth: int.parse(dwsmProvider.waterFeeController.text),
                                         isUniformFee: dwsmProvider.feeBasisID,
