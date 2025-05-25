@@ -321,7 +321,8 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                           onPressed: () async {
 
 
-                                            LoaderUtils.showLoadingWithMessage(context, isLoading: true,message: "Saving Scheme implementation...");
+                                            LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Scheme implementation...");
+
                                               await schemeProvider.saveSchemeImplementation(
                                                 userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                                 stateId: schemeProvider.stateId!,

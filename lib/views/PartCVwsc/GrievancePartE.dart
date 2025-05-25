@@ -147,7 +147,7 @@ class _GrievancePartE extends State<GrievancePartE> {
                                       ),
                                     ),
                                     onPressed: () async{
-                                       LoaderUtils.showLoadingWithMessage(context ,isLoading: true,message: "Grievance Redressal");
+                                       LoaderUtils.showLoadingWithMessage(context ,isLoading: vwscProvider.isLoading,message: "Grievance Redressal");
                                       await vwscProvider.saveGrievanceRedressal(userId: _localStorageService.getInt(AppConstants.prefUserId)!, stateId: vwscProvider.stateId!,
                                           villageId: vwscProvider.villageId!, grievanceMechanismAvailable: vwscProvider.selectedGrievanceMechanismId,
                                           grievanceTurnAroundTime: vwscProvider.selectedTurnAroundTimeId, registrationTypes: vwscProvider.selectedGrievanceMethodIds,

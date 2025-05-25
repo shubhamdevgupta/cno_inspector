@@ -231,7 +231,7 @@ class _RetrofittingAugmentationScreen
                                         ),
                                       ),
                                       onPressed: () async {
-                                         LoaderUtils.showLoadingWithMessage(context ,isLoading:true,message: "Additional info for Retrofitting/Augmentation Schemes only");
+                                         LoaderUtils.showLoadingWithMessage(context ,isLoading:schemeProvider.isLoading,message: "Additional info for Retrofitting/Augmentation Schemes only");
                                         await schemeProvider.saveRetrofitAdditionalInfo(
                                                 userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                                 stateId: schemeProvider.stateId!,

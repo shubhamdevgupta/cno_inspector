@@ -265,7 +265,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                         ),
                                         onPressed: () async {
 
-                                          LoaderUtils. showLoadingWithMessage(context, isLoading: true, message: "Community Involvement & VWSC Functionality");
+                                          LoaderUtils. showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Community Involvement & VWSC Functionality");
                                           await vwscProvider
                                               .saveVwscCommunityInvolvement(
                                               userId:   _localStorage.getInt(AppConstants.prefUserId)!,
