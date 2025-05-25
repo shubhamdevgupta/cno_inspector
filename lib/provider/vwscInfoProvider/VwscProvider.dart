@@ -543,6 +543,46 @@ class Vwscprovider extends ChangeNotifier {
       final response = await _fetchvwscrepo.fetchCommunityInvolvement(stateId, villageId, userId);
       if (response.status) {
         communityInvolvementData = response.result;
+        selectedVWSCFormed = getRadiobuttonData(communityInvolvementData.first.isPaniSamitiFormed,yesNoMap);
+        print('selectedVWSCFormed: $selectedVWSCFormed');
+
+        selectedVWSCBankAccount = getRadiobuttonData(communityInvolvementData.first.isVwscBankAccount,yesNoMap);
+        print('selectedVWSCBankAccount: $selectedVWSCBankAccount');
+
+
+        selectedVWSCInvolvement = getRadiobuttonData(communityInvolvementData.first.vwscGpInvolvementScheme,VwscGPInvolment);
+        print('selectedVWSCInvolvement: $selectedVWSCInvolvement');
+
+        selectedAsBuiltDrawing = getRadiobuttonData(communityInvolvementData.first.drawingPipelineAvlGpOffice,yesNoMap);
+        print('selectedAsBuiltDrawing: $selectedAsBuiltDrawing');
+
+        selectedVWSCMeetingConducted = getRadiobuttonData(communityInvolvementData.first.isVwscMeetingPeriodicManner,yesNoMap);
+        print('selectedVWSCMeetingConducted: $selectedVWSCMeetingConducted');
+
+
+        FrequencyController.text = communityInvolvementData.first.meetingHeldYesFrequency;
+        print('FrequencyController: ${FrequencyController.text}');
+
+        selectedVWSCRecordsAvailable = getRadiobuttonData(communityInvolvementData.first.isVwscMeetingRecordAvl,yesNoMap);
+        print('selectedVWSCMeetingConducted: $selectedVWSCRecordsAvailable');
+
+        selectedVWSCOMInvolved = getRadiobuttonData(communityInvolvementData.first.vwscInvolvementOm,VWSCOMInvolvedID);
+        print('selectedVWSCMeetingConducted: $selectedVWSCOMInvolved');
+
+        selectedSchemeHandover = getRadiobuttonData(communityInvolvementData.first.schemeHandedOverGp,SchemeHandover);
+        print('selectedSchemeHandover: $selectedSchemeHandover');
+
+        selectedOMArrangements = getRadiobuttonData(communityInvolvementData.first.omArrangement,OMArrangements);
+        print('selectedOMArrangements: $selectedOMArrangements');
+
+        selectedCommunityAwareness = getRadiobuttonData(communityInvolvementData.first.communityAwareness,CommunityAwarenessID);
+        print('selectedOMArrangements: $selectedCommunityAwareness');
+
+        selectedWaterQualitySatisfaction = getRadiobuttonData(communityInvolvementData.first.communitySatisfactionWithWq,WaterQualitySatisfaction);
+        print('selectedWaterQualitySatisfaction: $selectedWaterQualitySatisfaction');
+
+
+        communityInvolvementData = response.result;
         _message = '';
       } else {
         _message = response.message;
@@ -554,6 +594,26 @@ class Vwscprovider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  void clearCommunityInvolvementData() {
+    // Clear selected radio button values
+    selectedVWSCFormed = null;
+    selectedVWSCBankAccount = null;
+    selectedVWSCInvolvement = null;
+    selectedAsBuiltDrawing = null;
+    selectedVWSCMeetingConducted = null;
+    selectedVWSCRecordsAvailable = null;
+    selectedVWSCOMInvolved = null;
+    selectedSchemeHandover = null;
+    selectedOMArrangements = null;
+    selectedCommunityAwareness = null;
+    selectedWaterQualitySatisfaction = null;
+
+    // Clear frequency text field
+    FrequencyController.clear();
+
+    notifyListeners();
   }
 
   /// get api for que 222
@@ -612,8 +672,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
 
-  //33
-
+  /// get api for que 33
   List<CommunityFeedback> communityFeedbackData = [];
 
   Future<void> fetchCommunityFeedback(String stateId, String villageId, String userId) async {
@@ -623,8 +682,21 @@ class Vwscprovider extends ChangeNotifier {
     try {
       final response = await _fetchvwscrepo.fetchCommunityFeedback(stateId, villageId, userId);
       if (response.status) {
+
         communityFeedbackData = response.result;
         _message = '';
+
+        selectedComplaintByCommunity = getRadiobuttonData(communityFeedbackData.first.anyComplaintByCommunity,complainByCommunityOptMap);
+        print('selectedComplaintByCommunity: $selectedComplaintByCommunity');
+
+        selectedTypeOfComplaint = getCheckBoxData(communityFeedbackData.first.complaintType,typeOfComplaintMap);
+        print('selectedTypeOfComplaint: $selectedTypeOfComplaint');
+
+
+        SetSelectedWhereComplaintAddress = getRadiobuttonData(communityFeedbackData.first.isComplaintAddressed,whereComplaintAddressOptMap);
+     /*   print('selectedComplaintByCommunity: $SetSelectedWhereComplaintAddress');*/
+
+
       } else {
         _message = response.message;
       }
@@ -635,6 +707,18 @@ class Vwscprovider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+  void ClearfetchCommunityFeedback() {
+    // Clear selected radio button values
+    selectedComplaintByCommunity = null;
+    selectedTypeOfComplaint = [];
+    SetSelectedWhereComplaintAddress = null;
+
+
+    // Clear frequency text field
+
+
+    notifyListeners();
   }
 
 
@@ -757,6 +841,29 @@ class Vwscprovider extends ChangeNotifier {
       if (response.status) {
         waterQualityData = response.result;
         _message = '';
+
+
+
+        selectedFTKAvailability = getRadiobuttonData(waterQualityData.first.isFtkAvl,yesNoMap);
+        print('selectedFTKAvailability: $selectedFTKAvailability');
+
+
+        selectedFTKTestingFrequency = getRadiobuttonData(waterQualityData.first.ftkTestingPeriod,ftkTestingFrequencyMap);
+        print('selectedFTKTestingFrequency: $selectedFTKTestingFrequency');
+
+        womenTrainedController.text = waterQualityData.first.numberWomenTrainedFtk.toString();
+        print('FrequencyController: ${womenTrainedController.text}');
+
+        testerNameController.text = waterQualityData.first.whoTestFtk.toString();
+        print('testerNameController: ${testerNameController.text}');
+
+
+        selectedDisinfectionDone = getRadiobuttonData(waterQualityData.first.isChlorinationDisinfectionDone,yesNoMap);
+        print('selectedDisinfectionDone: $selectedDisinfectionDone');
+
+        selectedFRCLevel = getRadiobuttonData(waterQualityData.first.frcAvlAtEnd,frcLevelMap);
+        print('selectedFRCLevel: $selectedFRCLevel');
+
       } else {
         _message = response.message;
       }
@@ -768,7 +875,21 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+  void ClearfetchWaterQuality() {
+    // Clear selected radio button values
+    selectedFTKAvailability = null;
+    selectedFTKTestingFrequency = null;
+    SetSelectedWhereComplaintAddress = null;
+    selectedDisinfectionDone = null;
+    selectedFRCLevel = null;
 
+
+    // Clear frequency text field
+    womenTrainedController.clear();
+    testerNameController.clear();
+
+    notifyListeners();
+  }
 
 
   ///44
@@ -883,6 +1004,18 @@ class Vwscprovider extends ChangeNotifier {
       if (response.status) {
         vwscGrievanceData = response.result;
         _message = '';
+
+
+
+        selectedGrievanceMechanism = getRadiobuttonData(vwscGrievanceData.first.grievanceMechAvl,yesNoMap);
+        print('selectedGrievanceMechanism: $selectedGrievanceMechanism');
+
+        grievanceRegistrationMethods = getCheckBoxData(vwscGrievanceData.first.registrationType,grievanceRegistrationMethodMap);
+        print('grievanceRegistrationMethods: $grievanceRegistrationMethods');
+
+        selectedTurnAroundTime = getRadiobuttonData(vwscGrievanceData.first.grievanceTurnAroundTime,turnAroundTimeMap);
+        print('selectedTurnAroundTime: $selectedTurnAroundTime');
+
       } else {
         _message = response.message;
       }
@@ -893,6 +1026,17 @@ class Vwscprovider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+  void ClearfetchVwscGrievance() {
+    // Clear selected radio button values
+    selectedGrievanceMechanism = null;
+    grievanceRegistrationMethods = [];
+    selectedTurnAroundTime = null;
+
+
+
+
+    notifyListeners();
   }
 
   //5
@@ -993,8 +1137,7 @@ class Vwscprovider extends ChangeNotifier {
     "Others": 8,
   };
 
-  List<String> get typeOfComplaintMapOptions =>
-      typeOfComplaintMap.keys.toList();
+  List<String> get typeOfComplaintMapOptions => typeOfComplaintMap.keys.toList();
 
   List<String> _typeOfComplaintLabels = [];
 
