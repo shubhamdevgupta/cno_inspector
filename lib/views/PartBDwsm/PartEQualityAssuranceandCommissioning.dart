@@ -36,13 +36,14 @@ class _PartEQualityAssuranceCommissioning
         final districtid = args['districtid'] as int?;
         final stateId = args['stateId'] as int?;
         final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+        dwsmProvider.clearfetchQualityAssuranceData();
         if (districtid != null) {
           dwsmProvider.setDistrictId(districtid);
         }
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchCoordinationData("31", "478", "121212");
+        dwsmProvider.fetchQualityAssuranceData(stateId.toString(),districtid.toString(),localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -200,7 +201,7 @@ class _PartEQualityAssuranceCommissioning
                                         onPressed: ()  async {
 
                                           LoaderUtils.showLoadingWithMessage(context,
-                                              isLoading: true,message: "Saving Quality Assurance and Commissioning");
+                                              isLoading: dwsmProvider.isLoading,message: "Saving Quality Assurance and Commissioning");
 
                                           await dwsmProvider.saveQualityAssurance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                               inspectionAuthority: dwsmProvider.authorizedInspectorID, isCommissioningProtocolFollowed: dwsmProvider.commissioningProtocolFollowedID,

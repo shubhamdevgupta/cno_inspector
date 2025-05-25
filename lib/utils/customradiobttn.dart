@@ -5,7 +5,7 @@ class Customradiobttn extends StatelessWidget {
   final List<String> options;
   final String? selectedOption;
   final ValueChanged<String?> onChanged;
-  final Axis orientation; // <--- New optional parameter
+  final Axis orientation;
 
   const Customradiobttn({
     Key? key,
@@ -13,7 +13,7 @@ class Customradiobttn extends StatelessWidget {
     required this.options,
     required this.selectedOption,
     required this.onChanged,
-    this.orientation = Axis.horizontal, // <--- Default to horizontal
+    this.orientation = Axis.horizontal,
   }) : super(key: key);
 
   @override
@@ -31,37 +31,62 @@ class Customradiobttn extends StatelessWidget {
         const SizedBox(height: 6),
         orientation == Axis.horizontal
             ? Wrap(
-          spacing: 20,
-          children: options.map((option) {
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Radio<String>(
-                  value: option,
-                  groupValue: selectedOption,
-                  onChanged: onChanged,
-                  activeColor: Colors.deepOrangeAccent,
-                ),
-                Text(option),
-              ],
-            );
-          }).toList(),
-        )
+                spacing: 20,
+                runSpacing: 8,
+                children: options.map((option) {
+                  return IntrinsicHeight(
+                    // <-- Wrap Row in IntrinsicHeight
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // <-- Align center
+                      children: [
+                        Radio<String>(
+                          value: option,
+                          groupValue: selectedOption,
+                          onChanged: onChanged,
+                          activeColor: Colors.deepOrangeAccent,
+                        ),
+                        Flexible(
+                          child: Text(
+                            option,
+                            softWrap: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              )
             : Column(
-          children: options.map((option) {
-            return Row(
-              children: [
-                Radio<String>(
-                  value: option,
-                  groupValue: selectedOption,
-                  onChanged: onChanged,
-                  activeColor: Colors.deepOrangeAccent,
-                ),
-                Text(option),
-              ],
-            );
-          }).toList(),
-        ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: options.map((option) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 4.0),
+                    child: IntrinsicHeight(
+                      // <-- Wrap Row in IntrinsicHeight
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        // <-- Align center
+                        children: [
+                          Radio<String>(
+                            value: option,
+                            groupValue: selectedOption,
+                            onChanged: onChanged,
+                            activeColor: Colors.deepOrangeAccent,
+                          ),
+                          Expanded(
+                            child: Text(
+                              option,
+                              softWrap: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
         const SizedBox(height: 10),
       ],
     );

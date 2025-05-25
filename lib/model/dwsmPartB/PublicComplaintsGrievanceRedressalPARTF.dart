@@ -8,7 +8,7 @@ class PublicComplaintsGrievanceRedressal {
   final int yesTypeComplaints;
   final String yesTypeComplaintsOthers;
   final int yesTypeComplaintsOthersAverageTimeResolution;
-  final int yesTypeComplaintsOthersActionTakenDepartment;
+  final String yesTypeComplaintsOthersActionTakenDepartment;
 
   PublicComplaintsGrievanceRedressal({
     required this.userid,

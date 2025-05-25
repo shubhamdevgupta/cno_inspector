@@ -12,6 +12,8 @@ class DashboardProvider extends ChangeNotifier {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
+  String errorMsg = '';
+
   CnoDashboardResponse? cnoDashboardResponse;
 
   List<CnoDashboardItem> dashboardList=[];
@@ -27,6 +29,8 @@ class DashboardProvider extends ChangeNotifier {
      final rawDashboardList = await _dashboardRepository.fetchDashboardData(userId, action);
      if(rawDashboardList.status==true){
        dashboardList=rawDashboardList.result;
+     }else{
+       errorMsg=rawDashboardList.message;
      }
     } catch (e) {
       debugPrint("Dashboard Error: $e");
