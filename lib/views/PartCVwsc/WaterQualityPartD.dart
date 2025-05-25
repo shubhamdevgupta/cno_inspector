@@ -23,7 +23,38 @@ class WaterQualityPartD extends StatefulWidget {
 
 class _WaterQualityPartD extends State<WaterQualityPartD> {
 LocalStorageService _localStorageService =LocalStorageService();
+@override
+void initState() {
+  super.initState();
 
+  WidgetsBinding.instance.addPostFrameCallback((_) async{
+    final args =
+    ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    if (args != null) {
+      final villageId = args['villageId'] as int?;
+      final stateId = args['stateId'] as int?;
+
+      // You can now use them, or set them in your provider
+
+      final vwscProvider = Provider.of<Vwscprovider>(
+          context, listen: false);
+      vwscProvider.ClearfetchWaterQuality();
+      if (villageId != null) {
+        vwscProvider.setVillageId(villageId);
+      }
+      if (stateId != null) {
+        vwscProvider.setStateId(stateId);
+      }
+
+
+      vwscProvider.fetchWaterQuality(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+    }
+  });
+
+
+
+}
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -224,60 +255,4 @@ LocalStorageService _localStorageService =LocalStorageService();
     );
   }
 
-  Widget buildTextFormField({
-    required TextEditingController controller,
-    required String hint,
-    required IconData icon,
-    TextInputType keyboardType = TextInputType.text,
-    bool obscureText = false,
-    Widget? suffixIcon,
-    List<TextInputFormatter>? inputFormatters,
-  }) {
-    return TextFormField(
-      controller: controller,
-      obscureText: obscureText,
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: Colors.blueGrey),
-        suffixIcon: suffixIcon,
-        filled: true,
-        fillColor: Color(0xFFF5F7FA),
-        hintText: hint,
-        contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 16),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
-        ),
-      ),
-    );
-  }
-
-@override
-void didChangeDependencies() {
-  super.didChangeDependencies();
-
-  final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-  if (args != null) {
-    final villageId = args['villageId'] as int?;
-    final stateId = args['stateId'] as int?;
-
-    // You can now use them, or set them in your provider
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
-      if (villageId != null) {
-        vwscProvider.setVillageId(villageId);
-      }
-      if (stateId != null) {
-        vwscProvider.setStateId(stateId);
-      }
-    });
-
-  }
-}
 }
