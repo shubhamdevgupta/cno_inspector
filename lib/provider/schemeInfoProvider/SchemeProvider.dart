@@ -967,7 +967,13 @@ class Schemeprovider extends ChangeNotifier {
 
       if (response.status) {
         schemeVisualInspectionData = response.result;
-        _message = '';
+
+        if(schemeVisualInspectionData.isNotEmpty){
+          setQuesPartEa1 = schemeVisualInspectionData.first.quesPartEa1;
+        }
+
+        _message = response.message;
+        baseStatus = response.status;
       } else {
         _message = response.message;
       }
@@ -1402,6 +1408,8 @@ class Schemeprovider extends ChangeNotifier {
   final Map<String, int> question18Map = {"Yes": 1, "No": 2, "NA": 3};
 
   String? _quesPartE18;
+
+  bool baseStatus;
 
   String? get quesPartE18 => _quesPartE18;
 

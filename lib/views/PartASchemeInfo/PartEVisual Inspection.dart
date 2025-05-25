@@ -612,56 +612,31 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
 
                                           await schemeProvider
                                               .saveVisualInspection(
-                                                  userId: _localStorageService.getInt(
-                                                      AppConstants.prefUserId)!,
-                                                  stateId:
-                                                      schemeProvider.stateId!,
-                                                  schemeId:
-                                                      schemeProvider.schemeId!,
+                                                  userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                                  stateId: schemeProvider.stateId!,
+                                                  schemeId: schemeProvider.schemeId!,
                                                   costOverrun: 000,
-                                                  spalling: schemeProvider
-                                                      .selectedId_partEa1,
-                                                  cracks: schemeProvider
-                                                      .selectedId_partEa2,
-                                                  rustMarks: schemeProvider
-                                                      .selectedId_partEa3,
-                                                  swollenConcrete: schemeProvider
-                                                      .selectedId_partEa4,
-                                                  trappedJute: schemeProvider
-                                                      .selectedId_partEa5,
-                                                  rustedBars: schemeProvider
-                                                      .selectedId_partEa6,
+                                                  spalling: schemeProvider.selectedId_partEa1,
+                                                  cracks: schemeProvider.selectedId_partEa2,
+                                                  rustMarks: schemeProvider.selectedId_partEa3,
+                                                  swollenConcrete: schemeProvider.selectedId_partEa4,
+                                                  trappedJute: schemeProvider.selectedId_partEa5,
+                                                  rustedBars: schemeProvider.selectedId_partEa6,
                                                   //a7
-                                                  dampness: schemeProvider
-                                                      .selectedId_partEa8,
-                                                  whiteMarks: schemeProvider
-                                                      .selectedId_partEa9,
-                                                  stoneAggregates: schemeProvider
-                                                      .selectedId_partEa10,
-                                                  verticalAlignment: schemeProvider
-                                                      .selectedId_partEa11,
-                                                  sagSlabBeam: schemeProvider
-                                                      .selectedId_partEa12,
-                                                  highVibrationPumps: schemeProvider
-                                                      .selectedId_partEa13,
-                                                  reservoirLeakage: schemeProvider
-                                                      .selectedId_partEa14,
-                                                  highLeakagePumps: schemeProvider
-                                                      .selectedId_partEa15,
-                                                  pipelineLeakageTransmission:
-                                                      schemeProvider
-                                                          .selectedId_partEb1,
-                                                  pipelineLeakageDistribution:
-                                                      schemeProvider
-                                                          .selectedId_partEb2,
-                                                  wetPatches: schemeProvider
-                                                      .selectedId_partEb3,
-                                                  verifyPipeQuality: schemeProvider
-                                                      .selectedId_partE2,
-                                                  pipesAsPerDPR: schemeProvider
-                                                      .selectedId_partE3,
-                                                  complaintsOnPipelineDesign:
-                                                      schemeProvider.selectedId_partE4,
+                                                  dampness: schemeProvider.selectedId_partEa8,
+                                                  whiteMarks: schemeProvider.selectedId_partEa9,
+                                                  stoneAggregates: schemeProvider.selectedId_partEa10,
+                                                  verticalAlignment: schemeProvider.selectedId_partEa11,
+                                                  sagSlabBeam: schemeProvider.selectedId_partEa12,
+                                                  highVibrationPumps: schemeProvider.selectedId_partEa13,
+                                                  reservoirLeakage: schemeProvider.selectedId_partEa14,
+                                                  highLeakagePumps: schemeProvider.selectedId_partEa15,
+                                                  pipelineLeakageTransmission: schemeProvider.selectedId_partEb1,
+                                                  pipelineLeakageDistribution: schemeProvider.selectedId_partEb2,
+                                                  wetPatches: schemeProvider.selectedId_partEb3,
+                                                  verifyPipeQuality: schemeProvider.selectedId_partE2,
+                                                  pipesAsPerDPR: schemeProvider.selectedId_partE3,
+                                                  complaintsOnPipelineDesign: schemeProvider.selectedId_partE4,
                                                   isTPIAEngaged: schemeProvider.selectedId_partE5,
                                                   sampleChecks: schemeProvider.selectedId_partE6,
                                                   concurrentSupervision: schemeProvider.selectedId_partE7,
