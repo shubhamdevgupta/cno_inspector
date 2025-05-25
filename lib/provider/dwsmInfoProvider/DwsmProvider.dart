@@ -13,6 +13,20 @@ class Dwsmprovider extends ChangeNotifier {
   final DWSMRepositoy _dwsmRepository = DWSMRepositoy();
   final Fetchdwsmrepo _fetchdwsmrepo = Fetchdwsmrepo();
 
+  String getRadiobuttonData(int id, Map<String, int> labelMap) {
+    return labelMap.entries
+        .firstWhere((entry) => entry.value == id,
+            orElse: () => const MapEntry('', 0))
+        .key;
+  }
+
+  List<String> getCheckBoxData(List<int> ids, Map<String, int> labelMap) {
+    return labelMap.entries
+        .where((entry) => ids.contains(entry.value))
+        .map((entry) => entry.key)
+        .toList();
+  }
+
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -145,8 +159,25 @@ class Dwsmprovider extends ChangeNotifier {
           stateId, districtId, userId);
       if (response.status) {
         coordinationData = response.result;
+        if (coordinationData.isNotEmpty) {
+          selectedValueQ1 = getRadiobuttonData(
+              coordinationData.first.areMonthlyDwsmMeetingsOnProgressJjmWorks,
+              yesNoMap);
+
+          meetingsHeldController.text = coordinationData
+              .first.ifYesNoOfDwsmMeetingsLast6Months
+              .toString();
+          selectedMeetingQuality = getRadiobuttonData(
+              coordinationData.first.qualityOfMeetingAndRecordMaintenance,
+              meetingQualityMap);
+          selectedDISHA = getRadiobuttonData(
+              coordinationData.first
+                  .areDistDevelopCoordinatMonitorCommitteeMeetingRegularly,
+              yesNoMap);
+        }
         // Add any data processing here if needed
-        _message = '';
+        _message = response.message;
+        _status = response.status;
       } else {
         _message = response.message;
       }
@@ -297,8 +328,31 @@ class Dwsmprovider extends ChangeNotifier {
               stateId, districtId, userId);
       if (response.status) {
         sustainabilityData = response.result;
+
+        if (sustainabilityData.isNotEmpty) {
+          sourceSustainability = getRadiobuttonData(
+              sustainabilityData
+                  .first.areSourceSustainabilityMeasuresBeingPromoted,
+              sourceSustainabilityMap);
+          groundwaterProtection = getRadiobuttonData(
+              sustainabilityData
+                  .first.arePipedWaterSchemesGwSourcesProtectedContamination,
+              groundwaterProtectionMap);
+          rechargeStructureImplemented = getRadiobuttonData(
+              sustainabilityData
+                  .first.isAtLeastOneRechargeStructureGwSourceImplemented,
+              rechargeStructureMap);
+          rechargeReasonController.text = sustainabilityData
+              .first.ifNoLeastOneRechargeStructureGwSourceImplementedReson
+              .toString();
+          impactStudies = getRadiobuttonData(
+              sustainabilityData.first
+                  .areAnyImpactStudiesAssessmentsConductedSourceSustainEfforts,
+              impactStudiesMap);
+        }
         // Process sustainabilityData if needed
-        _message = '';
+        _message = response.message;
+        _status = response.status;
       } else {
         _message = response.message;
       }
@@ -397,7 +451,20 @@ class Dwsmprovider extends ChangeNotifier {
           .fetchMonitoringQualityLabInfrastructure(stateId, districtId, userId);
       if (response.status) {
         monitoringData = response.result;
-        _message = '';
+
+        if (monitoringData.isNotEmpty) {
+          assetsGeotagged = getRadiobuttonData(
+              monitoringData.first.areWaterSupplyAssetsGeotagged,
+              assetsGeotaggedMap);
+          hasNablLab = getRadiobuttonData(
+              monitoringData.first.doesDistrictHaveNablAccreditedLabEquivalent,
+              yesNoMap);
+          testingManagedController.text =
+              monitoringData.first.ifNoHowIsTestingManagedDescription;
+        }
+
+        _message = response.message;
+        _status = response.status;
       } else {
         _message = response.message;
       }
@@ -513,7 +580,8 @@ class Dwsmprovider extends ChangeNotifier {
       if (response.status) {
         operationMaintenanceData = response.result;
         // Example: you can extract data to UI controllers here
-        _message = '';
+        _message = response.message;
+        _status = response.status;
       } else {
         _message = response.message;
       }
@@ -646,7 +714,8 @@ class Dwsmprovider extends ChangeNotifier {
 
   List<QualityAssuranceCommissioning> qualityAssuranceData = [];
 
-  Future<void> fetchQualityAssuranceData(String stateId, String districtId, String userId) async {
+  Future<void> fetchQualityAssuranceData(
+      String stateId, String districtId, String userId) async {
     _isLoading = true;
     notifyListeners();
 
@@ -655,7 +724,8 @@ class Dwsmprovider extends ChangeNotifier {
           stateId, districtId, userId);
       if (response.status) {
         qualityAssuranceData = response.result;
-        _message = '';
+        _message = response.message;
+        _status = response.status;
       } else {
         _message = response.message;
       }
@@ -798,7 +868,8 @@ class Dwsmprovider extends ChangeNotifier {
           .fetchPublicComplaintsGrievanceRedressal(stateId, districtId, userId);
       if (response.status) {
         grievanceData = response.result;
-        _message = '';
+        _message = response.message;
+        _status = response.status;
       } else {
         _message = response.message;
       }

@@ -219,10 +219,9 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                         ),
                                       ),
                                       onPressed: () async {
-                                        LoaderUtils.showLoadingWithMessage(
-                                            context,
-                                            isLoading: true,
-                                            message: "Saving Source...");
+
+                                         LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Source...");
+
                                         await schemeProvider.saveSourceSurvey(
                                             userId: _localStorageService.getInt(
                                                 AppConstants.prefUserId)!,

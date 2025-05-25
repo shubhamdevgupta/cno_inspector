@@ -490,12 +490,92 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                               backgroundColor: Colors.red);
                                         }
                                       },
-                                      child: Text(
-                                        "SAVE & NEXT",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
+                                    ),
+
+
+                                    const SizedBox(height: 20),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.lightGreen,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+
+
+                                            LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Scheme implementation...");
+
+                                              await schemeProvider.saveSchemeImplementation(
+                                                userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                                stateId: schemeProvider.stateId!,
+                                                schemeId: schemeProvider.schemeId!,
+                                                costOverrun: schemeProvider.selectedCostOverrunID,
+                                                costRevisedBeforeWork: schemeProvider.selectedrevisedCostApprovedID,
+                                                revisedCostPercentage: schemeProvider.selectedincreaseInCostID,
+                                                slsscDate: schemeProvider.dateApproval ?? "",
+                                                intakeTubeWellNum: schemeProvider.intakeTubeWellNum,
+                                                intakeTubeWellCost:  double.tryParse(schemeProvider.costControllers['Intake/Tubewell']?.text ?? '') ?? 0.0,
+                                                electroMechanicalNum: schemeProvider.electroMechanicalNum,
+                                                electroMechanicalCost: double.tryParse(schemeProvider.costControllers['Electromechanical components']?.text ?? '') ?? 0.0,
+                                                wtpNum: 1,
+                                                wtpCost: double.parse(schemeProvider.costControllers['WTP']?.text ?? ''),
+                                                mbrNum: 2,
+                                                mbrCost: double.parse(schemeProvider.costControllers['MBR']?.text ?? '') ,
+                                                transmissionPipelineNum:3,
+                                                transmissionPipelineCost: double.parse(schemeProvider.costControllers['Transmission pipeline']?.text ?? '') ,
+                                                distributionPipelineNum: 4,
+                                                distributionPipelineCost: double.parse(schemeProvider.costControllers['Distribution pipeline']?.text ?? '') ,
+                                                disinfectionUnitNum: 5,
+                                                disinfectionUnitCost: double.parse(schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ?? '') ,
+                                                ohtNum: 6,
+                                                ohtCost: double.parse(schemeProvider.costControllers['Disinfection unit']?.text ?? '') ,
+                                                iotNum: 7,
+                                                iotCost: double.parse(schemeProvider.costControllers['IoT/SCADA']?.text ?? '') ,
+                                                roadRestorationNum: 8,
+                                                roadRestorationCost: double.parse(schemeProvider.costControllers['Road Restoration']?.text ?? '') ,
+                                                solarComponentNum: 9,
+                                                solarComponentCost:double.parse(schemeProvider.costControllers['Solar components']?.text ?? '') ,
+                                                otherComponentsNum: 10,
+                                                otherComponentsCost: double.parse(schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '') ,
+                                                plannedPTGatiShaktiWTP: schemeProvider.selectedWTPID,
+                                                plannedPTGatiShaktiOHT: schemeProvider.selectedOHSRID,
+                                                plannedPTGatiShaktiSource: schemeProvider.selecteSourceID,
+                                                plannedPTGatiShaktiPipeline: schemeProvider.selectedPipelineID,
+                                                delayReasons: schemeProvider.selectedDelayReasonsID,
+                                                costOverrunReasons: schemeProvider.selectedcostOverrunReasonsID,
+                                                costRevisionReasons: schemeProvider.selectedrevisionReasonsID,
+                                              );
+
+                                              if (schemeProvider.status!) {
+                                                ToastHelper.showToastMessage(
+                                                    schemeProvider.message!,
+                                                    backgroundColor: Colors.green);
+                                                Navigator.of(context).pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          SchemePlanningScreen()),
+                                                );
+                                              } else {
+                                                ToastHelper.showToastMessage(
+                                                    schemeProvider.message!,
+                                                    backgroundColor: Colors.red);
+                                              }
+                                          },
+                                          child: Text(
+                                            "SAVE & NEXT",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+
                                         ),
                                       ),
                                     ),
