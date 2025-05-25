@@ -144,7 +144,6 @@ class Dwsmprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
   //fetch for part a start
 
   List<CoordinationPlanningReview> coordinationData = [];
