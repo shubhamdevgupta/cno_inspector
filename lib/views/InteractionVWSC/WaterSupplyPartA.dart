@@ -1,7 +1,5 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
-
 import 'package:cno_inspection/services/LocalStorageService.dart';
-
 import 'package:cno_inspection/utils/LoaderUtils.dart';
 import 'package:cno_inspection/utils/toast_helper.dart';
 import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
@@ -10,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/AppConstants.dart';
-
-import '../../utils/CommonScreen.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
@@ -27,6 +23,33 @@ class WaterSupplyPartA extends StatefulWidget {
 class _WaterSupplyPartA extends State<WaterSupplyPartA> {
   LocalStorageService _localStorageService = LocalStorageService();
 
+  @override
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+      if (args != null) {
+        final villageId = args['villageId'] as int?;
+        final stateId = args['stateId'] as int?;
+
+        final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
+        vwscProvider.clearValuesforqueA();
+        if (villageId != null) {
+          vwscProvider.setVillageId(villageId);
+        }
+        if (stateId != null) {
+          vwscProvider.setStateId(stateId);
+        }
+
+        await vwscProvider.fetchWaterSupply(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+      }
+    });
+  }
+
   /*@override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -37,7 +60,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
       vwscProvider.setVillageId(args);
     }
   }*/
-  @override
+/*  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
@@ -49,7 +72,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
 
       // You can now use them, or set them in your provider
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async{
         final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
         if (villageId != null) {
           vwscProvider.setVillageId(villageId);
@@ -57,10 +80,18 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
         if (stateId != null) {
           vwscProvider.setStateId(stateId);
         }
+
+       await vwscProvider.fetchWaterSupply('14', '137397', '34483');
+        print("------ ${vwscProvider.waterSupplyData}");
+        print("------ ${vwscProvider.selectedFTKTestingFrequency}");
+        print("------ ${vwscProvider.selectedHouseholdWater}");
+        print("------ ${vwscProvider.reasonRemoteGroupsController.text}");
+        print("------ ${vwscProvider.message}");
+        print("------ ${vwscProvider.status}");
+
       });
     }
-  }
-
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -148,14 +179,14 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                 Customradiobttn(
                                   question: "1. Water supply frequency:",
                                   options: vwscProvider.FrequencyLabelOption,
-                                  selectedOption: vwscProvider.selectedFrequency,
-                                  onChanged: (val) {vwscProvider.selectedFrequency = val;
-                                    print('-------selectedFrequencyID ${vwscProvider.selectedFrequencyID}');},
+                                  selectedOption:
+                                      vwscProvider.selectedFrequency,
+                                  onChanged: (val) {
+                                    vwscProvider.selectedFrequency = val;
+                                    print(
+                                        '-------selectedFrequencyID ${vwscProvider.selectedFrequencyID}');
+                                  },
                                 ),
-
-
-
-
                                 Customradiobttn(
                                   question:
                                       "2. Is adequate water quantity reaching all the households?",
@@ -172,8 +203,10 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                   question:
                                       "3. Is adequate water quantity reaching to remote/SC/ST/PVTG groups?",
                                   options: vwscProvider.yesNoOptions,
-                                  selectedOption: vwscProvider.selectedPvtgGroups,
-                                  onChanged: (val) {vwscProvider.selectedPvtgGroups = val;
+                                  selectedOption:
+                                      vwscProvider.selectedPvtgGroups,
+                                  onChanged: (val) {
+                                    vwscProvider.selectedPvtgGroups = val;
                                     print(
                                         'selectedPvtgGroups------- ${vwscProvider.selectedPvtgGroupsId}');
                                   },
@@ -187,7 +220,6 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                 Customradiobttn(
                                   question:
                                       "4. Whether water reaches tail-end households:",
-
                                   options: vwscProvider.tailEndOptions,
                                   selectedOption: vwscProvider.selectedTailEnd,
                                   onChanged: (val) {
@@ -216,7 +248,11 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                   onSelectionChanged: (val) {
                                     vwscProvider.selectedinstitutions = val;
                                     print(
-                                        'selectedTailEnd------- ${vwscProvider.selectedinstitutionsIds}');
+                                        'selectedinstitutionsselectedinstitutions------- ${vwscProvider.selectedinstitutions}');
+
+                                    setState(() {
+                                      vwscProvider.selectedinstitutions = val;
+                                    });
                                   },
                                 ),
                                 Align(
@@ -231,17 +267,39 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                               10), // Adjust the radius as needed
                                         ),
                                       ),
-                                      onPressed: ()async {
-                                         LoaderUtils. showLoadingWithMessage(context, isLoading: true, message: "Water Supply Functionality");
-                                        print('selected village ${vwscProvider.villageId} and state ${vwscProvider.stateId}');
-                                                    await vwscProvider.saveVwscWaterSupply(userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                            stateId: vwscProvider.stateId!, villageId: vwscProvider.villageId!,
-                                            waterSupplyFrequency: 1,
-                                            adequateWaterToHH: vwscProvider.selectedHouseholdWaterId,
-                                            adequateWaterToRemote: vwscProvider.selectedPvtgGroupsId,
-                                            remoteReason: vwscProvider.reasonRemoteGroupsController.text, tailEndWaterReach: vwscProvider.selectedTailEndId,
-                                            schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
-                                            pwsReachInstitutions: vwscProvider.selectedinstitutionsIds, createdBy:_localStorageService.getInt(AppConstants.prefUserId)! );
+                                      onPressed: () async {
+                                        //todo ask to rishab and shakti
+                                        LoaderUtils.showLoadingWithMessage(
+                                            context,
+                                            isLoading: true,
+                                            message:
+                                                "Water Supply Functionality");
+                                        print(
+                                            'selected village ${vwscProvider.villageId} and state ${vwscProvider.stateId}');
+                                        await vwscProvider.saveVwscWaterSupply(
+                                            userId: _localStorageService.getInt(
+                                                AppConstants.prefUserId)!,
+                                            stateId: vwscProvider.stateId!,
+                                            villageId: vwscProvider.villageId!,
+                                            waterSupplyFrequency: vwscProvider
+                                                .selectedFTKTestingFrequencyId,
+                                            adequateWaterToHH: vwscProvider
+                                                .selectedHouseholdWaterId,
+                                            adequateWaterToRemote: vwscProvider
+                                                .selectedPvtgGroupsId,
+                                            remoteReason: vwscProvider
+                                                .reasonRemoteGroupsController
+                                                .text,
+                                            tailEndWaterReach:
+                                                vwscProvider.selectedTailEndId,
+                                            schemeOperationalStatus:
+                                                vwscProvider
+                                                    .selectedschemeStatusId,
+                                            pwsReachInstitutions: vwscProvider
+                                                .selectedinstitutionsIds,
+                                            createdBy:
+                                                _localStorageService.getInt(
+                                                    AppConstants.prefUserId)!);
                                         if (vwscProvider.status!) {
                                           ToastHelper.showToastMessage(
                                               vwscProvider.message!,
@@ -279,8 +337,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                 ),
               );
             },
-          )
-      ),
+          )),
     );
   }
 }

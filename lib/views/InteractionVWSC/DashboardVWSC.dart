@@ -1,5 +1,6 @@
 // views/DashboardScreen.dart
 import 'package:cno_inspection/model/DashboardResponse/DashboardResponse.dart';
+import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
+      print('login time state id ----- ${_localStorage.getInt(AppConstants.prefStateId)}');
 
       await dashboardProvider.fetchDashboardData( _localStorage.getInt(AppConstants.prefUserId)!, 3);
       _localStorage.saveInt("villageId", dashboardProvider.dashboardList.first.villageId);
@@ -221,7 +223,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         onTap: () {
                           final selectedVillageId = dashboardProvider.selectedVwscId;
                           final stateId = dashboardProvider.dashboardList.first.stateId;
-
+                          print('sending----- $stateId');
                           Navigator.pushReplacementNamed(
                               context, AppConstants.navigateToWaterSupplyPartA,
                               arguments: {
