@@ -251,8 +251,8 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                       ),
                                     ),
                                     onPressed: () async {
-                                      await LoaderUtils.conditionalLoader(
-                                          isLoading: schemeProvider.isLoading);
+                                      LoaderUtils.showLoadingWithMessage(context, isLoading: true,message: "Saving Scheme Planning...");
+
                                       await schemeProvider.saveSchemePlanning(
                                           userId: _localStorageService
                                               .getInt(AppConstants.prefUserId)!,
