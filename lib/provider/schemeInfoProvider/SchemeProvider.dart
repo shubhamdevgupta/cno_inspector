@@ -8,6 +8,7 @@ import '../../model/schemePartA/SchemeVisualInspectionModelPartE.dart';
 import '../../model/schemePartA/SourceSurveyResponsePartA.dart';
 import '../../repository/schemeInfoRepo/fetchSchemeRepo.dart';
 
+
 class Schemeprovider extends ChangeNotifier {
   final SchemeRepositoy _schemeRepositoy = SchemeRepositoy();
   final Fetchschemeinfo _fetchschemeinfo = Fetchschemeinfo();
@@ -92,6 +93,7 @@ class Schemeprovider extends ChangeNotifier {
   }
 
 
+
   String getRadiobuttonData(int id, Map<String, int> labelMap) {
     return labelMap.entries
         .firstWhere((entry) => entry.value == id,
@@ -137,10 +139,8 @@ class Schemeprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -291,7 +291,7 @@ class Schemeprovider extends ChangeNotifier {
   final TextEditingController deviationReasonController =
   TextEditingController();
 
-  Future<bool> saveSchemePlanning({
+  Future<void> saveSchemePlanning({
     required int userId,
     required int stateId,
     required int schemeId,
@@ -330,10 +330,8 @@ class Schemeprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -476,7 +474,7 @@ class Schemeprovider extends ChangeNotifier {
   int get onPmGatishaktiID => yesNoMap[_onPmGatishakti] ?? 0;
   final TextEditingController reasonController = TextEditingController();
 
-  Future<bool> saveRetrofitAdditionalInfo({
+  Future<void> saveRetrofitAdditionalInfo({
     required int userId,
     required int stateId,
     required int schemeId,
@@ -515,10 +513,8 @@ class Schemeprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -787,13 +783,6 @@ class Schemeprovider extends ChangeNotifier {
     };
   }
 
-  /// Dispose controllers when done
-  void disposeControllers() {
-    for (var controller in costControllers.values) {
-      controller.dispose();
-    }
-  }
-
   /// Optional: convert data to JSON
   Map<String, dynamic> toJson() => {
     'intakeTubeWellNum': intakeTubeWellNum,
@@ -888,7 +877,7 @@ class Schemeprovider extends ChangeNotifier {
   List<int> get selectedrevisionReasonsID =>
       _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
 
-  Future<bool> saveSchemeImplementation({
+  Future<void> saveSchemeImplementation({
     required int userId,
     required int stateId,
     required int schemeId,
@@ -975,15 +964,14 @@ class Schemeprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
+
 
   //**** fetch api Part D start here ***///
 
@@ -1187,10 +1175,8 @@ class Schemeprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -1506,6 +1492,7 @@ class Schemeprovider extends ChangeNotifier {
     _quesPartE10 = value;
     notifyListeners();
   }
+
 
   List<int> get selectedId_partE10 =>
       _quesPartE10.map((e) => question10Map[e] ?? 0).toList();

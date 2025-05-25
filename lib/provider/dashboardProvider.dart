@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import '../model/DashboardResponse/DashboardResponse.dart';
 import '../services/LocalStorageService.dart';
 import '../utils/AppConstants.dart';
+import '../utils/GlobalExceptionHandler.dart';
 
 class DashboardProvider extends ChangeNotifier {
   final DashboardRepository _dashboardRepository = DashboardRepository();
@@ -12,14 +13,18 @@ class DashboardProvider extends ChangeNotifier {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
+  bool _status = true;
+  bool get status => _status;
+
+
   String errorMsg = '';
 
   CnoDashboardResponse? cnoDashboardResponse;
 
   List<CnoDashboardItem> dashboardList=[];
-  String? selectedScheme;
+  int selectedSchemeID=0;
   int selectedVwscId=0;
-  String? selectedDwsm;
+  int selectedDwsmID=0;
 
   Future<void> fetchDashboardData(int userId,int action) async {
     _isLoading = true;
@@ -27,33 +32,30 @@ class DashboardProvider extends ChangeNotifier {
     int userId = _localStorage.getInt(AppConstants.prefUserId) ?? 0;
     try {
      final rawDashboardList = await _dashboardRepository.fetchDashboardData(userId, action);
+     _status=rawDashboardList.status;
      if(rawDashboardList.status==true){
        dashboardList=rawDashboardList.result;
      }else{
        errorMsg=rawDashboardList.message;
      }
     } catch (e) {
-      debugPrint("Dashboard Error: $e");
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  void setSelectedScheme(String? schemeId) {
-    selectedScheme = schemeId;
+  void setSelectedScheme(int schemeId) {
+    selectedSchemeID = schemeId;
     notifyListeners();
   }
-  void setSelectedDWSM(String? dwsmId) {
-    selectedDwsm = dwsmId;
+  void setSelectedDWSM(int dwsmId) {
+    selectedDwsmID = dwsmId;
     notifyListeners();
   }
   void setSelectedVWSC(int vwscId) {
     selectedVwscId = vwscId;
     notifyListeners();
-  }
-  @override
-  void reset() {
-    // TODO: implement reset
   }
 }

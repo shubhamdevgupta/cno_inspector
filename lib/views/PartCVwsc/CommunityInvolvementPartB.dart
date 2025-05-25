@@ -27,31 +27,32 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
   void initState() {
     super.initState();
 
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-      WidgetsBinding.instance.addPostFrameCallback((_) async{
-        final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      if (args != null) {
+        final villageId = args['villageId'] as int?;
+        final stateId = args['stateId'] as int?;
 
-        if (args != null) {
-          final villageId = args['villageId'] as int?;
-          final stateId = args['stateId'] as int?;
+        // You can now use them, or set them in your provider
 
-          // You can now use them, or set them in your provider
-
-          final vwscProvider = Provider.of<Vwscprovider>(
-              context, listen: false);
-          vwscProvider.clearCommunityInvolvementData();
-          if (villageId != null) {
-            vwscProvider.setVillageId(villageId);
-          }
-          if (stateId != null) {
-            vwscProvider.setStateId(stateId);
-          }
-          vwscProvider.fetchCommunityInvolvement(stateId.toString(), villageId.toString(), _localStorage.getInt(AppConstants.prefUserId).toString());
+        final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
+        vwscProvider.clearCommunityInvolvementData();
+        if (villageId != null) {
+          vwscProvider.setVillageId(villageId);
         }
-      });
-
+        if (stateId != null) {
+          vwscProvider.setStateId(stateId);
+        }
+        vwscProvider.fetchCommunityInvolvement(
+            stateId.toString(),
+            villageId.toString(),
+            _localStorage.getInt(AppConstants.prefUserId).toString());
+      }
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -291,7 +292,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                           isLoading: vwscProvider.isLoading,
                                           message:
                                               "Community Involvement & VWSC Functionality");
-                                   //   vwscProvider.fetchCommunityInvolvement("45", "111140", "1121");
+                                      //   vwscProvider.fetchCommunityInvolvement("45", "111140", "1121");
                                       await vwscProvider.saveVwscCommunityInvolvement(
                                           userId: _localStorage
                                               .getInt(AppConstants.prefUserId)!,
@@ -384,5 +385,4 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
       ],
     );
   }
-
 }

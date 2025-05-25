@@ -8,6 +8,7 @@ import '../../model/dwsmPartB/PublicComplaintsGrievanceRedressalPARTF.dart';
 import '../../model/dwsmPartB/QualityAssuranceCommissioningPARTE.dart';
 import '../../model/dwsmPartB/SourceSustainabilityWaterConservationPARTB.dart';
 import '../../repository/dwsmRepo/fetchDwsmRepo.dart';
+import '../../utils/GlobalExceptionHandler.dart';
 
 class Dwsmprovider extends ChangeNotifier {
   final DWSMRepositoy _dwsmRepository = DWSMRepositoy();
@@ -110,7 +111,7 @@ class Dwsmprovider extends ChangeNotifier {
 
   int get selectedDISHAID => yesNoMap[_selectedDISHA] ?? 0;
 
-  Future<bool> saveCoordinationPlanningReview({
+  Future<void> saveCoordinationPlanningReview({
     required int userId,
     required int stateId,
     required int districtId,
@@ -135,10 +136,10 @@ class Dwsmprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
       _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
+
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -181,8 +182,7 @@ class Dwsmprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch coordination data.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -356,8 +356,7 @@ class Dwsmprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch sustainability data.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -403,7 +402,7 @@ class Dwsmprovider extends ChangeNotifier {
   final TextEditingController testingManagedController =
       TextEditingController();
 
-  Future<bool> saveMonitoringQualityLab({
+  Future<void> saveMonitoringQualityLab({
     required int userId,
     required int stateId,
     required int districtId,
@@ -426,10 +425,9 @@ class Dwsmprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
+
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -468,8 +466,7 @@ class Dwsmprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch lab infrastructure data.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -525,7 +522,7 @@ class Dwsmprovider extends ChangeNotifier {
   final TextEditingController userFeePercentController =
       TextEditingController();
 
-  Future<bool> saveOperationMaintenance({
+  Future<void> saveOperationMaintenance({
     required int userId,
     required int stateId,
     required int districtId,
@@ -554,10 +551,8 @@ class Dwsmprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -603,8 +598,7 @@ class Dwsmprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch operation & maintenance data.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -703,7 +697,7 @@ class Dwsmprovider extends ChangeNotifier {
   int get thirdPartyAssessmentID =>
       thirdPartyAssessmentMap[_thirdPartyAssessment] ?? 0;
 
-  Future<bool> saveQualityAssurance({
+  Future<void> saveQualityAssurance({
     required int userId,
     required int stateId,
     required int districtId,
@@ -728,10 +722,8 @@ class Dwsmprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -770,8 +762,7 @@ class Dwsmprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch quality assurance data.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -863,7 +854,7 @@ class Dwsmprovider extends ChangeNotifier {
   TextEditingController avgResolutionTimeController = TextEditingController();
   TextEditingController actionTakenController = TextEditingController();
 
-  Future<bool> saveGrievanceRedressal({
+  Future<void> saveGrievanceRedressal({
     required int userId,
     required int stateId,
     required int districtId,
@@ -894,10 +885,9 @@ class Dwsmprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
       _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -946,8 +936,7 @@ class Dwsmprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch grievance redressal data.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
