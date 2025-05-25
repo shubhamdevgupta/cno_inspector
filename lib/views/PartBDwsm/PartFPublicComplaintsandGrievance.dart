@@ -43,6 +43,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
         final districtid = args['districtid'] as int?;
         final stateId = args['stateId'] as int?;
         final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+         dwsmProvider.clearfetchGrievanceRedressalData();
         if (districtid != null) {
           dwsmProvider.setDistrictId(districtid);
         }
@@ -50,7 +51,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
           dwsmProvider.setStateId(stateId);
         }
 
-        dwsmProvider.fetchCoordinationData("31", "478", "121212");
+        dwsmProvider.fetchGrievanceRedressalData(stateId.toString(),districtid.toString(),localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -161,6 +162,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                   options:dwsmProvider.grievanceRegistrationMethodsMap.keys.toList(),
                                   selectedOption: dwsmProvider.grievanceRegistrationMethods,
                                   onChanged: (values) => dwsmProvider.grievanceRegistrationMethods = values,
+                                  orientation: Axis.vertical,
                                 ),
 
                                 const SizedBox(height: 10),
@@ -195,6 +197,8 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                   Customtxtfeild(
                                     label: "3.3 Action taken by department:",
                                     controller: dwsmProvider.actionTakenController,
+                                    keyboardType: TextInputType.number,
+
                                   ),
 
                                 ],
@@ -214,7 +218,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                       onPressed: ()  async {
 
                                         LoaderUtils.showLoadingWithMessage(context,
-                                            isLoading: true,message: "Saving Public Complaints and Grievance Redressal");
+                                            isLoading: dwsmProvider.isLoading,message: "Saving Public Complaints and Grievance Redressal");
                                         await dwsmProvider.saveGrievanceRedressal(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                             grievanceMechanismAvailable: dwsmProvider.grievanceMechanismAvailableID, howGrievancesRegistered: dwsmProvider.grievanceRegistrationMethodsID,
                                             complaintsReceived: dwsmProvider.complaintsReceivedID, typeOfComplaints: dwsmProvider.complaintTypesID, otherComplaints: '',

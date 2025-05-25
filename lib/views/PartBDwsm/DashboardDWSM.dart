@@ -1,4 +1,5 @@
 // views/DashboardScreen.dart
+import 'package:cno_inspection/utils/Showerrormsg.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -82,6 +83,9 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
               builder: (context, dashboardProvider, child) {
             if (dashboardProvider.isLoading) {
               return const Center(child: CircularProgressIndicator());
+            }
+            if(dashboardProvider.dashboardList.isEmpty){
+              AppTextWidgets.errorText(dashboardProvider.errorMsg);
             }
             return SingleChildScrollView(
               padding: const EdgeInsets.all(12.0),

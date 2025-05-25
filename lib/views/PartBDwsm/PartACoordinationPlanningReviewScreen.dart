@@ -196,7 +196,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                     ),
                                     onPressed: () async {
                                        LoaderUtils.showLoadingWithMessage(context,
-                                          isLoading: true,message: "Saving Coordination, Planning & Review Mechanism");
+                                          isLoading: dwsmProvider.isLoading,message: "Saving Coordination, Planning & Review Mechanism");
 
                                       await dwsmProvider.saveCoordinationPlanningReview(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                           areMonthlyMeetingsHeld: dwsmProvider.selectedMeetingQualityID, numberOfMeetingsLast6Months: int.parse(dwsmProvider.meetingsHeldController.text),

@@ -42,7 +42,7 @@ class _PartDoperationandmaintenance
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchCoordinationData("31", "478", "121212");
+        dwsmProvider.fetchOperationMaintenanceData(stateId.toString(),districtid.toString(),localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -194,7 +194,7 @@ class _PartDoperationandmaintenance
                                     onPressed: () async {
 
                                       LoaderUtils.showLoadingWithMessage(context,
-                                          isLoading: true,message: "Saving Operation & Maintenance (O&M)");
+                                          isLoading: dwsmProvider.isLoading,message: "Saving Operation & Maintenance (O&M)");
 
                                       await dwsmProvider.saveOperationMaintenance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                         isProtocolInPlace: dwsmProvider.handoverProtocolID, percentVillagesWithManpower: double.parse(dwsmProvider.manpowerPercentController.text),

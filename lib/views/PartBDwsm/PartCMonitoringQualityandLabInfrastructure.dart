@@ -180,7 +180,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                         onPressed: () async {
 
                                           LoaderUtils.showLoadingWithMessage(context,
-                                          isLoading: true,message: "Saving  Monitoring, Quality and Lab Infrastructure");
+                                          isLoading: dwsmProvider.isLoading,message: "Saving  Monitoring, Quality and Lab Infrastructure");
 
                                           await dwsmProvider.saveMonitoringQualityLab(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                               areAssetsGeotagged: dwsmProvider.assetsGeotaggedID, hasNABLLab: dwsmProvider.hasNablLabID,
