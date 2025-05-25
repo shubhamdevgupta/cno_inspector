@@ -31,23 +31,31 @@ class _RetrofittingAugmentationScreen
     extends State<RetrofittingAugmentationScreen> {
 
   LocalStorageService _localStorageService = LocalStorageService();
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
 
-    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args =
+      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      if (args != null) {
+        final schemeId = args['schemeId'] as int?;
+        final stateId = args['stateId'] as int?;
 
-    if (args != null) {
-      final schemeId = args['schemeId'] as int?;
-      final stateId = args['stateId'] as int?;
-      final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);
-      if (schemeId != null) {
-        schemeProvider.setSchemeId(schemeId);
+        final schemeProvider =
+        Provider.of<Schemeprovider>(context, listen: false);
+
+        schemeProvider.clearfetchAdditionalInfoRetrofit();
+        if (schemeId != null) {
+          schemeProvider.setSchemeId(schemeId);
+        }
+        if (stateId != null) {
+          schemeProvider.setStateId(stateId);
+        }
+        schemeProvider.fetchAdditionalInfoRetrofit("0", "5343948", "34483");
       }
-      if (stateId != null) {
-        schemeProvider.setStateId(stateId);
-      }
-    }
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -152,24 +160,21 @@ class _RetrofittingAugmentationScreen
 
                                 Customtxtfeild(
                                   label: '2.1 Transmission Pipelines (in Kms)',
-                                  controller: schemeProvider
-                                      .transmissionPipelineKmController,
+                                  controller: schemeProvider.transmissionPipelineKmController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
                                   label: '2.2 Distribution Pipelines (in Kms)',
-                                  controller: schemeProvider
-                                      .distributionPipelineKmController,
+                                  controller: schemeProvider.distributionPipelineKmController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
                                   label: '2.3 WTP Capacity (in MLD)',
-                                  controller:
-                                      schemeProvider.wtpCapacityMldController,
+                                  controller: schemeProvider.wtpCapacityMldController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
@@ -177,8 +182,7 @@ class _RetrofittingAugmentationScreen
                                 Customtxtfeild(
                                   label:
                                       '2.4 Storage Structures (Nos./Capacity in KL)',
-                                  controller: schemeProvider
-                                      .storageStructureDetailsController,
+                                  controller: schemeProvider.storageStructureDetailsController,
                                   keyboardType: TextInputType.text,
                                 ),
                                 const SizedBox(height: 10),
@@ -203,10 +207,8 @@ class _RetrofittingAugmentationScreen
                                   '4. Has it been digitized and uploaded on PM Gatishakti? ',
                                   options:
                                   schemeProvider.yesNoMap.keys.toList(),
-                                  selectedOption:
-                                  schemeProvider.onPmGatiShakti,
-                                  onChanged: (val) => schemeProvider
-                                      .onPmGatiShakti = val,
+                                  selectedOption: schemeProvider.onPmGatiShakti,
+                                  onChanged: (val) => schemeProvider.onPmGatiShakti = val,
                                 ),
                                 if(schemeProvider.onPmGatishaktiID==2)
                                 Customtxtfeild(
