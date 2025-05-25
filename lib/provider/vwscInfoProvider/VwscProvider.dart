@@ -8,6 +8,7 @@ import '../../model/vwscPartC/VwscGrievancePartEResponse.dart';
 import '../../model/vwscPartC/WaterQualityPartAResponse.dart';
 import '../../model/vwscPartC/WaterQualityPartDResponse.dart';
 import '../../repository/vwscInfoRepo/VwscRepository.dart';
+import '../../utils/GlobalExceptionHandler.dart';
 
 class Vwscprovider extends ChangeNotifier {
   final VwscRepository _vwscRepository = VwscRepository();
@@ -404,7 +405,7 @@ class Vwscprovider extends ChangeNotifier {
 
 // que 6666666666666666666666666
 
-  Future<bool> saveVwscWaterSupply({
+  Future<void> saveVwscWaterSupply({
     required int userId,
     required int stateId,
     required int villageId,
@@ -436,10 +437,9 @@ class Vwscprovider extends ChangeNotifier {
       );
       _message = response.message;
       _status = response.status;
-      return response.status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
+
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -494,8 +494,7 @@ class Vwscprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch water supply data.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -588,8 +587,7 @@ class Vwscprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch community involvement data.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -619,7 +617,7 @@ class Vwscprovider extends ChangeNotifier {
   /// get api for que 222
 
   // vwsc_provider.dart (add this inside your provider)
-  Future<bool> saveVwscCommunityInvolvement({
+  Future<void> saveVwscCommunityInvolvement({
     required int userId,
     required int stateId,
     required int villageId,
@@ -661,10 +659,9 @@ class Vwscprovider extends ChangeNotifier {
       );
       _status = response.status;
       _message = response.message;
-      return response.status ?? false;
     } catch (e) {
       _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -701,8 +698,7 @@ class Vwscprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch community feedback.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -713,18 +709,13 @@ class Vwscprovider extends ChangeNotifier {
     selectedComplaintByCommunity = null;
     selectedTypeOfComplaint = [];
     SetSelectedWhereComplaintAddress = null;
-
-
-    // Clear frequency text field
-
-
     notifyListeners();
   }
 
 
   //33
 
-  Future<bool> saveCommunityFeedback({
+  Future<void> saveCommunityFeedback({
     required int userId,
     required int stateId,
     required int villageId,
@@ -748,10 +739,8 @@ class Vwscprovider extends ChangeNotifier {
       );
       _message = response.message;
       _status = response.status;
-      return response.status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -868,8 +857,7 @@ class Vwscprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch water quality monitoring.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -894,7 +882,7 @@ class Vwscprovider extends ChangeNotifier {
 
   ///44
 
-  Future<bool> saveWaterQualityMonitoring({
+  Future<void> saveWaterQualityMonitoring({
     required int userId,
     required int stateId,
     required int villageId,
@@ -925,10 +913,8 @@ class Vwscprovider extends ChangeNotifier {
 
       _status = response.status;
       _message = response.message;
-      return response.status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -1020,8 +1006,7 @@ class Vwscprovider extends ChangeNotifier {
         _message = response.message;
       }
     } catch (e) {
-      _message = 'Failed to fetch grievance data.';
-      debugPrint('Error: $e');
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -1041,7 +1026,7 @@ class Vwscprovider extends ChangeNotifier {
 
   //5
 
-  Future<bool> saveGrievanceRedressal({
+  Future<void> saveGrievanceRedressal({
     required int userId,
     required int stateId,
     required int villageId,
@@ -1065,10 +1050,8 @@ class Vwscprovider extends ChangeNotifier {
       );
       _status = response.status;
       _message = response.message;
-      return response.status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();

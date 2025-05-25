@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/authentication_provider.dart';
+import '../../model/DashboardResponse/DashboardResponse.dart';
 import '../../provider/dashboardProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
-import '../../utils/CustomDropdown.dart';
+import '../../utils/CustomSearchableDropdown.dart';
 import '../auth/DashboardScreen.dart';
 
 class Dashboardschemeinfo extends StatefulWidget {
@@ -19,7 +19,7 @@ class Dashboardschemeinfo extends StatefulWidget {
 
 class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
   late DashboardProvider dashboardProvider;
-   LocalStorageService localStorageService = LocalStorageService();
+  LocalStorageService localStorageService = LocalStorageService();
 
   @override
   void initState() {
@@ -27,7 +27,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!, 1);
+      await dashboardProvider.fetchDashboardData(
+          localStorageService.getInt(AppConstants.prefUserId)!, 1);
     });
   }
 
@@ -107,121 +108,172 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           thickness: 1,
                         ),
                         SizedBox(height: 4), // Space between title and dropdown
-                        CustomDropdown(
-                          value: dashboardProvider.selectedScheme,
-                          items: dashboardProvider.dashboardList.map((scheme) {
-                            return DropdownMenuItem<String>(
-                              value: scheme.schemeId.toString(),
-                              child: Text(
-                                scheme.schemeName,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'OpenSans',
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                          title: "",
-                          appBarTitle: "Select Scheme",
-                          showSearchBar: false,
-                          onChanged: (value) {
-                            dashboardProvider.setSelectedScheme(value);
-                          },
-                        )
-                      ],
-                    ),
-                    if (dashboardProvider.selectedScheme != null &&
-                        dashboardProvider.selectedScheme!.isNotEmpty)
-                    Column(
-                      children: [
-                        buildSampleCard(
-                          qnumber: "A.",
-                          title: "Source",
-                          color: Colors.blue,
-                          onTap: () {
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToSourceScreenQuestions,
-                                arguments: {
-                                'schemeId': int.parse(dashboardProvider.selectedScheme!),
-                                'stateId': dashboardProvider.dashboardList.first.stateId,
-                                }
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        buildSampleCard(
-                          qnumber: "B.",
-                          title: "Scheme Planning",
-                          color: Colors.orangeAccent,
-                          onTap: () {
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToSchemePlanningScreen,
-                                arguments: {
-                                  'schemeId': int.parse(dashboardProvider.selectedScheme!),
-                                  'stateId': dashboardProvider.dashboardList.first.stateId,
-                                });
-                            // Your onTap logic
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        buildSampleCard(
-                          qnumber: "C.",
-                          title: "Additional information for Retrofitting",
-                          color: Colors.deepOrangeAccent,
-                          onTap: () {
-                            // Your onTap logic
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToRetrofittingAugmentationScreen,
-                                arguments: {
-                                  'schemeId': int.parse(dashboardProvider.selectedScheme!),
-                                  'stateId': dashboardProvider.dashboardList.first.stateId,
-                                });
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        buildSampleCard(
-                          qnumber: "D.",
-                          title: "Scheme implementation",
-                          color: Colors.lightGreen,
-                          onTap: () {
-                            // Your onTap logic
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToSchemeImplementationScreen,
-                                arguments: {
-                                  'schemeId': int.parse(dashboardProvider.selectedScheme!),
-                                  'stateId': dashboardProvider.dashboardList.first.stateId,
-                                });
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        buildSampleCard(
-                          qnumber: "E.",
-                          title: "Visual Inspection",
-                          color: Colors.green,
-                          onTap: () {
-                            // Your onTap logic
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToVisualInspectionScreen,
-                                arguments: {
-                                  'schemeId': int.parse(dashboardProvider.selectedScheme!),
-                                  'stateId': dashboardProvider.dashboardList.first.stateId,
-                                });
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
+                        CustomSearchableDropdown(
+                            title: "Select Scheme",
+                            value: dashboardProvider.dashboardList
+                                    .firstWhere(
+                                      (district) =>
+                                          district.schemeId ==
+                                          dashboardProvider.selectedSchemeID,
+                                      orElse: () => CnoDashboardItem(
+                                        userid: 0,
+                                        totalSchemes: 0,
+                                        pendingSchemes: 0,
+                                        underProcessScheme: 0,
+                                        totalDistricts: 0,
+                                        pendingDistricts: 0,
+                                        underProcessDistricts: 0,
+                                        totalVillages: 0,
+                                        pendingVillages: 0,
+                                        underProcessVillages: 0,
+                                        schemeId: 0,
+                                        schemeName: '',
+                                        stateId: 0,
+                                        districtId: 0,
+                                        blockId: 0,
+                                        panchayatId: 0,
+                                        villageId: 0,
+                                      ),
+                                    )
+                                    .schemeName ??
+                                'Select Scheme',
+                            items: dashboardProvider.dashboardList
+                                .map((item) => item.schemeName ?? '')
+                                .where((name) => name.isNotEmpty)
+                                .toSet()
+                                .toList(),
+                            onChanged: (selectedScheme) {
+                              if (selectedScheme == null) return;
 
+                              final selectedItem =
+                                  dashboardProvider.dashboardList.firstWhere(
+                                (item) => item.schemeName == selectedScheme,
+                                orElse: () => CnoDashboardItem(
+                                  userid: 0,
+                                  totalSchemes: 0,
+                                  pendingSchemes: 0,
+                                  underProcessScheme: 0,
+                                  totalDistricts: 0,
+                                  pendingDistricts: 0,
+                                  underProcessDistricts: 0,
+                                  totalVillages: 0,
+                                  pendingVillages: 0,
+                                  underProcessVillages: 0,
+                                  schemeId: 0,
+                                  schemeName: '',
+                                  stateId: 0,
+                                  districtId: 0,
+                                  blockId: 0,
+                                  panchayatId: 0,
+                                  villageId: 0,
+                                ),
+                              );
+                              dashboardProvider
+                                  .setSelectedDWSM(selectedItem.districtId);
+                            })
+                      ],
+                    ),
+                    if (dashboardProvider.selectedSchemeID != 0)
+                      Column(
+                        children: [
+                          buildSampleCard(
+                            qnumber: "A.",
+                            title: "Source",
+                            color: Colors.blue,
+                            onTap: () {
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToSourceScreenQuestions,
+                                  arguments: {
+                                    'schemeId':
+                                        dashboardProvider.selectedSchemeID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          buildSampleCard(
+                            qnumber: "B.",
+                            title: "Scheme Planning",
+                            color: Colors.orangeAccent,
+                            onTap: () {
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToSchemePlanningScreen,
+                                  arguments: {
+                                    'schemeId':
+                                        dashboardProvider.selectedSchemeID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                              // Your onTap logic
+                            },
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          buildSampleCard(
+                            qnumber: "C.",
+                            title: "Additional information for Retrofitting",
+                            color: Colors.deepOrangeAccent,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(
+                                  context,
+                                  AppConstants
+                                      .navigateToRetrofittingAugmentationScreen,
+                                  arguments: {
+                                    'schemeId':
+                                        dashboardProvider.selectedSchemeID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          buildSampleCard(
+                            qnumber: "D.",
+                            title: "Scheme implementation",
+                            color: Colors.lightGreen,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(
+                                  context,
+                                  AppConstants
+                                      .navigateToSchemeImplementationScreen,
+                                  arguments: {
+                                    'schemeId':
+                                        dashboardProvider.selectedSchemeID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          buildSampleCard(
+                            qnumber: "E.",
+                            title: "Visual Inspection",
+                            color: Colors.green,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToVisualInspectionScreen,
+                                  arguments: {
+                                    'schemeId':
+                                        dashboardProvider.selectedSchemeID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
+                        ],
+                      ),
+                  ],
                 ),
               );
             },
