@@ -1,8 +1,17 @@
 import 'package:cno_inspection/repository/dwsmRepo/DWSMRepositoy.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../model/dwsmPartB/CoordinationPlanningReviewPARTA.dart';
+import '../../model/dwsmPartB/MonitoringQualityLabInfrastructurePARTC.dart';
+import '../../model/dwsmPartB/OperationMaintenancePARTD.dart';
+import '../../model/dwsmPartB/PublicComplaintsGrievanceRedressalPARTF.dart';
+import '../../model/dwsmPartB/QualityAssuranceCommissioningPARTE.dart';
+import '../../model/dwsmPartB/SourceSustainabilityWaterConservationPARTB.dart';
+import '../../repository/dwsmRepo/fetchDwsmRepo.dart';
+
 class Dwsmprovider extends ChangeNotifier {
   final DWSMRepositoy _dwsmRepository = DWSMRepositoy();
+  final Fetchdwsmrepo _fetchdwsmrepo = Fetchdwsmrepo();
 
   bool _isLoading = false;
 
@@ -121,6 +130,36 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
+  //fetch for part a start
+
+  List<CoordinationPlanningReview> coordinationData = [];
+
+  Future<void> fetchCoordinationData(String stateId, String districtId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchdwsmrepo.fetchCoordinationPlanningReview(stateId, districtId, userId);
+      if (response.status) {
+        coordinationData = response.result;
+        // Add any data processing here if needed
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch coordination data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //fetch for part a end
+
+
+
   //BBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
 
@@ -234,6 +273,36 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
+  // fetch for dwsm part B start
+  List<SourceSustainabilityWaterConservation> sustainabilityData = [];
+
+  Future<void> fetchSustainabilityData(String stateId, String districtId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchdwsmrepo.fetchSourceSustainabilityWaterConservation(stateId, districtId, userId);
+      if (response.status) {
+        sustainabilityData = response.result;
+        // Process sustainabilityData if needed
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch sustainability data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // fetch for dwsm part B end
+
+
+
+
   //CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 
 // Geotagging of water supply assets
@@ -297,6 +366,37 @@ class Dwsmprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // fetch for dwsm part C start
+
+  List<MonitoringQualityLabInfrastructure> monitoringData = [];
+
+  Future<void> fetchMonitoringLabData(String stateId, String districtId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchdwsmrepo.fetchMonitoringQualityLabInfrastructure(stateId, districtId, userId);
+      if (response.status) {
+        monitoringData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch lab infrastructure data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+
+  // fetch for dwsm part C end
+
+
+
 
   //DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
@@ -378,6 +478,38 @@ class Dwsmprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // fetch for dwsm part D start
+
+  List<OperationMaintenance> operationMaintenanceData = [];
+
+  Future<void> fetchOperationMaintenanceData(String stateId, String districtId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchdwsmrepo.fetchOperationMaintenance(stateId, districtId, userId);
+      if (response.status) {
+        operationMaintenanceData = response.result;
+        // Example: you can extract data to UI controllers here
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch operation & maintenance data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+
+  // fetch for dwsm part D end
+
+
+
 
   //EEEEEEEEEEEEEEEEEEEEEEE
 
@@ -480,6 +612,36 @@ class Dwsmprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // fetch for dwsm part E start
+
+  List<QualityAssuranceCommissioning> qualityAssuranceData = [];
+
+  Future<void> fetchQualityAssuranceData(String stateId, String districtId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchdwsmrepo.fetchQualityAssuranceCommissioning(stateId, districtId, userId);
+      if (response.status) {
+        qualityAssuranceData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch quality assurance data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // fetch for dwsm part E end
+
+
+
 
   ///FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
@@ -586,4 +748,33 @@ class Dwsmprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+// fetch for dwsm part F start
+
+  List<PublicComplaintsGrievanceRedressal> grievanceData = [];
+
+  Future<void> fetchGrievanceRedressalData(String stateId, String districtId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchdwsmrepo.fetchPublicComplaintsGrievanceRedressal(stateId, districtId, userId);
+      if (response.status) {
+        grievanceData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch grievance redressal data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+// fetch for dwsm part F end
+
+
 }
