@@ -30,12 +30,42 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
   final LocalStorageService _localStorage = LocalStorageService();
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+      if (args != null) {
+        final villageId = args['villageId'] as int?;
+        final stateId = args['stateId'] as int?;
+
+        // You can now use them, or set them in your provider
+
+        final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
+        vwscProvider.ClearfetchCommunityFeedback();
+        if (villageId != null) {
+          vwscProvider.setVillageId(villageId);
+        }
+        if (stateId != null) {
+          vwscProvider.setStateId(stateId);
+        }
+
+        vwscProvider.fetchCommunityFeedback(
+            stateId.toString(),
+            villageId.toString(),
+            _localStorage.getInt(AppConstants.prefUserId).toString());
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/icons/header_bg.png'),
-            fit: BoxFit.cover),
+            image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
       ),
       child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -105,13 +135,11 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                     borderRadius: BorderRadius.circular(14),
                                     boxShadow: [
                                       BoxShadow(
-                                        color:
-                                            Colors.black12.withOpacity(0.06),
+                                        color: Colors.black12.withOpacity(0.06),
                                         blurRadius: 6,
                                         offset: const Offset(0, 3),
                                       ),
                                     ],
-
                                   ),
                                   padding: EdgeInsets.all(8),
                                   width: double.infinity,
@@ -130,7 +158,8 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                           vwscProvider
                                                   .selectedComplaintByCommunity =
                                               val;
-                                          print('selected---- ${vwscProvider.selectedComplaintByCommunity} : ${vwscProvider.selectedComplaintByCommunityId}');
+                                          print(
+                                              'selected---- ${vwscProvider.selectedComplaintByCommunity} : ${vwscProvider.selectedComplaintByCommunityId}');
                                         },
                                       ),
                                       if (vwscProvider
@@ -138,23 +167,21 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                           "Yes") ...[
                                         CustomMultiSelectChipQuestion(
                                           question:
-                                              "2. Type of complaint (select all that apply):",
+                                              "1.1 Type of complaint (select all that apply):",
                                           options: vwscProvider
                                               .typeOfComplaintMapOptions,
                                           selectedValues: vwscProvider
                                               .selectedTypeOfComplaint,
                                           onSelectionChanged: (val) {
                                             vwscProvider
-                                                    .selectedTypeOfComplaint =
-                                                val;
+                                                .selectedTypeOfComplaint = val;
                                             print(
                                                 'selected2--- ${vwscProvider.selectedTypeOfComplaint} : ${vwscProvider.selectedTypeOfComplaintIds}');
                                           },
                                         ),
 
                                         // Show text field if 'Others' is selected
-                                        if (vwscProvider
-                                            .selectedTypeOfComplaint
+                                        if (vwscProvider.selectedTypeOfComplaint
                                             .contains("Others"))
                                           Customtxtfeild(
                                             label:
@@ -188,28 +215,30 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                               backgroundColor:
                                                   Colors.deepOrange,
                                               shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10), // Adjust the radius as needed
+                                                borderRadius: BorderRadius.circular(
+                                                    10), // Adjust the radius as needed
                                               ),
                                             ),
                                             onPressed: () async {
                                               LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Community feedback on quality of construction");
 
                                               await vwscProvider.saveCommunityFeedback(
-                                                  userId: _localStorage.getInt(AppConstants.prefUserId)!,
-                                                  stateId: vwscProvider.stateId!,
-                                                  villageId: vwscProvider.villageId!,
+                                                  userId: _localStorage.getInt(
+                                                      AppConstants.prefUserId)!,
+                                                  stateId:
+                                                      vwscProvider.stateId!,
+                                                  villageId:
+                                                      vwscProvider.villageId!,
                                                   anyComplaintByCommunity:
                                                       vwscProvider
                                                           .selectedComplaintByCommunityId,
-                                                  isComplaintAddressed:
-                                                      vwscProvider
-                                                          .selectedWhereComplaintAddressOptId,
+                                                  isComplaintAddressed: vwscProvider
+                                                      .selectedWhereComplaintAddressOptId,
                                                   complaintType: vwscProvider
                                                       .selectedTypeOfComplaintIds,
-                                                  createdBy:   _localStorage.getInt(AppConstants.prefUserId)!
-                                              );
+                                                  createdBy: _localStorage
+                                                      .getInt(AppConstants
+                                                          .prefUserId)!);
                                               if (vwscProvider.status!) {
                                                 ToastHelper.showToastMessage(
                                                     vwscProvider.message!,
@@ -275,28 +304,5 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
         )
       ],
     );
-  }
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-    if (args != null) {
-      final villageId = args['villageId'] as int?;
-      final stateId = args['stateId'] as int?;
-
-      // You can now use them, or set them in your provider
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
-        if (villageId != null) {
-          vwscProvider.setVillageId(villageId);
-        }
-        if (stateId != null) {
-          vwscProvider.setStateId(stateId);
-        }
-      });
-
-    }
   }
 }
