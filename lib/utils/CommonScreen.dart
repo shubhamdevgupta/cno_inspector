@@ -1,11 +1,11 @@
-import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../views/InteractionVWSC/CommunityFeedbackPartC.dart';
-import '../views/InteractionVWSC/CommunityInvolvementPartB.dart';
-import '../views/InteractionVWSC/WaterQualityPartD.dart';
-import '../views/InteractionVWSC/WaterSupplyPartA.dart';
+import '../views/PartCVwsc/CommunityFeedbackPartC.dart';
+import '../views/PartCVwsc/CommunityInvolvementPartB.dart';
+import '../views/PartCVwsc/GrievancePartE.dart';
+import '../views/PartCVwsc/WaterQualityPartD.dart';
+import '../views/PartCVwsc/WaterSupplyPartA.dart';
 import 'Appcolor.dart';
 
 

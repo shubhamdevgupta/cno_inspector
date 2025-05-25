@@ -6,21 +6,19 @@ import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartACoordinationPlanningReviewScreen.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartBSourceSustainabilityWaterConservation.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartCMonitoringQualityandLabInfrastructure.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartDOperationandMaintenance.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartEQualityAssuranceandCommissioning.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartFPublicComplaintsandGrievance.dart';
-import 'package:cno_inspection/views/InteractionVWSC/CommunityFeedbackPartC.dart';
-import 'package:cno_inspection/views/InteractionVWSC/CommunityInvolvementPartB.dart';
-import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
-import 'package:cno_inspection/views/InteractionVWSC/WaterQualityPartD.dart';
-
-import 'package:cno_inspection/views/InteractionVWSC/WaterSupplyPartA.dart';
-
-import 'package:cno_inspection/views/InteractionDWSM/DashboardDWSM.dart';
-import 'package:cno_inspection/views/InteractionVWSC/DashboardVWSC.dart';
+import 'package:cno_inspection/views/PartBDwsm/DashboardDWSM.dart';
+import 'package:cno_inspection/views/PartBDwsm/PartACoordinationPlanningReviewScreen.dart';
+import 'package:cno_inspection/views/PartBDwsm/PartBSourceSustainabilityWaterConservation.dart';
+import 'package:cno_inspection/views/PartBDwsm/PartCMonitoringQualityandLabInfrastructure.dart';
+import 'package:cno_inspection/views/PartBDwsm/PartDOperationandMaintenance.dart';
+import 'package:cno_inspection/views/PartBDwsm/PartEQualityAssuranceandCommissioning.dart';
+import 'package:cno_inspection/views/PartBDwsm/PartFPublicComplaintsandGrievance.dart';
+import 'package:cno_inspection/views/PartCVwsc/CommunityFeedbackPartC.dart';
+import 'package:cno_inspection/views/PartCVwsc/CommunityInvolvementPartB.dart';
+import 'package:cno_inspection/views/PartCVwsc/DashboardVWSC.dart';
+import 'package:cno_inspection/views/PartCVwsc/GrievancePartE.dart';
+import 'package:cno_inspection/views/PartCVwsc/WaterQualityPartD.dart';
+import 'package:cno_inspection/views/PartCVwsc/WaterSupplyPartA.dart';
 
 import 'package:cno_inspection/views/auth/DashboardScreen.dart';
 import 'package:cno_inspection/views/auth/AuthScreen.dart';

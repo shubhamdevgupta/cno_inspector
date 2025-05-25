@@ -1,7 +1,7 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/utils/customtxtfeild.dart';
-import 'package:cno_inspection/views/InteractionVWSC/CommunityFeedbackPartC.dart';
+import 'package:cno_inspection/views/PartCVwsc/CommunityFeedbackPartC.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

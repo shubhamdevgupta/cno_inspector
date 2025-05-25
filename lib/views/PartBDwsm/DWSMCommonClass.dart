@@ -1,14 +1,14 @@
-import 'package:cno_inspection/views/InteractionDWSM/PartACoordinationPlanningReviewScreen.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartBSourceSustainabilityWaterConservation.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartCMonitoringQualityandLabInfrastructure.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartDOperationandMaintenance.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartEQualityAssuranceandCommissioning.dart';
-import 'package:cno_inspection/views/InteractionDWSM/PartFPublicComplaintsandGrievance.dart';
-import 'package:cno_inspection/views/InteractionVWSC/GrievancePartE.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/Appcolor.dart';
+import 'PartACoordinationPlanningReviewScreen.dart';
+import 'PartBSourceSustainabilityWaterConservation.dart';
+import 'PartCMonitoringQualityandLabInfrastructure.dart';
+import 'PartDOperationandMaintenance.dart';
+import 'PartEQualityAssuranceandCommissioning.dart';
+import 'PartFPublicComplaintsandGrievance.dart';
 
 
 
