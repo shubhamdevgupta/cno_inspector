@@ -288,7 +288,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                     onPressed: () async {
                                       LoaderUtils.showLoadingWithMessage(
                                           context,
-                                          isLoading: true,
+                                          isLoading: vwscProvider.isLoading,
                                           message:
                                               "Community Involvement & VWSC Functionality");
                                    //   vwscProvider.fetchCommunityInvolvement("45", "111140", "1121");

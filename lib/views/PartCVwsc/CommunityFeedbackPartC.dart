@@ -220,11 +220,7 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                               ),
                                             ),
                                             onPressed: () async {
-                                              LoaderUtils.showLoadingWithMessage(
-                                                  context,
-                                                  isLoading: true,
-                                                  message:
-                                                      "Community feedback on quality of construction");
+                                              LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Community feedback on quality of construction");
 
                                               await vwscProvider.saveCommunityFeedback(
                                                   userId: _localStorage.getInt(

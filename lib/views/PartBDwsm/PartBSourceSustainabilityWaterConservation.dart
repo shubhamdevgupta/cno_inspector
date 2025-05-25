@@ -41,7 +41,7 @@ class _SourceSustainablitiyWasterConservation
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchCoordinationData("31", "478", "121212");
+        dwsmProvider.fetchSustainabilityData("31", "478", "121212");
       }
     });
   }
@@ -215,8 +215,7 @@ class _SourceSustainablitiyWasterConservation
                                       ),
                                       onPressed: () async {
 
-                                        LoaderUtils.showLoadingWithMessage(context,
-                                            isLoading: dwsmProvider.isLoading,message: "Saving Source Sustainability and Water Conservation");
+                                        LoaderUtils.showLoadingWithMessage(context, isLoading: dwsmProvider.isLoading,message: "Saving Source Sustainability and Water Conservation");
 
                                         dwsmProvider.saveSourceSustainability(
                                             userId: localStorageService.getInt(AppConstants.prefUserId)!,

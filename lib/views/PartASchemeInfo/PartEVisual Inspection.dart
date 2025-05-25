@@ -610,73 +610,53 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               message:
                                                   "Additional info for Retrofitting/Augmentation Schemes only");
 
-                                          await schemeProvider
-                                              .saveVisualInspection(
-                                                  userId: _localStorageService.getInt(
-                                                      AppConstants.prefUserId)!,
-                                                  stateId:
-                                                      schemeProvider.stateId!,
-                                                  schemeId:
-                                                      schemeProvider.schemeId!,
-                                                  costOverrun: 000,
-                                                  spalling: schemeProvider
-                                                      .selectedId_partEa1,
-                                                  cracks: schemeProvider
-                                                      .selectedId_partEa2,
-                                                  rustMarks: schemeProvider
-                                                      .selectedId_partEa3,
-                                                  swollenConcrete: schemeProvider
-                                                      .selectedId_partEa4,
-                                                  trappedJute: schemeProvider
-                                                      .selectedId_partEa5,
-                                                  rustedBars: schemeProvider
-                                                      .selectedId_partEa6,
-                                                  //a7
-                                                  dampness: schemeProvider
-                                                      .selectedId_partEa8,
-                                                  whiteMarks: schemeProvider
-                                                      .selectedId_partEa9,
-                                                  stoneAggregates: schemeProvider
-                                                      .selectedId_partEa10,
-                                                  verticalAlignment: schemeProvider
-                                                      .selectedId_partEa11,
-                                                  sagSlabBeam: schemeProvider
-                                                      .selectedId_partEa12,
-                                                  highVibrationPumps: schemeProvider
-                                                      .selectedId_partEa13,
-                                                  reservoirLeakage: schemeProvider
-                                                      .selectedId_partEa14,
-                                                  highLeakagePumps: schemeProvider
-                                                      .selectedId_partEa15,
-                                                  pipelineLeakageTransmission:
-                                                      schemeProvider
-                                                          .selectedId_partEb1,
-                                                  pipelineLeakageDistribution:
-                                                      schemeProvider
-                                                          .selectedId_partEb2,
-                                                  wetPatches: schemeProvider
-                                                      .selectedId_partEb3,
-                                                  verifyPipeQuality: schemeProvider
-                                                      .selectedId_partE2,
-                                                  pipesAsPerDPR: schemeProvider
-                                                      .selectedId_partE3,
-                                                  complaintsOnPipelineDesign:
-                                                      schemeProvider.selectedId_partE4,
-                                                  isTPIAEngaged: schemeProvider.selectedId_partE5,
-                                                  sampleChecks: schemeProvider.selectedId_partE6,
-                                                  concurrentSupervision: schemeProvider.selectedId_partE7,
-                                                  tpiaStageChecks: schemeProvider.selectedId_partE8,
-                                                  tpiaReports: schemeProvider.selectedId_partE9,
-                                                  actionOnTPIA: schemeProvider.selectedId_partE11,
-                                                  tpiaVerifyMB: schemeProvider.selectedId_partE12,
-                                                  hydroTestingDone: schemeProvider.selectedId_partE13a,
-                                                  // 13b distrabution line
-                                                  testReportsProvided: schemeProvider.selectedId_partE14,
-                                                  deptQualityChecks: schemeProvider.selectedId_partE15,
-                                                  deptMeasurementVerification: schemeProvider.selectedId_partE16,
-                                                  schemeCommissioned: schemeProvider.selectedId_partE17,
-                                                  commissioningProofAvailable: schemeProvider.selectedId_partE18,
-                                                  tpiaIssueTypes: schemeProvider.selectedId_partE10); // 10 ==>  tpiaIssueTypes:schemeProvider.selectedId_partE10
+                                          LoaderUtils.showLoadingWithMessage(context ,isLoading:schemeProvider.isLoading,message: "Additional info for Retrofitting/Augmentation Schemes only");
+
+                                          await schemeProvider.saveVisualInspection(
+                                              userId: _localStorageService.getInt(
+                                                  AppConstants.prefUserId)!,
+                                              stateId: schemeProvider.stateId!,
+                                              schemeId: schemeProvider.schemeId!,
+                                              costOverrun: 000,
+
+                                              spalling: schemeProvider.selectedId_partEa1,
+                                              cracks: schemeProvider.selectedId_partEa2,
+                                              rustMarks: schemeProvider.selectedId_partEa3,
+                                              swollenConcrete: schemeProvider.selectedId_partEa4,
+                                              trappedJute: schemeProvider.selectedId_partEa5,
+                                              rustedBars: schemeProvider.selectedId_partEa6,
+                                              //a7
+                                              dampness: schemeProvider.selectedId_partEa8,
+                                              whiteMarks: schemeProvider.selectedId_partEa9,
+                                              stoneAggregates: schemeProvider.selectedId_partEa10,
+                                              verticalAlignment: schemeProvider.selectedId_partEa11,
+                                              sagSlabBeam: schemeProvider.selectedId_partEa12,
+                                              highVibrationPumps: schemeProvider.selectedId_partEa13,
+                                              reservoirLeakage: schemeProvider.selectedId_partEa14,
+                                              highLeakagePumps: schemeProvider.selectedId_partEa15,
+
+                                              pipelineLeakageTransmission: schemeProvider.selectedId_partEb1,
+                                              pipelineLeakageDistribution: schemeProvider.selectedId_partEb2,
+                                              wetPatches: schemeProvider.selectedId_partEb3,
+
+                                              verifyPipeQuality: schemeProvider.selectedId_partE2,
+                                              pipesAsPerDPR: schemeProvider.selectedId_partE3,
+                                              complaintsOnPipelineDesign: schemeProvider.selectedId_partE4,
+                                              isTPIAEngaged: schemeProvider.selectedId_partE5,
+                                              sampleChecks: schemeProvider.selectedId_partE6,
+                                              concurrentSupervision: schemeProvider.selectedId_partE7,
+                                              tpiaStageChecks: schemeProvider.selectedId_partE8,
+                                              tpiaReports: schemeProvider.selectedId_partE9,
+                                              actionOnTPIA: schemeProvider.selectedId_partE11,
+                                              tpiaVerifyMB: schemeProvider.selectedId_partE12,
+                                              hydroTestingDone: schemeProvider.selectedId_partE13a,
+                                              // 13b distrabution line
+                                              testReportsProvided: schemeProvider.selectedId_partE14,
+                                              deptQualityChecks: schemeProvider.selectedId_partE15,
+                                              deptMeasurementVerification: schemeProvider.selectedId_partE16,
+                                              schemeCommissioned: schemeProvider.selectedId_partE17,
+                                              commissioningProofAvailable: schemeProvider.selectedId_partE18,
+                                              tpiaIssueTypes:schemeProvider.selectedId_partE10);  // 10 ==>  tpiaIssueTypes:schemeProvider.selectedId_partE10
 
                                           if (schemeProvider.status!) {
                                             ToastHelper.showToastMessage(
