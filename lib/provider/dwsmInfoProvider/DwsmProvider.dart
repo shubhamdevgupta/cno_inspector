@@ -81,19 +81,20 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedMeetingQualityID => meetingQualityMap[_selectedMeetingQuality] ?? 0;
+  int get selectedMeetingQualityID =>
+      meetingQualityMap[_selectedMeetingQuality] ?? 0;
 
   // Question 2: DISHA meetings being held
   String? _selectedDISHA;
 
   String? get selectedDISHA => _selectedDISHA;
+
   set selectedDISHA(String? val) {
     _selectedDISHA = val;
     notifyListeners();
   }
 
   int get selectedDISHAID => yesNoMap[_selectedDISHA] ?? 0;
-
 
   Future<bool> saveCoordinationPlanningReview({
     required int userId,
@@ -134,12 +135,14 @@ class Dwsmprovider extends ChangeNotifier {
 
   List<CoordinationPlanningReview> coordinationData = [];
 
-  Future<void> fetchCoordinationData(String stateId, String districtId, String userId) async {
+  Future<void> fetchCoordinationData(
+      String stateId, String districtId, String userId) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchdwsmrepo.fetchCoordinationPlanningReview(stateId, districtId, userId);
+      final response = await _fetchdwsmrepo.fetchCoordinationPlanningReview(
+          stateId, districtId, userId);
       if (response.status) {
         coordinationData = response.result;
         // Add any data processing here if needed
@@ -158,10 +161,7 @@ class Dwsmprovider extends ChangeNotifier {
 
   //fetch for part a end
 
-
-
   //BBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-
 
   // Question 1: Source sustainability promotion
 
@@ -172,15 +172,16 @@ class Dwsmprovider extends ChangeNotifier {
   };
 
   String? _sourceSustainability;
+
   String? get sourceSustainability => _sourceSustainability;
+
   set sourceSustainability(String? value) {
     _sourceSustainability = value;
     notifyListeners();
   }
 
-  int get sourceSustainabilityId => sourceSustainabilityMap[_sourceSustainability] ?? 0;
-
-
+  int get sourceSustainabilityId =>
+      sourceSustainabilityMap[_sourceSustainability] ?? 0;
 
   // Question 2: Groundwater protection
   final Map<String, int> groundwaterProtectionMap = {
@@ -189,12 +190,16 @@ class Dwsmprovider extends ChangeNotifier {
     "No": 3,
   };
   String? _groundwaterProtection;
+
   String? get groundwaterProtection => _groundwaterProtection;
+
   set groundwaterProtection(String? value) {
     _groundwaterProtection = value;
     notifyListeners();
   }
-  int get groundwaterProtectionId => groundwaterProtectionMap[_groundwaterProtection] ?? 0;
+
+  int get groundwaterProtectionId =>
+      groundwaterProtectionMap[_groundwaterProtection] ?? 0;
 
   // Question 3: Recharge structure implementation
   final Map<String, int> rechargeStructureMap = {
@@ -204,7 +209,9 @@ class Dwsmprovider extends ChangeNotifier {
   };
 
   String? _rechargeStructureImplemented;
+
   String? get rechargeStructureImplemented => _rechargeStructureImplemented;
+
   set rechargeStructureImplemented(String? value) {
     _rechargeStructureImplemented = value;
     if (value != "No") {
@@ -213,12 +220,12 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get rechargeStructureImplementedID => rechargeStructureMap[_rechargeStructureImplemented] ?? 0;
-
-
+  int get rechargeStructureImplementedID =>
+      rechargeStructureMap[_rechargeStructureImplemented] ?? 0;
 
   // Controller for recharge reason (if "No")
-  final TextEditingController rechargeReasonController = TextEditingController();
+  final TextEditingController rechargeReasonController =
+      TextEditingController();
 
   // Question 4: Impact studies conducted
 
@@ -229,11 +236,14 @@ class Dwsmprovider extends ChangeNotifier {
   };
 
   String? _impactStudies;
+
   String? get impactStudies => _impactStudies;
+
   set impactStudies(String? value) {
     _impactStudies = value;
     notifyListeners();
   }
+
   int get impactStudiesID => impactStudiesMap[_impactStudies] ?? 0;
 
   Future<bool> saveSourceSustainability({
@@ -276,12 +286,15 @@ class Dwsmprovider extends ChangeNotifier {
   // fetch for dwsm part B start
   List<SourceSustainabilityWaterConservation> sustainabilityData = [];
 
-  Future<void> fetchSustainabilityData(String stateId, String districtId, String userId) async {
+  Future<void> fetchSustainabilityData(
+      String stateId, String districtId, String userId) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchdwsmrepo.fetchSourceSustainabilityWaterConservation(stateId, districtId, userId);
+      final response =
+          await _fetchdwsmrepo.fetchSourceSustainabilityWaterConservation(
+              stateId, districtId, userId);
       if (response.status) {
         sustainabilityData = response.result;
         // Process sustainabilityData if needed
@@ -300,9 +313,6 @@ class Dwsmprovider extends ChangeNotifier {
 
   // fetch for dwsm part B end
 
-
-
-
   //CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 
 // Geotagging of water supply assets
@@ -314,25 +324,31 @@ class Dwsmprovider extends ChangeNotifier {
   };
 
   String? _assetsGeotagged;
+
   String? get assetsGeotagged => _assetsGeotagged;
+
   set assetsGeotagged(String? value) {
     _assetsGeotagged = value;
     notifyListeners();
   }
+
   int get assetsGeotaggedID => assetsGeotaggedMap[_assetsGeotagged] ?? 0;
 
 // NABL-accredited lab availability
   String? _hasNablLab;
+
   String? get hasNablLab => _hasNablLab;
+
   set hasNablLab(String? value) {
     _hasNablLab = value;
     notifyListeners();
   }
+
   int get hasNablLabID => yesNoMap[_hasNablLab] ?? 0;
 
 // Testing management (if no NABL lab)
-  final TextEditingController testingManagedController = TextEditingController();
-
+  final TextEditingController testingManagedController =
+      TextEditingController();
 
   Future<bool> saveMonitoringQualityLab({
     required int userId,
@@ -371,12 +387,14 @@ class Dwsmprovider extends ChangeNotifier {
 
   List<MonitoringQualityLabInfrastructure> monitoringData = [];
 
-  Future<void> fetchMonitoringLabData(String stateId, String districtId, String userId) async {
+  Future<void> fetchMonitoringLabData(
+      String stateId, String districtId, String userId) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchdwsmrepo.fetchMonitoringQualityLabInfrastructure(stateId, districtId, userId);
+      final response = await _fetchdwsmrepo
+          .fetchMonitoringQualityLabInfrastructure(stateId, districtId, userId);
       if (response.status) {
         monitoringData = response.result;
         _message = '';
@@ -392,11 +410,7 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
-
   // fetch for dwsm part C end
-
-
-
 
   //DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
@@ -408,7 +422,9 @@ class Dwsmprovider extends ChangeNotifier {
   };
 
   String? _handoverProtocol;
+
   String? get handoverProtocol => _handoverProtocol;
+
   set handoverProtocol(String? value) {
     _handoverProtocol = value;
     notifyListeners();
@@ -417,7 +433,8 @@ class Dwsmprovider extends ChangeNotifier {
   int get handoverProtocolID => handoverProtocolMap[_handoverProtocol] ?? 0;
 
 // 2. Manpower Percentage Controller
-  final TextEditingController manpowerPercentController = TextEditingController();
+  final TextEditingController manpowerPercentController =
+      TextEditingController();
 
 // 3. Water Fee Controller
   final TextEditingController waterFeeController = TextEditingController();
@@ -428,17 +445,19 @@ class Dwsmprovider extends ChangeNotifier {
     "Volumetric": 2,
   };
   String? _feeBasis;
+
   String? get feeBasis => _feeBasis;
+
   set feeBasis(String? value) {
     _feeBasis = value;
     notifyListeners();
   }
+
   int get feeBasisID => feeBasisMap[_feeBasis] ?? 0;
 
-
 // 5. User Fee Collection Percentage
-  final TextEditingController userFeePercentController = TextEditingController();
-
+  final TextEditingController userFeePercentController =
+      TextEditingController();
 
   Future<bool> saveOperationMaintenance({
     required int userId,
@@ -483,12 +502,14 @@ class Dwsmprovider extends ChangeNotifier {
 
   List<OperationMaintenance> operationMaintenanceData = [];
 
-  Future<void> fetchOperationMaintenanceData(String stateId, String districtId, String userId) async {
+  Future<void> fetchOperationMaintenanceData(
+      String stateId, String districtId, String userId) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchdwsmrepo.fetchOperationMaintenance(stateId, districtId, userId);
+      final response = await _fetchdwsmrepo.fetchOperationMaintenance(
+          stateId, districtId, userId);
       if (response.status) {
         operationMaintenanceData = response.result;
         // Example: you can extract data to UI controllers here
@@ -505,78 +526,86 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
-
   // fetch for dwsm part D end
-
-
-
 
   //EEEEEEEEEEEEEEEEEEEEEEE
 
   // 1. Authorized Inspectors - Multi Select
 
-  final Map<String,int> authorizedInspectorsMap={
-    "PHED Engineer":1,
-    "PMC/PMU":2,
-    "TPIA":3,
-    "VWSC":4,
-    "Contractor Representative":5,
-    "Others":6
+  final Map<String, int> authorizedInspectorsMap = {
+    "PHED Engineer": 1,
+    "PMC/PMU": 2,
+    "TPIA": 3,
+    "VWSC": 4,
+    "Contractor Representative": 5,
+    "Others": 6
   };
 
   String? _authorizedInspectors;
+
   String? get authorizedInspectors => _authorizedInspectors;
+
   set authorizedInspectors(String? value) {
     _authorizedInspectors = value;
     notifyListeners();
   }
 
-  int get authorizedInspectorID => authorizedInspectorsMap[_authorizedInspectors] ?? 0;
+  int get authorizedInspectorID =>
+      authorizedInspectorsMap[_authorizedInspectors] ?? 0;
 
 // 2. Commissioning Protocol Followed - Radio
   String? _commissioningProtocolFollowed;
+
   String? get commissioningProtocolFollowed => _commissioningProtocolFollowed;
+
   set commissioningProtocolFollowed(String? value) {
     _commissioningProtocolFollowed = value;
     notifyListeners();
   }
 
-  int get commissioningProtocolFollowedID => yesNoMap[_commissioningProtocolFollowed] ?? 0;
+  int get commissioningProtocolFollowedID =>
+      yesNoMap[_commissioningProtocolFollowed] ?? 0;
 
 // 3. Commissioning Presence - Multi Select
 
-  final Map<String,int> commissioningPresenceMap={
-    "PHED":1 ,
-    "VWSC Members":2 ,
+  final Map<String, int> commissioningPresenceMap = {
+    "PHED": 1,
+    "VWSC Members": 2,
     "PRI Representatives": 3,
-    "ISA":4 ,
+    "ISA": 4,
     "TPIA": 5,
-    "Community Members":6
+    "Community Members": 6
   };
   String? _commissioningPresence;
+
   String? get commissioningPresence => _commissioningPresence;
+
   set commissioningPresence(String? value) {
     _commissioningPresence = value;
     notifyListeners();
   }
-  int get commissioningPresenceID => commissioningPresenceMap[_commissioningPresence] ?? 0;
 
+  int get commissioningPresenceID =>
+      commissioningPresenceMap[_commissioningPresence] ?? 0;
 
 // 4. Third Party Assessment - Radio
-  final Map<String,int> thirdPartyAssessmentMap={
-    "Yes – Regularly":1,
-    "Occasionally":2,
-    "Not Done":3
+  final Map<String, int> thirdPartyAssessmentMap = {
+    "Yes – Regularly": 1,
+    "Occasionally": 2,
+    "Not Done": 3
   };
 
   String? _thirdPartyAssessment;
+
   String? get thirdPartyAssessment => _thirdPartyAssessment;
+
   set thirdPartyAssessment(String? value) {
     _thirdPartyAssessment = value;
     notifyListeners();
   }
 
-  int get thirdPartyAssessmentID => thirdPartyAssessmentMap[_thirdPartyAssessment] ?? 0;
+  int get thirdPartyAssessmentID =>
+      thirdPartyAssessmentMap[_thirdPartyAssessment] ?? 0;
 
   Future<bool> saveQualityAssurance({
     required int userId,
@@ -622,7 +651,8 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _fetchdwsmrepo.fetchQualityAssuranceCommissioning(stateId, districtId, userId);
+      final response = await _fetchdwsmrepo.fetchQualityAssuranceCommissioning(
+          stateId, districtId, userId);
       if (response.status) {
         qualityAssuranceData = response.result;
         _message = '';
@@ -640,24 +670,24 @@ class Dwsmprovider extends ChangeNotifier {
 
   // fetch for dwsm part E end
 
-
-
-
   ///FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
   // 1. Grievance Mechanism Available - Radio
   String? _grievanceMechanismAvailable;
+
   String? get grievanceMechanismAvailable => _grievanceMechanismAvailable;
+
   set grievanceMechanismAvailable(String? value) {
     _grievanceMechanismAvailable = value;
     notifyListeners();
   }
-  int get grievanceMechanismAvailableID => yesNoMap[_grievanceMechanismAvailable] ?? 0;
 
+  int get grievanceMechanismAvailableID =>
+      yesNoMap[_grievanceMechanismAvailable] ?? 0;
 
 // 2. Grievance Registration Methods - Multi Select
 
-  final Map<String,int> grievanceRegistrationMethodsMap={
+  final Map<String, int> grievanceRegistrationMethodsMap = {
     "Toll free number": 1,
     "Web based portal": 2,
     "Mobile application": 3,
@@ -665,18 +695,23 @@ class Dwsmprovider extends ChangeNotifier {
     "Directly calling to PHED/Contractor/O&M agency": 5
   };
 
-  String? _grievanceRegistrationMethods ;
+  String? _grievanceRegistrationMethods;
+
   String? get grievanceRegistrationMethods => _grievanceRegistrationMethods;
+
   set grievanceRegistrationMethods(String? value) {
     _grievanceRegistrationMethods = value;
     notifyListeners();
   }
-  int get grievanceRegistrationMethodsID => grievanceRegistrationMethodsMap[_grievanceRegistrationMethods] ?? 0;
 
+  int get grievanceRegistrationMethodsID =>
+      grievanceRegistrationMethodsMap[_grievanceRegistrationMethods] ?? 0;
 
 // 3. Complaints Received - Radio
   String? _complaintsReceived;
+
   String? get complaintsReceived => _complaintsReceived;
+
   set complaintsReceived(String? value) {
     _complaintsReceived = value;
     notifyListeners();
@@ -684,19 +719,20 @@ class Dwsmprovider extends ChangeNotifier {
 
   int get complaintsReceivedID => yesNoMap[_complaintsReceived] ?? 0;
 
-
 // 3.1 Type of Complaints - Multi Select
-  final Map<String,int> complaintTypeMap={
-    "Poor water quality":1 ,
+  final Map<String, int> complaintTypeMap = {
+    "Poor water quality": 1,
     "Incomplete connections": 2,
-    "Delay in commissioning":3 ,
+    "Delay in commissioning": 3,
     "No water supply": 4,
     "Faulty construction": 5,
-    "Others":6,
+    "Others": 6,
   };
 
   String? _complaintTypes;
+
   String? get complaintTypes => _complaintTypes;
+
   set complaintTypes(String? value) {
     _complaintTypes = value;
     notifyListeners();
@@ -706,7 +742,6 @@ class Dwsmprovider extends ChangeNotifier {
 
   TextEditingController avgResolutionTimeController = TextEditingController();
   TextEditingController actionTakenController = TextEditingController();
-
 
   Future<bool> saveGrievanceRedressal({
     required int userId,
@@ -753,12 +788,14 @@ class Dwsmprovider extends ChangeNotifier {
 
   List<PublicComplaintsGrievanceRedressal> grievanceData = [];
 
-  Future<void> fetchGrievanceRedressalData(String stateId, String districtId, String userId) async {
+  Future<void> fetchGrievanceRedressalData(
+      String stateId, String districtId, String userId) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchdwsmrepo.fetchPublicComplaintsGrievanceRedressal(stateId, districtId, userId);
+      final response = await _fetchdwsmrepo
+          .fetchPublicComplaintsGrievanceRedressal(stateId, districtId, userId);
       if (response.status) {
         grievanceData = response.result;
         _message = '';
@@ -775,6 +812,4 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
 // fetch for dwsm part F end
-
-
 }

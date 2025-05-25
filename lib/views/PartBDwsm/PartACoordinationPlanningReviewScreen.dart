@@ -22,18 +22,17 @@ class CoordinationPlanningReview extends StatefulWidget {
 
 class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
   LocalStorageService localStorageService = LocalStorageService();
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      final args =
+      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-    final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-    if (args != null) {
-      final districtid = args['districtid'] as int?;
-      final stateId = args['stateId'] as int?;
-
-      WidgetsBinding.instance.addPostFrameCallback((_){
+      if (args != null) {
+        final districtid = args['districtid'] as int?;
+        final stateId = args['stateId'] as int?;
         final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
         if (districtid != null) {
           dwsmProvider.setDistrictId(districtid);
@@ -41,10 +40,9 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-      });
-
-
-    }
+        dwsmProvider.fetchCoordinationData("31", "478", "121212");
+      }
+    });
   }
 
   @override
