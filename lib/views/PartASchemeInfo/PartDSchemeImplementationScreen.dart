@@ -16,6 +16,7 @@ import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
+import '../../utils/toast_helper.dart';
 import 'PartBSchemePlanningScreen.dart';
 import 'PartEVisual Inspection.dart';
 import 'SchemeInfoCommonScreen.dart';
@@ -319,9 +320,8 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                           ),
                                           onPressed: () async {
 
+
                                             LoaderUtils.showLoadingWithMessage(context, isLoading: true,message: "Saving Scheme implementation...");
-
-
                                               await schemeProvider.saveSchemeImplementation(
                                                 userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                                 stateId: schemeProvider.stateId!,
@@ -334,26 +334,26 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                                 intakeTubeWellCost:  double.tryParse(schemeProvider.costControllers['Intake/Tubewell']?.text ?? '') ?? 0.0,
                                                 electroMechanicalNum: schemeProvider.electroMechanicalNum,
                                                 electroMechanicalCost: double.tryParse(schemeProvider.costControllers['Electromechanical components']?.text ?? '') ?? 0.0,
-                                                wtpNum: schemeProvider.wtpNum,
-                                                wtpCost: double.tryParse(schemeProvider.costControllers['WTP']?.text ?? '') ?? 0.0,
-                                                mbrNum: schemeProvider.mbrNum,
-                                                mbrCost: double.tryParse(schemeProvider.costControllers['MBR']?.text ?? '') ?? 0.0,
-                                                transmissionPipelineNum: schemeProvider.transmissionPipelineNum,
-                                                transmissionPipelineCost: double.tryParse(schemeProvider.costControllers['Transmission pipeline']?.text ?? '') ?? 0.0,
-                                                distributionPipelineNum: schemeProvider.distributionPipelineNum,
-                                                distributionPipelineCost: double.tryParse(schemeProvider.costControllers['Distribution pipeline']?.text ?? '') ?? 0.0,
-                                                disinfectionUnitNum: schemeProvider.disinfectionUnitNum,
-                                                disinfectionUnitCost: double.tryParse(schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ?? '') ?? 0.0,
-                                                ohtNum: schemeProvider.ohtNum,
-                                                ohtCost: double.tryParse(schemeProvider.costControllers['Disinfection unit']?.text ?? '') ?? 0.0,
-                                                iotNum: schemeProvider.iotNum,
-                                                iotCost: double.tryParse(schemeProvider.costControllers['IoT/SCADA']?.text ?? '') ?? 0.0,
-                                                roadRestorationNum: schemeProvider.roadRestorationNum,
-                                                roadRestorationCost: double.tryParse(schemeProvider.costControllers['Road Restoration']?.text ?? '') ?? 0.0,
-                                                solarComponentNum: schemeProvider.solarComponentNum,
-                                                solarComponentCost:double.tryParse(schemeProvider.costControllers['Solar components']?.text ?? '') ?? 0.0,
-                                                otherComponentsNum: schemeProvider.otherComponentsNum,
-                                                otherComponentsCost: double.tryParse(schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '') ?? 0.0,
+                                                wtpNum: 1,
+                                                wtpCost: double.parse(schemeProvider.costControllers['WTP']?.text ?? ''),
+                                                mbrNum: 2,
+                                                mbrCost: double.parse(schemeProvider.costControllers['MBR']?.text ?? '') ,
+                                                transmissionPipelineNum:3,
+                                                transmissionPipelineCost: double.parse(schemeProvider.costControllers['Transmission pipeline']?.text ?? '') ,
+                                                distributionPipelineNum: 4,
+                                                distributionPipelineCost: double.parse(schemeProvider.costControllers['Distribution pipeline']?.text ?? '') ,
+                                                disinfectionUnitNum: 5,
+                                                disinfectionUnitCost: double.parse(schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ?? '') ,
+                                                ohtNum: 6,
+                                                ohtCost: double.parse(schemeProvider.costControllers['Disinfection unit']?.text ?? '') ,
+                                                iotNum: 7,
+                                                iotCost: double.parse(schemeProvider.costControllers['IoT/SCADA']?.text ?? '') ,
+                                                roadRestorationNum: 8,
+                                                roadRestorationCost: double.parse(schemeProvider.costControllers['Road Restoration']?.text ?? '') ,
+                                                solarComponentNum: 9,
+                                                solarComponentCost:double.parse(schemeProvider.costControllers['Solar components']?.text ?? '') ,
+                                                otherComponentsNum: 10,
+                                                otherComponentsCost: double.parse(schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '') ,
                                                 plannedPTGatiShaktiWTP: schemeProvider.selectedWTPID,
                                                 plannedPTGatiShaktiOHT: schemeProvider.selectedOHSRID,
                                                 plannedPTGatiShaktiSource: schemeProvider.selecteSourceID,
@@ -363,9 +363,20 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                                 costRevisionReasons: schemeProvider.selectedrevisionReasonsID,
                                               );
 
-
-
-
+                                              if (schemeProvider.status!) {
+                                                ToastHelper.showToastMessage(
+                                                    schemeProvider.message!,
+                                                    backgroundColor: Colors.green);
+                                                Navigator.of(context).pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          SchemePlanningScreen()),
+                                                );
+                                              } else {
+                                                ToastHelper.showToastMessage(
+                                                    schemeProvider.message!,
+                                                    backgroundColor: Colors.red);
+                                              }
                                           },
                                           child: Text(
                                             "SAVE & NEXT",
@@ -449,10 +460,12 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                       border: OutlineInputBorder(),
                     ),
                     onChanged: (val) {
-                      schemeProvider.updateAdmissibleCost(component, val);
+
 
                       final id = schemeProvider.costControllers[component] ?? 0;
                       print("Component: $component, ID: $id, Value: $val");
+                      print("--3434 ${schemeProvider.costControllers['Intake/Tubewell']?.text}");
+                      print("--56565 ${schemeProvider.intakeTubeWellNum}");
                     },
                   ),
                 );
@@ -469,35 +482,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
     );
   }
 
-  /// Helper function to collect data from admissible cost fields
-  Map<String, dynamic> collectAdmissibleCostData(Schemeprovider schemeProvider) {
-    return {
-      'intakeTubeWellNum': schemeProvider.intakeTubeWellNum,
-      'intakeTubeWellCost': schemeProvider.costControllers['Intake/Tubewell']?.text ?? '',
-      'electroMechanicalNum': schemeProvider.electroMechanicalNum,
-      'electroMechanicalCost': schemeProvider.costControllers['Electromechanical components']?.text ?? '',
-      'wtpNum': schemeProvider.wtpNum,
-      'wtpCost': schemeProvider.costControllers['WTP']?.text ?? '',
-      'mbrNum': schemeProvider.mbrNum,
-      'mbrCost': schemeProvider.costControllers['MBR']?.text ?? '',
-      'transmissionPipelineNum': schemeProvider.transmissionPipelineNum,
-      'transmissionPipelineCost': schemeProvider.costControllers['Transmission pipeline']?.text ?? '',
-      'distributionPipelineNum': schemeProvider.distributionPipelineNum,
-      'distributionPipelineCost': schemeProvider.costControllers['Distribution pipeline']?.text ?? '',
-      'disinfectionUnitNum': schemeProvider.disinfectionUnitNum,
-      'disinfectionUnitCost': schemeProvider.costControllers['Disinfection unit']?.text ?? '',
-      'ohtNum': schemeProvider.ohtNum,
-      'ohtCost': schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ?? '',
-      'iotNum': schemeProvider.iotNum,
-      'iotCost': schemeProvider.costControllers['IoT/SCADA']?.text ?? '',
-      'roadRestorationNum': schemeProvider.roadRestorationNum,
-      'roadRestorationCost': schemeProvider.costControllers['Road Restoration']?.text ?? '',
-      'solarComponentNum': schemeProvider.solarComponentNum,
-      'solarComponentCost': schemeProvider.costControllers['Solar components']?.text ?? '',
-      'otherComponentsNum': schemeProvider.otherComponentsNum,
-      'otherComponentsCost': schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '',
-    };
-  }
+
 
 
 
