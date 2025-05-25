@@ -1,7 +1,7 @@
 import 'package:cno_inspection/utils/customtxtfeild.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
-import 'package:cno_inspection/views/PartASchemeInfo/PartCRetrofittingAugmentationScreen.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartCRetrofittingAugmentationScreen.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartDSchemeImplementationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -557,9 +557,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   Customradiobttn(
                                     question:
                                         "15. Whether departmental engineers do quality checks",
-                                    options: schemeProvider.question15Map.keys.toList(),
-                                    selectedOption:
-                                    schemeProvider.quesPartE15,
+                                    options: schemeProvider.question15Map.keys
+                                        .toList(),
+                                    selectedOption: schemeProvider.quesPartE15,
                                     onChanged: (val) {
                                       schemeProvider.quesPartE15 = val;
                                     },
@@ -569,9 +569,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   Customradiobttn(
                                     question:
                                         "16. Whether departmental engineers (JE/AE/DE/EE etc.) are verifying measurements of construction works",
-                                    options: schemeProvider.question16Map.keys.toList(),
-                                    selectedOption:
-                                        schemeProvider.quesPartE16,
+                                    options: schemeProvider.question16Map.keys
+                                        .toList(),
+                                    selectedOption: schemeProvider.quesPartE16,
                                     onChanged: (val) {
                                       schemeProvider.quesPartE16 = val;
                                     },
@@ -581,9 +581,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   Customradiobttn(
                                     question:
                                         "17. Scheme commissioned as per protocol?",
-                                    options: schemeProvider.question17Map.keys.toList(),
-                                    selectedOption:
-                                    schemeProvider.quesPartE17,
+                                    options: schemeProvider.question17Map.keys
+                                        .toList(),
+                                    selectedOption: schemeProvider.quesPartE17,
                                     onChanged: (val) {
                                       schemeProvider.quesPartE17 = val;
                                     },
@@ -593,9 +593,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   Customradiobttn(
                                     question:
                                         "18. Document proof of commissioning available",
-                                    options: schemeProvider.question17Map.keys.toList(),
-                                    selectedOption:
-                                        schemeProvider.quesPartE18,
+                                    options: schemeProvider.question17Map.keys
+                                        .toList(),
+                                    selectedOption: schemeProvider.quesPartE18,
                                     onChanged: (val) {
                                       schemeProvider.quesPartE17 = val;
                                     },
@@ -614,27 +614,42 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                           ),
                                         ),
                                         onPressed: () async {
+                                          LoaderUtils.showLoadingWithMessage(
+                                              context,
+                                              isLoading: true,
+                                              message:
+                                                  "Additional info for Retrofitting/Augmentation Schemes only");
 
-                                          LoaderUtils.showLoadingWithMessage(context ,isLoading:true,message: "Additional info for Retrofitting/Augmentation Schemes only");
-
-                                          await schemeProvider.saveVisualInspection( userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                          await schemeProvider.saveVisualInspection(
+                                              userId: _localStorageService.getInt(
+                                                  AppConstants.prefUserId)!,
                                               stateId: schemeProvider.stateId!,
-                                              schemeId: schemeProvider.schemeId!,
+                                              schemeId:
+                                                  schemeProvider.schemeId!,
                                               costOverrun: 000,
-                                              spalling: int.parse(schemeProvider.getSelectedPartEa1!),
-                                              cracks: int.parse(schemeProvider.getSelectedPartEa2!),
-                                              rustMarks: int.parse(schemeProvider.getSelectedPartEa3!),
-                                              swollenConcrete: int.parse(schemeProvider.getSelectedPartEa4!),
-                                              trappedJute: int.parse(schemeProvider.getSelectedPartEa5!),
+
+                                              spalling: int.parse(schemeProvider
+                                                  .getSelectedPartEa1!),
+                                              cracks: int.parse(schemeProvider
+                                                  .getSelectedPartEa2!),
+                                              rustMarks: int.parse(schemeProvider
+                                                  .getSelectedPartEa3!),
+                                              swollenConcrete: int.parse(
+                                                  schemeProvider
+                                                      .getSelectedPartEa4!),
+                                              trappedJute: int.parse(
+                                                  schemeProvider
+                                                      .getSelectedPartEa5!),
                                               rustedBars: int.parse(schemeProvider.getSelectedPartEa6!),
-                                              dampness: int.parse(schemeProvider.getSelectedPartEa7!),
-                                              whiteMarks: int.parse(schemeProvider.getSelectedPartEa8!),
-                                              stoneAggregates: int.parse(schemeProvider.getSelectedPartEa9!),
-                                              verticalAlignment: int.parse(schemeProvider.getSelectedPartEa10!),
-                                              sagSlabBeam: int.parse(schemeProvider.getSelectedPartEa11!),
-                                              highVibrationPumps: int.parse(schemeProvider.getSelectedPartEa12!),
-                                              reservoirLeakage: int.parse(schemeProvider.getSelectedPartEa13!),
-                                              highLeakagePumps: int.parse(schemeProvider.getSelectedPartEa14!),
+                                              //7
+                                              dampness: int.parse(schemeProvider.getSelectedPartEa8!),
+                                              whiteMarks: int.parse(schemeProvider.getSelectedPartEa9!),
+                                              stoneAggregates: int.parse(schemeProvider.getSelectedPartEa10!),
+                                              verticalAlignment: int.parse(schemeProvider.getSelectedPartEa11!),
+                                              sagSlabBeam: int.parse(schemeProvider.getSelectedPartEa12!),
+                                              highVibrationPumps: int.parse(schemeProvider.getSelectedPartEa13!),
+                                              reservoirLeakage: int.parse(schemeProvider.getSelectedPartEa14!),
+                                              highLeakagePumps: int.parse(schemeProvider.getSelectedPartEa15!),
 
                                               pipelineLeakageTransmission: int.parse(schemeProvider.getSelectedPartEb1!),
                                               pipelineLeakageDistribution: int.parse(schemeProvider.getSelectedPartEb2!),
@@ -648,24 +663,23 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               concurrentSupervision: int.parse(schemeProvider.getSelectedPartE7!),
                                               tpiaStageChecks: int.parse(schemeProvider.getSelectedPartE8!),
                                               tpiaReports: int.parse(schemeProvider.getSelectedPartE9!),
-
                                               actionOnTPIA: int.parse(schemeProvider.getSelectedPartE10!),
-                                              tpiaVerifyMB: int.parse(schemeProvider.getSelectedPartE11!),
-                                              hydroTestingDone: int.parse(schemeProvider.getSelectedPartE12!),
-
-                                              testReportsProvided: int.parse(schemeProvider.getSelectedPartEa14!),
-                                              deptQualityChecks: int.parse(schemeProvider.getSelectedPartEa15!),
-                                              deptMeasurementVerification: int.parse(schemeProvider.quesPartE16!),
-
-                                              schemeCommissioned: int.parse(schemeProvider.quesPartE17!),
-                                              commissioningProofAvailable: int.parse(schemeProvider.quesPartE18!),
-                                              tpiaIssueTypes: tpiaIssueTypes);
+                                              //11
+                                              tpiaVerifyMB: int.parse(schemeProvider.getSelectedPartE12!),
+                                              hydroTestingDone: int.parse(schemeProvider.getSelectedPartE13a!),
+                                              testReportsProvided: int.parse(schemeProvider.quesPartE13b!),
+                                              deptQualityChecks: int.parse(schemeProvider.quesPartE14!),
+                                              deptMeasurementVerification: int.parse(schemeProvider.quesPartE15!),
+                                              schemeCommissioned: int.parse(schemeProvider.quesPartE16!),
+                                              commissioningProofAvailable: int.parse(schemeProvider.quesPartE17!),
+                                              tpiaIssueTypes: );
 
                                           if (schemeProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 schemeProvider.message!,
                                                 backgroundColor: Colors.green);
-                                            Navigator.of(context).pushReplacement(
+                                            Navigator.of(context)
+                                                .pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (_) =>
                                                       SchemeImplementationScreen()),
@@ -676,12 +690,11 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                                 backgroundColor: Colors.red);
                                           }
 
-
-                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardschemeinfo()),);
-
-
-
-
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    Dashboardschemeinfo()),
+                                          );
                                         },
                                         child: Text(
                                           "SAVE",
