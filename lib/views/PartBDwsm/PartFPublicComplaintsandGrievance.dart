@@ -42,13 +42,16 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
     if (args != null) {
       final districtid = args['districtid'] as int?;
       final stateId = args['stateId'] as int?;
-      final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
-      if (districtid != null) {
-        dwsmProvider.setDistrictId(districtid);
-      }
-      if (stateId != null) {
-        dwsmProvider.setStateId(stateId);
-      }
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+        if (districtid != null) {
+          dwsmProvider.setDistrictId(districtid);
+        }
+        if (stateId != null) {
+          dwsmProvider.setStateId(stateId);
+        }
+      });
+
     }
   }
 
@@ -184,6 +187,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                   Customtxtfeild(
                                     label: "3.2 What is the average time of resolution:",
                                     controller: dwsmProvider.avgResolutionTimeController,
+                                    keyboardType: TextInputType.number,
                                   ),
 
                                   const SizedBox(height: 10),
@@ -208,9 +212,9 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                         ),
                                       ),
                                       onPressed: ()  async {
-                                        await LoaderUtils.conditionalLoader(
-                                            isLoading: dwsmProvider.isLoading);
 
+                                        LoaderUtils.showLoadingWithMessage(context,
+                                            isLoading: true,message: "Saving Public Complaints and Grievance Redressal");
                                         await dwsmProvider.saveGrievanceRedressal(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                             grievanceMechanismAvailable: dwsmProvider.grievanceMechanismAvailableID, howGrievancesRegistered: dwsmProvider.grievanceRegistrationMethodsID,
                                             complaintsReceived: dwsmProvider.complaintsReceivedID, typeOfComplaints: dwsmProvider.complaintTypesID, otherComplaints: '',

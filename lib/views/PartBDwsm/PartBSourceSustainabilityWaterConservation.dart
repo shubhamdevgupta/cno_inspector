@@ -34,13 +34,18 @@ class _SourceSustainablitiyWasterConservation
     if (args != null) {
       final districtid = args['districtid'] as int?;
       final stateId = args['stateId'] as int?;
-      final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
-      if (districtid != null) {
-        dwsmProvider.setDistrictId(districtid);
-      }
-      if (stateId != null) {
-        dwsmProvider.setStateId(stateId);
-      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+        if (districtid != null) {
+          dwsmProvider.setDistrictId(districtid);
+        }
+        if (stateId != null) {
+          dwsmProvider.setStateId(stateId);
+        }
+      });
+
+
     }
   }
 
@@ -212,8 +217,10 @@ class _SourceSustainablitiyWasterConservation
                                         ),
                                       ),
                                       onPressed: () async {
-                                        await LoaderUtils.conditionalLoader(
-                                            isLoading: dwsmProvider.isLoading);
+
+                                        LoaderUtils.showLoadingWithMessage(context,
+                                            isLoading: true,message: "Saving Source Sustainability and Water Conservation");
+
                                         dwsmProvider.saveSourceSustainability(
                                             userId: localStorageService.getInt(AppConstants.prefUserId)!,
                                             stateId: dwsmProvider.stateId!,

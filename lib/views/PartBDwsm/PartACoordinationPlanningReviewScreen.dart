@@ -32,13 +32,18 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
     if (args != null) {
       final districtid = args['districtid'] as int?;
       final stateId = args['stateId'] as int?;
-      final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
-      if (districtid != null) {
-        dwsmProvider.setDistrictId(districtid);
-      }
-      if (stateId != null) {
-        dwsmProvider.setStateId(stateId);
-      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+        if (districtid != null) {
+          dwsmProvider.setDistrictId(districtid);
+        }
+        if (stateId != null) {
+          dwsmProvider.setStateId(stateId);
+        }
+      });
+
+
     }
   }
 
@@ -192,8 +197,8 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                       ),
                                     ),
                                     onPressed: () async {
-                                      await LoaderUtils.conditionalLoader(
-                                          isLoading: dwsmProvider.isLoading);
+                                       LoaderUtils.showLoadingWithMessage(context,
+                                          isLoading: true,message: "Saving Coordination, Planning & Review Mechanism");
 
                                       await dwsmProvider.saveCoordinationPlanningReview(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                           areMonthlyMeetingsHeld: dwsmProvider.selectedMeetingQualityID, numberOfMeetingsLast6Months: int.parse(dwsmProvider.meetingsHeldController.text),

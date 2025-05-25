@@ -35,13 +35,17 @@ class _PartDoperationandmaintenance
     if (args != null) {
       final districtid = args['districtid'] as int?;
       final stateId = args['stateId'] as int?;
-      final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
-      if (districtid != null) {
-        dwsmProvider.setDistrictId(districtid);
-      }
-      if (stateId != null) {
-        dwsmProvider.setStateId(stateId);
-      }
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+        if (districtid != null) {
+          dwsmProvider.setDistrictId(districtid);
+        }
+        if (stateId != null) {
+          dwsmProvider.setStateId(stateId);
+        }
+      });
+
+
     }
   }
 
@@ -190,9 +194,11 @@ class _PartDoperationandmaintenance
                                       ),
                                     ),
                                     onPressed: () async {
-                                      await LoaderUtils.conditionalLoader(
-                                          isLoading: dwsmProvider.isLoading);
-                                    await dwsmProvider.saveOperationMaintenance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
+
+                                      LoaderUtils.showLoadingWithMessage(context,
+                                          isLoading: true,message: "Saving Operation & Maintenance (O&M)");
+
+                                      await dwsmProvider.saveOperationMaintenance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                         isProtocolInPlace: dwsmProvider.handoverProtocolID, percentVillagesWithManpower: double.parse(dwsmProvider.manpowerPercentController.text),
                                         isWaterFeeCharged: -1, feeAmountPerMonth: int.parse(dwsmProvider.waterFeeController.text),
                                         isUniformFee: dwsmProvider.feeBasisID,
