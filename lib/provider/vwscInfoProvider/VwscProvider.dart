@@ -1,22 +1,26 @@
 import 'package:cno_inspection/model/BaseResponse.dart';
-import 'package:cno_inspection/model/BaseResponseModel.dart';
+import 'package:cno_inspection/repository/vwscInfoRepo/fetchVwscRepo.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../model/vwscPartC/WaterQualityPartAResponse.dart';
 import '../../repository/vwscInfoRepo/VwscRepository.dart';
 
 class Vwscprovider extends ChangeNotifier {
   final VwscRepository _vwscRepository = VwscRepository();
+  final Fetchvwscrepo _fetchvwscrepo = Fetchvwscrepo();
 
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   String? _message;
+
   String? get message => _message;
   bool? _status;
+
   bool? get status => _status;
 
   BaseResponse? baseResponse;
-
 
   int? _villageId;
 
@@ -49,13 +53,11 @@ class Vwscprovider extends ChangeNotifier {
 
   // 2. Expose just the labels for the UI
 
-
   String? _selectedFrequencyLabels;
 
   String? get selectedFrequency => _selectedFrequencyLabels;
 
   // 3. Track selected labels
-
 
   set selectedFrequency(String? values) {
     _selectedFrequencyLabels = values;
@@ -63,8 +65,8 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   int get selectedFrequencyID => FrequencyLabels[_selectedFrequencyLabels] ?? 0;
-  // 4. Convert selected labels to their mapped integer values (for API)
 
+  // 4. Convert selected labels to their mapped integer values (for API)
 
   // Yes/No options with mappings
   // question 2222222222222222
@@ -76,8 +78,6 @@ class Vwscprovider extends ChangeNotifier {
   List<String> get yesNoOptions => yesNoMap.keys.toList();
 
   // Selected value for household water adequacy (label)
-
-
 
 ////////
   String? _selectedVWSCFormed; // Yes / No
@@ -92,9 +92,7 @@ class Vwscprovider extends ChangeNotifier {
   //
   int get selectedVWSCFormedID => yesNoMap[_selectedVWSCFormed] ?? 0;
 
-
-
-    String? _selectedVWSCBankAccount; // Yes / No
+  String? _selectedVWSCBankAccount; // Yes / No
 
   String? get selectedVWSCBankAccount => _selectedVWSCBankAccount;
 
@@ -106,10 +104,7 @@ class Vwscprovider extends ChangeNotifier {
   //
   int get selectedVWSCBankAccountID => yesNoMap[_selectedVWSCBankAccount] ?? 0;
 
-
-
-
-    String? _selectedAsBuiltDrawing; // Yes / No
+  String? _selectedAsBuiltDrawing; // Yes / No
 
   String? get selectedAsBuiltDrawing => _selectedAsBuiltDrawing;
 
@@ -121,8 +116,6 @@ class Vwscprovider extends ChangeNotifier {
   //
   int get selectedAsBuiltDrawingID => yesNoMap[_selectedAsBuiltDrawing] ?? 0;
 
-
-
   String? _selectedVWSCMeetingConducted; // Yes / No
 
   String? get selectedVWSCMeetingConducted => _selectedVWSCMeetingConducted;
@@ -133,12 +126,10 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedVWSCMeetingConductedID => yesNoMap[_selectedVWSCMeetingConducted] ?? 0;
-
-
+  int get selectedVWSCMeetingConductedID =>
+      yesNoMap[_selectedVWSCMeetingConducted] ?? 0;
 
   TextEditingController FrequencyController = TextEditingController();
-
 
   String? _selectedVWSCInvolvement; // Yes / No
 
@@ -148,16 +139,20 @@ class Vwscprovider extends ChangeNotifier {
     _selectedVWSCInvolvement = value;
     notifyListeners();
   }
+
   //
   final Map<String, int> VwscGPInvolment = {
     "Active": 1,
-    "Limited": 2,"No Involvement": 3,"VWSC not found": 4,
+    "Limited": 2,
+    "No Involvement": 3,
+    "VWSC not found": 4,
   };
+
   List<String> get VwscGPInvolmentOptions => VwscGPInvolment.keys.toList();
 
   //
-  int get selectedVWSCInvolvementID => VwscGPInvolment[_selectedVWSCInvolvement] ?? 0;
-
+  int get selectedVWSCInvolvementID =>
+      VwscGPInvolment[_selectedVWSCInvolvement] ?? 0;
 
   String? _selectedVWSCRecordsAvailable; // Yes / No
 
@@ -168,11 +163,9 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   //
-  int get selectedVWSCRecordsAvailableID => yesNoMap[_selectedVWSCRecordsAvailable] ?? 0;
-
-
+  int get selectedVWSCRecordsAvailableID =>
+      yesNoMap[_selectedVWSCRecordsAvailable] ?? 0;
 
   String? _selectedVWSCOMInvolved; // Yes / No
 
@@ -183,14 +176,16 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   final Map<String, int> VWSCOMInvolvedID = {
     "Active": 1,
-    "Limited": 2,"No": 3,"Not Applicable": 4,
+    "Limited": 2,
+    "No": 3,
+    "Not Applicable": 4,
   };
-  //
-  int get selectedVWSCOMInvolvedID => VWSCOMInvolvedID[_selectedVWSCOMInvolved] ?? 0;
 
+  //
+  int get selectedVWSCOMInvolvedID =>
+      VWSCOMInvolvedID[_selectedVWSCOMInvolved] ?? 0;
 
   String? _selectedSchemeHandover; // Yes / No
 
@@ -201,17 +196,17 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   final Map<String, int> SchemeHandover = {
     "Yes": 1,
-    "No": 2,"Not Applicable": 3,
+    "No": 2,
+    "Not Applicable": 3,
   };
 
   List<String> get SchemeHandoverOptions => SchemeHandover.keys.toList();
+
   //
-  int get selectedSchemeHandoverID => SchemeHandover[_selectedSchemeHandover] ?? 0;
-
-
+  int get selectedSchemeHandoverID =>
+      SchemeHandover[_selectedSchemeHandover] ?? 0;
 
   String? _selectedOMArrangements; // Yes / No
 
@@ -222,15 +217,18 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   final Map<String, int> OMArrangements = {
     "VWSC": 1,
-    "PHED": 2,"Outsourced": 3,"No arrangement": 4,
+    "PHED": 2,
+    "Outsourced": 3,
+    "No arrangement": 4,
   };
 
   List<String> get OMArrangementsOptions => OMArrangements.keys.toList();
+
   //
-  int get selectedOMArrangementsID => OMArrangements[_selectedOMArrangements] ?? 0;
+  int get selectedOMArrangementsID =>
+      OMArrangements[_selectedOMArrangements] ?? 0;
 
   String? _selectedCommunityAwareness; // Yes / No
 
@@ -241,16 +239,18 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   final Map<String, int> CommunityAwarenessID = {
     "Well informed": 1,
-    "Some awareness": 2,"No awareness": 3
+    "Some awareness": 2,
+    "No awareness": 3
   };
 
-  List<String> get CommunityAwarenessOptions => CommunityAwarenessID.keys.toList();
+  List<String> get CommunityAwarenessOptions =>
+      CommunityAwarenessID.keys.toList();
 
   //
-  int get selectedCommunityAwarenessID => CommunityAwarenessID[_selectedCommunityAwareness] ?? 0;
+  int get selectedCommunityAwarenessID =>
+      CommunityAwarenessID[_selectedCommunityAwareness] ?? 0;
 
   String? _selectedVWSCMeetingFrequency; // Yes / No
 
@@ -264,16 +264,18 @@ class Vwscprovider extends ChangeNotifier {
   //
   final Map<String, int> VWSCMeetingFrequency = {
     "Weekly": 1,
-    "Monthly": 2,"Quarterly": 3,"Other": 4,
+    "Monthly": 2,
+    "Quarterly": 3,
+    "Other": 4,
   };
-  int get selectedVWSCMeetingFrequencyID => VWSCMeetingFrequency[_selectedVWSCMeetingFrequency] ?? 0;
 
-
-
+  int get selectedVWSCMeetingFrequencyID =>
+      VWSCMeetingFrequency[_selectedVWSCMeetingFrequency] ?? 0;
 
   String? _selectedWaterQualitySatisfaction; // Yes / No
 
-  String? get selectedWaterQualitySatisfaction => _selectedWaterQualitySatisfaction;
+  String? get selectedWaterQualitySatisfaction =>
+      _selectedWaterQualitySatisfaction;
 
   set selectedWaterQualitySatisfaction(String? value) {
     _selectedWaterQualitySatisfaction = value;
@@ -283,21 +285,26 @@ class Vwscprovider extends ChangeNotifier {
   //
   final Map<String, int> WaterQualitySatisfaction = {
     "Satisfied": 1,
-    "Partially Satisfied": 2,"Dissatisfied": 3,"Not Interacted": 4,
+    "Partially Satisfied": 2,
+    "Dissatisfied": 3,
+    "Not Interacted": 4,
   };
 
-  List<String> get WaterQualitySatisfactionOptions => WaterQualitySatisfaction.keys.toList();
-  int get selectedWaterQualitySatisfactionID => WaterQualitySatisfaction[_selectedWaterQualitySatisfaction] ?? 0;
+  List<String> get WaterQualitySatisfactionOptions =>
+      WaterQualitySatisfaction.keys.toList();
 
-
+  int get selectedWaterQualitySatisfactionID =>
+      WaterQualitySatisfaction[_selectedWaterQualitySatisfaction] ?? 0;
 
   String? _selectedHouseholdWater;
+
   String? get selectedHouseholdWater => _selectedHouseholdWater;
 
   set selectedHouseholdWater(String? value) {
     _selectedHouseholdWater = value;
     notifyListeners();
   }
+
   // Get mapped ID
   int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? 0;
 
@@ -305,39 +312,42 @@ class Vwscprovider extends ChangeNotifier {
 
   // question 33333
   String? _selectedPvtgGroups;
+
   String? get selectedPvtgGroups => _selectedPvtgGroups;
 
   set selectedPvtgGroups(String? value) {
     _selectedPvtgGroups = value;
     notifyListeners();
   }
+
   TextEditingController reasonRemoteGroupsController = TextEditingController();
 
   int get selectedPvtgGroupsId => yesNoMap[_selectedPvtgGroups] ?? 0;
 
   // question 33333
 
-
-
 ///// ques 44444444444
-  final Map<String, int> tailEndMap ={
+  final Map<String, int> tailEndMap = {
     "Yes – Consistently": 1,
     "Occasionally": 2,
     "No": 3,
     "Not Verified": 4,
   };
+
   List<String> get tailEndOptions => tailEndMap.keys.toList();
 
   String? _selectedTailEnd;
+
   String? get selectedTailEnd => _selectedTailEnd;
 
   set selectedTailEnd(String? value) {
     _selectedTailEnd = value;
     notifyListeners();
   }
-  int get selectedTailEndId => tailEndMap[_selectedTailEnd] ?? 0;
-  /// 4444444444
 
+  int get selectedTailEndId => tailEndMap[_selectedTailEnd] ?? 0;
+
+  /// 4444444444
 
   //// ques 5555555555555555555
 
@@ -351,6 +361,7 @@ class Vwscprovider extends ChangeNotifier {
   List<String> get schemeStatusOptions => schemeStatusMap.keys.toList();
 
   String? _selectedschemeStatus;
+
   String? get selectedschemeStatus => _selectedschemeStatus;
 
   set selectedschemeStatus(String? value) {
@@ -370,9 +381,11 @@ class Vwscprovider extends ChangeNotifier {
     "PHCs": 3,
     "Not Applicable": 4,
   };
+
   List<String> get institutionsOptions => institutionsMap.keys.toList();
 
   List<String> _selectedinstitutions = [];
+
   List<String> get selectedinstitutions => _selectedinstitutions;
 
   set selectedinstitutions(List<String> values) {
@@ -386,10 +399,6 @@ class Vwscprovider extends ChangeNotifier {
       .toList();
 
 // que 6666666666666666666666666
-
-
-
-
 
   Future<bool> saveVwscWaterSupply({
     required int userId,
@@ -422,7 +431,7 @@ class Vwscprovider extends ChangeNotifier {
         createdBy: createdBy,
       );
       _message = response.message;
-      _status=response.status;
+      _status = response.status;
       return response.status ?? false;
     } catch (e) {
       _message = 'Something went wrong';
@@ -432,6 +441,93 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  /// get api for que 111
+
+  List<WaterSupplyFunctionality> waterSupplyData = [];
+
+  Future<void> fetchWaterSupply(
+      String stateId, String villageId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchvwscrepo.fetchWaterSupplyFunctionality(
+          stateId, villageId, userId);
+      if (response.status) {
+        waterSupplyData = response.result;
+
+        selectedFrequency =
+            getRadiobuttonData(waterSupplyData.first.waterSupplyFrequency,FrequencyLabels);
+        print('selectedFrequency: $selectedFrequency');
+
+        selectedHouseholdWater =
+            getRadiobuttonData(waterSupplyData.first.isAdequateWaterQuantityReachToHh,yesNoMap);
+        print('selectedHouseholdWater: $selectedHouseholdWater');
+
+        selectedPvtgGroups =
+            getRadiobuttonData(waterSupplyData.first.isAdequateWaterQuantityReachToRemote,yesNoMap);
+        print('selectedPvtgGroups: $selectedPvtgGroups');
+
+        reasonRemoteGroupsController.text =
+            waterSupplyData.first.isAdequateWaterQuantityReachToRemoteReason;
+        print('reasonRemoteGroupsController: ${reasonRemoteGroupsController.text}');
+
+        selectedTailEnd =
+            getRadiobuttonData(waterSupplyData.first.whetherWaterReachToTailEnd,tailEndMap);
+        print('selectedTailEnd: $selectedTailEnd');
+
+        selectedschemeStatus =
+            getRadiobuttonData(waterSupplyData.first.schemeOperationalStatusCommissioning,schemeStatusMap);
+        print('selectedschemeStatus: $selectedschemeStatus');
+
+        selectedinstitutions =
+            getCheckBoxData(waterSupplyData.first.whetherPwsReachAllSchoolAnganwadiPhc,institutionsMap);
+        print('selectedinstitutions: $selectedinstitutions');
+
+        notifyListeners();
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch water supply data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  String getRadiobuttonData(int id, Map<String, int> labelMap) {
+    return labelMap.entries
+        .firstWhere((entry) => entry.value == id,
+        orElse: () => const MapEntry('', 0))
+        .key;
+  }
+
+
+  List<String> getCheckBoxData(List<int> ids, Map<String, int> labelMap) {
+    return labelMap.entries
+        .where((entry) => ids.contains(entry.value))
+        .map((entry) => entry.key)
+        .toList();
+  }
+  void clearValuesforqueA() {
+    selectedFrequency = null;
+    selectedHouseholdWater = null;
+    selectedPvtgGroups = null;
+    reasonRemoteGroupsController.clear();
+    selectedTailEnd = null;
+    selectedschemeStatus = null;
+    selectedinstitutions = [];
+    notifyListeners();
+  }
+
+
+
+
+  /// get api for que 111
 
   // vwsc_provider.dart (add this inside your provider)
   Future<bool> saveVwscCommunityInvolvement({
@@ -474,7 +570,7 @@ class Vwscprovider extends ChangeNotifier {
         communitySatisfactionWithWq: communitySatisfactionWithWq,
         createdBy: createdBy,
       );
-      _status=response.status;
+      _status = response.status;
       _message = response.message;
       return response.status ?? false;
     } catch (e) {
@@ -509,7 +605,7 @@ class Vwscprovider extends ChangeNotifier {
         createdBy: createdBy,
       );
       _message = response.message;
-      _status=response.status;
+      _status = response.status;
       return response.status ?? false;
     } catch (e) {
       _message = 'Something went wrong';
@@ -519,8 +615,6 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-
 
   Map<String, int> ftkTestingFrequencyMap = {
     'Regularly tested': 1,
@@ -536,49 +630,61 @@ class Vwscprovider extends ChangeNotifier {
     'Not Tested': 4,
   };
 
-
   // 1. FTK Availability
   String? _selectedFTKAvailability;
+
   String? get selectedFTKAvailability => _selectedFTKAvailability;
+
   set selectedFTKAvailability(String? value) {
     _selectedFTKAvailability = value;
     notifyListeners();
   }
+
   int get selectedFTKAvailabilityId => yesNoMap[_selectedFTKAvailability] ?? 0;
 
   // 2. FTK Testing Frequency
   String? _selectedFTKTestingFrequency;
+
   String? get selectedFTKTestingFrequency => _selectedFTKTestingFrequency;
+
   set selectedFTKTestingFrequency(String? value) {
     _selectedFTKTestingFrequency = value;
     notifyListeners();
   }
-  int get selectedFTKTestingFrequencyId => ftkTestingFrequencyMap[_selectedFTKTestingFrequency] ?? 0;
+
+  int get selectedFTKTestingFrequencyId =>
+      ftkTestingFrequencyMap[_selectedFTKTestingFrequency] ?? 0;
 
   // 3. Women Trained in FTK Testing
-  TextEditingController womenTrainedController=TextEditingController();
+  TextEditingController womenTrainedController = TextEditingController();
 
   // 4. Who is doing water quality testing
   TextEditingController testerNameController = TextEditingController();
 
   // 5. Disinfection Done
   String? _selectedDisinfectionDone;
+
   String? get selectedDisinfectionDone => _selectedDisinfectionDone;
+
   set selectedDisinfectionDone(String? value) {
     _selectedDisinfectionDone = value;
     notifyListeners();
   }
-  int get selectedDisinfectionDoneId => yesNoMap[_selectedDisinfectionDone] ?? 0;
+
+  int get selectedDisinfectionDoneId =>
+      yesNoMap[_selectedDisinfectionDone] ?? 0;
 
   // 6. FRC Level
   String? _selectedFRCLevel;
+
   String? get selectedFRCLevel => _selectedFRCLevel;
+
   set selectedFRCLevel(String? value) {
     _selectedFRCLevel = value;
     notifyListeners();
   }
-  int get selectedFRCLevelId => frcLevelMap[_selectedFRCLevel] ?? 0;
 
+  int get selectedFRCLevelId => frcLevelMap[_selectedFRCLevel] ?? 0;
 
   Future<bool> saveWaterQualityMonitoring({
     required int userId,
@@ -609,7 +715,7 @@ class Vwscprovider extends ChangeNotifier {
         createdBy: createdBy,
       );
 
-      _status=response.status;
+      _status = response.status;
       _message = response.message;
       return response.status ?? false;
     } catch (e) {
@@ -620,8 +726,6 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-
 
   Map<String, int> turnAroundTimeMap = {
     'Same day': 1,
@@ -638,15 +742,18 @@ class Vwscprovider extends ChangeNotifier {
     "Directly calling to PHED/Contractor/O&M agency": 5,
   };
 
-
 // 7. Grievance redressal mechanism available
   String? _selectedGrievanceMechanism;
+
   String? get selectedGrievanceMechanism => _selectedGrievanceMechanism;
+
   set selectedGrievanceMechanism(String? value) {
     _selectedGrievanceMechanism = value;
     notifyListeners();
   }
-  int get selectedGrievanceMechanismId => yesNoMap[_selectedGrievanceMechanism] ?? 0;
+
+  int get selectedGrievanceMechanismId =>
+      yesNoMap[_selectedGrievanceMechanism] ?? 0;
 
 // 8. Grievance registration methods (multi-select)
   List<String> _selectedGrievanceMethods = [];
@@ -659,17 +766,22 @@ class Vwscprovider extends ChangeNotifier {
   }
 
 // Expose selected IDs (mapped from selected labels)
-  List<int> get selectedGrievanceMethodIds => _selectedGrievanceMethods.map((e) => grievanceRegistrationMethodMap[e] ?? 0).toList();
-
+  List<int> get selectedGrievanceMethodIds => _selectedGrievanceMethods
+      .map((e) => grievanceRegistrationMethodMap[e] ?? 0)
+      .toList();
 
 // 9. Turn around time for grievance
   String? _selectedTurnAroundTime;
+
   String? get selectedTurnAroundTime => _selectedTurnAroundTime;
+
   set selectedTurnAroundTime(String? value) {
     _selectedTurnAroundTime = value;
     notifyListeners();
   }
-  int get selectedTurnAroundTimeId => turnAroundTimeMap[_selectedTurnAroundTime] ?? 0;
+
+  int get selectedTurnAroundTimeId =>
+      turnAroundTimeMap[_selectedTurnAroundTime] ?? 0;
 
   Future<bool> saveGrievanceRedressal({
     required int userId,
@@ -693,7 +805,7 @@ class Vwscprovider extends ChangeNotifier {
         registrationTypes: registrationTypes,
         createdBy: createdBy,
       );
-      _status=response.status;
+      _status = response.status;
       _message = response.message;
       return response.status ?? false;
     } catch (e) {
@@ -704,15 +816,19 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
   ///// ques c 1111111
-  final Map<String, int> complainByCommunityOptMap ={
+  final Map<String, int> complainByCommunityOptMap = {
     "Yes": 1,
     "No": 2,
     "Not Known": 3,
   };
-  List<String> get complainByCommunityOption => complainByCommunityOptMap.keys.toList();
+
+  List<String> get complainByCommunityOption =>
+      complainByCommunityOptMap.keys.toList();
 
   String? _selectedComplaintByCommunity;
+
   String? get selectedComplaintByCommunity => _selectedComplaintByCommunity;
 
   set selectedComplaintByCommunity(String? value) {
@@ -720,29 +836,34 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedComplaintByCommunityId => complainByCommunityOptMap[_selectedComplaintByCommunity] ?? 0;
+  int get selectedComplaintByCommunityId =>
+      complainByCommunityOptMap[_selectedComplaintByCommunity] ?? 0;
 
-/// 11111111
+  /// 11111111
 
   ///////////33333333333/////////////
 
-  final Map<String, int> whereComplaintAddressOptMap ={
+  final Map<String, int> whereComplaintAddressOptMap = {
     "Yes": 1,
     "No": 2,
     "Partially": 3,
   };
-  List<String> get whereComplaintAddressOpt => whereComplaintAddressOptMap.keys.toList();
+
+  List<String> get whereComplaintAddressOpt =>
+      whereComplaintAddressOptMap.keys.toList();
 
   String? _selectedWhereComplaintAddressOpt;
-  String? get selectedWhereComplaintAddress => _selectedWhereComplaintAddressOpt;
+
+  String? get selectedWhereComplaintAddress =>
+      _selectedWhereComplaintAddressOpt;
 
   set SetSelectedWhereComplaintAddress(String? value) {
     _selectedWhereComplaintAddressOpt = value;
     notifyListeners();
   }
 
-  int get selectedWhereComplaintAddressOptId => whereComplaintAddressOptMap[_selectedWhereComplaintAddressOpt] ?? 0;
-
+  int get selectedWhereComplaintAddressOptId =>
+      whereComplaintAddressOptMap[_selectedWhereComplaintAddressOpt] ?? 0;
 
   ///////////33333333333/////////////
 
@@ -758,7 +879,8 @@ class Vwscprovider extends ChangeNotifier {
     "Others": 8,
   };
 
-  List<String> get typeOfComplaintMapOptions => typeOfComplaintMap.keys.toList();
+  List<String> get typeOfComplaintMapOptions =>
+      typeOfComplaintMap.keys.toList();
 
   List<String> _typeOfComplaintLabels = [];
 
@@ -776,5 +898,4 @@ class Vwscprovider extends ChangeNotifier {
       .toList();
 
 //
-
 }

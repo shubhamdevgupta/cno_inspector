@@ -27,10 +27,20 @@ class _CustomMultiSelectChipQuestionState
   @override
   void initState() {
     super.initState();
-    selectedChoices = widget.selectedValues;
+    selectedChoices = List.from(widget.selectedValues); // defensive copy
   }
 
-  _onChoiceSelected(String choice) {
+  @override
+  void didUpdateWidget(covariant CustomMultiSelectChipQuestion oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.selectedValues != oldWidget.selectedValues) {
+      setState(() {
+        selectedChoices = List.from(widget.selectedValues);
+      });
+    }
+  }
+
+  void _onChoiceSelected(String choice) {
     setState(() {
       if (selectedChoices.contains(choice)) {
         selectedChoices.remove(choice);
@@ -74,3 +84,4 @@ class _CustomMultiSelectChipQuestionState
     );
   }
 }
+
