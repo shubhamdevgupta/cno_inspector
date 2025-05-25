@@ -41,6 +41,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
 
         final schemeProvider =
         Provider.of<Schemeprovider>(context, listen: false);
+        schemeProvider.clearfetchSchemePlanning();
         if (schemeId != null) {
           schemeProvider.setSchemeId(schemeId);
         }
@@ -232,7 +233,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               ),
                               const SizedBox(height: 6),
                               Customradiobttn(
-                                question: 'Your question here?',
+                                question: 'Found as per DPR',
                                 options: schemeProvider.yesNoMap.keys.toList(),
                                 selectedOption: schemeProvider.onSpotExcavation,
                                 onChanged: (val) {

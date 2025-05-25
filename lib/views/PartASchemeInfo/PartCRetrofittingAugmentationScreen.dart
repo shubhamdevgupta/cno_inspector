@@ -45,6 +45,8 @@ class _RetrofittingAugmentationScreen
 
         final schemeProvider =
         Provider.of<Schemeprovider>(context, listen: false);
+
+        schemeProvider.clearfetchAdditionalInfoRetrofit();
         if (schemeId != null) {
           schemeProvider.setSchemeId(schemeId);
         }
@@ -158,24 +160,21 @@ class _RetrofittingAugmentationScreen
 
                                 Customtxtfeild(
                                   label: '2.1 Transmission Pipelines (in Kms)',
-                                  controller: schemeProvider
-                                      .transmissionPipelineKmController,
+                                  controller: schemeProvider.transmissionPipelineKmController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
                                   label: '2.2 Distribution Pipelines (in Kms)',
-                                  controller: schemeProvider
-                                      .distributionPipelineKmController,
+                                  controller: schemeProvider.distributionPipelineKmController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
                                   label: '2.3 WTP Capacity (in MLD)',
-                                  controller:
-                                      schemeProvider.wtpCapacityMldController,
+                                  controller: schemeProvider.wtpCapacityMldController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
@@ -183,8 +182,7 @@ class _RetrofittingAugmentationScreen
                                 Customtxtfeild(
                                   label:
                                       '2.4 Storage Structures (Nos./Capacity in KL)',
-                                  controller: schemeProvider
-                                      .storageStructureDetailsController,
+                                  controller: schemeProvider.storageStructureDetailsController,
                                   keyboardType: TextInputType.text,
                                 ),
                                 const SizedBox(height: 10),
@@ -209,10 +207,8 @@ class _RetrofittingAugmentationScreen
                                   '4. Has it been digitized and uploaded on PM Gatishakti? ',
                                   options:
                                   schemeProvider.yesNoMap.keys.toList(),
-                                  selectedOption:
-                                  schemeProvider.onPmGatiShakti,
-                                  onChanged: (val) => schemeProvider
-                                      .onPmGatiShakti = val,
+                                  selectedOption: schemeProvider.onPmGatiShakti,
+                                  onChanged: (val) => schemeProvider.onPmGatiShakti = val,
                                 ),
                                 if(schemeProvider.onPmGatishaktiID==2)
                                 Customtxtfeild(
