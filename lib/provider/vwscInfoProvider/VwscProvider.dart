@@ -457,8 +457,7 @@ class Vwscprovider extends ChangeNotifier {
       if (response.status) {
         waterSupplyData = response.result;
 
-        selectedFrequency =
-            getRadiobuttonData(waterSupplyData.first.waterSupplyFrequency,FrequencyLabels);
+        selectedFrequency = getRadiobuttonData(waterSupplyData.first.waterSupplyFrequency,FrequencyLabels);
         print('selectedFrequency: $selectedFrequency');
 
         selectedHouseholdWater =
@@ -528,6 +527,20 @@ class Vwscprovider extends ChangeNotifier {
 
 
   /// get api for que 111
+  /// get api for que 222
+
+  Future<void> fetchVwscCommunityInvolvement(String stateId, String villageId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+
+    }catch(e){
+    }
+  }
+
+
+  /// get api for que 222
 
   // vwsc_provider.dart (add this inside your provider)
   Future<bool> saveVwscCommunityInvolvement({
