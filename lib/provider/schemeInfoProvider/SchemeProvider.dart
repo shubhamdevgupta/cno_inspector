@@ -969,7 +969,7 @@ class Schemeprovider extends ChangeNotifier {
         schemeVisualInspectionData = response.result;
 
         if(schemeVisualInspectionData.isNotEmpty){
-          setQuesPartEa1 = schemeVisualInspectionData.first.quesPartEa1;
+        //  setQuesPartEa1 = schemeVisualInspectionData.first.quesPartEa1;
         }
 
         _message = response.message;
