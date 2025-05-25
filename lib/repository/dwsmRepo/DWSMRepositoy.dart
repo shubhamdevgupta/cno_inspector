@@ -42,7 +42,7 @@ class DWSMRepositoy {
     required int areSustainabilityMeasuresPromoted,
     required int areGWSourcesProtected,
     required int isRechargeStructureImplemented,
-    required int reasonIfNotImplemented,
+    required String reasonIfNotImplemented,
     required int areImpactStudiesConducted,
   }) async {
     try {
@@ -55,7 +55,7 @@ class DWSMRepositoy {
           "are_source_sustainability_measures_being_promoted": areSustainabilityMeasuresPromoted,
           "are_piped_water_schemes_gw_sources_protected_contamination": areGWSourcesProtected,
           "is_at_least_one_recharge_structure_gw_source_implemented": isRechargeStructureImplemented,
-          "if_no_least_one_recharge_structure_gw_source_implemented_reson": reasonIfNotImplemented,
+          "if_no_least_one_recharge_structure_gw_source_implemented_reson": reasonIfNotImplemented,//have to be in string
           "are_any_impact_studies_assessments_conducted_source_sustain_efforts": areImpactStudiesConducted,
         }),
       );

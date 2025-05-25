@@ -320,12 +320,12 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                           ),
                                           onPressed: () async {
 
-                                            await LoaderUtils.conditionalLoader(isLoading: schemeProvider.isLoading);
 
+                                            LoaderUtils.showLoadingWithMessage(context, isLoading: true,message: "Saving Scheme implementation...");
                                               await schemeProvider.saveSchemeImplementation(
                                                 userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                                stateId: 4,
-                                                schemeId: 565656565,
+                                                stateId: schemeProvider.stateId!,
+                                                schemeId: schemeProvider.schemeId!,
                                                 costOverrun: schemeProvider.selectedCostOverrunID,
                                                 costRevisedBeforeWork: schemeProvider.selectedrevisedCostApprovedID,
                                                 revisedCostPercentage: schemeProvider.selectedincreaseInCostID,

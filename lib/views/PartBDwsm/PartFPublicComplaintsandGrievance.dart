@@ -1,3 +1,5 @@
+import 'package:cno_inspection/services/LocalStorageService.dart';
+import 'package:cno_inspection/utils/AppConstants.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
@@ -10,9 +12,11 @@ import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
+import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
+import '../../utils/toast_helper.dart';
 import '../PartASchemeInfo/PartBSchemePlanningScreen.dart';
 import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
@@ -26,14 +30,7 @@ class PartFPublicCompliant extends StatefulWidget {
 }
 
 class _PartFPublicCompliant extends State<PartFPublicCompliant> {
-// State variables
-  // State variables
-  String? grievanceMechanismAvailable;
-  List<String> grievanceRegistrationMethods = [];
-  String? complaintsReceived;
-  List<String> complaintTypes = [];
-  TextEditingController avgResolutionTimeController = TextEditingController();
-  TextEditingController actionTakenController = TextEditingController();
+  LocalStorageService localStorageService =LocalStorageService();
 
   @override
   void didChangeDependencies() {
@@ -45,13 +42,16 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
     if (args != null) {
       final districtid = args['districtid'] as int?;
       final stateId = args['stateId'] as int?;
-      final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
-      if (districtid != null) {
-        dwsmProvider.setDistrictId(districtid);
-      }
-      if (stateId != null) {
-        dwsmProvider.setStateId(stateId);
-      }
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+        if (districtid != null) {
+          dwsmProvider.setDistrictId(districtid);
+        }
+        if (stateId != null) {
+          dwsmProvider.setStateId(stateId);
+        }
+      });
+
     }
   }
 
@@ -115,9 +115,9 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
             ),
             elevation: 5,
           ),
-          body: Stack(
-            children: [
-              SingleChildScrollView(
+          body: Consumer<Dwsmprovider>(
+            builder: (context,dwsmProvider,child){
+              return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
                       top: 20, left: 6, right: 6, bottom: 5),
@@ -147,83 +147,55 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                             child:Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
-                                // Grievance mechanism available
                                 Customradiobttn(
                                   question: "1. Grievance Redressal mechanism available:",
-                                  options: ["Yes", "No"],
-                                  selectedOption: grievanceMechanismAvailable,
-                                  onChanged: (val) => setState(() => grievanceMechanismAvailable = val),
+                                  options: dwsmProvider.yesNoMap.keys.toList(),
+                                  selectedOption: dwsmProvider.grievanceMechanismAvailable,
+                                  onChanged: (val) => dwsmProvider.grievanceMechanismAvailable = val,
                                 ),
 
                                 const SizedBox(height: 10),
 
-                                // How grievances are registered
-                                CustomMultiSelectChipQuestion(
+                                Customradiobttn(
                                   question: "2. How grievances are registered by the villagers:",
-                                  options: [
-                                    "Toll free number",
-                                    "Web based portal",
-                                    "Mobile application",
-                                    "Public grievance registration center",
-                                    "Directly calling to PHED/Contractor/O&M agency"
-                                  ],
-                                  selectedValues: grievanceRegistrationMethods,
-                                  onSelectionChanged: (values) {
-                                    setState(() {
-                                      grievanceRegistrationMethods = values;
-                                    });
-                                  },
+                                  options:dwsmProvider.grievanceRegistrationMethodsMap.keys.toList(),
+                                  selectedOption: dwsmProvider.grievanceRegistrationMethods,
+                                  onChanged: (values) => dwsmProvider.grievanceRegistrationMethods = values,
                                 ),
 
                                 const SizedBox(height: 10),
 
-                                // Are complaints received
                                 Customradiobttn(
                                   question: "3. Are complaints received from public regarding JJM schemes?",
-                                  options: ["Yes", "No"],
-                                  selectedOption: complaintsReceived,
-                                  onChanged: (val) => setState(() => complaintsReceived = val),
+                                  options: dwsmProvider.yesNoMap.keys.toList(),
+                                  selectedOption: dwsmProvider.complaintsReceived,
+                                  onChanged: (val) => dwsmProvider.complaintsReceived = val,
                                 ),
 
-                                if (complaintsReceived == "Yes") ...[
+                                if (dwsmProvider.complaintsReceived == "Yes") ...[
                                   const SizedBox(height: 10),
 
-                                  // Type of complaints
-                                  CustomMultiSelectChipQuestion(
+                                  Customradiobttn(
                                     question: "3.1 If yes, type of complaints (tick all applicable):",
-                                    options: [
-                                      "Poor water quality",
-                                      "Incomplete connections",
-                                      "Delay in commissioning",
-                                      "No water supply",
-                                      "Faulty construction",
-                                      "Others"
-                                    ],
-                                    selectedValues: complaintTypes,
-                                    onSelectionChanged: (values) {
-                                      setState(() {
-                                        complaintTypes = values;
-                                      });
-                                    },
+                                    options:dwsmProvider.complaintTypeMap.keys.toList(),
+                                    selectedOption: dwsmProvider.complaintTypes,
+                                    onChanged: (values) => dwsmProvider.complaintTypes = values,
                                   ),
 
                                   const SizedBox(height: 10),
 
-                                  // Average resolution time
                                   Customtxtfeild(
                                     label: "3.2 What is the average time of resolution:",
-                                    controller: avgResolutionTimeController,
+                                    controller: dwsmProvider.avgResolutionTimeController,
+                                    keyboardType: TextInputType.number,
                                   ),
 
                                   const SizedBox(height: 10),
 
-                                  // Action taken
                                   Customtxtfeild(
                                     label: "3.3 Action taken by department:",
-                                    controller: actionTakenController,
+                                    controller: dwsmProvider.actionTakenController,
                                   ),
-
 
                                 ],
 
@@ -239,9 +211,26 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                           borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
                                         ),
                                       ),
-                                      onPressed: () {
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboarddwsm()),);
+                                      onPressed: ()  async {
 
+                                        LoaderUtils.showLoadingWithMessage(context,
+                                            isLoading: true,message: "Saving Public Complaints and Grievance Redressal");
+                                        await dwsmProvider.saveGrievanceRedressal(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
+                                            grievanceMechanismAvailable: dwsmProvider.grievanceMechanismAvailableID, howGrievancesRegistered: dwsmProvider.grievanceRegistrationMethodsID,
+                                            complaintsReceived: dwsmProvider.complaintsReceivedID, typeOfComplaints: dwsmProvider.complaintTypesID, otherComplaints: '',
+                                            resolutionTime: int.parse(dwsmProvider.avgResolutionTimeController.text), actionTakenByDepartment: int.parse(dwsmProvider.actionTakenController.text));
+                                        if (dwsmProvider.status!) {
+                                          ToastHelper.showToastMessage(
+                                              dwsmProvider.message!,
+                                              backgroundColor: Colors.green);
+                                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => Dashboarddwsm()),
+                                                (Route<dynamic> route) => false,
+                                          );
+                                        } else {
+                                          ToastHelper.showToastMessage(
+                                              dwsmProvider.message!,
+                                              backgroundColor: Colors.red);
+                                        }
                                       },
                                       child: Text(
                                         "SAVE",
@@ -261,9 +250,9 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
+              );
+            },
+          )
         ),
       ),
     );

@@ -615,7 +615,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
 
                                           LoaderUtils.showLoadingWithMessage(context ,isLoading:true,message: "Additional info for Retrofitting/Augmentation Schemes only");
 
-                                    /*      await schemeProvider.saveVisualInspection( userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                       /*   await schemeProvider.saveVisualInspection( userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                               stateId: schemeProvider.stateId!,
                                               schemeId: schemeProvider.schemeId!,
                                               costOverrun: costOverrun,
