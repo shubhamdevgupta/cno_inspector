@@ -674,11 +674,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                                 backgroundColor: Colors.red);
                                           }
 
-
                                           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardschemeinfo()),);
-
-
-
 
                                         },
                                         child: Text(
