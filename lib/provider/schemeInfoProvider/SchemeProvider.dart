@@ -1,8 +1,16 @@
 import 'package:cno_inspection/repository/schemeInfoRepo/SchemeRepository.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../model/schemePartA/AdditionalInfoRetrofitResponsePartC.dart';
+import '../../model/schemePartA/SchemeImplementationModelPartD.dart';
+import '../../model/schemePartA/SchemePlanningResponsePartB.dart';
+import '../../model/schemePartA/SchemeVisualInspectionModelPartE.dart';
+import '../../model/schemePartA/SourceSurveyResponsePartA.dart';
+import '../../repository/schemeInfoRepo/fetchSchemeRepo.dart';
+
 class Schemeprovider extends ChangeNotifier {
   final SchemeRepositoy _schemeRepositoy = SchemeRepositoy();
+  final Fetchschemeinfo _fetchschemeinfo = Fetchschemeinfo();
 
   bool _isLoading = false;
 
@@ -66,14 +74,18 @@ class Schemeprovider extends ChangeNotifier {
       TextEditingController();
 
   int? _schemeId;
+
   int? get schemeId => _schemeId;
+
   void setSchemeId(int id) {
     _schemeId = id;
     notifyListeners();
   }
 
   int? _stateId;
+
   int? get stateId => _stateId;
+
   void setStateId(int id) {
     _stateId = id;
     notifyListeners();
@@ -119,6 +131,35 @@ class Schemeprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  //**** fetch api Part A start here ***///
+
+  List<SourceSurveyItem> sourceSurveyData = [];
+
+  Future<void> fetchSourceSurvey(
+      String stateId, String schemeId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response =
+          await _fetchschemeinfo.fetchSourceSurvey(stateId, schemeId, userId);
+      if (response.status) {
+        sourceSurveyData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch Source Survey data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //**** fetch api Part B start here ***///
 
   // --------------------
   // 1. Survey Questions (Checkbox Questions)
@@ -244,6 +285,34 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  //**** fetch api Part B start here ***///
+
+  List<SchemePlanningItem> schemePlanningData = [];
+
+  Future<void> fetchSchemePlanning(
+      String stateId, String schemeId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response =
+          await _fetchschemeinfo.fetchSchemePlanning(stateId, schemeId, userId);
+      if (response.status) {
+        schemePlanningData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch Scheme Planning data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //**** fetch api Part B end here ***///
   // Radio 1: Legacy Infrastructure Assessment
   String? _legacyInfraAssessment;
 
@@ -342,14 +411,40 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  //**** fetch api Part C start here ***///
 
+  List<AdditionalInfoRetrofitItem> retrofitInfoData = [];
 
+  Future<void> fetchAdditionalInfoRetrofit(
+      String stateId, String schemeId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
 
+    try {
+      final response = await _fetchschemeinfo.fetchAdditionalInfoRetrofit(
+          stateId, schemeId, userId);
+      if (response.status) {
+        retrofitInfoData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch Retrofit Info data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 
+  //**** fetch api Part C end here ***///
 
   // Q1: Delay reasons
   List<String> _selectedDelayReasons = [];
+
   List<String> get selectedDelayReasons => _selectedDelayReasons;
+
   set selectedDelayReasons(List<String> value) {
     _selectedDelayReasons = value;
     notifyListeners();
@@ -367,12 +462,16 @@ class Schemeprovider extends ChangeNotifier {
     "Clearances from Highway/Forest/Railways etc.": 9,
   };
 
-      List<String> get delayReasonsOptions => delayReasons.keys.toList();
-  List<int> get selectedDelayReasonsID => _selectedDelayReasons.map((e) => delayReasons[e] ?? 0).toList();
+  List<String> get delayReasonsOptions => delayReasons.keys.toList();
+
+  List<int> get selectedDelayReasonsID =>
+      _selectedDelayReasons.map((e) => delayReasons[e] ?? 0).toList();
 
   // Q2: Cost overrun (single choice)
   String? _selectedCostOverrun;
+
   String? get selectedCostOverrun => _selectedCostOverrun;
+
   set selectedCostOverrun(String? value) {
     _selectedCostOverrun = value;
     notifyListeners();
@@ -389,7 +488,9 @@ class Schemeprovider extends ChangeNotifier {
 
   // Q3: Reason(s) for cost overrun (multi-select)
   List<String> _selectedcostOverrunReasons = [];
+
   List<String> get selectedcostOverrunReasons => _selectedcostOverrunReasons;
+
   set selectedcostOverrunReasons(List<String> value) {
     _selectedcostOverrunReasons = value;
     notifyListeners();
@@ -408,8 +509,9 @@ class Schemeprovider extends ChangeNotifier {
   };
 
   List<String> get ReasonsOptionsOptions => ReasonsOptions.keys.toList();
-  List<int> get selectedcostOverrunReasonsID => _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
 
+  List<int> get selectedcostOverrunReasonsID =>
+      _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
 
   // Q4: Revised cost approved before award (yes/no)
   String? _selectedrevisedCostApproved; // Yes / No
@@ -423,7 +525,9 @@ class Schemeprovider extends ChangeNotifier {
 
   // Q5: Cost overrun (single choice)
   String? _selectedincreaseInCost;
+
   String? get selectedincreaseInCost => _selectedincreaseInCost;
+
   set selectedincreaseInCost(String? value) {
     _selectedincreaseInCost = value;
     notifyListeners();
@@ -436,15 +540,18 @@ class Schemeprovider extends ChangeNotifier {
     "No overrun": 4,
   };
 
-  int get selectedincreaseInCostID => increaseInCostID[_selectedincreaseInCost] ?? 0;
-
+  int get selectedincreaseInCostID =>
+      increaseInCostID[_selectedincreaseInCost] ?? 0;
 
   //
-  int get selectedrevisedCostApprovedID => yesNoMap[_selectedrevisedCostApproved] ?? 0;
+  int get selectedrevisedCostApprovedID =>
+      yesNoMap[_selectedrevisedCostApproved] ?? 0;
 
   // Q5.1: Increase in cost (single choice)
   String? _increaseInCost;
+
   String? get increaseInCost => _increaseInCost;
+
   set increaseInCost(String? value) {
     _increaseInCost = value;
     notifyListeners();
@@ -462,12 +569,13 @@ class Schemeprovider extends ChangeNotifier {
 
   // Q6: Reason(s) for cost overrun (multi-select)
   List<String> _selectedrevisionReasons = [];
+
   List<String> get selectedrevisionReasons => _selectedrevisionReasons;
+
   set selectedrevisionReasons(List<String> value) {
     _selectedrevisionReasons = value;
     notifyListeners();
   }
-
 
   //Q7
   Map<String, TextEditingController> costControllers = {};
@@ -520,8 +628,6 @@ class Schemeprovider extends ChangeNotifier {
     };
   }
 
-
-
   /// Dispose controllers when done
   void disposeControllers() {
     for (var controller in costControllers.values) {
@@ -529,25 +635,25 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
-
   /// Optional: convert data to JSON
   Map<String, dynamic> toJson() => {
-    'intakeTubeWellNum': intakeTubeWellNum,
-    'electroMechanicalNum': electroMechanicalNum,
-    'wtpNum': wtpNum,
-    'mbrNum': mbrNum,
-    'transmissionPipelineNum': transmissionPipelineNum,
-    'distributionPipelineNum': distributionPipelineNum,
-    'ohtNum': ohtNum,
-    'disinfectionUnitNum': disinfectionUnitNum,
-    'iotNum': iotNum,
-    'roadRestorationNum': roadRestorationNum,
-    'solarComponentNum': solarComponentNum,
-    'otherComponentsNum': otherComponentsNum,
-    'costControllers': costControllers.map((key, value) => MapEntry(key, value.text)),
-  };
+        'intakeTubeWellNum': intakeTubeWellNum,
+        'electroMechanicalNum': electroMechanicalNum,
+        'wtpNum': wtpNum,
+        'mbrNum': mbrNum,
+        'transmissionPipelineNum': transmissionPipelineNum,
+        'distributionPipelineNum': distributionPipelineNum,
+        'ohtNum': ohtNum,
+        'disinfectionUnitNum': disinfectionUnitNum,
+        'iotNum': iotNum,
+        'roadRestorationNum': roadRestorationNum,
+        'solarComponentNum': solarComponentNum,
+        'otherComponentsNum': otherComponentsNum,
+        'costControllers':
+            costControllers.map((key, value) => MapEntry(key, value.text)),
+      };
 
-   //Q8.1
+  //Q8.1
   String? _selectedWTP; // Yes / No
 
   String? get selectedWTP => _selectedWTP;
@@ -556,9 +662,11 @@ class Schemeprovider extends ChangeNotifier {
     _selectedWTP = value;
     notifyListeners();
   }
+
   //
   int get selectedWTPID => yesNoMap[_selectedWTP] ?? 0;
-   //Q8.2
+
+  //Q8.2
   String? _selectedOHSR; // Yes / No
 
   String? get selectedOHSR => _selectedOHSR;
@@ -567,9 +675,11 @@ class Schemeprovider extends ChangeNotifier {
     _selectedOHSR = value;
     notifyListeners();
   }
+
   //
   int get selectedOHSRID => yesNoMap[_selectedOHSR] ?? 0;
-   //Q8.3
+
+  //Q8.3
   String? _selecteSource; // Yes / No
 
   String? get selecteSource => _selecteSource;
@@ -578,9 +688,11 @@ class Schemeprovider extends ChangeNotifier {
     _selecteSource = value;
     notifyListeners();
   }
+
   //
   int get selecteSourceID => yesNoMap[_selecteSource] ?? 0;
-   //Q8.4
+
+  //Q8.4
   String? _selectedPipeline; // Yes / No
 
   String? get selectedPipeline => _selectedPipeline;
@@ -589,7 +701,6 @@ class Schemeprovider extends ChangeNotifier {
     _selectedPipeline = value;
     notifyListeners();
   }
-
 
   //
   int get selectedPipelineID => yesNoMap[_selectedPipeline] ?? 0;
@@ -606,9 +717,6 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
-
   final Map<String, int> revisionReasonsID = {
     "Price rise of materials": 1,
     "Additional scope of work ": 2,
@@ -617,8 +725,9 @@ class Schemeprovider extends ChangeNotifier {
   };
 
   List<String> get revisionReasonsIDOptions => revisionReasonsID.keys.toList();
-  List<int> get selectedrevisionReasonsID => _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
 
+  List<int> get selectedrevisionReasonsID =>
+      _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
 
   Future<bool> saveSchemeImplementation({
     required int userId,
@@ -717,6 +826,35 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  //**** fetch api Part D start here ***///
+
+  List<SchemeImplementationModel> schemeImplementationData = [];
+
+  Future<void> fetchSchemeImplementationData(
+      String stateId, String schemeId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchschemeinfo.fetchSchemeImplementation(
+          stateId, schemeId, userId);
+      if (response.status) {
+        schemeImplementationData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch Scheme Implementation data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //**** fetch api Part E end here ***///
+
   Future<bool> saveVisualInspection({
     required int userId,
     required int stateId,
@@ -813,6 +951,36 @@ class Schemeprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  //**** fetch api Part E start here ***///
+
+  List<SchemeVisualInspectionModel> schemeVisualInspectionData = [];
+
+  Future<void> fetchSchemeVisualInspectionData(
+      String stateId, String schemeId, String userId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchschemeinfo.fetchSchemeVisualInspection(
+          stateId, schemeId, userId);
+
+      if (response.status) {
+        schemeVisualInspectionData = response.result;
+        _message = '';
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      _message = 'Failed to fetch Scheme Visual Inspection data.';
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //**** fetch api Part E end here ***///
 
   String? _quesPartEa1;
   String? _quesPartEa2;
@@ -1077,7 +1245,6 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedId_partE9 => yesNoMap[_quesPartE9] ?? 0;
 
-
   final Map<String, int> question10Map = {
     "Pipelines without proper depth": 1,
     "Pipelines leaking": 2,
@@ -1087,18 +1254,16 @@ class Schemeprovider extends ChangeNotifier {
     "Others": 6
   };
   List<String> _quesPartE10 = [];
+
   List<String> get getSelectedPartE10 => _quesPartE10;
+
   set selectedPartE10(List<String> value) {
     _quesPartE10 = value;
     notifyListeners();
   }
 
-
-  List<int> get selectedId_partE10 => _quesPartE10.map((e) => question10Map[e] ?? 0).toList();
-
-
-
-
+  List<int> get selectedId_partE10 =>
+      _quesPartE10.map((e) => question10Map[e] ?? 0).toList();
 
   final Map<String, int> question11Map = {
     "Rectification/Demolition Done": 1,
@@ -1213,16 +1378,13 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedId_partE16 => question16Map[_quesPartE16] ?? 0;
 
-
   ////
   final Map<String, int> question17Map = {
-
-      "Yes":1,
-      "No":2,
-      "Partially":3,
-      "Not Verified":4,
-      "Work is in progress":5
-
+    "Yes": 1,
+    "No": 2,
+    "Partially": 3,
+    "Not Verified": 4,
+    "Work is in progress": 5
   };
 
   String? _quesPartE17;
@@ -1236,14 +1398,8 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedId_partE17 => question17Map[_quesPartE17] ?? 0;
 
-
-
   ////
-  final Map<String, int> question18Map = {
-
-    "Yes":1, "No":2, "NA":3
-
-  };
+  final Map<String, int> question18Map = {"Yes": 1, "No": 2, "NA": 3};
 
   String? _quesPartE18;
 
@@ -1255,7 +1411,4 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   int get selectedId_partE18 => question18Map[_quesPartE18] ?? 0;
-
-
-
 }

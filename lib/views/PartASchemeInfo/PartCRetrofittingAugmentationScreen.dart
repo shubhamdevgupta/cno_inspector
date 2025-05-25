@@ -31,23 +31,29 @@ class _RetrofittingAugmentationScreen
     extends State<RetrofittingAugmentationScreen> {
 
   LocalStorageService _localStorageService = LocalStorageService();
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
 
-    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args =
+      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      if (args != null) {
+        final schemeId = args['schemeId'] as int?;
+        final stateId = args['stateId'] as int?;
 
-    if (args != null) {
-      final schemeId = args['schemeId'] as int?;
-      final stateId = args['stateId'] as int?;
-      final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);
-      if (schemeId != null) {
-        schemeProvider.setSchemeId(schemeId);
+        final schemeProvider =
+        Provider.of<Schemeprovider>(context, listen: false);
+        if (schemeId != null) {
+          schemeProvider.setSchemeId(schemeId);
+        }
+        if (stateId != null) {
+          schemeProvider.setStateId(stateId);
+        }
+        schemeProvider.fetchAdditionalInfoRetrofit("0", "5343948", "34483");
       }
-      if (stateId != null) {
-        schemeProvider.setStateId(stateId);
-      }
-    }
+    });
   }
   @override
   Widget build(BuildContext context) {
