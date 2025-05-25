@@ -66,18 +66,14 @@ class Schemeprovider extends ChangeNotifier {
       TextEditingController();
 
   int? _schemeId;
-
   int? get schemeId => _schemeId;
-
   void setSchemeId(int id) {
     _schemeId = id;
     notifyListeners();
   }
 
   int? _stateId;
-
   int? get stateId => _stateId;
-
   void setStateId(int id) {
     _stateId = id;
     notifyListeners();
@@ -1130,6 +1126,7 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedId_partE9 => yesNoMap[_quesPartE9] ?? 0;
 
+
   final Map<String, int> question10Map = {
     "Pipelines without proper depth": 1,
     "Pipelines leaking": 2,
@@ -1138,17 +1135,19 @@ class Schemeprovider extends ChangeNotifier {
     "Water connections in drains": 5,
     "Others": 6
   };
-
-  String? _quesPartE10;
-
-  String? get getSelectedPartE10 => _quesPartE10;
-
-  set selectedPartE10(String? value) {
+  List<String> _quesPartE10 = [];
+  List<String> get getSelectedPartE10 => _quesPartE10;
+  set selectedPartE10(List<String> value) {
     _quesPartE10 = value;
     notifyListeners();
   }
 
-  int get selectedId_partE10 => question10Map[_quesPartE10] ?? 0;
+
+  List<int> get selectedId_partE10 => _quesPartE10.map((e) => question10Map[e] ?? 0).toList();
+
+
+
+
 
   final Map<String, int> question11Map = {
     "Rectification/Demolition Done": 1,

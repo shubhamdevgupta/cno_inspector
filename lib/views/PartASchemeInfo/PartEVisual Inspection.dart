@@ -15,6 +15,7 @@ import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/toast_helper.dart';
@@ -41,7 +42,6 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
     if (args != null) {
       final schemeId = args['schemeId'] as int?;
       final stateId = args['stateId'] as int?;
-
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final schemeProvider =
             Provider.of<Schemeprovider>(context, listen: false);
@@ -474,19 +474,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
 
                                   // Continue similarly for all remaining questions...
 
-                                  Customradiobttn(
-                                    question:
-                                        "10. Serious issues observed by TPIAs:",
-                                    options: schemeProvider.question10Map.keys
-                                        .toList(),
-                                    selectedOption:
-                                        schemeProvider.getSelectedPartE10,
-                                    onChanged: (val) {
+                                  CustomMultiSelectChipQuestion(
+                                    question: '10. Serious issues observed by TPIAs:',
+                                    options: schemeProvider.question10Map.keys.toList(),
+                                    selectedValues: schemeProvider.getSelectedPartE10,
+                                    onSelectionChanged: (val) {
                                       schemeProvider.selectedPartE10 = val;
+                                      print('SelecteddelayReasons: ${schemeProvider.getSelectedPartE10} : ${schemeProvider.selectedDelayReasonsID}');
                                     },
-                                    orientation: Axis
-                                        .vertical, // <--- Added to display vertically
                                   ),
+
+
 
                                   Customradiobttn(
                                     question:
@@ -591,11 +589,11 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   Customradiobttn(
                                     question:
                                         "18. Document proof of commissioning available",
-                                    options: schemeProvider.question17Map.keys.toList(),
+                                    options: schemeProvider.question18Map.keys.toList(),
                                     selectedOption:
                                         schemeProvider.quesPartE18,
                                     onChanged: (val) {
-                                      schemeProvider.quesPartE17 = val;
+                                      schemeProvider.quesPartE18 = val;
                                     },
                                   ),
 
@@ -615,44 +613,51 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
 
                                           LoaderUtils.showLoadingWithMessage(context ,isLoading:true,message: "Additional info for Retrofitting/Augmentation Schemes only");
 
-                                       /*   await schemeProvider.saveVisualInspection( userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                          await schemeProvider.saveVisualInspection(
+                                              userId: _localStorageService.getInt(
+                                                  AppConstants.prefUserId)!,
                                               stateId: schemeProvider.stateId!,
                                               schemeId: schemeProvider.schemeId!,
-                                              costOverrun: costOverrun,
-                                              spalling: spalling,
-                                              cracks: cracks,
-                                              rustMarks: rustMarks,
-                                              swollenConcrete: swollenConcrete,
-                                              trappedJute: trappedJute,
-                                              rustedBars: rustedBars,
-                                              dampness: dampness,
-                                              whiteMarks: whiteMarks,
-                                              stoneAggregates: stoneAggregates,
-                                              verticalAlignment: verticalAlignment,
-                                              sagSlabBeam: sagSlabBeam,
-                                              highVibrationPumps: highVibrationPumps,
-                                              reservoirLeakage: reservoirLeakage,
-                                              highLeakagePumps: highLeakagePumps,
-                                              pipelineLeakageTransmission: pipelineLeakageTransmission,
-                                              pipelineLeakageDistribution: pipelineLeakageDistribution,
-                                              wetPatches: wetPatches,
-                                              verifyPipeQuality: verifyPipeQuality,
-                                              pipesAsPerDPR: pipesAsPerDPR,
-                                              complaintsOnPipelineDesign: complaintsOnPipelineDesign,
-                                              isTPIAEngaged: isTPIAEngaged,
-                                              sampleChecks: sampleChecks,
-                                              concurrentSupervision: concurrentSupervision,
-                                              tpiaStageChecks: tpiaStageChecks,
-                                              tpiaReports: tpiaReports,
-                                              actionOnTPIA: actionOnTPIA,
-                                              tpiaVerifyMB: tpiaVerifyMB,
-                                              hydroTestingDone: hydroTestingDone,
-                                              testReportsProvided: testReportsProvided,
-                                              deptQualityChecks: deptQualityChecks,
-                                              deptMeasurementVerification: deptMeasurementVerification,
-                                              schemeCommissioned: schemeCommissioned,
-                                              commissioningProofAvailable: commissioningProofAvailable,
-                                              tpiaIssueTypes: tpiaIssueTypes);*/
+                                              costOverrun: 000,
+
+                                              spalling: schemeProvider.selectedId_partEa1,
+                                              cracks: schemeProvider.selectedId_partEa2,
+                                              rustMarks: schemeProvider.selectedId_partEa3,
+                                              swollenConcrete: schemeProvider.selectedId_partEa4,
+                                              trappedJute: schemeProvider.selectedId_partEa5,
+                                              rustedBars: schemeProvider.selectedId_partEa6,
+                                              //a7
+                                              dampness: schemeProvider.selectedId_partEa8,
+                                              whiteMarks: schemeProvider.selectedId_partEa9,
+                                              stoneAggregates: schemeProvider.selectedId_partEa10,
+                                              verticalAlignment: schemeProvider.selectedId_partEa11,
+                                              sagSlabBeam: schemeProvider.selectedId_partEa12,
+                                              highVibrationPumps: schemeProvider.selectedId_partEa13,
+                                              reservoirLeakage: schemeProvider.selectedId_partEa14,
+                                              highLeakagePumps: schemeProvider.selectedId_partEa15,
+
+                                              pipelineLeakageTransmission: schemeProvider.selectedId_partEb1,
+                                              pipelineLeakageDistribution: schemeProvider.selectedId_partEb2,
+                                              wetPatches: schemeProvider.selectedId_partEb3,
+
+                                              verifyPipeQuality: schemeProvider.selectedId_partE2,
+                                              pipesAsPerDPR: schemeProvider.selectedId_partE3,
+                                              complaintsOnPipelineDesign: schemeProvider.selectedId_partE4,
+                                              isTPIAEngaged: schemeProvider.selectedId_partE5,
+                                              sampleChecks: schemeProvider.selectedId_partE6,
+                                              concurrentSupervision: schemeProvider.selectedId_partE7,
+                                              tpiaStageChecks: schemeProvider.selectedId_partE8,
+                                              tpiaReports: schemeProvider.selectedId_partE9,
+                                              actionOnTPIA: schemeProvider.selectedId_partE11,
+                                              tpiaVerifyMB: schemeProvider.selectedId_partE12,
+                                              hydroTestingDone: schemeProvider.selectedId_partE13a,
+                                              // 13b distrabution line
+                                              testReportsProvided: schemeProvider.selectedId_partE14,
+                                              deptQualityChecks: schemeProvider.selectedId_partE15,
+                                              deptMeasurementVerification: schemeProvider.selectedId_partE16,
+                                              schemeCommissioned: schemeProvider.selectedId_partE17,
+                                              commissioningProofAvailable: schemeProvider.selectedId_partE18,
+                                              tpiaIssueTypes:schemeProvider.selectedId_partE10);  // 10 ==>  tpiaIssueTypes:schemeProvider.selectedId_partE10
 
                                           if (schemeProvider.status!) {
                                             ToastHelper.showToastMessage(
