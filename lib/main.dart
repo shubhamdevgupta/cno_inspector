@@ -1,3 +1,4 @@
+import 'package:cno_inspection/provider/AppStateProvider.dart';
 import 'package:cno_inspection/provider/ErrorProvider.dart';
 import 'package:cno_inspection/provider/authentication_provider.dart';
 import 'package:cno_inspection/provider/dashboardProvider.dart';
@@ -48,6 +49,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => Schemeprovider()),
         ChangeNotifierProvider(create: (_) => Dwsmprovider()),
         ChangeNotifierProvider(create: (_) => ErrorProvider()),
+        ChangeNotifierProvider(create: (_) => AppStateProvider()),
+
 
       ],
       child: MyApp(),

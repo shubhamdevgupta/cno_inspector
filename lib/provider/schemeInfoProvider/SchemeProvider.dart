@@ -8,12 +8,16 @@ import '../../model/schemePartA/SchemeVisualInspectionModelPartE.dart';
 import '../../model/schemePartA/SourceSurveyResponsePartA.dart';
 import '../../repository/schemeInfoRepo/fetchSchemeRepo.dart';
 import '../../utils/GlobalExceptionHandler.dart';
+import '../../views/tabLayout/DashboardTabView.dart';
 
 class Schemeprovider extends ChangeNotifier {
   final SchemeRepositoy _schemeRepositoy = SchemeRepositoy();
   final Fetchschemeinfo _fetchschemeinfo = Fetchschemeinfo();
 
   int formType = 2; // suppose 1 = above 10
+
+  String errorMsg = '';
+
 
   bool _isLoading = false;
 

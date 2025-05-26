@@ -2,10 +2,12 @@
 import 'package:cno_inspection/provider/dwsmInfoProvider/DwsmProvider.dart';
 import 'package:cno_inspection/utils/CustomSearchableDropdown.dart';
 import 'package:cno_inspection/utils/Showerrormsg.dart';
+import 'package:cno_inspection/views/tabLayout/DashboardTabView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/DashboardResponse/DashboardResponse.dart';
+import '../../provider/AppStateProvider.dart';
 import '../../provider/dashboardProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
@@ -31,10 +33,11 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-      final String? sourceFlag = args?['source'];
-      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,2, int.parse(sourceFlag!));
 
+
+      final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+
+      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,1,mode.modeValue);
       dwsmprovider = Provider.of<Dwsmprovider>(context, listen: false);
 
       //clear part a
@@ -81,7 +84,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardscreen()),
+                    MaterialPageRoute(builder: (context) => DashboardTabView()),
                     (route) => false,
                   );
                 }

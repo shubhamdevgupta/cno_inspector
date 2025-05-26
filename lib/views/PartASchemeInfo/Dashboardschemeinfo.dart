@@ -1,8 +1,10 @@
 // views/DashboardScreen.dart
 import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
+import 'package:cno_inspection/views/tabLayout/DashboardTabView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/dashboardProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
@@ -26,14 +28,11 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-
-      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-      final String? sourceFlag = args?['source'];
-      print('dataaaaaaaaaaaaaaaa  $sourceFlag');
-
       dashboardProvider =Provider.of<DashboardProvider>(context,listen: false);
-      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!,1, int.parse(sourceFlag!));
 
+      final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+
+      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!,1,mode.modeValue);
       dashboardProvider = Provider.of<DashboardProvider>(context, listen: false);
       schemeprovider = Provider.of<Schemeprovider>(context,listen: false);
       //clear for part a
@@ -75,7 +74,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardscreen()),
+                    MaterialPageRoute(builder: (context) => DashboardTabView()),
                     (route) => false,
                   );
                 }

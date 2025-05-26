@@ -1,9 +1,11 @@
 import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
+import 'package:cno_inspection/views/tabLayout/DashboardTabView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/customradiobttn.dart';
@@ -98,6 +100,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
           ),
           body: Consumer<Schemeprovider>(
             builder: (context, schemeProvider, child) {
+              final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
               return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
@@ -210,7 +213,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                 // Below 10% part Start
 
                                 Visibility(
-                                  visible: schemeProvider.formType==2, // or your custom bool
+                                  visible: mode == ProjectMode.below10,
                                   child: Column(
                                     children: [
                                       SizedBox(height: 10,),
