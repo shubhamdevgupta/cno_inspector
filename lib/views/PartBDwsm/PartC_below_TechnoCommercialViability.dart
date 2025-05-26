@@ -7,28 +7,26 @@ import 'package:provider/provider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
-import '../../utils/MultiSelectionlist.dart';
+import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
-import 'PartFPublicComplaintsandGrievance.dart';
+import 'PartDOperationandMaintenance.dart';
 
-class PartEQualityAssuranceCommissioning extends StatefulWidget {
-  const PartEQualityAssuranceCommissioning({Key? key}) : super(key: key);
+class PartcBelowTechnocommercialviabilityP extends StatefulWidget {
+  const PartcBelowTechnocommercialviabilityP({Key? key}) : super(key: key);
 
   @override
-  _PartEQualityAssuranceCommissioning createState() =>
-      _PartEQualityAssuranceCommissioning();
+  _PartcBelowTechnocommercialviabilityP createState() => _PartcBelowTechnocommercialviabilityP();
 }
 
-class _PartEQualityAssuranceCommissioning
-    extends State<PartEQualityAssuranceCommissioning> {
+class _PartcBelowTechnocommercialviabilityP extends State<PartcBelowTechnocommercialviabilityP> {
   LocalStorageService localStorageService = LocalStorageService();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
       ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
@@ -36,14 +34,17 @@ class _PartEQualityAssuranceCommissioning
         final districtid = args['districtid'] as int?;
         final stateId = args['stateId'] as int?;
         final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
-        dwsmProvider.clearfetchQualityAssuranceData();
+        dwsmProvider.clearMonitoringFields();
         if (districtid != null) {
           dwsmProvider.setDistrictId(districtid);
         }
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchQualityAssuranceData(stateId.toString(),districtid.toString(),localStorageService.getInt(AppConstants.prefUserId).toString());
+        dwsmProvider.fetchMonitoringLabData(
+            stateId.toString(),
+            districtid.toString(),
+            localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -73,7 +74,7 @@ class _PartEQualityAssuranceCommissioning
               // Removes the default back button
               centerTitle: true,
               title: Text(
-                "Quality Assurance and Commissioning",
+                "Techno-Commercial Viability",
                 style: AppStyles.appBarTitle,
               ),
               leading: IconButton(
@@ -85,7 +86,7 @@ class _PartEQualityAssuranceCommissioning
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => Dashboarddwsm()),
-                      (route) => false,
+                          (route) => false,
                     );
                   }
                 },
@@ -107,7 +108,7 @@ class _PartEQualityAssuranceCommissioning
               elevation: 5,
             ),
             body: Consumer<Dwsmprovider>(
-              builder: (context, dwsmProvider, child) {
+              builder: (context, dwsmProvider, childe) {
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -116,15 +117,15 @@ class _PartEQualityAssuranceCommissioning
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Dwsmcommonclass(
-                          no: 5,
+                          no: 3,
                         ),
                         Card(
                           elevation: 5,
                           child: Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                border:
-                                    Border.all(color: Colors.green, width: 1.4),
+                                border: Border.all(
+                                    color: Colors.deepOrangeAccent, width: 1.4),
                                 borderRadius: BorderRadius.circular(14),
                                 boxShadow: [
                                   BoxShadow(
@@ -139,96 +140,100 @@ class _PartEQualityAssuranceCommissioning
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Authorized inspectors
 
+                                  //Below 10% scheme
                                   Column(
                                     children: [
-                                      Customradiobttn(
-                                        question:
-                                        "1. Who all are authorized to inspect and measure works during field inspection?",
-                                        options: dwsmProvider.authorizedInspectorsMap.keys.toList(),
-                                        selectedOption:
-                                        dwsmProvider.authorizedInspectors,
-                                        onChanged: (values) {
-                                          dwsmProvider.authorizedInspectors = values;
-                                        },
+
+                                      Customtxtfeild(
+                                        label: "1. What will be the annual O&M cost of the scheme?",
+                                        controller:
+                                        dwsmProvider.testingManagedController,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Customtxtfeild(
+                                        label: "2.	What shall be water user charges from the stakeholders?",
+                                        controller:
+                                        dwsmProvider.testingManagedController,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Customtxtfeild(
+                                        label: "3. What is the State plan for meeting the remaining O&M expenses?",
+                                        controller:
+                                        dwsmProvider.testingManagedController,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Customtxtfeild(
+                                        label: "4. Expected skilled manpower required for operations of the schemes?:?",
+                                        controller:
+                                        dwsmProvider.testingManagedController,
                                       ),
 
-                                      const SizedBox(height: 10),
-
-                                      Customradiobttn(
-                                        question:
-                                        "2. Is the commissioning protocol being followed?",
-                                        options: dwsmProvider.yesNoMap.keys.toList(),
-                                        selectedOption: dwsmProvider
-                                            .commissioningProtocolFollowed,
-                                        onChanged: (val) => dwsmProvider
-                                            .commissioningProtocolFollowed = val,
-                                      ),
-
-                                      const SizedBox(height: 10),
-
-                                      //TODO this question not part of below 10%
-                                      Customradiobttn(
-                                        question:
-                                        "3. During commissioning of schemes, who are generally present?",
-                                        options: dwsmProvider.commissioningPresenceMap.keys.toList(),
-                                        selectedOption: dwsmProvider.commissioningPresence,
-                                        onChanged: (values) {
-                                          dwsmProvider.commissioningPresence = values;
-                                        },
-                                      ),
-
-                                      const SizedBox(height: 10),
-
-                                      Customradiobttn(
-                                        question:
-                                        "4. Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?",
-                                        options: dwsmProvider.thirdPartyAssessmentMap.keys.toList(),
-                                        selectedOption:
-                                        dwsmProvider.thirdPartyAssessment,
-                                        onChanged: (val) =>
-                                        dwsmProvider.thirdPartyAssessment = val,
-                                      ),
                                     ],
+
                                   ),
 
-
-
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(
                                       height: 35,
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.green,
+                                          backgroundColor: Colors.deepOrange,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
                                                 10), // Adjust the radius as needed
                                           ),
                                         ),
-                                        onPressed: ()  async {
+                                        onPressed: () async {
+                                      /*    LoaderUtils.showLoadingWithMessage(
+                                              context,
+                                              isLoading: dwsmProvider.isLoading,
+                                              message:
+                                              "Saving  Monitoring, Quality and Lab Infrastructure");
 
-                                          LoaderUtils.showLoadingWithMessage(context, isLoading: dwsmProvider.isLoading,message: "Saving Quality Assurance and Commissioning");
-
-                                          await dwsmProvider.saveQualityAssurance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
-                                              inspectionAuthority: dwsmProvider.authorizedInspectorID, isCommissioningProtocolFollowed: dwsmProvider.commissioningProtocolFollowedID,
-                                              schemesPresentDuringCommissioning: dwsmProvider.commissioningPresenceID,
-                                              districtAssessmentAgencies: dwsmProvider.thirdPartyAssessmentID);
+                                          await dwsmProvider
+                                              .saveMonitoringQualityLab(
+                                              userId: localStorageService
+                                                  .getInt(AppConstants
+                                                  .prefUserId)!,
+                                              stateId:
+                                              dwsmProvider.stateId!,
+                                              districtId:
+                                              dwsmProvider.districtId!,
+                                              areAssetsGeotagged:
+                                              dwsmProvider
+                                                  .assetsGeotaggedID,
+                                              hasNABLLab:
+                                              dwsmProvider.hasNablLabID,
+                                              testingManagementDescription:
+                                              dwsmProvider
+                                                  .testingManagedController
+                                                  .text);
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,
                                                 backgroundColor: Colors.green);
-                                            Navigator.of(context).pushReplacement(
+                                            Navigator.of(context)
+                                                .pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (_) =>
-                                                      PartFPublicCompliant()),
+                                                      PartDoperationandmaintenance()),
                                             );
                                           } else {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,
                                                 backgroundColor: Colors.red);
-                                          }
+                                          }*/
                                         },
                                         child: Text(
                                           "SAVE & NEXT",
@@ -243,6 +248,7 @@ class _PartEQualityAssuranceCommissioning
                                   ),
                                 ],
                               )),
+
                         )
                       ],
                     ),
