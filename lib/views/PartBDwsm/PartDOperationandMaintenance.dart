@@ -136,6 +136,8 @@ class _PartDoperationandmaintenance
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                          Column(
+                            children: [
                               Customradiobttn(
                                 question: "1. Is a protocol for handing over in-village infrastructure in place?",
                                 options: dwsmProvider.handoverProtocolMap.keys.toList(),
@@ -175,6 +177,42 @@ class _PartDoperationandmaintenance
                                 controller: dwsmProvider.userFeePercentController,
                                 keyboardType: TextInputType.number,
                               ),
+                            ],
+                          ),
+
+
+
+                              //Below 10 % scheme
+                              Column(
+                                children: [
+
+                                  Customradiobttn(
+                                    question: "1. Who all are authorized to inspect, and measure works during field inspection?",
+                                    options: dwsmProvider.fieldinspectionMap.keys.toList(),
+                                    selectedOption: dwsmProvider.fieldinspection,
+                                    onChanged: (val) => dwsmProvider.fieldinspection = val,
+                                  ),
+
+
+                                  Customradiobttn(
+                                    question: "2. Is the commissioning protocol being proposed:",
+                                    options: dwsmProvider.yesNoMap.keys.toList(),
+                                    selectedOption: dwsmProvider.commisionprotocol,
+                                    onChanged: (val) => dwsmProvider.commisionprotocol = val,
+                                  ),
+
+                                  Customradiobttn(
+                                    question: "3. Has the district has hired any third-party inspection agencies on quality checks for JJM schemes?:",
+                                    options: dwsmProvider.yesNoMap.keys.toList(),
+                                    selectedOption: dwsmProvider.inspectionagencies,
+                                    onChanged: (val) => dwsmProvider.inspectionagencies = val,
+                                  ),
+
+
+
+                                ],
+                              ),
+
                               SizedBox(
                                 height: 10,
                               ),

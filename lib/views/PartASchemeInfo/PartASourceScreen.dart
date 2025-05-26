@@ -225,8 +225,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                             isLoading: schemeProvider.isLoading,
                                             message: "Saving Source...");
                                         await schemeProvider.saveSourceSurvey(
-                                            userId: _localStorageService.getInt(
-                                                AppConstants.prefUserId)!,
+                                            userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                             stateId: schemeProvider.stateId!,
                                             schemeId: schemeProvider.schemeId!,
                                             isRecommendShiftToSurface: schemeProvider
