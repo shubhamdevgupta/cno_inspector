@@ -1252,48 +1252,48 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   void mapAllWidgets(SchemeVisualInspectionModel schemeVisualInspectionModel) {
-    setQuesPartEa1 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa2 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa3 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa4 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa5 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa6 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa7 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa8 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa9 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa10 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa11 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa12 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa13 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa14 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEa15 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEa1 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfSpallingPeelingOffSurface, yesNoMap);
+    setQuesPartEa2 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfCracks, yesNoMap);
+    setQuesPartEa3 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfRedBrownRustMarks, yesNoMap);
+    setQuesPartEa4 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfSwollenConcrete, yesNoMap);
+    setQuesPartEa5 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfTrappedJutePlasticBags, yesNoMap);
+    setQuesPartEa6 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfProtrudingRustedReinforcementBars, yesNoMap);
+    setQuesPartEa7 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfSpallingPeelingOffSurface, yesNoMap);
+    setQuesPartEa8 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfDampnessOfConcreteSurfaces, yesNoMap);
+    setQuesPartEa9 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfVisibleWhiteMarks, yesNoMap);
+    setQuesPartEa10 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfVisibleStoneAggregates, yesNoMap);
+    setQuesPartEa11 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfStructuresMissingVerticalAlignment, yesNoMap);
+    setQuesPartEa12 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfVisibleSagInTheSlabBeam, yesNoMap);
+    setQuesPartEa13 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfHighVibrationObservedInThePumps, yesNoMap);
+    setQuesPartEa14 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfLeakagesInReservoirs, yesNoMap);
+    setQuesPartEa15 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfHighLeakagesFromThePumps, yesNoMap);
 
-    setQuesPartEb1 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEb2 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartEb3 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartEb1 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfPipelinesLeakagesInTransmission, yesNoMap);
+    setQuesPartEb2 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfPipelinesLeakagesInDistribution, yesNoMap);
+    setQuesPartEb3 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfPipelinesWetPatchesPoolOfWater, yesNoMap);
 
-    setQuesPartE2 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartE3 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartE4 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartE5 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartE2 = getRadiobuttonData(schemeVisualInspectionModel.whetherQualityVerifyOfManufacturePipeThirdParty, yesNoMap);
+    setQuesPartE3 = getRadiobuttonData(schemeVisualInspectionModel.areThePipesAsMentionInTheDPRImplementOnGround, yesNoMap);
+    setQuesPartE4 = getRadiobuttonData(schemeVisualInspectionModel.areThereAnyComplaintsRegardingPipelineDesignDPR, yesNoMap);
+    setQuesPartE5 = getRadiobuttonData(schemeVisualInspectionModel.isTpiaEngagedForThisScheme, yesNoMap);
     setQuesPartE6 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartE7 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartE8 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartE9 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    setQuesPartE7 = getRadiobuttonData(schemeVisualInspectionModel.isConcurrentSupervisionInTheScopeOfTPIA, yesNoMap);
+    setQuesPartE8 = getRadiobuttonData(schemeVisualInspectionModel.hasTpiaConductedQualityChecksAtDifferentStages, yesNoMap);
+    setQuesPartE9 = getRadiobuttonData(schemeVisualInspectionModel.areThereRecordsOfInspectReportsIssuedByTpia, yesNoMap);
 
-    selectedPartE10 = [];
+    //selectedPartE10 = getCheckBoxData(schemeVisualInspectionModel.typeOfIssuesTpias., question10Map);  // list
 
-    selectedPartE11 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question11Map);
-    selectedPartE12 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question12Map);
+    selectedPartE11 = getRadiobuttonData(schemeVisualInspectionModel.hasAnyActionBeenTakenBasedOnTpiaObservation, question11Map);
+    selectedPartE12 = getRadiobuttonData(schemeVisualInspectionModel.doesTpiaVerifyMeasurementBooks, question12Map);
 
-    selectedPartE13a = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    quesPartE13b = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
+    selectedPartE13a = getRadiobuttonData(schemeVisualInspectionModel.isHydrotestingPipelinesDone, yesNoMap);
+    //quesPartE13b = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfPipelinesLeakagesInTransmission, yesNoMap);
 
-    quesPartE14 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question14Map);
-    quesPartE15 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question15Map);
-    quesPartE16 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question16Map);
-    quesPartE17 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question17Map);
-    quesPartE18 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question18Map);
+    quesPartE14 = getRadiobuttonData(schemeVisualInspectionModel.isTestReportsProvidedSamples, question14Map);
+    quesPartE15 = getRadiobuttonData(schemeVisualInspectionModel.whetherDeptEngineersDoQualityChecks, question15Map);
+    quesPartE16 = getRadiobuttonData(schemeVisualInspectionModel.whetherDeptEngVerifyMeasureConstructionWorks, question16Map);
+    quesPartE17 = getRadiobuttonData(schemeVisualInspectionModel.schemeCommissionedAsPerProtocol, question17Map);
+    quesPartE18 = getRadiobuttonData(schemeVisualInspectionModel.documentAsProofOfCommissioningAvailable, question18Map);
   }
 
 
