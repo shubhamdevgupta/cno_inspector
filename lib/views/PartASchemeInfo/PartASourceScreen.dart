@@ -44,7 +44,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSourceSurvey("0", "5343948", "34483");
+        schemeProvider.fetchSourceSurvey(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }

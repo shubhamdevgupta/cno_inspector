@@ -37,14 +37,14 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
 
         final schemeProvider =
             Provider.of<Schemeprovider>(context, listen: false);
-         schemeProvider.ClearfetchSchemeImplementationData();
+         schemeProvider.clearSchemeImplementationData();
         if (schemeId != null) {
           schemeProvider.setSchemeId(schemeId);
         }
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSchemeImplementationData("0", "5343948", "34483");
+        schemeProvider.fetchSchemeImplementationData(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }

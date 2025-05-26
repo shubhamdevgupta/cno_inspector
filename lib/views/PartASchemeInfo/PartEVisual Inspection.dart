@@ -36,13 +36,15 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
 
         final schemeProvider =
             Provider.of<Schemeprovider>(context, listen: false);
+        schemeProvider.clearVisualInspectionAnswers();
+
         if (schemeId != null) {
           schemeProvider.setSchemeId(schemeId);
         }
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSchemeVisualInspectionData("0", "5343948", "34483");
+        schemeProvider.fetchSchemeVisualInspectionData(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
