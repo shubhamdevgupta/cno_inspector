@@ -17,7 +17,7 @@ class Dwsmprovider extends ChangeNotifier {
   String getRadiobuttonData(int id, Map<String, int> labelMap) {
     return labelMap.entries
         .firstWhere((entry) => entry.value == id,
-            orElse: () => const MapEntry('', 0))
+        orElse: () => const MapEntry('', 0))
         .key;
   }
 
@@ -267,7 +267,7 @@ class Dwsmprovider extends ChangeNotifier {
 
   // Controller for recharge reason (if "No")
   final TextEditingController rechargeReasonController =
-      TextEditingController();
+  TextEditingController();
 
   // Question 4: Impact studies conducted
 
@@ -335,8 +335,8 @@ class Dwsmprovider extends ChangeNotifier {
 
     try {
       final response =
-          await _fetchdwsmrepo.fetchSourceSustainabilityWaterConservation(
-              stateId, districtId, userId);
+      await _fetchdwsmrepo.fetchSourceSustainabilityWaterConservation(
+          stateId, districtId, userId);
       if (response.status) {
         sustainabilityData = response.result;
 
@@ -424,7 +424,7 @@ class Dwsmprovider extends ChangeNotifier {
 
 // Testing management (if no NABL lab)
   final TextEditingController testingManagedController =
-      TextEditingController();
+  TextEditingController();
 
   Future<void> saveMonitoringQualityLab({
     required int userId,
@@ -531,7 +531,7 @@ class Dwsmprovider extends ChangeNotifier {
 
 // 2. Manpower Percentage Controller
   final TextEditingController manpowerPercentController =
-      TextEditingController();
+  TextEditingController();
 
 // 3. Water Fee Controller
   final TextEditingController waterFeeController = TextEditingController();
@@ -554,7 +554,7 @@ class Dwsmprovider extends ChangeNotifier {
 
 // 5. User Fee Collection Percentage
   final TextEditingController userFeePercentController =
-      TextEditingController();
+  TextEditingController();
 
   Future<void> saveOperationMaintenance({
     required int userId,
@@ -987,4 +987,71 @@ class Dwsmprovider extends ChangeNotifier {
 
   }
 // fetch for dwsm part F end
+
+
+
+////Below 10%
+
+//part D
+
+//Q1
+  final Map<String, int> fieldinspectionMap = {
+    "PHED Engineer": 1,
+    "PMC/PMU": 2,
+    "TPIA": 3,"VWSC": 4,"Contractor Representative ": 5,"others": 6,
+  };
+
+  String? _fieldinspection;
+
+  String? get fieldinspection => _fieldinspection;
+
+  set fieldinspection(String? value) {
+    _fieldinspection = value;
+    notifyListeners();
+  }
+
+  int get fieldinspectionID => fieldinspectionMap[_fieldinspection] ?? 0;
+
+
+  //Q2
+  String? _commisionprotocol;
+
+  String? get commisionprotocol => _commisionprotocol;
+
+  set commisionprotocol(String? value) {
+    _commisionprotocol = value;
+    notifyListeners();
+  }
+
+  int get commisionprotocolID => yesNoMap[_commisionprotocol] ?? 0;
+
+  //Q3
+  String? _inspectionagencies;
+
+  String? get inspectionagencies => _inspectionagencies;
+
+  set inspectionagencies(String? value) {
+    _inspectionagencies = value;
+    notifyListeners();
+  }
+
+  int get inspectionagenciesID => yesNoMap[_inspectionagencies] ?? 0;
+
+
+  // Part E
+
+//Q1
+
+  String? _GrievanceRedressalmechanism ;
+
+  String? get GrievanceRedressalmechanism => _GrievanceRedressalmechanism;
+
+  set GrievanceRedressalmechanism(String? value) {
+    _GrievanceRedressalmechanism = value;
+    notifyListeners();
+  }
+
+  int get GrievanceRedressalmechanismID => yesNoMap[_GrievanceRedressalmechanism] ?? 0;
+
+
 }

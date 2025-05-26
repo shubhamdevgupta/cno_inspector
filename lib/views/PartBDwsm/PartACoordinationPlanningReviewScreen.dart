@@ -200,6 +200,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                       ),
                                     ),
                                     onPressed: () async {
+
                                       LoaderUtils.showLoadingWithMessage(
                                           context,
                                           isLoading: dwsmProvider.isLoading,
@@ -219,9 +220,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                                   dwsmProvider
                                                       .selectedValueQ1Id,
                                               numberOfMeetingsLast6Months:
-                                                  int.parse(dwsmProvider
-                                                      .meetingsHeldController
-                                                      .text),
+                                                  int.parse(dwsmProvider.meetingsHeldController.text),
                                               qualityOfMeeting: dwsmProvider
                                                   .selectedMeetingQualityID,
                                               areCoordinationMeetingsRegular:

@@ -162,6 +162,7 @@ void initState() {
                                 controller: vwscProvider.testerNameController,
                               ),
 
+                              //TODO this question is not part of below 10%
                               Customradiobttn(
                                 question: "5. Disinfection/chlorination done:",
                                 options: vwscProvider.yesNoMap.keys.toList(),
@@ -169,6 +170,8 @@ void initState() {
                                 onChanged: (val) => vwscProvider.selectedDisinfectionDone = val,
                               ),
 
+
+                            //TODO this question is not part of below 10%
                               Customradiobttn(
                                 question: "6. Free Residual Chlorine Level (FRC) at tail ends:",
                                 options: vwscProvider.frcLevelMap.keys.toList(),
