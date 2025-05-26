@@ -29,7 +29,6 @@ class RetrofittingAugmentationScreen extends StatefulWidget {
 
 class _RetrofittingAugmentationScreen
     extends State<RetrofittingAugmentationScreen> {
-
   LocalStorageService _localStorageService = LocalStorageService();
 
   @override
@@ -38,13 +37,13 @@ class _RetrofittingAugmentationScreen
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
-      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
       if (args != null) {
         final schemeId = args['schemeId'] as int?;
         final stateId = args['stateId'] as int?;
 
         final schemeProvider =
-        Provider.of<Schemeprovider>(context, listen: false);
+            Provider.of<Schemeprovider>(context, listen: false);
 
         schemeProvider.clearfetchAdditionalInfoRetrofit();
         if (schemeId != null) {
@@ -53,10 +52,14 @@ class _RetrofittingAugmentationScreen
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchAdditionalInfoRetrofit(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+        schemeProvider.fetchAdditionalInfoRetrofit(
+            stateId.toString(),
+            schemeId.toString(),
+            _localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -138,7 +141,6 @@ class _RetrofittingAugmentationScreen
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // 1. Radio Button: Legacy Infra Assessment
                                 Customradiobttn(
                                   question:
                                       '1. Whether the condition assessment of the legacy infrastructure done before scheme planning?',
@@ -154,27 +156,33 @@ class _RetrofittingAugmentationScreen
                                 // 2. Text Fields for Legacy Infrastructure Usage
                                 const Text(
                                   '2. Legacy infrastructure which has been retrofitted and being used in the scheme under JJM:',
-                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600),
                                 ),
                                 const SizedBox(height: 6),
 
                                 Customtxtfeild(
-                                  label: '2.1 Transmission Pipelines (in Kms)',
-                                  controller: schemeProvider.transmissionPipelineKmController,
+                                  label:
+                                      '2.1 Transmission Pipelines (in Kms)',
+                                  controller: schemeProvider
+                                      .transmissionPipelineKmController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
-                                  label: '2.2 Distribution Pipelines (in Kms)',
-                                  controller: schemeProvider.distributionPipelineKmController,
+                                  label:
+                                      '2.2 Distribution Pipelines (in Kms)',
+                                  controller: schemeProvider
+                                      .distributionPipelineKmController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
 
                                 Customtxtfeild(
                                   label: '2.3 WTP Capacity (in MLD)',
-                                  controller: schemeProvider.wtpCapacityMldController,
+                                  controller: schemeProvider
+                                      .wtpCapacityMldController,
                                   keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 8),
@@ -182,43 +190,58 @@ class _RetrofittingAugmentationScreen
                                 Customtxtfeild(
                                   label:
                                       '2.4 Storage Structures (Nos./Capacity in KL)',
-                                  controller: schemeProvider.storageStructureDetailsController,
+                                  controller: schemeProvider
+                                      .storageStructureDetailsController,
                                   keyboardType: TextInputType.text,
                                 ),
                                 const SizedBox(height: 10),
 
-                                // 3. Radio Button: As-built Drawing Availability
-                                Customradiobttn(
-                                  question:
+                                Visibility(
+                                    visible: schemeProvider.formType==1,
+                                    child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // 3. Radio Button: As-built Drawing Availability
+                                    Customradiobttn(
+                                      question:
                                       '3. Is the as-built drawing of the new infrastructure in conjunction with the existing infrastructure available with the department/agency/GP?',
-                                  options:
+                                      options:
                                       schemeProvider.yesNoMap.keys.toList(),
-                                  selectedOption:
-                                      schemeProvider.asBuiltDrawingAvailability,
-                                  onChanged: (val) => schemeProvider
-                                      .asBuiltDrawingAvailability = val,
-                                ),
-                                const SizedBox(height: 20),
+                                      selectedOption: schemeProvider
+                                          .asBuiltDrawingAvailability,
+                                      onChanged: (val) => schemeProvider
+                                          .asBuiltDrawingAvailability = val,
+                                    ),
+                                    const SizedBox(height: 20),
+
+                                    if (schemeProvider
+                                        .asBuiltDrawingAvailabilityID ==
+                                        1)
+                                      Customradiobttn(
+                                        question:
+                                        '4. Has it been digitized and uploaded on PM Gatishakti? ',
+                                        options: schemeProvider.yesNoMap.keys
+                                            .toList(),
+                                        selectedOption:
+                                        schemeProvider.onPmGatiShakti,
+                                        onChanged: (val) =>
+                                        schemeProvider.onPmGatiShakti = val,
+                                      ),
+                                    if (schemeProvider.onPmGatishaktiID == 2)
+                                      Customtxtfeild(
+                                        label: '4.1 Reason',
+                                        controller:
+                                        schemeProvider.reasonController,
+                                        keyboardType: TextInputType.text,
+                                      ),
+
+                                  ],
+                                )),
 
 
-                                if(schemeProvider.asBuiltDrawingAvailabilityID==1)
-                                Customradiobttn(
-                                  question:
-                                  '4. Has it been digitized and uploaded on PM Gatishakti? ',
-                                  options:
-                                  schemeProvider.yesNoMap.keys.toList(),
-                                  selectedOption: schemeProvider.onPmGatiShakti,
-                                  onChanged: (val) => schemeProvider.onPmGatiShakti = val,
+                                SizedBox(
+                                  height: 20,
                                 ),
-                                if(schemeProvider.onPmGatishaktiID==2)
-                                Customtxtfeild(
-                                  label:
-                                  '4.1 Reason',
-                                  controller: schemeProvider
-                                      .reasonController,
-                                  keyboardType: TextInputType.text,
-                                ),
-                                SizedBox(height: 20,),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
@@ -233,21 +256,39 @@ class _RetrofittingAugmentationScreen
                                         ),
                                       ),
                                       onPressed: () async {
-                                         LoaderUtils.showLoadingWithMessage(context ,isLoading:schemeProvider.isLoading,message: "Additional info for Retrofitting/Augmentation Schemes only");
-                                        await schemeProvider.saveRetrofitAdditionalInfo(
-                                                userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                                stateId: schemeProvider.stateId!,
-                                                schemeId: schemeProvider.schemeId!,
-                                                isAssessmentDone:
-                                                schemeProvider.selectedLegacyInfraAssessmentId,
+                                        LoaderUtils.showLoadingWithMessage(
+                                            context,
+                                            isLoading: schemeProvider.isLoading,
+                                            message:
+                                                "Additional info for Retrofitting/Augmentation Schemes only");
+                                        await schemeProvider
+                                            .saveRetrofitAdditionalInfo(
+                                                userId: _localStorageService.getInt(
+                                                    AppConstants.prefUserId)!,
+                                                stateId:
+                                                    schemeProvider.stateId!,
+                                                schemeId:
+                                                    schemeProvider.schemeId!,
+                                                isAssessmentDone: schemeProvider
+                                                    .selectedLegacyInfraAssessmentId,
                                                 assessmentMethod: '',
-                                                assessmentReason: '',//not found
-                                                pipelineKms: double.parse(schemeProvider.transmissionPipelineKmController.text),
-                                                distributionKms:
-                                                    double.parse(schemeProvider.distributionPipelineKmController.text),
-                                                wtpCapacity: double.parse(schemeProvider.wtpCapacityMldController.text),
-                                                structureNos: int.parse(schemeProvider.storageStructureDetailsController.text),
-                                                structureCapacity: 0.0, // not found
+                                                assessmentReason: '',
+                                                //not found
+                                                pipelineKms: double.parse(schemeProvider
+                                                    .transmissionPipelineKmController
+                                                    .text),
+                                                distributionKms: double.parse(
+                                                    schemeProvider
+                                                        .distributionPipelineKmController
+                                                        .text),
+                                                wtpCapacity: double.parse(schemeProvider
+                                                    .wtpCapacityMldController
+                                                    .text),
+                                                structureNos: int.parse(schemeProvider
+                                                    .storageStructureDetailsController
+                                                    .text),
+                                                structureCapacity: 0.0,
+                                                // not found
                                                 buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
                                                 onPMGati: schemeProvider.onPmGatishaktiID,
                                                 noReason: schemeProvider.reasonController.text);

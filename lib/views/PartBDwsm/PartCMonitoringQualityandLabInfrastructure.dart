@@ -156,8 +156,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                   Customradiobttn(
                                     question:
                                         "2. Does the district have an NABL-accredited lab or equivalent for water quality testing?",
-                                    options:
-                                        dwsmProvider.yesNoMap.keys.toList(),
+                                    options: dwsmProvider.yesNoMap.keys.toList(),
                                     selectedOption: dwsmProvider.hasNablLab,
                                     onChanged: (val) {
                                       dwsmProvider.hasNablLab = val;
