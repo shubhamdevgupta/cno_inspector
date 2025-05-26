@@ -36,6 +36,8 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
 
         final schemeProvider =
             Provider.of<Schemeprovider>(context, listen: false);
+        schemeProvider.clearfetchSourceSurvey();
+
         if (schemeId != null) {
           schemeProvider.setSchemeId(schemeId);
         }

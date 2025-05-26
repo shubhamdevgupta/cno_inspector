@@ -1,13 +1,13 @@
 // views/DashboardScreen.dart
+import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/DashboardResponse/DashboardResponse.dart';
 import '../../provider/dashboardProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
-import '../../utils/CustomSearchableDropdown.dart';
+import '../../utils/CustomDropdown.dart';
 import '../auth/DashboardScreen.dart';
 
 class Dashboardschemeinfo extends StatefulWidget {
@@ -19,16 +19,27 @@ class Dashboardschemeinfo extends StatefulWidget {
 
 class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
   late DashboardProvider dashboardProvider;
+  late Schemeprovider schemeprovider;
   LocalStorageService localStorageService = LocalStorageService();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      dashboardProvider =
-          Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(
-          localStorageService.getInt(AppConstants.prefUserId)!, 1);
+      dashboardProvider = Provider.of<DashboardProvider>(context, listen: false);
+      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!, 1);
+      schemeprovider = Provider.of<Schemeprovider>(context,listen: false);
+      //clear for part a
+      schemeprovider.clearfetchSourceSurvey();
+      //clear for part b
+      schemeprovider.clearfetchSchemePlanning();
+      //clear for part c
+      schemeprovider.clearfetchAdditionalInfoRetrofit();
+      //clear for part d
+      schemeprovider.clearSchemeImplementationData();
+      //clear for par e
+      schemeprovider.clearVisualInspectionAnswers();
+
     });
   }
 
@@ -108,72 +119,32 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           thickness: 1,
                         ),
                         SizedBox(height: 4), // Space between title and dropdown
-                        CustomSearchableDropdown(
-                            title: "Select Scheme",
-                            value: dashboardProvider.dashboardList
-                                    .firstWhere(
-                                      (district) =>
-                                          district.schemeId ==
-                                          dashboardProvider.selectedSchemeID,
-                                      orElse: () => CnoDashboardItem(
-                                        userid: 0,
-                                        totalSchemes: 0,
-                                        pendingSchemes: 0,
-                                        underProcessScheme: 0,
-                                        totalDistricts: 0,
-                                        pendingDistricts: 0,
-                                        underProcessDistricts: 0,
-                                        totalVillages: 0,
-                                        pendingVillages: 0,
-                                        underProcessVillages: 0,
-                                        schemeId: 0,
-                                        schemeName: '',
-                                        stateId: 0,
-                                        districtId: 0,
-                                        blockId: 0,
-                                        panchayatId: 0,
-                                        villageId: 0,
-                                      ),
-                                    )
-                                    .schemeName ??
-                                'Select Scheme',
-                            items: dashboardProvider.dashboardList
-                                .map((item) => item.schemeName ?? '')
-                                .where((name) => name.isNotEmpty)
-                                .toSet()
-                                .toList(),
-                            onChanged: (selectedScheme) {
-                              if (selectedScheme == null) return;
-
-                              final selectedItem =
-                                  dashboardProvider.dashboardList.firstWhere(
-                                (item) => item.schemeName == selectedScheme,
-                                orElse: () => CnoDashboardItem(
-                                  userid: 0,
-                                  totalSchemes: 0,
-                                  pendingSchemes: 0,
-                                  underProcessScheme: 0,
-                                  totalDistricts: 0,
-                                  pendingDistricts: 0,
-                                  underProcessDistricts: 0,
-                                  totalVillages: 0,
-                                  pendingVillages: 0,
-                                  underProcessVillages: 0,
-                                  schemeId: 0,
-                                  schemeName: '',
-                                  stateId: 0,
-                                  districtId: 0,
-                                  blockId: 0,
-                                  panchayatId: 0,
-                                  villageId: 0,
+                        CustomDropdown(
+                          value: dashboardProvider.selectedSchemeID,
+                          items: dashboardProvider.dashboardList.map((scheme) {
+                            return DropdownMenuItem<String>(
+                              value: scheme.schemeId.toString(),
+                              child: Text(
+                                scheme.schemeName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'OpenSans',
                                 ),
-                              );
-                              dashboardProvider
-                                  .setSelectedDWSM(selectedItem.districtId);
-                            })
+                              ),
+                            );
+                          }).toList(),
+                          title: "",
+                          appBarTitle: "Select Scheme",
+                          showSearchBar: false,
+                          onChanged: (value) {
+                            dashboardProvider.setSelectedScheme(value);
+                          },
+                        )
                       ],
                     ),
-                    if (dashboardProvider.selectedSchemeID != 0)
+                    if (dashboardProvider.selectedSchemeID !=null && dashboardProvider.selectedSchemeID!.isNotEmpty)
                       Column(
                         children: [
                           buildSampleCard(

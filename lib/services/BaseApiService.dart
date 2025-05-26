@@ -107,8 +107,7 @@ class BaseApiService {
         throw ApiException(
             'Unauthorized ${handleErrorResp(response.body, '')}');
       case 500:
-        throw ApiException(
-            handleErrorResp(response.body, 'Internal Server Error'));
+        throw ApiException(handleErrorResp(response.body, 'Internal Server Error'));
       case 502:
         throw ApiException(
             'Bad Gateway ${handleErrorResp(response.body, '')}');

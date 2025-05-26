@@ -635,7 +635,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  final Map<String, int> costOverrun = {
+   Map<String, int> costOverrun = {
     "<10%": 1,
     "10–25%": 2,
     ">25%": 3,
@@ -973,6 +973,43 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  void clearSchemeImplementationData() {
+    schemeImplementationData = [];
+
+    // Reset checkbox and radio selections
+    selectedDelayReasons = [];
+    selectedCostOverrun = null;
+    selectedcostOverrunReasons = [];
+    selectedrevisedCostApproved = null;
+    selectedincreaseInCost = null;
+    selectedrevisionReasons = [];
+
+    // Reset date
+    dateApproval = '';
+
+    // Reset table numbers
+    intakeTubeWellNum = 0;
+    electroMechanicalNum = 0;
+    wtpNum = 0;
+    mbrNum = 0;
+    transmissionPipelineNum = 0;
+    distributionPipelineNum = 0;
+    ohtNum = 0;
+    disinfectionUnitNum = 0;
+    iotNum = 0;
+    roadRestorationNum = 0;
+    solarComponentNum = 0;
+    otherComponentsNum = 0;
+
+    // Reset planned component radio buttons
+    selectedWTP = null;
+    selectedOHSR = null;
+    selecteSource = null;
+    selectedPipeline = null;
+
+    notifyListeners(); // if inside a provider
+  }
+
 
   //**** fetch api Part D start here ***///
 
@@ -987,8 +1024,8 @@ class Schemeprovider extends ChangeNotifier {
       final response = await _fetchschemeinfo.fetchSchemeImplementation(
           stateId, schemeId, userId);
       if (response.status) {
-        schemeImplementationData = response.result;
         _message = '';
+        schemeImplementationData = response.result;
 
         selectedDelayReasons = getCheckBoxData(schemeImplementationData.first.delayWorkReason,delayReasons);
         print('selectedDelayReasons: $selectedDelayReasons');
@@ -1055,9 +1092,6 @@ class Schemeprovider extends ChangeNotifier {
         selectedPipeline = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedPipeline,yesNoMap);
         print('selectedPipeline: $selectedPipeline');
 
-
-
-
       } else {
         _message = response.message;
       }
@@ -1083,8 +1117,7 @@ class Schemeprovider extends ChangeNotifier {
     selecteSource = null;
     selectedPipeline= null;
     costControllers.clear();
-
-
+    notifyListeners();
   }
 
   //**** fetch api Part E end here ***///
@@ -1202,7 +1235,7 @@ class Schemeprovider extends ChangeNotifier {
 
         if(schemeVisualInspectionData.isNotEmpty){
 
-          resetAllPartESelections(schemeVisualInspectionData.first);
+          mapAllWidgets(schemeVisualInspectionData.first);
         }
 
         _message = response.message;
@@ -1218,7 +1251,7 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
-  void resetAllPartESelections(SchemeVisualInspectionModel schemeVisualInspectionModel) {
+  void mapAllWidgets(SchemeVisualInspectionModel schemeVisualInspectionModel) {
     setQuesPartEa1 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
     setQuesPartEa2 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
     setQuesPartEa3 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
@@ -1263,6 +1296,59 @@ class Schemeprovider extends ChangeNotifier {
     quesPartE18 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, question18Map);
   }
 
+
+  void clearVisualInspectionAnswers() {
+    // Part EA questions
+    setQuesPartEa1 = null;
+    setQuesPartEa2 = null;
+    setQuesPartEa3 = null;
+    setQuesPartEa4 = null;
+    setQuesPartEa5 = null;
+    setQuesPartEa6 = null;
+    setQuesPartEa7 = null;
+    setQuesPartEa8 = null;
+    setQuesPartEa9 = null;
+    setQuesPartEa10 = null;
+    setQuesPartEa11 = null;
+    setQuesPartEa12 = null;
+    setQuesPartEa13 = null;
+    setQuesPartEa14 = null;
+    setQuesPartEa15 = null;
+
+    // Part EB questions
+    setQuesPartEb1 = null;
+    setQuesPartEb2 = null;
+    setQuesPartEb3 = null;
+
+    // Part E questions
+    setQuesPartE2 = null;
+    setQuesPartE3 = null;
+    setQuesPartE4 = null;
+    setQuesPartE5 = null;
+    setQuesPartE6 = null;
+    setQuesPartE7 = null;
+    setQuesPartE8 = null;
+    setQuesPartE9 = null;
+
+    // Multi-select (checkbox)
+    selectedPartE10 = [];
+
+    // Radio buttons with custom maps
+    selectedPartE11 = null;
+    selectedPartE12 = null;
+
+    selectedPartE13a = null;
+    quesPartE13b = null;
+
+    quesPartE14 = null;
+    quesPartE15 = null;
+    quesPartE16 = null;
+    quesPartE17 = null;
+    quesPartE18 = null;
+
+    // Trigger UI update if inside ChangeNotifier
+    notifyListeners(); // Optional - if you're using Provider
+  }
 
 
   //**** fetch api Part E end here ***///
@@ -1699,19 +1785,4 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedId_partE18 => question18Map[_quesPartE18] ?? 0;
 
-
-
-  String getRadiobuttonData(int id, Map<String, int> labelMap) {
-    return labelMap.entries
-        .firstWhere((entry) => entry.value == id,
-        orElse: () => const MapEntry('', 0))
-        .key;
-  }
-
-  List<String> getCheckBoxData(List<int> ids, Map<String, int> labelMap) {
-    return labelMap.entries
-        .where((entry) => ids.contains(entry.value))
-        .map((entry) => entry.key)
-        .toList();
-  }
 }

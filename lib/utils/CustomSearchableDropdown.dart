@@ -169,12 +169,6 @@ class _SearchDialogState extends State<SearchDialog> {
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.pop(context);
-            } else {
-          /*    Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => Labparameterscreen()),
-                    (route) => false,
-              );*/
             }
           },
         ),

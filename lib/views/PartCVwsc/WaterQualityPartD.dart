@@ -39,7 +39,7 @@ void initState() {
 
       final vwscProvider = Provider.of<Vwscprovider>(
           context, listen: false);
-      vwscProvider.ClearfetchWaterQuality();
+      vwscProvider.clearFetchWaterQuality();
       if (villageId != null) {
         vwscProvider.setVillageId(villageId);
       }

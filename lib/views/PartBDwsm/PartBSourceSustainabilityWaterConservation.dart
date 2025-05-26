@@ -23,25 +23,30 @@ class SourceSustainablitiyWasterConservation extends StatefulWidget {
 
 class _SourceSustainablitiyWasterConservation
     extends State<SourceSustainablitiyWasterConservation> {
-  LocalStorageService localStorageService=LocalStorageService();
+  LocalStorageService localStorageService = LocalStorageService();
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
-      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
       if (args != null) {
         final districtid = args['districtid'] as int?;
         final stateId = args['stateId'] as int?;
         final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+        dwsmProvider.clearSustainabilityFields();
         if (districtid != null) {
           dwsmProvider.setDistrictId(districtid);
         }
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchSustainabilityData("31", "478", "121212");
+        dwsmProvider.fetchSustainabilityData(
+            stateId.toString(),
+            districtid.toString(),
+            localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -214,21 +219,28 @@ class _SourceSustainablitiyWasterConservation
                                         ),
                                       ),
                                       onPressed: () async {
-
-                                        LoaderUtils.showLoadingWithMessage(context, isLoading: dwsmProvider.isLoading,message: "Saving Source Sustainability and Water Conservation");
+                                        LoaderUtils.showLoadingWithMessage(
+                                            context,
+                                            isLoading: dwsmProvider.isLoading,
+                                            message:
+                                                "Saving Source Sustainability and Water Conservation");
 
                                         dwsmProvider.saveSourceSustainability(
-                                            userId: localStorageService.getInt(AppConstants.prefUserId)!,
+                                            userId: localStorageService.getInt(
+                                                AppConstants.prefUserId)!,
                                             stateId: dwsmProvider.stateId!,
-                                            districtId: dwsmProvider.districtId!,
+                                            districtId:
+                                                dwsmProvider.districtId!,
                                             areSustainabilityMeasuresPromoted:
-                                                dwsmProvider.sourceSustainabilityId,
-                                            areGWSourcesProtected:
-                                                dwsmProvider.groundwaterProtectionId,
+                                                dwsmProvider
+                                                    .sourceSustainabilityId,
+                                            areGWSourcesProtected: dwsmProvider
+                                                .groundwaterProtectionId,
                                             isRechargeStructureImplemented:
-                                                dwsmProvider.rechargeStructureImplementedID,
-                                            reasonIfNotImplemented:
-                                                dwsmProvider.rechargeReasonController.text,
+                                                dwsmProvider
+                                                    .rechargeStructureImplementedID,
+                                            reasonIfNotImplemented: dwsmProvider
+                                                .rechargeReasonController.text,
                                             areImpactStudiesConducted:
                                                 dwsmProvider.impactStudiesID);
 

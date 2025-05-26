@@ -36,7 +36,7 @@ class _GrievancePartE extends State<GrievancePartE> {
         final stateId = args['stateId'] as int?;
 
         final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
-        vwscProvider.ClearfetchVwscGrievance();
+        vwscProvider.clearFetchGrievance();
         if (villageId != null) {
           vwscProvider.setVillageId(villageId);
         }

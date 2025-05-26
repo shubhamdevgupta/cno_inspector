@@ -44,7 +44,7 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
         // You can now use them, or set them in your provider
 
         final vwscProvider = Provider.of<Vwscprovider>(context, listen: false);
-        vwscProvider.ClearfetchCommunityFeedback();
+        vwscProvider.clearCommunityFeedback();
         if (villageId != null) {
           vwscProvider.setVillageId(villageId);
         }
