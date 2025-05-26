@@ -1,8 +1,10 @@
 // views/DashboardScreen.dart
+import 'package:cno_inspection/utils/CustomSearchableDropdown.dart';
 import 'package:cno_inspection/utils/Showerrormsg.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/DashboardResponse/DashboardResponse.dart';
 import '../../provider/dashboardProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
@@ -28,7 +30,8 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!, 2);
+      await dashboardProvider.fetchDashboardData(
+          _localStorage.getInt(AppConstants.prefUserId)!, 2);
     });
   }
 
@@ -84,7 +87,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
             if (dashboardProvider.isLoading) {
               return const Center(child: CircularProgressIndicator());
             }
-            if(dashboardProvider.dashboardList.isEmpty){
+            if (dashboardProvider.dashboardList.isEmpty) {
               AppTextWidgets.errorText(dashboardProvider.errorMsg);
             }
             return SingleChildScrollView(
@@ -111,34 +114,75 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                         thickness: 1,
                       ),
                       SizedBox(height: 4),
-                      // Space between title and dropdown
-                      CustomDropdown(
-                        value: dashboardProvider.selectedDwsm,
-                        items: dashboardProvider.dashboardList.map((scheme) {
-                          return DropdownMenuItem<String>(
-                            value: scheme.districtId.toString(),
-                            child: Text(
-                              scheme.districtName!,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'OpenSans',
+                      CustomSearchableDropdown(
+                          title: "Select DWSM",
+                          value: dashboardProvider.dashboardList
+                                  .firstWhere(
+                                    (district) =>
+                                        district.districtId ==
+                                        dashboardProvider.selectedDwsmID,
+                                    orElse: () => CnoDashboardItem(
+                                      userid: 0,
+                                      totalSchemes: 0,
+                                      pendingSchemes: 0,
+                                      underProcessScheme: 0,
+                                      totalDistricts: 0,
+                                      pendingDistricts: 0,
+                                      underProcessDistricts: 0,
+                                      totalVillages: 0,
+                                      pendingVillages: 0,
+                                      underProcessVillages: 0,
+                                      schemeId: 0,
+                                      schemeName: '',
+                                      stateId: 0,
+                                      districtId: 0,
+                                      blockId: 0,
+                                      panchayatId: 0,
+                                      villageId: 0,
+                                    ),
+                                  )
+                                  .districtName ??
+                              'Select DWSM',
+                          items: dashboardProvider.dashboardList
+                              .map((item) => item.districtName ?? '')
+                              .where((name) => name.isNotEmpty)
+                              .toSet()
+                              .toList(),
+                          onChanged: (selectedDistrict) {
+                            if (selectedDistrict == null) return;
+
+                            final selectedItem =
+                                dashboardProvider.dashboardList.firstWhere(
+                              (item) => item.districtName == selectedDistrict,
+                              orElse: () => CnoDashboardItem(
+                                userid: 0,
+                                totalSchemes: 0,
+                                pendingSchemes: 0,
+                                underProcessScheme: 0,
+                                totalDistricts: 0,
+                                pendingDistricts: 0,
+                                underProcessDistricts: 0,
+                                totalVillages: 0,
+                                pendingVillages: 0,
+                                underProcessVillages: 0,
+                                schemeId: 0,
+                                schemeName: '',
+                                stateId: 0,
+                                districtId: 0,
+                                blockId: 0,
+                                panchayatId: 0,
+                                villageId: 0,
                               ),
-                            ),
-                          );
-                        }).toList(),
-                        title: "",
-                        appBarTitle: "Select DWSM",
-                        showSearchBar: false,
-                        onChanged: (value) {
-                          dashboardProvider.setSelectedDWSM(value);
-                        },
-                      )
+                            );
+
+                            dashboardProvider.setSelectedDWSM(selectedItem.districtId);
+                            print('village id ${dashboardProvider.selectedVwscId}');
+
+                          })
                     ],
                   ),
-                  if (dashboardProvider.selectedDwsm != null &&
-                      dashboardProvider.selectedDwsm!.isNotEmpty)
+                  if (dashboardProvider.selectedVwscId !=0)
+
                     Column(
                       children: [
                         buildSampleCard(
@@ -148,13 +192,12 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                           onTap: () {
                             Navigator.pushReplacementNamed(
                                 context,
-                                AppConstants
-                                    .navigateToCoordinationPlanningScreen,
+                                AppConstants.navigateToCoordinationPlanningScreen,
                                 arguments: {
-                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
-                                  'stateId': dashboardProvider.dashboardList.first.stateId,
-                                }
-                            );
+                                  'districtid': dashboardProvider.selectedDwsmID,
+                                  'stateId': dashboardProvider
+                                      .dashboardList.first.stateId,
+                                });
                           },
                         ),
                         SizedBox(
@@ -171,8 +214,10 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                                 AppConstants
                                     .navigateToSourceSustainablitiyWasterConservation,
                                 arguments: {
-                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
-                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                  'districtid': dashboardProvider.selectedDwsmID,
+
+                                  'stateId': dashboardProvider
+                                      .dashboardList.first.stateId,
                                 });
                           },
                         ),
@@ -188,8 +233,10 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             Navigator.pushReplacementNamed(context,
                                 AppConstants.navigateToMonitoringQuality,
                                 arguments: {
-                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
-                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                  'districtid': dashboardProvider.selectedDwsmID,
+
+                                  'stateId': dashboardProvider
+                                      .dashboardList.first.stateId,
                                 });
                           },
                         ),
@@ -205,8 +252,10 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             Navigator.pushReplacementNamed(context,
                                 AppConstants.navigateToOperationandMaintance,
                                 arguments: {
-                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
-                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                  'districtid': dashboardProvider.selectedDwsmID,
+
+                                  'stateId': dashboardProvider
+                                      .dashboardList.first.stateId,
                                 });
                           },
                         ),
@@ -222,15 +271,16 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             Navigator.pushReplacementNamed(context,
                                 AppConstants.navigateToQualityAssurance,
                                 arguments: {
-                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
-                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                  'districtid': dashboardProvider.selectedDwsmID,
+
+                                  'stateId': dashboardProvider
+                                      .dashboardList.first.stateId,
                                 });
                           },
                         ),
                         SizedBox(
                           height: 10,
                         ),
-
                         buildSampleCard(
                           qnumber: "F.",
                           title: "Public Complaints and Grievance Redressal",
@@ -240,8 +290,9 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             Navigator.pushReplacementNamed(context,
                                 AppConstants.navigateToPartFPublicCompliant,
                                 arguments: {
-                                  'districtid': int.parse(dashboardProvider.selectedDwsm!),
-                                  'stateId': dashboardProvider.dashboardList.first.stateId,
+                                  'districtid': dashboardProvider.selectedDwsmID,
+                                  'stateId': dashboardProvider
+                                      .dashboardList.first.stateId,
                                 });
                           },
                         ),

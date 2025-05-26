@@ -7,6 +7,8 @@ import '../../model/schemePartA/SchemePlanningResponsePartB.dart';
 import '../../model/schemePartA/SchemeVisualInspectionModelPartE.dart';
 import '../../model/schemePartA/SourceSurveyResponsePartA.dart';
 import '../../repository/schemeInfoRepo/fetchSchemeRepo.dart';
+import '../../utils/GlobalExceptionHandler.dart';
+
 
 class Schemeprovider extends ChangeNotifier {
   final SchemeRepositoy _schemeRepositoy = SchemeRepositoy();
@@ -71,7 +73,7 @@ class Schemeprovider extends ChangeNotifier {
   final TextEditingController criticalController = TextEditingController();
   final TextEditingController semiCriticalController = TextEditingController();
   final TextEditingController waterAllocationController =
-      TextEditingController();
+  TextEditingController();
 
   int? _schemeId;
 
@@ -91,7 +93,23 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> saveSourceSurvey({
+
+
+  String getRadiobuttonData(int id, Map<String, int> labelMap) {
+    return labelMap.entries
+        .firstWhere((entry) => entry.value == id,
+        orElse: () => const MapEntry('', 0))
+        .key;
+  }
+
+
+  List<String> getCheckBoxData(List<int> ids, Map<String, int> labelMap) {
+    return labelMap.entries
+        .where((entry) => ids.contains(entry.value))
+        .map((entry) => entry.key)
+        .toList();
+  }
+  Future<void> saveSourceSurvey({
     required int userId,
     required int stateId,
     required int schemeId,
@@ -122,10 +140,8 @@ class Schemeprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -143,10 +159,33 @@ class Schemeprovider extends ChangeNotifier {
 
     try {
       final response =
-          await _fetchschemeinfo.fetchSourceSurvey(stateId, schemeId, userId);
+      await _fetchschemeinfo.fetchSourceSurvey(stateId, schemeId, userId);
       if (response.status) {
         sourceSurveyData = response.result;
         _message = '';
+
+        selectedValueQ1 = getRadiobuttonData(sourceSurveyData.first.isRcmndShiftToSurfaceWtr,yesNoMap);
+        print('selectedValueQ1: $selectedValueQ1');
+
+        selectedValueQ2 = getRadiobuttonData(sourceSurveyData.first.anyStudyAccessGwBeforeSw,yesNoMap);
+        print('selectedValueQ2: $selectedValueQ2');
+
+        safeController.text = sourceSurveyData.first.noVillagesSafeZone.toString();
+        print('safeController: ${safeController.text}');
+
+        criticalController.text = sourceSurveyData.first.noVillagesCriticalZone.toString();
+        print('criticalController: ${criticalController.text}');
+
+        semiCriticalController.text = sourceSurveyData.first.noVillagesSemiCriticalZone.toString();
+        print('semiCriticalController: ${semiCriticalController.text}');
+
+        selectedValueQ3 = getRadiobuttonData(sourceSurveyData.first.incaseGwContAnyAnalysisConduct,yesNoMap);
+        print('selectedValueQ3: $selectedValueQ3');
+
+
+        waterAllocationController.text = sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw.toString();
+        print('waterAllocationController: ${waterAllocationController.text}');
+
       } else {
         _message = response.message;
       }
@@ -157,6 +196,23 @@ class Schemeprovider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+
+  void clearfetchSourceSurvey() {
+    // Clear selected radio button values
+    selectedValueQ1 = null;
+    selectedValueQ2 = null;
+    selectedValueQ3 = null;
+
+
+    // Clear frequency text field
+    safeController.clear();
+    criticalController.clear();
+    semiCriticalController.clear();
+    waterAllocationController.clear();
+
+    notifyListeners();
   }
 
   //**** fetch api Part B start here ***///
@@ -216,9 +272,9 @@ class Schemeprovider extends ChangeNotifier {
   // --------------------
   // 4. Pipe Material Selection (Text Fields)
   final TextEditingController rockyPipeMaterialController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController soilPipeMaterialController =
-      TextEditingController();
+  TextEditingController();
 
   // --------------------
   // 5. On-Spot Excavation Check (Radio + Conditional Text)
@@ -234,9 +290,9 @@ class Schemeprovider extends ChangeNotifier {
   int get onSpotExcavationID => yesNoMap[_onSpotExcavation] ?? 0;
 
   final TextEditingController deviationReasonController =
-      TextEditingController();
+  TextEditingController();
 
-  Future<bool> saveSchemePlanning({
+  Future<void> saveSchemePlanning({
     required int userId,
     required int stateId,
     required int schemeId,
@@ -275,10 +331,8 @@ class Schemeprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -296,10 +350,48 @@ class Schemeprovider extends ChangeNotifier {
 
     try {
       final response =
-          await _fetchschemeinfo.fetchSchemePlanning(stateId, schemeId, userId);
+      await _fetchschemeinfo.fetchSchemePlanning(stateId, schemeId, userId);
       if (response.status) {
         schemePlanningData = response.result;
         _message = '';
+
+
+        topoSurvey = getRadiobuttonData(schemePlanningData.first.isTopographicalSurvey,yesNoMap);
+        print('topoSurvey: $topoSurvey');
+
+        gpsSurvey = getRadiobuttonData(schemePlanningData.first.isGpsPhysicalSurvey,yesNoMap);
+        print('gpsSurvey: $gpsSurvey');
+
+
+        googleEarthSurvey = getRadiobuttonData(schemePlanningData.first.isGoogleEarthSurvey,yesNoMap);
+        print('googleEarthSurvey: $googleEarthSurvey');
+
+        noSurvey = getRadiobuttonData(schemePlanningData.first.noSurvey,yesNoMap);
+        print('noSurvey: $noSurvey');
+
+        wtpHoursController.text = schemePlanningData.first.runningHrsDesignTransmissionMain.toString();
+        print('wtpHoursController: ${wtpHoursController.text}');
+
+        ohsrTimeController.text = schemePlanningData.first.retentionTimeOSHR.toString();
+        print('ohsrTimeController: ${ohsrTimeController.text}');
+
+
+        mbrTimeController.text = schemePlanningData.first.retentionTimeMBR.toString();
+        print('mbrTimeController: ${mbrTimeController.text}');
+
+        rockyPipeMaterialController.text = schemePlanningData.first.distributionNetwrkTerrianTypeRockyStrata.toString();
+        print('rockyPipeMaterialController: ${rockyPipeMaterialController.text}');
+
+
+        soilPipeMaterialController.text = schemePlanningData.first.distributionNetwrkTerrianTypeSoilStrata.toString();
+        print('soilPipeMaterialController: ${soilPipeMaterialController.text}');
+
+        onSpotExcavation = getRadiobuttonData(schemePlanningData.first.foundAsPerDPR,yesNoMap);
+        print('onSpotExcavation: $onSpotExcavation');
+
+        deviationReasonController.text = schemePlanningData.first.divationIfAny.toString();
+        print('deviationReasonController: ${deviationReasonController.text}');
+
       } else {
         _message = response.message;
       }
@@ -312,6 +404,27 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+
+  void clearfetchSchemePlanning() {
+    // Clear selected radio button values
+    topoSurvey = null;
+    gpsSurvey = null;
+    googleEarthSurvey = null;
+    noSurvey = null;
+    onSpotExcavation = null;
+
+
+    // Clear frequency text field
+    wtpHoursController.clear();
+    ohsrTimeController.clear();
+    mbrTimeController.clear();
+    waterAllocationController.clear();
+    rockyPipeMaterialController.clear();
+    soilPipeMaterialController.clear();
+    deviationReasonController.clear();
+
+    notifyListeners();
+  }
   //**** fetch api Part B end here ***///
   // Radio 1: Legacy Infrastructure Assessment
   String? _legacyInfraAssessment;
@@ -328,13 +441,13 @@ class Schemeprovider extends ChangeNotifier {
 
   // TextField Controllers: Legacy Infrastructure Usage
   final TextEditingController transmissionPipelineKmController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController distributionPipelineKmController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController wtpCapacityMldController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController storageStructureDetailsController =
-      TextEditingController();
+  TextEditingController();
 
   // Radio 2: As-built Drawing Availability
   String? _asBuiltDrawingAvailability;
@@ -362,7 +475,7 @@ class Schemeprovider extends ChangeNotifier {
   int get onPmGatishaktiID => yesNoMap[_onPmGatishakti] ?? 0;
   final TextEditingController reasonController = TextEditingController();
 
-  Future<bool> saveRetrofitAdditionalInfo({
+  Future<void> saveRetrofitAdditionalInfo({
     required int userId,
     required int stateId,
     required int schemeId,
@@ -401,10 +514,8 @@ class Schemeprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -426,6 +537,34 @@ class Schemeprovider extends ChangeNotifier {
       if (response.status) {
         retrofitInfoData = response.result;
         _message = '';
+
+        legacyInfraAssessment = getRadiobuttonData(retrofitInfoData.first.whetherAssesmentLegacyDone,yesNoMap);
+        print('legacyInfraAssessment: $legacyInfraAssessment');
+
+
+        transmissionPipelineKmController.text = retrofitInfoData.first.legacyInfrastructureTransmissionPipelineKms.toString();
+        print('transmissionPipelineKmController: ${transmissionPipelineKmController.text}');
+
+        distributionPipelineKmController.text = retrofitInfoData.first.legacyInfrastructureDistributionPipelineKms.toString();
+        print('distributionPipelineKmController: ${distributionPipelineKmController.text}');
+
+        wtpCapacityMldController.text = retrofitInfoData.first.legacyInfrastructureWtpCapacityMld.toString();
+        print('wtpCapacityMldController: ${wtpCapacityMldController.text}');
+
+        storageStructureDetailsController.text = retrofitInfoData.first.legacyInfrastructureStorageStrCapacityKl.toString();
+        print('storageStructureDetailsController: ${storageStructureDetailsController.text}');
+
+
+
+        asBuiltDrawingAvailability = getRadiobuttonData(retrofitInfoData.first.buildDrawingInfrAvailable,yesNoMap);
+        print('legacyInfraAssessment: $asBuiltDrawingAvailability');
+
+        onPmGatiShakti = getRadiobuttonData(retrofitInfoData.first.ifYesIsItOnPMGati,yesNoMap);
+        print('onPmGatiShakti: $onPmGatiShakti');
+
+        reasonController.text = retrofitInfoData.first.ifNoReason.toString();
+        print('reasonController: ${reasonController.text}');
+
       } else {
         _message = response.message;
       }
@@ -438,6 +577,25 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+
+  void clearfetchAdditionalInfoRetrofit() {
+    // Clear selected radio button values
+    legacyInfraAssessment = null;
+    asBuiltDrawingAvailability = null;
+    onPmGatiShakti = null;
+
+
+
+    // Clear frequency text field
+    transmissionPipelineKmController.clear();
+    distributionPipelineKmController.clear();
+    wtpCapacityMldController.clear();
+    storageStructureDetailsController.clear();
+    reasonController.clear();
+
+
+    notifyListeners();
+  }
   //**** fetch api Part C end here ***///
 
   // Q1: Delay reasons
@@ -510,8 +668,7 @@ class Schemeprovider extends ChangeNotifier {
 
   List<String> get ReasonsOptionsOptions => ReasonsOptions.keys.toList();
 
-  List<int> get selectedcostOverrunReasonsID =>
-      _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
+  List<int> get selectedcostOverrunReasonsID => _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
 
   // Q4: Revised cost approved before award (yes/no)
   String? _selectedrevisedCostApproved; // Yes / No
@@ -540,8 +697,7 @@ class Schemeprovider extends ChangeNotifier {
     "No overrun": 4,
   };
 
-  int get selectedincreaseInCostID =>
-      increaseInCostID[_selectedincreaseInCost] ?? 0;
+  int get selectedincreaseInCostID => increaseInCostID[_selectedincreaseInCost] ?? 0;
 
   //
   int get selectedrevisedCostApprovedID =>
@@ -628,30 +784,23 @@ class Schemeprovider extends ChangeNotifier {
     };
   }
 
-  /// Dispose controllers when done
-  void disposeControllers() {
-    for (var controller in costControllers.values) {
-      controller.dispose();
-    }
-  }
-
   /// Optional: convert data to JSON
   Map<String, dynamic> toJson() => {
-        'intakeTubeWellNum': intakeTubeWellNum,
-        'electroMechanicalNum': electroMechanicalNum,
-        'wtpNum': wtpNum,
-        'mbrNum': mbrNum,
-        'transmissionPipelineNum': transmissionPipelineNum,
-        'distributionPipelineNum': distributionPipelineNum,
-        'ohtNum': ohtNum,
-        'disinfectionUnitNum': disinfectionUnitNum,
-        'iotNum': iotNum,
-        'roadRestorationNum': roadRestorationNum,
-        'solarComponentNum': solarComponentNum,
-        'otherComponentsNum': otherComponentsNum,
-        'costControllers':
-            costControllers.map((key, value) => MapEntry(key, value.text)),
-      };
+    'intakeTubeWellNum': intakeTubeWellNum,
+    'electroMechanicalNum': electroMechanicalNum,
+    'wtpNum': wtpNum,
+    'mbrNum': mbrNum,
+    'transmissionPipelineNum': transmissionPipelineNum,
+    'distributionPipelineNum': distributionPipelineNum,
+    'ohtNum': ohtNum,
+    'disinfectionUnitNum': disinfectionUnitNum,
+    'iotNum': iotNum,
+    'roadRestorationNum': roadRestorationNum,
+    'solarComponentNum': solarComponentNum,
+    'otherComponentsNum': otherComponentsNum,
+    'costControllers':
+    costControllers.map((key, value) => MapEntry(key, value.text)),
+  };
 
   //Q8.1
   String? _selectedWTP; // Yes / No
@@ -729,7 +878,7 @@ class Schemeprovider extends ChangeNotifier {
   List<int> get selectedrevisionReasonsID =>
       _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
 
-  Future<bool> saveSchemeImplementation({
+  Future<void> saveSchemeImplementation({
     required int userId,
     required int stateId,
     required int schemeId,
@@ -816,15 +965,14 @@ class Schemeprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
+
 
   //**** fetch api Part D start here ***///
 
@@ -841,6 +989,75 @@ class Schemeprovider extends ChangeNotifier {
       if (response.status) {
         schemeImplementationData = response.result;
         _message = '';
+
+        selectedDelayReasons = getCheckBoxData(schemeImplementationData.first.delayWorkReason,delayReasons);
+        print('selectedDelayReasons: $selectedDelayReasons');
+
+        selectedCostOverrun = getRadiobuttonData(schemeImplementationData.first.costOverrun,costOverrun);
+        print('selectedCostOverrun: $selectedCostOverrun');
+
+        selectedcostOverrunReasons = getCheckBoxData(schemeImplementationData.first.costOverrunReason,ReasonsOptions);
+        print('selectedcostOverrunReasons: $selectedcostOverrunReasons');
+
+        selectedrevisedCostApproved = getRadiobuttonData(schemeImplementationData.first.hasSchemeCostRevisedBeforeWork,yesNoMap);
+        print('selectedrevisedCostApproved: $selectedrevisedCostApproved');
+
+        selectedincreaseInCost = getRadiobuttonData(schemeImplementationData.first.schemeCostRevisedBeforeWorkYesPer,increaseInCostID);
+        print('selectedincreaseInCost: $selectedincreaseInCost');
+ //TODO
+        dateApproval = schemeImplementationData.first.slsscDateForRevisedEstimate;
+        print('dateApproval: $dateApproval');
+
+        selectedrevisionReasons = getCheckBoxData(schemeImplementationData.first.costOverrunReason,revisionReasonsID);
+        print('selectedrevisionReasons: $selectedrevisionReasons');
+
+        selectedrevisionReasons = getCheckBoxData(schemeImplementationData.first.costOverrunReason,revisionReasonsID);
+        print('selectedrevisionReasons: $selectedrevisionReasons');
+
+        //table
+       intakeTubeWellNum = schemeImplementationData.first.numIntakeTubeWell;
+        print('intakeTubeWellNum: $intakeTubeWellNum');
+        electroMechanicalNum = schemeImplementationData.first.numElectroMechanicalInclPump;
+        print('electroMechanicalNum: $electroMechanicalNum');
+        wtpNum = schemeImplementationData.first.numWtp;
+        print('wtpNum: $wtpNum');
+        mbrNum = schemeImplementationData.first.numMbr;
+        print('mbrNum: $mbrNum');
+        transmissionPipelineNum = schemeImplementationData.first.numTransmissionPipeline;
+        print('transmissionPipelineNum: $transmissionPipelineNum');
+        distributionPipelineNum = schemeImplementationData.first.numDistributionPipeline;
+        print('distributionPipelineNum: $intakeTubeWellNum');
+        ohtNum = schemeImplementationData.first.numOshrEsrOhtGsr;
+        print('ohtNum: $intakeTubeWellNum');
+        disinfectionUnitNum = schemeImplementationData.first.numDisinfectionUnit;
+        print('disinfectionUnitNum: $intakeTubeWellNum');
+        iotNum = schemeImplementationData.first.numIoTScada;
+        print('iotNum: $intakeTubeWellNum');
+        roadRestorationNum = schemeImplementationData.first.numRoadRestoration;
+        print('roadRestorationNum: $intakeTubeWellNum');
+        solarComponentNum = schemeImplementationData.first.numSolarComponents;
+        print('solarComponentNum: $intakeTubeWellNum');
+        otherComponentsNum = schemeImplementationData.first.numOtherDgSetHhStorageTanksEtc;
+        print('iotNum: $otherComponentsNum');
+
+
+
+
+        selectedWTP = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedWtp,yesNoMap);
+        print('selectedWTP: $selectedWTP');
+
+        selectedOHSR = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedOshrEsrOhtGsr,yesNoMap);
+        print('selectedOHSR: $selectedOHSR');
+
+        selecteSource = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedSource,yesNoMap);
+        print('selecteSource: $selecteSource');
+
+        selectedPipeline = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedPipeline,yesNoMap);
+        print('selectedPipeline: $selectedPipeline');
+
+
+
+
       } else {
         _message = response.message;
       }
@@ -853,9 +1070,26 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  void ClearfetchSchemeImplementationData() {
+    selectedDelayReasons = [];
+    selectedCostOverrun = null;
+    selectedcostOverrunReasons = [];
+    selectedrevisedCostApproved = null;
+    selectedincreaseInCost = null;
+    dateApproval = null;
+    selectedrevisionReasons = [];
+    selectedWTP = null;
+    selectedOHSR = null;
+    selecteSource = null;
+    selectedPipeline= null;
+    costControllers.clear();
+
+
+  }
+
   //**** fetch api Part E end here ***///
 
-  Future<bool> saveVisualInspection({
+  Future<void> saveVisualInspection({
     required int userId,
     required int stateId,
     required int schemeId,
@@ -942,10 +1176,8 @@ class Schemeprovider extends ChangeNotifier {
 
       _message = response.message;
       _status = response.status;
-      return _status ?? false;
     } catch (e) {
-      _message = 'Something went wrong';
-      return false;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -1314,6 +1546,7 @@ class Schemeprovider extends ChangeNotifier {
     _quesPartE10 = value;
     notifyListeners();
   }
+
 
   List<int> get selectedId_partE10 =>
       _quesPartE10.map((e) => question10Map[e] ?? 0).toList();

@@ -1,9 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cno_inspection/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
+
+import '../main.dart';
+import '../views/auth/ExceptionScreen.dart';
 import 'CustomException.dart';
 
 class GlobalExceptionHandler {
-/*
   static void handleException(Exception e) {
     print("exception is $e");
     if (navigatorKey.currentContext == null) {
@@ -27,7 +29,7 @@ class GlobalExceptionHandler {
         if (navigatorKey.currentState?.canPop() == true) {
           navigatorKey.currentState?.pop();
         }
-      ToastHelper.showSnackBar(context,errorMessage);
+        ToastHelper.showSnackBar(context, errorMessage);
       } else {
         // Full-screen error for API or unexpected errors
         if (navigatorKey.currentState?.canPop() == true) {
@@ -36,7 +38,8 @@ class GlobalExceptionHandler {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+            insetPadding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
             contentPadding: EdgeInsets.zero, // Remove default padding
             content: ConstrainedBox(
               constraints: BoxConstraints(
@@ -47,9 +50,7 @@ class GlobalExceptionHandler {
             ),
           ),
         );
-
       }
     });
   }
-*/
 }

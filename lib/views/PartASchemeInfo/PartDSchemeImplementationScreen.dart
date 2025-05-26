@@ -37,6 +37,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
 
         final schemeProvider =
             Provider.of<Schemeprovider>(context, listen: false);
+         schemeProvider.ClearfetchSchemeImplementationData();
         if (schemeId != null) {
           schemeProvider.setSchemeId(schemeId);
         }
@@ -147,8 +148,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                   question:
                                       '1. Reason(s) for delay after award of work:',
                                   options: schemeProvider.delayReasonsOptions,
-                                  selectedValues:
-                                      schemeProvider.selectedDelayReasons,
+                                  selectedValues: schemeProvider.selectedDelayReasons,
                                   onSelectionChanged: (val) {
                                     schemeProvider.selectedDelayReasons = val;
                                     print(
@@ -160,12 +160,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                 // Q2: Cost overrun
                                 Customradiobttn(
                                   question: '2. Cost overrun:',
-                                  options: [
-                                    '<10%',
-                                    '10–25%',
-                                    '>25%',
-                                    'No overrun'
-                                  ],
+                                  options: schemeProvider.costOverrun.keys.toList(),
                                   selectedOption:
                                       schemeProvider.selectedCostOverrun,
                                   onChanged: (value) {
@@ -194,16 +189,13 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                 Customradiobttn(
                                   question:
                                       '4. Has the scheme approved cost been revised before award of work:',
-                                  options:
-                                      schemeProvider.yesNoMap.keys.toList(),
-                                  selectedOption: schemeProvider
-                                      .selectedrevisedCostApproved,
+                                  options: schemeProvider.yesNoMap.keys.toList(),
+                                  selectedOption: schemeProvider.selectedrevisedCostApproved,
                                   onChanged: (value) {
                                     schemeProvider.selectedrevisedCostApproved =
                                         value;
 
-                                    print(
-                                        'selectedrevisedCostApproved:  ${schemeProvider.selectedrevisedCostApprovedID}');
+                                    print('selectedrevisedCostApproved:  ${schemeProvider.selectedrevisedCostApprovedID}');
                                   },
                                 ),
                                 const SizedBox(height: 10),
@@ -262,10 +254,8 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
 
                                 CustomMultiSelectChipQuestion(
                                   question: '6. Reason(s) for revision:',
-                                  options:
-                                      schemeProvider.revisionReasonsIDOptions,
-                                  selectedValues:
-                                      schemeProvider.selectedrevisionReasons,
+                                  options: schemeProvider.revisionReasonsIDOptions,
+                                  selectedValues: schemeProvider.selectedrevisionReasons,
                                   onSelectionChanged: (values) {
                                     setState(() => schemeProvider
                                         .selectedrevisionReasons = values);
@@ -365,20 +355,16 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                             message:
                                                 "Saving Scheme implementation...");
 
-                                        await schemeProvider
-                                            .saveSchemeImplementation(
-                                          userId: _localStorageService
-                                              .getInt(AppConstants.prefUserId)!,
+
+                                        await schemeProvider.saveSchemeImplementation(
+                                          userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                           stateId: schemeProvider.stateId!,
                                           schemeId: schemeProvider.schemeId!,
-                                          costOverrun: schemeProvider
-                                              .selectedCostOverrunID,
-                                          costRevisedBeforeWork: schemeProvider
-                                              .selectedrevisedCostApprovedID,
-                                          revisedCostPercentage: schemeProvider
-                                              .selectedincreaseInCostID,
+                                          costOverrun: schemeProvider.selectedCostOverrunID,
+                                          costRevisedBeforeWork: schemeProvider.selectedrevisedCostApprovedID,
+                                          revisedCostPercentage: schemeProvider.selectedincreaseInCostID,
                                           slsscDate:
-                                              schemeProvider.dateApproval ?? "",
+                                          schemeProvider.dateApproval ?? "",
                                           intakeTubeWellNum:
                                               schemeProvider.intakeTubeWellNum,
                                           intakeTubeWellCost: double.tryParse(
@@ -435,9 +421,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                                   ?.text ??
                                               ''),
                                           iotNum: 7,
-                                          iotCost: double.parse(schemeProvider
-                                                  .costControllers['IoT/SCADA']
-                                                  ?.text ??
+                                          iotCost: double.parse(schemeProvider.costControllers['IoT/SCADA']?.text ??
                                               ''),
                                           roadRestorationNum: 8,
                                           roadRestorationCost: double.parse(
@@ -468,8 +452,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                               schemeProvider.selecteSourceID,
                                           plannedPTGatiShaktiPipeline:
                                               schemeProvider.selectedPipelineID,
-                                          delayReasons: schemeProvider
-                                              .selectedDelayReasonsID,
+                                          delayReasons: schemeProvider.selectedDelayReasonsID,
                                           costOverrunReasons: schemeProvider
                                               .selectedcostOverrunReasonsID,
                                           costRevisionReasons: schemeProvider
