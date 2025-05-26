@@ -140,82 +140,35 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                 Column(
-                                   children: [
-                                     Customradiobttn(
-                                       question:
-                                       "1. Are water supply assets (OHTs, WTPs, Pump Houses, etc.) geotagged?",
-                                       options: dwsmProvider
-                                           .assetsGeotaggedMap.keys
-                                           .toList(),
-                                       selectedOption:
-                                       dwsmProvider.assetsGeotagged,
-                                       onChanged: (val) {
-                                         dwsmProvider.assetsGeotagged = val;
-                                       },
-                                     ),
-                                     SizedBox(height: 12),
-                                     Customradiobttn(
-                                       question:
-                                       "2. Does the district have an NABL-accredited lab or equivalent for water quality testing?",
-                                       options:
-                                       dwsmProvider.yesNoMap.keys.toList(),
-                                       selectedOption: dwsmProvider.hasNablLab,
-                                       onChanged: (val) {
-                                         dwsmProvider.hasNablLab = val;
-                                       },
-                                     ),
-                                     if (dwsmProvider.hasNablLabID == 2)
-                                       Customtxtfeild(
-                                         label:
-                                         "2.1 If no, how is testing managed?",
-                                         controller:
-                                         dwsmProvider.testingManagedController,
-                                       ),
-                                   ],
-                                 ),
-
-                                  //Below 10% scheme
-                                  Column(
-                                   children: [
-
-                                     Customtxtfeild(
-                                       label: "1. What will be the annual O&M cost of the scheme?",
-                                       controller:
-                                       dwsmProvider.testingManagedController,
-                                     ),
-                                     SizedBox(
-                                       height: 10,
-                                     ),
-                                     Customtxtfeild(
-                                       label: "2.	What shall be water user charges from the stakeholders?",
-                                       controller:
-                                       dwsmProvider.testingManagedController,
-                                     ),
-                                     SizedBox(
-                                       height: 10,
-                                     ),
-                                     Customtxtfeild(
-                                       label: "3. What is the State plan for meeting the remaining O&M expenses?",
-                                       controller:
-                                       dwsmProvider.testingManagedController,
-                                     ),
-                                     SizedBox(
-                                       height: 10,
-                                     ),
-                                     Customtxtfeild(
-                                       label: "4. Expected skilled manpower required for operations of the schemes?:?",
-                                       controller:
-                                       dwsmProvider.testingManagedController,
-                                     ),
-
-                                   ],
-
-                                 ),
-
-                                  SizedBox(
-                                    height: 10,
+                                  Customradiobttn(
+                                    question:
+                                        "1. Are water supply assets (OHTs, WTPs, Pump Houses, etc.) geotagged?",
+                                    options: dwsmProvider
+                                        .assetsGeotaggedMap.keys
+                                        .toList(),
+                                    selectedOption:
+                                        dwsmProvider.assetsGeotagged,
+                                    onChanged: (val) {
+                                      dwsmProvider.assetsGeotagged = val;
+                                    },
                                   ),
+                                  SizedBox(height: 12),
+                                  Customradiobttn(
+                                    question:
+                                        "2. Does the district have an NABL-accredited lab or equivalent for water quality testing?",
+                                    options: dwsmProvider.yesNoMap.keys.toList(),
+                                    selectedOption: dwsmProvider.hasNablLab,
+                                    onChanged: (val) {
+                                      dwsmProvider.hasNablLab = val;
+                                    },
+                                  ),
+                                  if (dwsmProvider.hasNablLabID == 2)
+                                    Customtxtfeild(
+                                      label:
+                                          "2.1 If no, how is testing managed?",
+                                      controller:
+                                          dwsmProvider.testingManagedController,
+                                    ),
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(

@@ -203,7 +203,7 @@ class _DashboardscreenState extends State<Dashboardscreen> {
                           padding: EdgeInsets.all(8.0),
                           child: buildAssessmentCard(
                             title: "Scheme Inspection Form",
-                            baselineStatus: "In-Progress",
+                            baselineStatus: "Total Schemes \n ${dashboardProvider.dashboardList.first.totalSchemes}",
                             baselineColor: Colors.orangeAccent,
                             latestStatus: "Pending",
                             latestColor: Colors.redAccent,
@@ -223,7 +223,7 @@ class _DashboardscreenState extends State<Dashboardscreen> {
                         padding: EdgeInsets.all(8.0),
                         child: buildAssessmentCard(
                           title: "Interaction with DWSM",
-                          baselineStatus: "In-Progress",
+                          baselineStatus: "Total Districts \n ${dashboardProvider.dashboardList.first.totalDistricts}",
                           baselineColor: Colors.orangeAccent,
                           latestStatus: "Pending",
                           latestColor: Colors.redAccent,
@@ -242,7 +242,7 @@ class _DashboardscreenState extends State<Dashboardscreen> {
                         padding: EdgeInsets.all(8.0),
                         child: buildAssessmentCard(
                           title: "Interaction with VWSC ",
-                          baselineStatus: "In-Progress",
+                          baselineStatus: "Total VWSC \n ${dashboardProvider.dashboardList.first.totalVillages}",
                           baselineColor: Colors.orangeAccent,
                           latestStatus: "Pending",
                           latestColor: Colors.redAccent,

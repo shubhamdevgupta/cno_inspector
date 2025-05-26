@@ -9,7 +9,6 @@ import '../utils/GlobalExceptionHandler.dart';
 class DashboardProvider extends ChangeNotifier {
   final DashboardRepository _dashboardRepository = DashboardRepository();
   final LocalStorageService _localStorage = LocalStorageService();
-
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
