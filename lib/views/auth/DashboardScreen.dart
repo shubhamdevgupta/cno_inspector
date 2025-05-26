@@ -47,16 +47,18 @@ class _DashboardscreenState extends State<Dashboardscreen> {
               AppConstants.appTitle,
               style: AppStyles.appBarTitle,
             ),
-            leading: Builder(
-              builder: (context) {
-                return IconButton(
-                  icon: const Icon(Icons.menu, color: Colors.white),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                );
-              },
-            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.logout, color: Colors.white),
+                tooltip: 'Logout',
+                onPressed: () async {
+                  final authProvider = Provider.of<AuthenticationProvider>(
+                      context, listen: false);
+                  await authProvider.logoutUser();
+                  Navigator.pushReplacementNamed(context, AppConstants.navigateToLogin);
+                },
+              ),
+            ],
             //elevation
             flexibleSpace: Container(
               decoration: const BoxDecoration(
@@ -71,57 +73,6 @@ class _DashboardscreenState extends State<Dashboardscreen> {
               ),
             ),
             elevation: 5,
-          ),
-          drawer: Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                DrawerHeader(
-                  decoration: const BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "kkk=",
-                        style: AppStyles.appBarTitle,
-                      ),
-                      Text(
-                        "ghg", // Provide a fallback value if null
-                        style: AppStyles.setTextStyle(
-                            16, FontWeight.normal, Colors.white70),
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.dashboard),
-                  title: Text(
-                    "dd",
-                    style: AppStyles.style16NormalBlack,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.logout),
-                  title: Text(
-                    "logout",
-                    style: AppStyles.style16NormalBlack,
-                  ),
-                  onTap: () async {
-                    final authProvider = Provider.of<AuthenticationProvider>(
-                        context,
-                        listen: false);
-                    await authProvider.logoutUser();
-                    Navigator.pushReplacementNamed(
-                        context, AppConstants.navigateToLogin);
-                  },
-                ),
-              ],
-            ),
           ),
           body: Consumer<DashboardProvider>(
             builder: (context, dashboardProvider, child) {

@@ -635,7 +635,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  final Map<String, int> costOverrun = {
+   Map<String, int> costOverrun = {
     "<10%": 1,
     "10–25%": 2,
     ">25%": 3,
@@ -973,6 +973,43 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  void clearSchemeImplementationData() {
+    schemeImplementationData = [];
+
+    // Reset checkbox and radio selections
+    selectedDelayReasons = [];
+    selectedCostOverrun = null;
+    selectedcostOverrunReasons = [];
+    selectedrevisedCostApproved = null;
+    selectedincreaseInCost = null;
+    selectedrevisionReasons = [];
+
+    // Reset date
+    dateApproval = '';
+
+    // Reset table numbers
+    intakeTubeWellNum = 0;
+    electroMechanicalNum = 0;
+    wtpNum = 0;
+    mbrNum = 0;
+    transmissionPipelineNum = 0;
+    distributionPipelineNum = 0;
+    ohtNum = 0;
+    disinfectionUnitNum = 0;
+    iotNum = 0;
+    roadRestorationNum = 0;
+    solarComponentNum = 0;
+    otherComponentsNum = 0;
+
+    // Reset planned component radio buttons
+    selectedWTP = null;
+    selectedOHSR = null;
+    selecteSource = null;
+    selectedPipeline = null;
+
+    notifyListeners(); // if inside a provider
+  }
+
 
   //**** fetch api Part D start here ***///
 
@@ -987,8 +1024,8 @@ class Schemeprovider extends ChangeNotifier {
       final response = await _fetchschemeinfo.fetchSchemeImplementation(
           stateId, schemeId, userId);
       if (response.status) {
-        schemeImplementationData = response.result;
         _message = '';
+        schemeImplementationData = response.result;
 
         selectedDelayReasons = getCheckBoxData(schemeImplementationData.first.delayWorkReason,delayReasons);
         print('selectedDelayReasons: $selectedDelayReasons');
@@ -1055,9 +1092,6 @@ class Schemeprovider extends ChangeNotifier {
         selectedPipeline = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedPipeline,yesNoMap);
         print('selectedPipeline: $selectedPipeline');
 
-
-
-
       } else {
         _message = response.message;
       }
@@ -1083,8 +1117,7 @@ class Schemeprovider extends ChangeNotifier {
     selecteSource = null;
     selectedPipeline= null;
     costControllers.clear();
-
-
+    notifyListeners();
   }
 
   //**** fetch api Part E end here ***///

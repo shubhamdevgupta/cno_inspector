@@ -22,7 +22,7 @@ class DashboardProvider extends ChangeNotifier {
   CnoDashboardResponse? cnoDashboardResponse;
 
   List<CnoDashboardItem> dashboardList=[];
-  int selectedSchemeID=0;
+  String? selectedSchemeID;
   int selectedVwscId=0;
   int selectedDwsmID=0;
 
@@ -46,7 +46,7 @@ class DashboardProvider extends ChangeNotifier {
     }
   }
 
-  void setSelectedScheme(int schemeId) {
+  void setSelectedScheme(String? schemeId) {
     selectedSchemeID = schemeId;
     notifyListeners();
   }

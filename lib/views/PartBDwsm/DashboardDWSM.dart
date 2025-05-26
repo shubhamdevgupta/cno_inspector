@@ -176,7 +176,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             );
 
                             dashboardProvider.setSelectedDWSM(selectedItem.districtId);
-                            print('village id ${dashboardProvider.selectedVwscId}');
+                            print('village id ${dashboardProvider}');
 
                           })
                     ],
