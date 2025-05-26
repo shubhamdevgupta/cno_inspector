@@ -31,8 +31,9 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(
-          _localStorage.getInt(AppConstants.prefUserId)!, 2);
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final String? sourceFlag = args?['source'];
+      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,2, int.parse(sourceFlag!));
 
       dwsmprovider = Provider.of<Dwsmprovider>(context, listen: false);
 
@@ -140,25 +141,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                                     (district) =>
                                         district.districtId ==
                                         dashboardProvider.selectedDwsmID,
-                                    orElse: () => CnoDashboardItem(
-                                      userid: 0,
-                                      totalSchemes: 0,
-                                      pendingSchemes: 0,
-                                      underProcessScheme: 0,
-                                      totalDistricts: 0,
-                                      pendingDistricts: 0,
-                                      underProcessDistricts: 0,
-                                      totalVillages: 0,
-                                      pendingVillages: 0,
-                                      underProcessVillages: 0,
-                                      schemeId: 0,
-                                      schemeName: '',
-                                      stateId: 0,
-                                      districtId: 0,
-                                      blockId: 0,
-                                      panchayatId: 0,
-                                      villageId: 0,
-                                    ),
+                                    orElse: () => CnoDashboardItem.empty(),
                                   )
                                   .districtName ??
                               'Select DWSM',
@@ -173,25 +156,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             final selectedItem =
                                 dashboardProvider.dashboardList.firstWhere(
                               (item) => item.districtName == selectedDistrict,
-                              orElse: () => CnoDashboardItem(
-                                userid: 0,
-                                totalSchemes: 0,
-                                pendingSchemes: 0,
-                                underProcessScheme: 0,
-                                totalDistricts: 0,
-                                pendingDistricts: 0,
-                                underProcessDistricts: 0,
-                                totalVillages: 0,
-                                pendingVillages: 0,
-                                underProcessVillages: 0,
-                                schemeId: 0,
-                                schemeName: '',
-                                stateId: 0,
-                                districtId: 0,
-                                blockId: 0,
-                                panchayatId: 0,
-                                villageId: 0,
-                              ),
+                              orElse: () => CnoDashboardItem.empty(),
                             );
 
                             dashboardProvider
@@ -200,7 +165,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                           })
                     ],
                   ),
-                  if (dashboardProvider.selectedDwsmID != 0)
+                 // if (dashboardProvider.selectedDwsmID != 0)
                     Column(
                       children: [
                         buildSampleCard(

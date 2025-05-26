@@ -31,11 +31,10 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      print(
-          'login time state id ----- ${_localStorage.getInt(AppConstants.prefStateId)}');
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final String? sourceFlag = args?['source'];
 
-      await dashboardProvider.fetchDashboardData(
-          _localStorage.getInt(AppConstants.prefUserId)!, 3);
+      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,3, int.parse(sourceFlag!));
       _localStorage.saveInt(
           "villageId", dashboardProvider.dashboardList.first.villageId);
 
@@ -143,25 +142,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                                   (village) =>
                                       village.villageId ==
                                       dashboardProvider.selectedVwscId,
-                                  orElse: () => CnoDashboardItem(
-                                    userid: 0,
-                                    totalSchemes: 0,
-                                    pendingSchemes: 0,
-                                    underProcessScheme: 0,
-                                    totalDistricts: 0,
-                                    pendingDistricts: 0,
-                                    underProcessDistricts: 0,
-                                    totalVillages: 0,
-                                    pendingVillages: 0,
-                                    underProcessVillages: 0,
-                                    schemeId: 0,
-                                    schemeName: '',
-                                    stateId: 0,
-                                    districtId: 0,
-                                    blockId: 0,
-                                    panchayatId: 0,
-                                    villageId: 0,
-                                  ),
+                                  orElse: () =>CnoDashboardItem.empty(),
                                 )
                                 .villageName ??
                             'Select Village',
@@ -176,25 +157,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                           final selectedItem =
                               dashboardProvider.dashboardList.firstWhere(
                             (item) => item.villageName == selectedVillageName,
-                            orElse: () => CnoDashboardItem(
-                              userid: 0,
-                              totalSchemes: 0,
-                              pendingSchemes: 0,
-                              underProcessScheme: 0,
-                              totalDistricts: 0,
-                              pendingDistricts: 0,
-                              underProcessDistricts: 0,
-                              totalVillages: 0,
-                              pendingVillages: 0,
-                              underProcessVillages: 0,
-                              schemeId: 0,
-                              schemeName: '',
-                              stateId: 0,
-                              districtId: 0,
-                              blockId: 0,
-                              panchayatId: 0,
-                              villageId: 0,
-                            ),
+                            orElse: () => CnoDashboardItem.empty(),
                           );
 
                           dashboardProvider

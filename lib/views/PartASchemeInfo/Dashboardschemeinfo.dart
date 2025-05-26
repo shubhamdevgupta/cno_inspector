@@ -26,8 +26,15 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final String? sourceFlag = args?['source'];
+      print('dataaaaaaaaaaaaaaaa  $sourceFlag');
+
+      dashboardProvider =Provider.of<DashboardProvider>(context,listen: false);
+      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!,1, int.parse(sourceFlag!));
+
       dashboardProvider = Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!, 1);
       schemeprovider = Provider.of<Schemeprovider>(context,listen: false);
       //clear for part a
       schemeprovider.clearfetchSourceSurvey();

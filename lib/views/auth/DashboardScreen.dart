@@ -1,4 +1,6 @@
 import 'package:cno_inspection/utils/Showerrormsg.dart';
+import 'package:cno_inspection/utils/TotalSchemsCard.dart';
+import 'package:cno_inspection/views/tabLayout/DashboardTabView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +27,7 @@ class _DashboardscreenState extends State<Dashboardscreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!, 0);
+      await dashboardProvider.fetchDashboardHomeData(0);
     });
   }
 
@@ -53,9 +55,11 @@ class _DashboardscreenState extends State<Dashboardscreen> {
                 tooltip: 'Logout',
                 onPressed: () async {
                   final authProvider = Provider.of<AuthenticationProvider>(
-                      context, listen: false);
+                      context,
+                      listen: false);
                   await authProvider.logoutUser();
-                  Navigator.pushReplacementNamed(context, AppConstants.navigateToLogin);
+                  Navigator.pushReplacementNamed(
+                      context, AppConstants.navigateToLogin);
                 },
               ),
             ],
@@ -79,14 +83,17 @@ class _DashboardscreenState extends State<Dashboardscreen> {
               if (dashboardProvider.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
-              if(!dashboardProvider.status){
-              return  Center(child: AppTextWidgets.errorText(dashboardProvider.errorMsg));
+              if (!dashboardProvider.status) {
+                return Center(
+                    child:
+                        AppTextWidgets.errorText(dashboardProvider.errorMsg));
               }
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+/*
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 10),
@@ -161,7 +168,9 @@ class _DashboardscreenState extends State<Dashboardscreen> {
                                         size: 18, color: Colors.teal),
                                     const SizedBox(width: 6),
                                     Text(
-                                      dashboardProvider.dashboardList.first.designation??'designation',
+                                      dashboardProvider.dashboardList.first
+                                              .designation ??
+                                          'designation',
                                       style: const TextStyle(
                                           fontSize: 14,
                                           fontFamily: 'OpenSans',
@@ -180,7 +189,9 @@ class _DashboardscreenState extends State<Dashboardscreen> {
                                     const SizedBox(width: 6),
                                     Flexible(
                                       child: Text(
-                                        dashboardProvider.dashboardList.first.mobileNumber??'mobile number',
+                                        dashboardProvider.dashboardList.first
+                                                .mobileNumber ??
+                                            'mobile number',
                                         style: const TextStyle(
                                           fontSize: 14,
                                           fontFamily: 'OpenSans',
@@ -197,85 +208,58 @@ class _DashboardscreenState extends State<Dashboardscreen> {
                         ],
                       ),
                     ),
+*/
                     const SizedBox(height: 15),
-                    Container(
-                      child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: buildAssessmentCard(
-                            title: "Scheme Inspection Form",
-                            baselineStatus: "Total Schemes \n ${dashboardProvider.dashboardList.first.totalSchemes}",
-                            baselineColor: Colors.orangeAccent,
-                            latestStatus: "Pending",
-                            latestColor: Colors.redAccent,
-                            odfStatus: "Non-ODF Plus",
-                            odfColor: Colors.redAccent,
-                            backgroundColor: Color(0xFFE3F2FD),
-                            borderColor: Color(0xFF2196F3),
-                            buttonColor: Color(0xFF2196F3),
-                            onStartPressed: () {
-                              Navigator.pushReplacementNamed(context,
-                                  AppConstants.navigateToDashboardSchemeInfo);
-                            },
-                          )),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: StatCard(
+                        title: 'Total Schemes',
+                        value: dashboardProvider
+                            .cnoDashboardHomeList.first.totalScheme,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: buildAssessmentCard(
-                          title: "Interaction with DWSM",
-                          baselineStatus: "Total Districts \n ${dashboardProvider.dashboardList.first.totalDistricts}",
-                          baselineColor: Colors.orangeAccent,
-                          latestStatus: "Pending",
-                          latestColor: Colors.redAccent,
-                          odfStatus: "Non-ODF Plus",
-                          odfColor: Colors.redAccent,
-                          backgroundColor: Color(0xFFE3F2FD),
-                          borderColor: Color(0xFF2196F3),
-                          buttonColor: Color(0xFF2196F3),
-                          onStartPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, AppConstants.navigateToDashboardDWSM);
-                          },
-                        )),
+                        child: StatCard(
+                            title: 'Total DWSM',
+                            value: dashboardProvider
+                                .cnoDashboardHomeList.first.totalDistrict)),
                     const SizedBox(height: 10),
                     Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: buildAssessmentCard(
-                          title: "Interaction with VWSC ",
-                          baselineStatus: "Total VWSC \n ${dashboardProvider.dashboardList.first.totalVillages}",
-                          baselineColor: Colors.orangeAccent,
-                          latestStatus: "Pending",
-                          latestColor: Colors.redAccent,
-                          odfStatus: "Non-ODF Plus",
-                          odfColor: Colors.redAccent,
-                          backgroundColor: Color(0xFFE3F2FD),
-                          borderColor: Color(0xFF2196F3),
-                          buttonColor: Color(0xFF2196F3),
-                          onStartPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, AppConstants.navigateToDashboardVWSC);
-                          },
-                        )),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFe0f7fa), Color(0xFFFFFFFF)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(24),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 16,
-                            offset: const Offset(0, 6),
+                        child: StatCard(
+                            title: 'Total VWSC',
+                            value: dashboardProvider
+                                .cnoDashboardHomeList.first.totalVillage)),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 45,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [],
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (_) => DashboardTabView()),
+                          );
+                        },
+                        child: Text(
+                          "Submit Your Assessment",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ),
                   ],

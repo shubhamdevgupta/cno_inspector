@@ -22,14 +22,14 @@ class CnoDashboardResponse {
 }
 
 class CnoDashboardItem {
-  final int userid;
+  final int userId;
   final String? userName;
   final String? designation;
   final String? mobileNumber;
 
   final int totalSchemes;
   final int pendingSchemes;
-  final int underProcessScheme;
+  final int underProcessSchemes;
 
   final int totalDistricts;
   final int pendingDistricts;
@@ -58,13 +58,13 @@ class CnoDashboardItem {
   final String? villageName;
 
   CnoDashboardItem({
-    required this.userid,
+    required this.userId,
     this.userName,
     this.designation,
     this.mobileNumber,
     required this.totalSchemes,
     required this.pendingSchemes,
-    required this.underProcessScheme,
+    required this.underProcessSchemes,
     required this.totalDistricts,
     required this.pendingDistricts,
     required this.underProcessDistricts,
@@ -85,15 +85,44 @@ class CnoDashboardItem {
     this.villageName,
   });
 
+  factory CnoDashboardItem.empty() {
+    return CnoDashboardItem(
+      userId: 0,
+      userName: '',
+      designation: '',
+      mobileNumber: '',
+      totalSchemes: 0,
+      pendingSchemes: 0,
+      underProcessSchemes: 0,
+      totalDistricts: 0,
+      pendingDistricts: 0,
+      underProcessDistricts: 0,
+      totalVillages: 0,
+      pendingVillages: 0,
+      underProcessVillages: 0,
+      schemeId: 0,
+      schemeName: '',
+      stateId: 0,
+      stateName: '',
+      districtId: 0,
+      districtName: '',
+      blockId: 0,
+      blockName: '',
+      panchayatId: 0,
+      panchayatName: '',
+      villageId: 0,
+      villageName: '',
+    );
+  }
   factory CnoDashboardItem.fromJson(Map<String, dynamic> json) {
     return CnoDashboardItem(
-      userid: json['userid'] ?? 0,
+      userId: json['userid'] ?? 0,
       userName: json['userName'],
       designation: json['Designation'],
       mobileNumber: json['MobileNumber'],
       totalSchemes: json['total_schemes'] ?? 0,
       pendingSchemes: json['pending_schemes'] ?? 0,
-      underProcessScheme: json['under_process_scheme'] ?? 0,
+      underProcessSchemes: json['under_process_scheme'] ?? 0,
       totalDistricts: json['total_districts'] ?? 0,
       pendingDistricts: json['pending_districts'] ?? 0,
       underProcessDistricts: json['under_process_districts'] ?? 0,
@@ -101,7 +130,7 @@ class CnoDashboardItem {
       pendingVillages: json['pending_villages'] ?? 0,
       underProcessVillages: json['under_process_villages'] ?? 0,
       schemeId: json['SchemeId'] ?? 0,
-      schemeName: json['SchemeName'] ?? '',
+      schemeName: json['SchemeName'],
       stateId: json['stateid'] ?? 0,
       stateName: json['StateName'],
       districtId: json['districtid'] ?? 0,
@@ -115,3 +144,5 @@ class CnoDashboardItem {
     );
   }
 }
+
+
