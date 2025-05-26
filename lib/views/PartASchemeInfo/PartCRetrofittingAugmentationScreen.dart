@@ -53,7 +53,7 @@ class _RetrofittingAugmentationScreen
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchAdditionalInfoRetrofit("0", "5343948", "34483");
+        schemeProvider.fetchAdditionalInfoRetrofit(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }

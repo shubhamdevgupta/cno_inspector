@@ -48,7 +48,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSchemePlanning("0", "5343948", "34483");
+        schemeProvider.fetchSchemePlanning(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
