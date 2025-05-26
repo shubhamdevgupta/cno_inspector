@@ -10,6 +10,7 @@ import '../repository/AuthenticaitonRepository.dart';
 import '../services/LocalStorageService.dart';
 import '../utils/AppConstants.dart';
 import '../utils/CurrentLocation.dart';
+import '../utils/GlobalExceptionHandler.dart';
 import '../utils/LocationUtils.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
@@ -73,7 +74,7 @@ class AuthenticationProvider extends ChangeNotifier {
         onFailure(errorMsg);
       }
     } catch (e) {
-      _sendOtpResponse = null;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -93,7 +94,7 @@ class AuthenticationProvider extends ChangeNotifier {
         onFailure(errorMsg);
       }
     } catch (e) {
-      _verifyOtpResponse = null;
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();

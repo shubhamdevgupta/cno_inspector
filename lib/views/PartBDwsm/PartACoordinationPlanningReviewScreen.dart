@@ -26,21 +26,25 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
-      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
       if (args != null) {
         final districtid = args['districtid'] as int?;
         final stateId = args['stateId'] as int?;
         final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+        dwsmProvider.clearCoordinationFields();
         if (districtid != null) {
           dwsmProvider.setDistrictId(districtid);
         }
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchCoordinationData("31", "478", "121212");
+        dwsmProvider.fetchCoordinationData(
+            stateId.toString(),
+            districtid.toString(),
+            localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -158,7 +162,8 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                 Customradiobttn(
                                   question:
                                       '1.2 Quality of Meeting and Record maintenance:',
-                                  options: dwsmProvider.meetingQualityMap.keys.toList(),
+                                  options: dwsmProvider.meetingQualityMap.keys
+                                      .toList(),
                                   selectedOption:
                                       dwsmProvider.selectedMeetingQuality,
                                   onChanged: (value) {
@@ -195,10 +200,32 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                       ),
                                     ),
                                     onPressed: () async {
-                                       LoaderUtils.showLoadingWithMessage(context, isLoading: dwsmProvider.isLoading,message: "Saving Coordination, Planning & Review Mechanism");
-                                      await dwsmProvider.saveCoordinationPlanningReview(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
-                                          areMonthlyMeetingsHeld: dwsmProvider.selectedValueQ1Id, numberOfMeetingsLast6Months: int.parse(dwsmProvider.meetingsHeldController.text),
-                                          qualityOfMeeting: dwsmProvider.selectedMeetingQualityID, areCoordinationMeetingsRegular: dwsmProvider.selectedDISHAID);
+                                      LoaderUtils.showLoadingWithMessage(
+                                          context,
+                                          isLoading: dwsmProvider.isLoading,
+                                          message:
+                                              "Saving Coordination, Planning & Review Mechanism");
+                                      await dwsmProvider
+                                          .saveCoordinationPlanningReview(
+                                              userId:
+                                                  localStorageService
+                                                      .getInt(
+                                                          AppConstants
+                                                              .prefUserId)!,
+                                              stateId: dwsmProvider.stateId!,
+                                              districtId: dwsmProvider
+                                                  .districtId!,
+                                              areMonthlyMeetingsHeld:
+                                                  dwsmProvider
+                                                      .selectedValueQ1Id,
+                                              numberOfMeetingsLast6Months:
+                                                  int.parse(dwsmProvider
+                                                      .meetingsHeldController
+                                                      .text),
+                                              qualityOfMeeting: dwsmProvider
+                                                  .selectedMeetingQualityID,
+                                              areCoordinationMeetingsRegular:
+                                                  dwsmProvider.selectedDISHAID);
 
                                       if (dwsmProvider.status!) {
                                         ToastHelper.showToastMessage(

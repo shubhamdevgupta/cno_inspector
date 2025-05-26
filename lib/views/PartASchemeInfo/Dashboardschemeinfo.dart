@@ -38,7 +38,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
       //clear for part d
       schemeprovider.clearSchemeImplementationData();
       //clear for par e
-
+      schemeprovider.clearVisualInspectionAnswers();
 
     });
   }

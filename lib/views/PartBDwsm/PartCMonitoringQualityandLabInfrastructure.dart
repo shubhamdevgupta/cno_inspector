@@ -34,13 +34,17 @@ class _MonitioringQuality extends State<MonitioringQuality> {
         final districtid = args['districtid'] as int?;
         final stateId = args['stateId'] as int?;
         final dwsmProvider = Provider.of<Dwsmprovider>(context, listen: false);
+        dwsmProvider.clearMonitoringFields();
         if (districtid != null) {
           dwsmProvider.setDistrictId(districtid);
         }
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchMonitoringLabData("31", "478", "121212");
+        dwsmProvider.fetchMonitoringLabData(
+            stateId.toString(),
+            districtid.toString(),
+            localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -179,7 +183,11 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                           ),
                                         ),
                                         onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(context, isLoading: dwsmProvider.isLoading, message: "Saving  Monitoring, Quality and Lab Infrastructure");
+                                          LoaderUtils.showLoadingWithMessage(
+                                              context,
+                                              isLoading: dwsmProvider.isLoading,
+                                              message:
+                                                  "Saving  Monitoring, Quality and Lab Infrastructure");
 
                                           await dwsmProvider
                                               .saveMonitoringQualityLab(

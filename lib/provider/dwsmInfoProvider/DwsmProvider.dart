@@ -189,6 +189,18 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
+  void clearCoordinationFields() {
+    selectedValueQ1 = null;
+
+    meetingsHeldController.clear();
+
+    selectedMeetingQuality = null;
+    selectedDISHA = null;
+
+    // If you're using Provider or ChangeNotifier, optionally call:
+    notifyListeners(); // <- only if inside a ChangeNotifier
+  }
+
   //fetch for part a end
 
   //BBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -363,6 +375,18 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
+  void clearSustainabilityFields() {
+    sourceSustainability = null;
+    groundwaterProtection = null;
+    rechargeStructureImplemented = null;
+    rechargeReasonController.clear();
+    impactStudies = null;
+
+    // If within a ChangeNotifier or Provider, uncomment:
+    // notifyListeners();
+  }
+
+
   // fetch for dwsm part B end
 
   //CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
@@ -472,6 +496,16 @@ class Dwsmprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void clearMonitoringFields() {
+    assetsGeotagged = null;
+    hasNablLab = null;
+    testingManagedController.clear();
+
+    // If using ChangeNotifier or similar:
+    // notifyListeners();
+  }
+
 
   // fetch for dwsm part C end
 

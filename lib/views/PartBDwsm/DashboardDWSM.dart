@@ -1,4 +1,5 @@
 // views/DashboardScreen.dart
+import 'package:cno_inspection/provider/dwsmInfoProvider/DwsmProvider.dart';
 import 'package:cno_inspection/utils/CustomSearchableDropdown.dart';
 import 'package:cno_inspection/utils/Showerrormsg.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import '../../provider/dashboardProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
-import '../../utils/CustomDropdown.dart';
 import '../auth/DashboardScreen.dart';
 
 class Dashboarddwsm extends StatefulWidget {
@@ -23,6 +23,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
   final LocalStorageService _localStorage = LocalStorageService();
 
   late DashboardProvider dashboardProvider;
+  late Dwsmprovider dwsmprovider;
 
   @override
   void initState() {
@@ -32,6 +33,25 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
           Provider.of<DashboardProvider>(context, listen: false);
       await dashboardProvider.fetchDashboardData(
           _localStorage.getInt(AppConstants.prefUserId)!, 2);
+
+      dwsmprovider = Provider.of<Dwsmprovider>(context, listen: false);
+
+      //clear part a
+      dwsmprovider.clearCoordinationFields();
+
+      // clear part b
+      dwsmprovider.clearSustainabilityFields();
+
+      // clear part c
+
+      dwsmprovider.clearMonitoringFields();
+
+      //clear part d
+      dwsmprovider.clearfetchOperationMaintenanceData();
+      //clear part e
+      dwsmprovider.clearfetchQualityAssuranceData();
+      // clear part f
+      dwsmprovider.clearfetchGrievanceRedressalData();
     });
   }
 
@@ -107,7 +127,6 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                               .black87, // Dark text for better readability
                         ),
                       ),
-
                       const Divider(
                         height: 10,
                         color: Colors.grey,
@@ -175,14 +194,13 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                               ),
                             );
 
-                            dashboardProvider.setSelectedDWSM(selectedItem.districtId);
+                            dashboardProvider
+                                .setSelectedDWSM(selectedItem.districtId);
                             print('village id ${dashboardProvider}');
-
                           })
                     ],
                   ),
-                  if (dashboardProvider.selectedVwscId !=0)
-
+                  if (dashboardProvider.selectedDwsmID != 0)
                     Column(
                       children: [
                         buildSampleCard(
@@ -192,9 +210,11 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                           onTap: () {
                             Navigator.pushReplacementNamed(
                                 context,
-                                AppConstants.navigateToCoordinationPlanningScreen,
+                                AppConstants
+                                    .navigateToCoordinationPlanningScreen,
                                 arguments: {
-                                  'districtid': dashboardProvider.selectedDwsmID,
+                                  'districtid':
+                                      dashboardProvider.selectedDwsmID,
                                   'stateId': dashboardProvider
                                       .dashboardList.first.stateId,
                                 });
@@ -214,8 +234,8 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                                 AppConstants
                                     .navigateToSourceSustainablitiyWasterConservation,
                                 arguments: {
-                                  'districtid': dashboardProvider.selectedDwsmID,
-
+                                  'districtid':
+                                      dashboardProvider.selectedDwsmID,
                                   'stateId': dashboardProvider
                                       .dashboardList.first.stateId,
                                 });
@@ -233,8 +253,8 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             Navigator.pushReplacementNamed(context,
                                 AppConstants.navigateToMonitoringQuality,
                                 arguments: {
-                                  'districtid': dashboardProvider.selectedDwsmID,
-
+                                  'districtid':
+                                      dashboardProvider.selectedDwsmID,
                                   'stateId': dashboardProvider
                                       .dashboardList.first.stateId,
                                 });
@@ -252,8 +272,8 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             Navigator.pushReplacementNamed(context,
                                 AppConstants.navigateToOperationandMaintance,
                                 arguments: {
-                                  'districtid': dashboardProvider.selectedDwsmID,
-
+                                  'districtid':
+                                      dashboardProvider.selectedDwsmID,
                                   'stateId': dashboardProvider
                                       .dashboardList.first.stateId,
                                 });
@@ -271,8 +291,8 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             Navigator.pushReplacementNamed(context,
                                 AppConstants.navigateToQualityAssurance,
                                 arguments: {
-                                  'districtid': dashboardProvider.selectedDwsmID,
-
+                                  'districtid':
+                                      dashboardProvider.selectedDwsmID,
                                   'stateId': dashboardProvider
                                       .dashboardList.first.stateId,
                                 });
@@ -290,7 +310,8 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                             Navigator.pushReplacementNamed(context,
                                 AppConstants.navigateToPartFPublicCompliant,
                                 arguments: {
-                                  'districtid': dashboardProvider.selectedDwsmID,
+                                  'districtid':
+                                      dashboardProvider.selectedDwsmID,
                                   'stateId': dashboardProvider
                                       .dashboardList.first.stateId,
                                 });

@@ -22,7 +22,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
   final LocalStorageService _localStorage = LocalStorageService();
 
   late DashboardProvider dashboardProvider;
-  String path='';
+  late Vwscprovider vwscprovider;
+  String path = '';
 
   @override
   void initState() {
@@ -30,10 +31,31 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      print('login time state id ----- ${_localStorage.getInt(AppConstants.prefStateId)}');
+      print(
+          'login time state id ----- ${_localStorage.getInt(AppConstants.prefStateId)}');
 
-      await dashboardProvider.fetchDashboardData( _localStorage.getInt(AppConstants.prefUserId)!, 3);
-      _localStorage.saveInt("villageId", dashboardProvider.dashboardList.first.villageId);
+      await dashboardProvider.fetchDashboardData(
+          _localStorage.getInt(AppConstants.prefUserId)!, 3);
+      _localStorage.saveInt(
+          "villageId", dashboardProvider.dashboardList.first.villageId);
+
+      vwscprovider = Provider.of<Vwscprovider>(context, listen: false);
+
+      //part a clear
+       vwscprovider.clearValuesforqueA();
+
+       // part b clear
+      vwscprovider.clearCommunityInvolvementData();
+
+      // part c clear
+      vwscprovider.clearCommunityFeedback();
+
+      // part d clear
+      vwscprovider.clearFetchWaterQuality();
+
+      //part e clear
+      vwscprovider.clearFetchGrievance();
+
     });
   }
 
@@ -175,9 +197,10 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                             ),
                           );
 
-                          dashboardProvider.setSelectedVWSC(
-                              selectedItem.villageId);
-                          print('village id ${dashboardProvider.selectedVwscId}');
+                          dashboardProvider
+                              .setSelectedVWSC(selectedItem.villageId);
+                          print(
+                              'village id ${dashboardProvider.selectedVwscId}');
 
                           path = _buildLocationPath([
                             selectedItem.stateName ?? '',
@@ -190,122 +213,135 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                       ),
                     ],
                   ),
-                  if (dashboardProvider.selectedVwscId !=0)
-                  Column(
-                    children: [
-                      Visibility(
-                        visible: path.isNotEmpty,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _iconCircle(Icons.location_on, Colors.red),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                path,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black87,
+                  if (dashboardProvider.selectedVwscId != 0)
+                    Column(
+                      children: [
+                        Visibility(
+                          visible: path.isNotEmpty,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _iconCircle(Icons.location_on, Colors.red),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  path,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black87,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      buildSampleCard(
-                        qnumber: "A.",
-                        title: "Water Supply Functionality",
-                        color: Colors.blue,
-                        onTap: () {
-                          final selectedVillageId = dashboardProvider.selectedVwscId;
-                          final stateId = dashboardProvider.dashboardList.first.stateId;
-                          print('sending----- $stateId');
-                          Navigator.pushReplacementNamed(
-                              context, AppConstants.navigateToWaterSupplyPartA,
-                              arguments: {
-                                'villageId': selectedVillageId,
-                                'stateId': stateId,
-                              }                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      buildSampleCard(
-                        qnumber: "B.",
-                        title: "Community Involvement & VWSC Functionality",
-                        color: Colors.orangeAccent,
-                        onTap: () {
-                          final selectedVillageId = dashboardProvider.selectedVwscId;
-                          final stateId = dashboardProvider.dashboardList.first.stateId;
-                          Navigator.pushReplacementNamed(context,
-                              AppConstants.navigateToCommunityInvolvementPartB,
-                              arguments: {
-                                'villageId': selectedVillageId,
-                                'stateId': stateId,
-                              }                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      buildSampleCard(
-                        qnumber: "C.",
-                        title: "Community feedback on quality of construction",
-                        color: Colors.deepOrangeAccent,
-                        onTap: () {
-                          final selectedVillageId = dashboardProvider.selectedVwscId;
-                          final stateId = dashboardProvider.dashboardList.first.stateId;
-                          Navigator.pushReplacementNamed(context,
-                              AppConstants.navigateToCommunityFeedbackPartC,
-                              arguments: {
-                                'villageId': selectedVillageId,
-                                'stateId': stateId,
-                              }                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      buildSampleCard(
-                        qnumber: "D.",
-                        title: "Water Quality Monitoring",
-                        color: Colors.lightGreen,
-                        onTap: () {
-                          final selectedVillageId = dashboardProvider.selectedVwscId;
-                          final stateId = dashboardProvider.dashboardList.first.stateId;
-                          Navigator.pushReplacementNamed(
-                              context, AppConstants.navigateToQulityPartD,
-                              arguments: {
-                                'villageId': selectedVillageId,
-                                'stateId': stateId,
-                              }                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      buildSampleCard(
-                        qnumber: "E.",
-                        title: "Grievance Redressal",
-                        color: Colors.green,
-                        onTap: () {
-                          final selectedVillageId = dashboardProvider.selectedVwscId;
-                          final stateId = dashboardProvider.dashboardList.first.stateId;
-                          Navigator.pushReplacementNamed(
-                              context, AppConstants.navigateToGrievancePartE,
-                              arguments: {
-                                'villageId': selectedVillageId,
-                                'stateId': stateId,
-                              }                          );
-                        },
-                      ),
-                    ],
-                  )
+                        SizedBox(
+                          height: 8,
+                        ),
+                        buildSampleCard(
+                          qnumber: "A.",
+                          title: "Water Supply Functionality",
+                          color: Colors.blue,
+                          onTap: () {
+                            final selectedVillageId =
+                                dashboardProvider.selectedVwscId;
+                            final stateId =
+                                dashboardProvider.dashboardList.first.stateId;
+                            print('sending----- $stateId');
+                            Navigator.pushReplacementNamed(context,
+                                AppConstants.navigateToWaterSupplyPartA,
+                                arguments: {
+                                  'villageId': selectedVillageId,
+                                  'stateId': stateId,
+                                });
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "B.",
+                          title: "Community Involvement & VWSC Functionality",
+                          color: Colors.orangeAccent,
+                          onTap: () {
+                            final selectedVillageId =
+                                dashboardProvider.selectedVwscId;
+                            final stateId =
+                                dashboardProvider.dashboardList.first.stateId;
+                            Navigator.pushReplacementNamed(
+                                context,
+                                AppConstants
+                                    .navigateToCommunityInvolvementPartB,
+                                arguments: {
+                                  'villageId': selectedVillageId,
+                                  'stateId': stateId,
+                                });
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "C.",
+                          title:
+                              "Community feedback on quality of construction",
+                          color: Colors.deepOrangeAccent,
+                          onTap: () {
+                            final selectedVillageId =
+                                dashboardProvider.selectedVwscId;
+                            final stateId =
+                                dashboardProvider.dashboardList.first.stateId;
+                            Navigator.pushReplacementNamed(context,
+                                AppConstants.navigateToCommunityFeedbackPartC,
+                                arguments: {
+                                  'villageId': selectedVillageId,
+                                  'stateId': stateId,
+                                });
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "D.",
+                          title: "Water Quality Monitoring",
+                          color: Colors.lightGreen,
+                          onTap: () {
+                            final selectedVillageId =
+                                dashboardProvider.selectedVwscId;
+                            final stateId =
+                                dashboardProvider.dashboardList.first.stateId;
+                            Navigator.pushReplacementNamed(
+                                context, AppConstants.navigateToQulityPartD,
+                                arguments: {
+                                  'villageId': selectedVillageId,
+                                  'stateId': stateId,
+                                });
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildSampleCard(
+                          qnumber: "E.",
+                          title: "Grievance Redressal",
+                          color: Colors.green,
+                          onTap: () {
+                            final selectedVillageId =
+                                dashboardProvider.selectedVwscId;
+                            final stateId =
+                                dashboardProvider.dashboardList.first.stateId;
+                            Navigator.pushReplacementNamed(
+                                context, AppConstants.navigateToGrievancePartE,
+                                arguments: {
+                                  'villageId': selectedVillageId,
+                                  'stateId': stateId,
+                                });
+                          },
+                        ),
+                      ],
+                    )
                 ],
               ),
             );

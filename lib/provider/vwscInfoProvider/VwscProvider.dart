@@ -616,7 +616,6 @@ class Vwscprovider extends ChangeNotifier {
 
   /// get api for que 222
 
-  // vwsc_provider.dart (add this inside your provider)
   Future<void> saveVwscCommunityInvolvement({
     required int userId,
     required int stateId,
@@ -704,7 +703,7 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  void ClearfetchCommunityFeedback() {
+  void clearCommunityFeedback() {
     // Clear selected radio button values
     selectedComplaintByCommunity = null;
     selectedTypeOfComplaint = [];
@@ -863,7 +862,7 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  void ClearfetchWaterQuality() {
+  void clearFetchWaterQuality() {
     // Clear selected radio button values
     selectedFTKAvailability = null;
     selectedFTKTestingFrequency = null;
@@ -1012,7 +1011,7 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  void ClearfetchVwscGrievance() {
+  void clearFetchGrievance() {
     // Clear selected radio button values
     selectedGrievanceMechanism = null;
     grievanceRegistrationMethods = [];
