@@ -156,7 +156,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                                   AppConstants.navigateToSourceScreenQuestions,
                                   arguments: {
                                     'schemeId':
-                                        dashboardProvider.selectedSchemeID,
+                                        int.parse(dashboardProvider.selectedSchemeID!),
                                     'stateId': dashboardProvider
                                         .dashboardList.first.stateId,
                                   });
