@@ -206,6 +206,39 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                       schemeProvider.waterAllocationController,
                                   keyboardType: TextInputType.number,
                                 ),
+
+                                // Below 10% part Start
+
+                                Visibility(
+                                  visible: schemeProvider.formType==2, // or your custom bool
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 10,),
+                                      Customtxtfeild(
+                                        label: '6.	Whether all representatives of source finding committee such as State WRD/ID, State level offices of CGWB etc. were consulted for making the recommendation or it was a PHED level exercise through Dept. Level hydrogeologist only? Provide details',
+                                        controller: schemeProvider.sourceFindingRepresentativesConsulted_Controller,
+                                        keyboardType: TextInputType.text,
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Customtxtfeild(
+                                        label: '7.	What were the other cost-effective alternative sources available to provide the piped water supply in the area? Provide details',
+                                        controller: schemeProvider.alternativeSourcesAvailable_Controller,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                      const SizedBox(height: 8),
+                                    ],
+                                  ),
+                                ),
+
+                                // pass this additional value when api available
+                               /*
+                               schemeProvider.sourceFindingRepresentativesConsulted_Controller.text
+                                schemeProvider.alternativeSourcesAvailable_Controller.text*/
+
+                                // Below 10% part End
+
+
+
                                 const SizedBox(height: 15),
                                 Align(
                                   alignment: Alignment.centerRight,
@@ -225,8 +258,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                             isLoading: schemeProvider.isLoading,
                                             message: "Saving Source...");
                                         await schemeProvider.saveSourceSurvey(
-                                            userId: _localStorageService.getInt(
-                                                AppConstants.prefUserId)!,
+                                            userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                             stateId: schemeProvider.stateId!,
                                             schemeId: schemeProvider.schemeId!,
                                             isRecommendShiftToSurface: schemeProvider
@@ -274,7 +306,9 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                   ),
                                 ),
                               ],
-                            )),
+                            )
+
+                        ),
                       )
                     ],
                   ),

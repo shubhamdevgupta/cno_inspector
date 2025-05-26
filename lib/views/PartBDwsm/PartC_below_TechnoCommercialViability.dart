@@ -13,14 +13,14 @@ import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 import 'PartDOperationandMaintenance.dart';
 
-class MonitioringQuality extends StatefulWidget {
-  const MonitioringQuality({Key? key}) : super(key: key);
+class PartcBelowTechnocommercialviabilityP extends StatefulWidget {
+  const PartcBelowTechnocommercialviabilityP({Key? key}) : super(key: key);
 
   @override
-  _MonitioringQuality createState() => _MonitioringQuality();
+  _PartcBelowTechnocommercialviabilityP createState() => _PartcBelowTechnocommercialviabilityP();
 }
 
-class _MonitioringQuality extends State<MonitioringQuality> {
+class _PartcBelowTechnocommercialviabilityP extends State<PartcBelowTechnocommercialviabilityP> {
   LocalStorageService localStorageService = LocalStorageService();
 
   @override
@@ -28,7 +28,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
-          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
       if (args != null) {
         final districtid = args['districtid'] as int?;
@@ -74,7 +74,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
               // Removes the default back button
               centerTitle: true,
               title: Text(
-                "Monitoring, Quality and Lab Infrastructure",
+                "Techno-Commercial Viability",
                 style: AppStyles.appBarTitle,
               ),
               leading: IconButton(
@@ -86,7 +86,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => Dashboarddwsm()),
-                      (route) => false,
+                          (route) => false,
                     );
                   }
                 },
@@ -140,35 +140,48 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Customradiobttn(
-                                    question:
-                                        "1. Are water supply assets (OHTs, WTPs, Pump Houses, etc.) geotagged?",
-                                    options: dwsmProvider
-                                        .assetsGeotaggedMap.keys
-                                        .toList(),
-                                    selectedOption:
-                                        dwsmProvider.assetsGeotagged,
-                                    onChanged: (val) {
-                                      dwsmProvider.assetsGeotagged = val;
-                                    },
+
+                                  //Below 10% scheme
+                                  Column(
+                                    children: [
+
+                                      Customtxtfeild(
+                                        label: "1. What will be the annual O&M cost of the scheme?",
+                                        controller:
+                                        dwsmProvider.testingManagedController,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Customtxtfeild(
+                                        label: "2.	What shall be water user charges from the stakeholders?",
+                                        controller:
+                                        dwsmProvider.testingManagedController,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Customtxtfeild(
+                                        label: "3. What is the State plan for meeting the remaining O&M expenses?",
+                                        controller:
+                                        dwsmProvider.testingManagedController,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Customtxtfeild(
+                                        label: "4. Expected skilled manpower required for operations of the schemes?:?",
+                                        controller:
+                                        dwsmProvider.testingManagedController,
+                                      ),
+
+                                    ],
+
                                   ),
-                                  SizedBox(height: 12),
-                                  Customradiobttn(
-                                    question:
-                                        "2. Does the district have an NABL-accredited lab or equivalent for water quality testing?",
-                                    options: dwsmProvider.yesNoMap.keys.toList(),
-                                    selectedOption: dwsmProvider.hasNablLab,
-                                    onChanged: (val) {
-                                      dwsmProvider.hasNablLab = val;
-                                    },
+
+                                  SizedBox(
+                                    height: 10,
                                   ),
-                                  if (dwsmProvider.hasNablLabID == 2)
-                                    Customtxtfeild(
-                                      label:
-                                          "2.1 If no, how is testing managed?",
-                                      controller:
-                                          dwsmProvider.testingManagedController,
-                                    ),
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(
@@ -182,30 +195,30 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                           ),
                                         ),
                                         onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(
+                                      /*    LoaderUtils.showLoadingWithMessage(
                                               context,
                                               isLoading: dwsmProvider.isLoading,
                                               message:
-                                                  "Saving  Monitoring, Quality and Lab Infrastructure");
+                                              "Saving  Monitoring, Quality and Lab Infrastructure");
 
                                           await dwsmProvider
                                               .saveMonitoringQualityLab(
-                                                  userId: localStorageService
-                                                      .getInt(AppConstants
-                                                          .prefUserId)!,
-                                                  stateId:
-                                                      dwsmProvider.stateId!,
-                                                  districtId:
-                                                      dwsmProvider.districtId!,
-                                                  areAssetsGeotagged:
-                                                      dwsmProvider
-                                                          .assetsGeotaggedID,
-                                                  hasNABLLab:
-                                                      dwsmProvider.hasNablLabID,
-                                                  testingManagementDescription:
-                                                      dwsmProvider
-                                                          .testingManagedController
-                                                          .text);
+                                              userId: localStorageService
+                                                  .getInt(AppConstants
+                                                  .prefUserId)!,
+                                              stateId:
+                                              dwsmProvider.stateId!,
+                                              districtId:
+                                              dwsmProvider.districtId!,
+                                              areAssetsGeotagged:
+                                              dwsmProvider
+                                                  .assetsGeotaggedID,
+                                              hasNABLLab:
+                                              dwsmProvider.hasNablLabID,
+                                              testingManagementDescription:
+                                              dwsmProvider
+                                                  .testingManagedController
+                                                  .text);
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,
@@ -220,7 +233,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,
                                                 backgroundColor: Colors.red);
-                                          }
+                                          }*/
                                         },
                                         child: Text(
                                           "SAVE & NEXT",

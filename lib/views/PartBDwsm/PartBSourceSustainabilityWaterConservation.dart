@@ -206,6 +206,32 @@ class _SourceSustainablitiyWasterConservation
                                 SizedBox(
                                   height: 10,
                                 ),
+
+
+
+                                //TODO Please add this question in below 10%
+                                Customradiobttn(
+                                  question:
+                                  "5. •	Does the district have an NABL-accredited lab or equivalent for water quality testing?",
+                                  options: dwsmProvider
+                                      .rechargeStructureMap.keys
+                                      .toList(),
+                                  selectedOption:
+                                  dwsmProvider.rechargeStructureImplemented,
+                                  onChanged: (val) => dwsmProvider
+                                      .rechargeStructureImplemented = val,
+                                ),
+                                if (dwsmProvider
+                                    .rechargeStructureImplementedID ==
+                                    3) ...[
+                                  const SizedBox(height: 8),
+                                  Customtxtfeild(
+                                    label: "If no, how is testing managed:",
+                                    controller:
+                                    dwsmProvider.rechargeReasonController,
+                                  ),
+                                ],
+
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(

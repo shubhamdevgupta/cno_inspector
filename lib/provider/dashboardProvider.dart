@@ -2,6 +2,7 @@ import 'package:cno_inspection/model/DashboardResponse/CnoHomeDashboard.dart';
 import 'package:cno_inspection/repository/DashboardRepository.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../model/DashboardResponse/CnoHomeDashboard.dart';
 import '../model/DashboardResponse/DashboardResponse.dart';
 import '../services/LocalStorageService.dart';
 import '../utils/AppConstants.dart';
@@ -10,7 +11,6 @@ import '../utils/GlobalExceptionHandler.dart';
 class DashboardProvider extends ChangeNotifier {
   final DashboardRepository _dashboardRepository = DashboardRepository();
   final LocalStorageService _localStorage = LocalStorageService();
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 

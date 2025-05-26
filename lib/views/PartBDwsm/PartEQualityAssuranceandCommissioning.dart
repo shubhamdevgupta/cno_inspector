@@ -140,52 +140,61 @@ class _PartEQualityAssuranceCommissioning
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   // Authorized inspectors
-                                  Customradiobttn(
-                                    question:
+
+                                  Column(
+                                    children: [
+                                      Customradiobttn(
+                                        question:
                                         "1. Who all are authorized to inspect and measure works during field inspection?",
-                                    options: dwsmProvider.authorizedInspectorsMap.keys.toList(),
-                                    selectedOption:
+                                        options: dwsmProvider.authorizedInspectorsMap.keys.toList(),
+                                        selectedOption:
                                         dwsmProvider.authorizedInspectors,
-                                    onChanged: (values) {
-                                      dwsmProvider.authorizedInspectors = values;
-                                    },
-                                  ),
+                                        onChanged: (values) {
+                                          dwsmProvider.authorizedInspectors = values;
+                                        },
+                                      ),
 
-                                  const SizedBox(height: 10),
+                                      const SizedBox(height: 10),
 
-                                  Customradiobttn(
-                                    question:
+                                      Customradiobttn(
+                                        question:
                                         "2. Is the commissioning protocol being followed?",
-                                    options: dwsmProvider.yesNoMap.keys.toList(),
-                                    selectedOption: dwsmProvider
-                                        .commissioningProtocolFollowed,
-                                    onChanged: (val) => dwsmProvider
-                                        .commissioningProtocolFollowed = val,
-                                  ),
+                                        options: dwsmProvider.yesNoMap.keys.toList(),
+                                        selectedOption: dwsmProvider
+                                            .commissioningProtocolFollowed,
+                                        onChanged: (val) => dwsmProvider
+                                            .commissioningProtocolFollowed = val,
+                                      ),
 
-                                  const SizedBox(height: 10),
+                                      const SizedBox(height: 10),
 
-                                  Customradiobttn(
-                                    question:
+                                      //TODO this question not part of below 10%
+                                      Customradiobttn(
+                                        question:
                                         "3. During commissioning of schemes, who are generally present?",
-                                    options: dwsmProvider.commissioningPresenceMap.keys.toList(),
-                                    selectedOption: dwsmProvider.commissioningPresence,
-                                    onChanged: (values) {
-                                      dwsmProvider.commissioningPresence = values;
-                                    },
-                                  ),
+                                        options: dwsmProvider.commissioningPresenceMap.keys.toList(),
+                                        selectedOption: dwsmProvider.commissioningPresence,
+                                        onChanged: (values) {
+                                          dwsmProvider.commissioningPresence = values;
+                                        },
+                                      ),
 
-                                  const SizedBox(height: 10),
+                                      const SizedBox(height: 10),
 
-                                  Customradiobttn(
-                                    question:
+                                      Customradiobttn(
+                                        question:
                                         "4. Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?",
-                                    options: dwsmProvider.thirdPartyAssessmentMap.keys.toList(),
-                                    selectedOption:
+                                        options: dwsmProvider.thirdPartyAssessmentMap.keys.toList(),
+                                        selectedOption:
                                         dwsmProvider.thirdPartyAssessment,
-                                    onChanged: (val) =>
+                                        onChanged: (val) =>
                                         dwsmProvider.thirdPartyAssessment = val,
+                                      ),
+                                    ],
                                   ),
+
+
+
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(

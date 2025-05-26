@@ -162,10 +162,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                               Navigator.pushReplacementNamed(context,
                                   AppConstants.navigateToSourceScreenQuestions,
                                   arguments: {
-                                    'schemeId':
-                                        int.parse(dashboardProvider.selectedSchemeID!),
-                                    'stateId': dashboardProvider
-                                        .dashboardList.first.stateId,
+                                    'schemeId': int.parse(dashboardProvider.selectedSchemeID!),
+                                    'stateId': dashboardProvider.dashboardList.first.stateId,
                                   });
                             },
                           ),

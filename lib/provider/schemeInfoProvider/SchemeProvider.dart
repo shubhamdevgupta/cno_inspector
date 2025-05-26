@@ -9,10 +9,11 @@ import '../../model/schemePartA/SourceSurveyResponsePartA.dart';
 import '../../repository/schemeInfoRepo/fetchSchemeRepo.dart';
 import '../../utils/GlobalExceptionHandler.dart';
 
-
 class Schemeprovider extends ChangeNotifier {
   final SchemeRepositoy _schemeRepositoy = SchemeRepositoy();
   final Fetchschemeinfo _fetchschemeinfo = Fetchschemeinfo();
+
+  int formType = 2; // suppose 1 = above 10
 
   bool _isLoading = false;
 
@@ -73,7 +74,7 @@ class Schemeprovider extends ChangeNotifier {
   final TextEditingController criticalController = TextEditingController();
   final TextEditingController semiCriticalController = TextEditingController();
   final TextEditingController waterAllocationController =
-  TextEditingController();
+      TextEditingController();
 
   int? _schemeId;
 
@@ -93,15 +94,12 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
   String getRadiobuttonData(int id, Map<String, int> labelMap) {
     return labelMap.entries
         .firstWhere((entry) => entry.value == id,
-        orElse: () => const MapEntry('', 0))
+            orElse: () => const MapEntry('', 0))
         .key;
   }
-
 
   List<String> getCheckBoxData(List<int> ids, Map<String, int> labelMap) {
     return labelMap.entries
@@ -109,6 +107,16 @@ class Schemeprovider extends ChangeNotifier {
         .map((entry) => entry.key)
         .toList();
   }
+
+  ///// Below 10 % work Started here
+
+  final TextEditingController sourceFindingRepresentativesConsulted_Controller =
+      TextEditingController();
+  final TextEditingController alternativeSourcesAvailable_Controller =
+      TextEditingController();
+
+  ///// Below 10 % work End here
+
   Future<void> saveSourceSurvey({
     required int userId,
     required int stateId,
@@ -159,33 +167,38 @@ class Schemeprovider extends ChangeNotifier {
 
     try {
       final response =
-      await _fetchschemeinfo.fetchSourceSurvey(stateId, schemeId, userId);
+          await _fetchschemeinfo.fetchSourceSurvey(stateId, schemeId, userId);
       if (response.status) {
         sourceSurveyData = response.result;
         _message = '';
 
-        selectedValueQ1 = getRadiobuttonData(sourceSurveyData.first.isRcmndShiftToSurfaceWtr,yesNoMap);
+        selectedValueQ1 = getRadiobuttonData(
+            sourceSurveyData.first.isRcmndShiftToSurfaceWtr, yesNoMap);
         print('selectedValueQ1: $selectedValueQ1');
 
-        selectedValueQ2 = getRadiobuttonData(sourceSurveyData.first.anyStudyAccessGwBeforeSw,yesNoMap);
+        selectedValueQ2 = getRadiobuttonData(
+            sourceSurveyData.first.anyStudyAccessGwBeforeSw, yesNoMap);
         print('selectedValueQ2: $selectedValueQ2');
 
-        safeController.text = sourceSurveyData.first.noVillagesSafeZone.toString();
+        safeController.text =
+            sourceSurveyData.first.noVillagesSafeZone.toString();
         print('safeController: ${safeController.text}');
 
-        criticalController.text = sourceSurveyData.first.noVillagesCriticalZone.toString();
+        criticalController.text =
+            sourceSurveyData.first.noVillagesCriticalZone.toString();
         print('criticalController: ${criticalController.text}');
 
-        semiCriticalController.text = sourceSurveyData.first.noVillagesSemiCriticalZone.toString();
+        semiCriticalController.text =
+            sourceSurveyData.first.noVillagesSemiCriticalZone.toString();
         print('semiCriticalController: ${semiCriticalController.text}');
 
-        selectedValueQ3 = getRadiobuttonData(sourceSurveyData.first.incaseGwContAnyAnalysisConduct,yesNoMap);
+        selectedValueQ3 = getRadiobuttonData(
+            sourceSurveyData.first.incaseGwContAnyAnalysisConduct, yesNoMap);
         print('selectedValueQ3: $selectedValueQ3');
 
-
-        waterAllocationController.text = sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw.toString();
+        waterAllocationController.text =
+            sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw.toString();
         print('waterAllocationController: ${waterAllocationController.text}');
-
       } else {
         _message = response.message;
       }
@@ -198,13 +211,11 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
-
   void clearfetchSourceSurvey() {
     // Clear selected radio button values
     selectedValueQ1 = null;
     selectedValueQ2 = null;
     selectedValueQ3 = null;
-
 
     // Clear frequency text field
     safeController.clear();
@@ -272,9 +283,9 @@ class Schemeprovider extends ChangeNotifier {
   // --------------------
   // 4. Pipe Material Selection (Text Fields)
   final TextEditingController rockyPipeMaterialController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController soilPipeMaterialController =
-  TextEditingController();
+      TextEditingController();
 
   // --------------------
   // 5. On-Spot Excavation Check (Radio + Conditional Text)
@@ -290,7 +301,14 @@ class Schemeprovider extends ChangeNotifier {
   int get onSpotExcavationID => yesNoMap[_onSpotExcavation] ?? 0;
 
   final TextEditingController deviationReasonController =
-  TextEditingController();
+      TextEditingController();
+
+  //// Below 10 % work Started here PArt B
+  final TextEditingController schemePlanning_Question1Controller = TextEditingController();
+  final TextEditingController schemePlanning_Question2Controller = TextEditingController();
+  final TextEditingController schemePlanning_Question5Controller = TextEditingController();
+  final TextEditingController schemePlanning_Question6Controller = TextEditingController();
+  //// Below 10 % work Ended here
 
   Future<void> saveSchemePlanning({
     required int userId,
@@ -350,48 +368,58 @@ class Schemeprovider extends ChangeNotifier {
 
     try {
       final response =
-      await _fetchschemeinfo.fetchSchemePlanning(stateId, schemeId, userId);
+          await _fetchschemeinfo.fetchSchemePlanning(stateId, schemeId, userId);
       if (response.status) {
         schemePlanningData = response.result;
         _message = '';
 
-
-        topoSurvey = getRadiobuttonData(schemePlanningData.first.isTopographicalSurvey,yesNoMap);
+        topoSurvey = getRadiobuttonData(
+            schemePlanningData.first.isTopographicalSurvey, yesNoMap);
         print('topoSurvey: $topoSurvey');
 
-        gpsSurvey = getRadiobuttonData(schemePlanningData.first.isGpsPhysicalSurvey,yesNoMap);
+        gpsSurvey = getRadiobuttonData(
+            schemePlanningData.first.isGpsPhysicalSurvey, yesNoMap);
         print('gpsSurvey: $gpsSurvey');
 
-
-        googleEarthSurvey = getRadiobuttonData(schemePlanningData.first.isGoogleEarthSurvey,yesNoMap);
+        googleEarthSurvey = getRadiobuttonData(
+            schemePlanningData.first.isGoogleEarthSurvey, yesNoMap);
         print('googleEarthSurvey: $googleEarthSurvey');
 
-        noSurvey = getRadiobuttonData(schemePlanningData.first.noSurvey,yesNoMap);
+        noSurvey =
+            getRadiobuttonData(schemePlanningData.first.noSurvey, yesNoMap);
         print('noSurvey: $noSurvey');
 
-        wtpHoursController.text = schemePlanningData.first.runningHrsDesignTransmissionMain.toString();
+        wtpHoursController.text = schemePlanningData
+            .first.runningHrsDesignTransmissionMain
+            .toString();
         print('wtpHoursController: ${wtpHoursController.text}');
 
-        ohsrTimeController.text = schemePlanningData.first.retentionTimeOSHR.toString();
+        ohsrTimeController.text =
+            schemePlanningData.first.retentionTimeOSHR.toString();
         print('ohsrTimeController: ${ohsrTimeController.text}');
 
-
-        mbrTimeController.text = schemePlanningData.first.retentionTimeMBR.toString();
+        mbrTimeController.text =
+            schemePlanningData.first.retentionTimeMBR.toString();
         print('mbrTimeController: ${mbrTimeController.text}');
 
-        rockyPipeMaterialController.text = schemePlanningData.first.distributionNetwrkTerrianTypeRockyStrata.toString();
-        print('rockyPipeMaterialController: ${rockyPipeMaterialController.text}');
+        rockyPipeMaterialController.text = schemePlanningData
+            .first.distributionNetwrkTerrianTypeRockyStrata
+            .toString();
+        print(
+            'rockyPipeMaterialController: ${rockyPipeMaterialController.text}');
 
-
-        soilPipeMaterialController.text = schemePlanningData.first.distributionNetwrkTerrianTypeSoilStrata.toString();
+        soilPipeMaterialController.text = schemePlanningData
+            .first.distributionNetwrkTerrianTypeSoilStrata
+            .toString();
         print('soilPipeMaterialController: ${soilPipeMaterialController.text}');
 
-        onSpotExcavation = getRadiobuttonData(schemePlanningData.first.foundAsPerDPR,yesNoMap);
+        onSpotExcavation = getRadiobuttonData(
+            schemePlanningData.first.foundAsPerDPR, yesNoMap);
         print('onSpotExcavation: $onSpotExcavation');
 
-        deviationReasonController.text = schemePlanningData.first.divationIfAny.toString();
+        deviationReasonController.text =
+            schemePlanningData.first.divationIfAny.toString();
         print('deviationReasonController: ${deviationReasonController.text}');
-
       } else {
         _message = response.message;
       }
@@ -404,7 +432,6 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
-
   void clearfetchSchemePlanning() {
     // Clear selected radio button values
     topoSurvey = null;
@@ -412,7 +439,6 @@ class Schemeprovider extends ChangeNotifier {
     googleEarthSurvey = null;
     noSurvey = null;
     onSpotExcavation = null;
-
 
     // Clear frequency text field
     wtpHoursController.clear();
@@ -425,6 +451,7 @@ class Schemeprovider extends ChangeNotifier {
 
     notifyListeners();
   }
+
   //**** fetch api Part B end here ***///
   // Radio 1: Legacy Infrastructure Assessment
   String? _legacyInfraAssessment;
@@ -441,13 +468,13 @@ class Schemeprovider extends ChangeNotifier {
 
   // TextField Controllers: Legacy Infrastructure Usage
   final TextEditingController transmissionPipelineKmController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController distributionPipelineKmController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController wtpCapacityMldController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController storageStructureDetailsController =
-  TextEditingController();
+      TextEditingController();
 
   // Radio 2: As-built Drawing Availability
   String? _asBuiltDrawingAvailability;
@@ -474,6 +501,9 @@ class Schemeprovider extends ChangeNotifier {
 
   int get onPmGatishaktiID => yesNoMap[_onPmGatishakti] ?? 0;
   final TextEditingController reasonController = TextEditingController();
+
+
+
 
   Future<void> saveRetrofitAdditionalInfo({
     required int userId,
@@ -538,33 +568,43 @@ class Schemeprovider extends ChangeNotifier {
         retrofitInfoData = response.result;
         _message = '';
 
-        legacyInfraAssessment = getRadiobuttonData(retrofitInfoData.first.whetherAssesmentLegacyDone,yesNoMap);
+        legacyInfraAssessment = getRadiobuttonData(
+            retrofitInfoData.first.whetherAssesmentLegacyDone, yesNoMap);
         print('legacyInfraAssessment: $legacyInfraAssessment');
 
+        transmissionPipelineKmController.text = retrofitInfoData
+            .first.legacyInfrastructureTransmissionPipelineKms
+            .toString();
+        print(
+            'transmissionPipelineKmController: ${transmissionPipelineKmController.text}');
 
-        transmissionPipelineKmController.text = retrofitInfoData.first.legacyInfrastructureTransmissionPipelineKms.toString();
-        print('transmissionPipelineKmController: ${transmissionPipelineKmController.text}');
+        distributionPipelineKmController.text = retrofitInfoData
+            .first.legacyInfrastructureDistributionPipelineKms
+            .toString();
+        print(
+            'distributionPipelineKmController: ${distributionPipelineKmController.text}');
 
-        distributionPipelineKmController.text = retrofitInfoData.first.legacyInfrastructureDistributionPipelineKms.toString();
-        print('distributionPipelineKmController: ${distributionPipelineKmController.text}');
-
-        wtpCapacityMldController.text = retrofitInfoData.first.legacyInfrastructureWtpCapacityMld.toString();
+        wtpCapacityMldController.text = retrofitInfoData
+            .first.legacyInfrastructureWtpCapacityMld
+            .toString();
         print('wtpCapacityMldController: ${wtpCapacityMldController.text}');
 
-        storageStructureDetailsController.text = retrofitInfoData.first.legacyInfrastructureStorageStrCapacityKl.toString();
-        print('storageStructureDetailsController: ${storageStructureDetailsController.text}');
+        storageStructureDetailsController.text = retrofitInfoData
+            .first.legacyInfrastructureStorageStrCapacityKl
+            .toString();
+        print(
+            'storageStructureDetailsController: ${storageStructureDetailsController.text}');
 
-
-
-        asBuiltDrawingAvailability = getRadiobuttonData(retrofitInfoData.first.buildDrawingInfrAvailable,yesNoMap);
+        asBuiltDrawingAvailability = getRadiobuttonData(
+            retrofitInfoData.first.buildDrawingInfrAvailable, yesNoMap);
         print('legacyInfraAssessment: $asBuiltDrawingAvailability');
 
-        onPmGatiShakti = getRadiobuttonData(retrofitInfoData.first.ifYesIsItOnPMGati,yesNoMap);
+        onPmGatiShakti = getRadiobuttonData(
+            retrofitInfoData.first.ifYesIsItOnPMGati, yesNoMap);
         print('onPmGatiShakti: $onPmGatiShakti');
 
         reasonController.text = retrofitInfoData.first.ifNoReason.toString();
         print('reasonController: ${reasonController.text}');
-
       } else {
         _message = response.message;
       }
@@ -577,14 +617,11 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
-
   void clearfetchAdditionalInfoRetrofit() {
     // Clear selected radio button values
     legacyInfraAssessment = null;
     asBuiltDrawingAvailability = null;
     onPmGatiShakti = null;
-
-
 
     // Clear frequency text field
     transmissionPipelineKmController.clear();
@@ -593,9 +630,9 @@ class Schemeprovider extends ChangeNotifier {
     storageStructureDetailsController.clear();
     reasonController.clear();
 
-
     notifyListeners();
   }
+
   //**** fetch api Part C end here ***///
 
   // Q1: Delay reasons
@@ -635,7 +672,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-   Map<String, int> costOverrun = {
+  Map<String, int> costOverrun = {
     "<10%": 1,
     "10–25%": 2,
     ">25%": 3,
@@ -668,7 +705,8 @@ class Schemeprovider extends ChangeNotifier {
 
   List<String> get ReasonsOptionsOptions => ReasonsOptions.keys.toList();
 
-  List<int> get selectedcostOverrunReasonsID => _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
+  List<int> get selectedcostOverrunReasonsID =>
+      _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
 
   // Q4: Revised cost approved before award (yes/no)
   String? _selectedrevisedCostApproved; // Yes / No
@@ -697,7 +735,8 @@ class Schemeprovider extends ChangeNotifier {
     "No overrun": 4,
   };
 
-  int get selectedincreaseInCostID => increaseInCostID[_selectedincreaseInCost] ?? 0;
+  int get selectedincreaseInCostID =>
+      increaseInCostID[_selectedincreaseInCost] ?? 0;
 
   //
   int get selectedrevisedCostApprovedID =>
@@ -786,21 +825,21 @@ class Schemeprovider extends ChangeNotifier {
 
   /// Optional: convert data to JSON
   Map<String, dynamic> toJson() => {
-    'intakeTubeWellNum': intakeTubeWellNum,
-    'electroMechanicalNum': electroMechanicalNum,
-    'wtpNum': wtpNum,
-    'mbrNum': mbrNum,
-    'transmissionPipelineNum': transmissionPipelineNum,
-    'distributionPipelineNum': distributionPipelineNum,
-    'ohtNum': ohtNum,
-    'disinfectionUnitNum': disinfectionUnitNum,
-    'iotNum': iotNum,
-    'roadRestorationNum': roadRestorationNum,
-    'solarComponentNum': solarComponentNum,
-    'otherComponentsNum': otherComponentsNum,
-    'costControllers':
-    costControllers.map((key, value) => MapEntry(key, value.text)),
-  };
+        'intakeTubeWellNum': intakeTubeWellNum,
+        'electroMechanicalNum': electroMechanicalNum,
+        'wtpNum': wtpNum,
+        'mbrNum': mbrNum,
+        'transmissionPipelineNum': transmissionPipelineNum,
+        'distributionPipelineNum': distributionPipelineNum,
+        'ohtNum': ohtNum,
+        'disinfectionUnitNum': disinfectionUnitNum,
+        'iotNum': iotNum,
+        'roadRestorationNum': roadRestorationNum,
+        'solarComponentNum': solarComponentNum,
+        'otherComponentsNum': otherComponentsNum,
+        'costControllers':
+            costControllers.map((key, value) => MapEntry(key, value.text)),
+      };
 
   //Q8.1
   String? _selectedWTP; // Yes / No
@@ -877,6 +916,12 @@ class Schemeprovider extends ChangeNotifier {
 
   List<int> get selectedrevisionReasonsID =>
       _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
+
+
+  // Below 10% content
+  final TextEditingController below10PartD_ques8_Controller = TextEditingController();
+
+
 
   Future<void> saveSchemeImplementation({
     required int userId,
@@ -1010,7 +1055,6 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners(); // if inside a provider
   }
 
-
   //**** fetch api Part D start here ***///
 
   List<SchemeImplementationModel> schemeImplementationData = [];
@@ -1027,46 +1071,62 @@ class Schemeprovider extends ChangeNotifier {
         _message = '';
         schemeImplementationData = response.result;
 
-        selectedDelayReasons = getCheckBoxData(schemeImplementationData.first.delayWorkReason,delayReasons);
+        selectedDelayReasons = getCheckBoxData(
+            schemeImplementationData.first.delayWorkReason, delayReasons);
         print('selectedDelayReasons: $selectedDelayReasons');
 
-        selectedCostOverrun = getRadiobuttonData(schemeImplementationData.first.costOverrun,costOverrun);
+        selectedCostOverrun = getRadiobuttonData(
+            schemeImplementationData.first.costOverrun, costOverrun);
         print('selectedCostOverrun: $selectedCostOverrun');
 
-        selectedcostOverrunReasons = getCheckBoxData(schemeImplementationData.first.costOverrunReason,ReasonsOptions);
+        selectedcostOverrunReasons = getCheckBoxData(
+            schemeImplementationData.first.costOverrunReason, ReasonsOptions);
         print('selectedcostOverrunReasons: $selectedcostOverrunReasons');
 
-        selectedrevisedCostApproved = getRadiobuttonData(schemeImplementationData.first.hasSchemeCostRevisedBeforeWork,yesNoMap);
+        selectedrevisedCostApproved = getRadiobuttonData(
+            schemeImplementationData.first.hasSchemeCostRevisedBeforeWork,
+            yesNoMap);
         print('selectedrevisedCostApproved: $selectedrevisedCostApproved');
 
-        selectedincreaseInCost = getRadiobuttonData(schemeImplementationData.first.schemeCostRevisedBeforeWorkYesPer,increaseInCostID);
+        selectedincreaseInCost = getRadiobuttonData(
+            schemeImplementationData.first.schemeCostRevisedBeforeWorkYesPer,
+            increaseInCostID);
         print('selectedincreaseInCost: $selectedincreaseInCost');
- //TODO
-        dateApproval = schemeImplementationData.first.slsscDateForRevisedEstimate;
+        //TODO
+        dateApproval =
+            schemeImplementationData.first.slsscDateForRevisedEstimate;
         print('dateApproval: $dateApproval');
 
-        selectedrevisionReasons = getCheckBoxData(schemeImplementationData.first.costOverrunReason,revisionReasonsID);
+        selectedrevisionReasons = getCheckBoxData(
+            schemeImplementationData.first.costOverrunReason,
+            revisionReasonsID);
         print('selectedrevisionReasons: $selectedrevisionReasons');
 
-        selectedrevisionReasons = getCheckBoxData(schemeImplementationData.first.costOverrunReason,revisionReasonsID);
+        selectedrevisionReasons = getCheckBoxData(
+            schemeImplementationData.first.costOverrunReason,
+            revisionReasonsID);
         print('selectedrevisionReasons: $selectedrevisionReasons');
 
         //table
-       intakeTubeWellNum = schemeImplementationData.first.numIntakeTubeWell;
+        intakeTubeWellNum = schemeImplementationData.first.numIntakeTubeWell;
         print('intakeTubeWellNum: $intakeTubeWellNum');
-        electroMechanicalNum = schemeImplementationData.first.numElectroMechanicalInclPump;
+        electroMechanicalNum =
+            schemeImplementationData.first.numElectroMechanicalInclPump;
         print('electroMechanicalNum: $electroMechanicalNum');
         wtpNum = schemeImplementationData.first.numWtp;
         print('wtpNum: $wtpNum');
         mbrNum = schemeImplementationData.first.numMbr;
         print('mbrNum: $mbrNum');
-        transmissionPipelineNum = schemeImplementationData.first.numTransmissionPipeline;
+        transmissionPipelineNum =
+            schemeImplementationData.first.numTransmissionPipeline;
         print('transmissionPipelineNum: $transmissionPipelineNum');
-        distributionPipelineNum = schemeImplementationData.first.numDistributionPipeline;
+        distributionPipelineNum =
+            schemeImplementationData.first.numDistributionPipeline;
         print('distributionPipelineNum: $intakeTubeWellNum');
         ohtNum = schemeImplementationData.first.numOshrEsrOhtGsr;
         print('ohtNum: $intakeTubeWellNum');
-        disinfectionUnitNum = schemeImplementationData.first.numDisinfectionUnit;
+        disinfectionUnitNum =
+            schemeImplementationData.first.numDisinfectionUnit;
         print('disinfectionUnitNum: $intakeTubeWellNum');
         iotNum = schemeImplementationData.first.numIoTScada;
         print('iotNum: $intakeTubeWellNum');
@@ -1074,24 +1134,27 @@ class Schemeprovider extends ChangeNotifier {
         print('roadRestorationNum: $intakeTubeWellNum');
         solarComponentNum = schemeImplementationData.first.numSolarComponents;
         print('solarComponentNum: $intakeTubeWellNum');
-        otherComponentsNum = schemeImplementationData.first.numOtherDgSetHhStorageTanksEtc;
+        otherComponentsNum =
+            schemeImplementationData.first.numOtherDgSetHhStorageTanksEtc;
         print('iotNum: $otherComponentsNum');
 
-
-
-
-        selectedWTP = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedWtp,yesNoMap);
+        selectedWTP = getRadiobuttonData(
+            schemeImplementationData.first.isComponentPlannedWtp, yesNoMap);
         print('selectedWTP: $selectedWTP');
 
-        selectedOHSR = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedOshrEsrOhtGsr,yesNoMap);
+        selectedOHSR = getRadiobuttonData(
+            schemeImplementationData.first.isComponentPlannedOshrEsrOhtGsr,
+            yesNoMap);
         print('selectedOHSR: $selectedOHSR');
 
-        selecteSource = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedSource,yesNoMap);
+        selecteSource = getRadiobuttonData(
+            schemeImplementationData.first.isComponentPlannedSource, yesNoMap);
         print('selecteSource: $selecteSource');
 
-        selectedPipeline = getRadiobuttonData(schemeImplementationData.first.isComponentPlannedPipeline,yesNoMap);
+        selectedPipeline = getRadiobuttonData(
+            schemeImplementationData.first.isComponentPlannedPipeline,
+            yesNoMap);
         print('selectedPipeline: $selectedPipeline');
-
       } else {
         _message = response.message;
       }
@@ -1115,7 +1178,7 @@ class Schemeprovider extends ChangeNotifier {
     selectedWTP = null;
     selectedOHSR = null;
     selecteSource = null;
-    selectedPipeline= null;
+    selectedPipeline = null;
     costControllers.clear();
     notifyListeners();
   }
@@ -1233,8 +1296,7 @@ class Schemeprovider extends ChangeNotifier {
       if (response.status) {
         schemeVisualInspectionData = response.result;
 
-        if(schemeVisualInspectionData.isNotEmpty){
-
+        if (schemeVisualInspectionData.isNotEmpty) {
           mapAllWidgets(schemeVisualInspectionData.first);
         }
 
@@ -1252,50 +1314,118 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   void mapAllWidgets(SchemeVisualInspectionModel schemeVisualInspectionModel) {
-    setQuesPartEa1 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfSpallingPeelingOffSurface, yesNoMap);
-    setQuesPartEa2 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfCracks, yesNoMap);
-    setQuesPartEa3 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfRedBrownRustMarks, yesNoMap);
-    setQuesPartEa4 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfSwollenConcrete, yesNoMap);
-    setQuesPartEa5 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfTrappedJutePlasticBags, yesNoMap);
-    setQuesPartEa6 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfProtrudingRustedReinforcementBars, yesNoMap);
-    setQuesPartEa7 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfSpallingPeelingOffSurface, yesNoMap);
-    setQuesPartEa8 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfDampnessOfConcreteSurfaces, yesNoMap);
-    setQuesPartEa9 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfVisibleWhiteMarks, yesNoMap);
-    setQuesPartEa10 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfVisibleStoneAggregates, yesNoMap);
-    setQuesPartEa11 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfStructuresMissingVerticalAlignment, yesNoMap);
-    setQuesPartEa12 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfVisibleSagInTheSlabBeam, yesNoMap);
-    setQuesPartEa13 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfHighVibrationObservedInThePumps, yesNoMap);
-    setQuesPartEa14 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfLeakagesInReservoirs, yesNoMap);
-    setQuesPartEa15 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfHighLeakagesFromThePumps, yesNoMap);
+    setQuesPartEa1 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfSpallingPeelingOffSurface,
+        yesNoMap);
+    setQuesPartEa2 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfCracks, yesNoMap);
+    setQuesPartEa3 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfRedBrownRustMarks, yesNoMap);
+    setQuesPartEa4 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfSwollenConcrete, yesNoMap);
+    setQuesPartEa5 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfTrappedJutePlasticBags,
+        yesNoMap);
+    setQuesPartEa6 = getRadiobuttonData(
+        schemeVisualInspectionModel
+            .isInspectOfProtrudingRustedReinforcementBars,
+        yesNoMap);
+    setQuesPartEa7 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfSpallingPeelingOffSurface,
+        yesNoMap);
+    setQuesPartEa8 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfDampnessOfConcreteSurfaces,
+        yesNoMap);
+    setQuesPartEa9 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfVisibleWhiteMarks, yesNoMap);
+    setQuesPartEa10 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfVisibleStoneAggregates,
+        yesNoMap);
+    setQuesPartEa11 = getRadiobuttonData(
+        schemeVisualInspectionModel
+            .isInspectOfStructuresMissingVerticalAlignment,
+        yesNoMap);
+    setQuesPartEa12 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfVisibleSagInTheSlabBeam,
+        yesNoMap);
+    setQuesPartEa13 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfHighVibrationObservedInThePumps,
+        yesNoMap);
+    setQuesPartEa14 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfLeakagesInReservoirs, yesNoMap);
+    setQuesPartEa15 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfHighLeakagesFromThePumps,
+        yesNoMap);
 
-    setQuesPartEb1 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfPipelinesLeakagesInTransmission, yesNoMap);
-    setQuesPartEb2 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfPipelinesLeakagesInDistribution, yesNoMap);
-    setQuesPartEb3 = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfPipelinesWetPatchesPoolOfWater, yesNoMap);
+    setQuesPartEb1 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfPipelinesLeakagesInTransmission,
+        yesNoMap);
+    setQuesPartEb2 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfPipelinesLeakagesInDistribution,
+        yesNoMap);
+    setQuesPartEb3 = getRadiobuttonData(
+        schemeVisualInspectionModel.isInspectOfPipelinesWetPatchesPoolOfWater,
+        yesNoMap);
 
-    setQuesPartE2 = getRadiobuttonData(schemeVisualInspectionModel.whetherQualityVerifyOfManufacturePipeThirdParty, yesNoMap);
-    setQuesPartE3 = getRadiobuttonData(schemeVisualInspectionModel.areThePipesAsMentionInTheDPRImplementOnGround, yesNoMap);
-    setQuesPartE4 = getRadiobuttonData(schemeVisualInspectionModel.areThereAnyComplaintsRegardingPipelineDesignDPR, yesNoMap);
-    setQuesPartE5 = getRadiobuttonData(schemeVisualInspectionModel.isTpiaEngagedForThisScheme, yesNoMap);
-    setQuesPartE6 = getRadiobuttonData(schemeVisualInspectionModel.areSampleBasedQualityChecksPipesCivilKeyComponents, yesNoMap);
-    setQuesPartE7 = getRadiobuttonData(schemeVisualInspectionModel.isConcurrentSupervisionInTheScopeOfTPIA, yesNoMap);
-    setQuesPartE8 = getRadiobuttonData(schemeVisualInspectionModel.hasTpiaConductedQualityChecksAtDifferentStages, yesNoMap);
-    setQuesPartE9 = getRadiobuttonData(schemeVisualInspectionModel.areThereRecordsOfInspectReportsIssuedByTpia, yesNoMap);
+    setQuesPartE2 = getRadiobuttonData(
+        schemeVisualInspectionModel
+            .whetherQualityVerifyOfManufacturePipeThirdParty,
+        yesNoMap);
+    setQuesPartE3 = getRadiobuttonData(
+        schemeVisualInspectionModel
+            .areThePipesAsMentionInTheDPRImplementOnGround,
+        yesNoMap);
+    setQuesPartE4 = getRadiobuttonData(
+        schemeVisualInspectionModel
+            .areThereAnyComplaintsRegardingPipelineDesignDPR,
+        yesNoMap);
+    setQuesPartE5 = getRadiobuttonData(
+        schemeVisualInspectionModel.isTpiaEngagedForThisScheme, yesNoMap);
+    setQuesPartE6 = getRadiobuttonData(
+        schemeVisualInspectionModel
+            .areSampleBasedQualityChecksPipesCivilKeyComponents,
+        yesNoMap);
+    setQuesPartE7 = getRadiobuttonData(
+        schemeVisualInspectionModel.isConcurrentSupervisionInTheScopeOfTPIA,
+        yesNoMap);
+    setQuesPartE8 = getRadiobuttonData(
+        schemeVisualInspectionModel
+            .hasTpiaConductedQualityChecksAtDifferentStages,
+        yesNoMap);
+    setQuesPartE9 = getRadiobuttonData(
+        schemeVisualInspectionModel.areThereRecordsOfInspectReportsIssuedByTpia,
+        yesNoMap);
 
     //selectedPartE10 = getCheckBoxData(schemeVisualInspectionModel.typeOfIssuesTpias., question10Map);  // list
 
-    selectedPartE11 = getRadiobuttonData(schemeVisualInspectionModel.hasAnyActionBeenTakenBasedOnTpiaObservation, question11Map);
-    selectedPartE12 = getRadiobuttonData(schemeVisualInspectionModel.doesTpiaVerifyMeasurementBooks, question12Map);
+    selectedPartE11 = getRadiobuttonData(
+        schemeVisualInspectionModel.hasAnyActionBeenTakenBasedOnTpiaObservation,
+        question11Map);
+    selectedPartE12 = getRadiobuttonData(
+        schemeVisualInspectionModel.doesTpiaVerifyMeasurementBooks,
+        question12Map);
 
-    selectedPartE13a = getRadiobuttonData(schemeVisualInspectionModel.isHydrotestingPipelinesDone, yesNoMap);
+    selectedPartE13a = getRadiobuttonData(
+        schemeVisualInspectionModel.isHydrotestingPipelinesDone, yesNoMap);
     //quesPartE13b = getRadiobuttonData(schemeVisualInspectionModel.isInspectOfPipelinesLeakagesInTransmission, yesNoMap);
 
-    quesPartE14 = getRadiobuttonData(schemeVisualInspectionModel.isTestReportsProvidedSamples, question14Map);
-    quesPartE15 = getRadiobuttonData(schemeVisualInspectionModel.whetherDeptEngineersDoQualityChecks, question15Map);
-    quesPartE16 = getRadiobuttonData(schemeVisualInspectionModel.whetherDeptEngVerifyMeasureConstructionWorks, question16Map);
-    quesPartE17 = getRadiobuttonData(schemeVisualInspectionModel.schemeCommissionedAsPerProtocol, question17Map);
-    quesPartE18 = getRadiobuttonData(schemeVisualInspectionModel.documentAsProofOfCommissioningAvailable, question18Map);
+    quesPartE14 = getRadiobuttonData(
+        schemeVisualInspectionModel.isTestReportsProvidedSamples,
+        question14Map);
+    quesPartE15 = getRadiobuttonData(
+        schemeVisualInspectionModel.whetherDeptEngineersDoQualityChecks,
+        question15Map);
+    quesPartE16 = getRadiobuttonData(
+        schemeVisualInspectionModel
+            .whetherDeptEngVerifyMeasureConstructionWorks,
+        question16Map);
+    quesPartE17 = getRadiobuttonData(
+        schemeVisualInspectionModel.schemeCommissionedAsPerProtocol,
+        question17Map);
+    quesPartE18 = getRadiobuttonData(
+        schemeVisualInspectionModel.documentAsProofOfCommissioningAvailable,
+        question18Map);
   }
-
 
   void clearVisualInspectionAnswers() {
     // Part EA questions
@@ -1349,7 +1479,6 @@ class Schemeprovider extends ChangeNotifier {
     // Trigger UI update if inside ChangeNotifier
     notifyListeners(); // Optional - if you're using Provider
   }
-
 
   //**** fetch api Part E end here ***///
 
@@ -1633,7 +1762,6 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   List<int> get selectedId_partE10 =>
       _quesPartE10.map((e) => question10Map[e] ?? 0).toList();
 
@@ -1775,7 +1903,6 @@ class Schemeprovider extends ChangeNotifier {
 
   String? _quesPartE18;
 
-
   String? get quesPartE18 => _quesPartE18;
 
   set quesPartE18(String? value) {
@@ -1784,5 +1911,4 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   int get selectedId_partE18 => question18Map[_quesPartE18] ?? 0;
-
 }

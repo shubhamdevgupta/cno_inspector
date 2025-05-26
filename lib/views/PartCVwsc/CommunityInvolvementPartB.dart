@@ -167,6 +167,9 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                       'selectedVWSCInvolvementID------- ${vwscProvider.selectedVWSCInvolvementID}');
                                 },
                               ),
+
+
+                              //TODO this question is not part of below 10%
                               Customradiobttn(
                                 question:
                                     "4. As-built Drawing of Pipelines available with GP office:",
@@ -224,6 +227,9 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                       'selectedVWSCRecordsAvailableID------- ${vwscProvider.selectedVWSCOMInvolvedID}');
                                 },
                               ),
+
+
+                              //TODO this question is not part of below 10%
                               Customradiobttn(
                                 question:
                                     "8. Scheme formally handed over to GP/VWSC:",
