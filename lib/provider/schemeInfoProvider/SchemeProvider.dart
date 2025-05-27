@@ -8,12 +8,16 @@ import '../../model/schemePartA/SchemeVisualInspectionModelPartE.dart';
 import '../../model/schemePartA/SourceSurveyResponsePartA.dart';
 import '../../repository/schemeInfoRepo/fetchSchemeRepo.dart';
 import '../../utils/GlobalExceptionHandler.dart';
+import '../../views/tabLayout/DashboardTabView.dart';
 
 class Schemeprovider extends ChangeNotifier {
   final SchemeRepositoy _schemeRepositoy = SchemeRepositoy();
   final Fetchschemeinfo _fetchschemeinfo = Fetchschemeinfo();
 
   int formType = 2; // suppose 1 = above 10
+
+  String errorMsg = '';
+
 
   bool _isLoading = false;
 
@@ -128,6 +132,9 @@ class Schemeprovider extends ChangeNotifier {
     required int semiCriticalZoneVillages,
     required int groundWaterAnalysisConducted,
     required int waterAllocationFromWRD,
+    required String alterNativeSource,
+    required String repressFindinCommitte,
+    required int modeType,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -144,6 +151,9 @@ class Schemeprovider extends ChangeNotifier {
         semiCriticalZoneVillages: semiCriticalZoneVillages,
         groundWaterAnalysisConducted: groundWaterAnalysisConducted,
         waterAllocationFromWRD: waterAllocationFromWRD,
+        alterNativeSource: alterNativeSource,
+        repressFindinCommitte: repressFindinCommitte,
+        modeType: modeType
       );
 
       _message = response.message;
@@ -222,6 +232,8 @@ class Schemeprovider extends ChangeNotifier {
     criticalController.clear();
     semiCriticalController.clear();
     waterAllocationController.clear();
+    sourceFindingRepresentativesConsulted_Controller.clear();
+    alternativeSourcesAvailable_Controller.clear();
 
     notifyListeners();
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../provider/AppStateProvider.dart';
 import '../../provider/dashboardProvider.dart';
 import 'AboveTenPercentTab.dart';
 import 'BelowTenPercentTab.dart';
@@ -18,26 +19,35 @@ class _DashboardTabViewState extends State<DashboardTabView>
   void initState() {
     super.initState();
 
-    // Set up tab controller with listener
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabChange);
 
-    // Delay until context is ready
     WidgetsBinding.instance.addPostFrameCallback((_) {
       dashboardProvider = Provider.of<DashboardProvider>(context, listen: false);
-      _fetchDataForTab(_tabController.index); // initial load
+      dashboardProvider.fetchDashboardHomeData(1);
+      final appState = Provider.of<AppStateProvider>(context, listen: false);
+
+      final mode = _tabController.index == 0
+          ? ProjectMode.below10
+          : ProjectMode.above10;
+      appState.setMode(mode);
+
+
     });
   }
 
+
   void _handleTabChange() {
-    if (_tabController.indexIsChanging) return; // Wait until animation completes
-    _fetchDataForTab(_tabController.index);
+    if (_tabController.indexIsChanging) return;
+    final appState = Provider.of<AppStateProvider>(context, listen: false);
+
+    final mode = _tabController.index == 0
+        ? ProjectMode.below10
+        : ProjectMode.above10;
+    appState.setMode(mode);
+
   }
 
-  void _fetchDataForTab(int index) {
-    int action = index == 0 ? 1 : 1;
-    dashboardProvider.fetchDashboardHomeData(action);
-  }
 
   @override
   void dispose() {

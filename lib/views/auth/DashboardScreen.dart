@@ -80,135 +80,14 @@ class _DashboardscreenState extends State<Dashboardscreen> {
           ),
           body: Consumer<DashboardProvider>(
             builder: (context, dashboardProvider, child) {
-              if (dashboardProvider.isLoading) {
+              if (dashboardProvider.cnoDashboardHomeList.isEmpty) {
                 return const Center(child: CircularProgressIndicator());
-              }
-              if (!dashboardProvider.status) {
-                return Center(
-                    child:
-                        AppTextWidgets.errorText(dashboardProvider.errorMsg));
               }
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-/*
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          // Profile Picture
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.blue.shade300,
-                                  Colors.blue.shade800
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                            ),
-                            padding: const EdgeInsets.all(2),
-                            // Border-like effect
-                            child: CircleAvatar(
-                              radius: 32,
-                              backgroundColor: Colors.grey[100],
-                              backgroundImage:
-                                  const AssetImage('assets/icons/user.png'),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-
-                          // User Info
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Welcome Text
-                                Text(
-                                  'Welcome',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'OpenSans',
-                                    color: Colors.grey.shade700,
-                                  ),
-                                ),
-                                Text(
-                                  dashboardProvider.dashboardList.first.userName??'username',
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'OpenSans',
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-
-                                const SizedBox(height: 4),
-
-                                // Department and Phone
-                                Row(
-                                  children: [
-                                    const Icon(Icons.account_balance_sharp,
-                                        size: 18, color: Colors.teal),
-                                    const SizedBox(width: 6),
-                                    Text(
-                                      dashboardProvider.dashboardList.first
-                                              .designation ??
-                                          'designation',
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: 'OpenSans',
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-
-                                const SizedBox(height: 6),
-
-                                Row(
-                                  children: [
-                                    const Icon(Icons.phone_android,
-                                        size: 18, color: Colors.teal),
-                                    const SizedBox(width: 6),
-                                    Flexible(
-                                      child: Text(
-                                        dashboardProvider.dashboardList.first
-                                                .mobileNumber ??
-                                            'mobile number',
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: 'OpenSans',
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-*/
                     const SizedBox(height: 15),
                     Padding(
                       padding: EdgeInsets.all(8.0),

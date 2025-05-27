@@ -18,6 +18,9 @@ class SchemeRepositoy {
     required int semiCriticalZoneVillages,
     required int groundWaterAnalysisConducted,
     required int waterAllocationFromWRD,
+    required String repressFindinCommitte,
+    required String alterNativeSource,
+    required int modeType,
   }) async {
     try {
       final response = await _apiService.post(
@@ -33,6 +36,9 @@ class SchemeRepositoy {
           "no_villages_semi_critical_zone": semiCriticalZoneVillages,
           "incase_gw_cont_any_analysis_conduct": groundWaterAnalysisConducted,
           "wtr_allocation_frm_state_WRD_ID_frm_sw": waterAllocationFromWRD,
+          "represe_of_ource_finding_committee": repressFindinCommitte,
+          "cost_effective_alternative_sources":alterNativeSource,
+          "phy_status":modeType,
         }),
       );
       return BaseResponse.fromJson(response);
@@ -40,6 +46,14 @@ class SchemeRepositoy {
       rethrow;
     }
   }
+
+/*
+  // Add column new
+  "represe_of_ource_finding_committee":"Test data 1",
+  "cost_effective_alternative_sources":"Test data 2",
+  "phy_status":9
+*/
+
 
   Future<BaseResponse> saveSchemePlanning({
     required int userId,

@@ -1,9 +1,11 @@
 // views/DashboardScreen.dart
 import 'package:cno_inspection/model/DashboardResponse/DashboardResponse.dart';
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
+import 'package:cno_inspection/views/tabLayout/DashboardTabView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/dashboardProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
@@ -31,10 +33,9 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
-      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-      final String? sourceFlag = args?['source'];
+      final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
 
-      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,3, int.parse(sourceFlag!));
+      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,1,mode.modeValue);
       _localStorage.saveInt(
           "villageId", dashboardProvider.dashboardList.first.villageId);
 
@@ -83,7 +84,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                 } else {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboardscreen()),
+                    MaterialPageRoute(builder: (context) => DashboardTabView()),
                     (route) => false,
                   );
                 }
