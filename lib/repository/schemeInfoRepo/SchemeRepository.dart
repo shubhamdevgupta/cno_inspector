@@ -70,6 +70,12 @@ class SchemeRepositoy {
     required String terrainSoil,
     required int foundAsPerDPR,
     required String deviation,
+
+    required String reason_not_awarded_scheme_planning,
+    required String work_awarded_no_physical_progress,
+    required String multiple_schemes_sanctioned_justify_detial,
+    required String desgined_conjunctive_detail,
+    required int phy_status ,
   }) async {
     try {
       final response = await _apiService.post(
@@ -89,6 +95,14 @@ class SchemeRepositoy {
           "distribution_netwrk_terrian_type_soil_strata": terrainSoil,
           "found_as_per_dpr": foundAsPerDPR,
           "divation_if_any": deviation,
+
+
+          "txtreason_not_awarded_scheme_planning": reason_not_awarded_scheme_planning,
+          "txtwork_awarded_no_physical_progress" :  work_awarded_no_physical_progress,
+          "txtmultiple_schemes_sanctioned_justify_detial" : multiple_schemes_sanctioned_justify_detial,
+          "txtdesgined_conjunctive_detail" : desgined_conjunctive_detail,
+          "phy_status" : phy_status
+
         }),
       );
       return BaseResponse.fromJson(response);
@@ -112,6 +126,7 @@ class SchemeRepositoy {
     required int buildDrawingAvailable,
     required int onPMGati,
     required String noReason,
+    required int phy_status,
   }) async {
     try {
       final response = await _apiService.post(
@@ -131,6 +146,7 @@ class SchemeRepositoy {
           "build_drawing_infr_available": buildDrawingAvailable,
           "if_yes_is_it_on_PMGati": onPMGati,
           "if_no_reason": noReason,
+          "phy_status" : phy_status
         }),
       );
       return BaseResponse.fromJson(response);
@@ -179,6 +195,14 @@ class SchemeRepositoy {
     required List<int> delayReasons,
     required List<int> costOverrunReasons,
     required List<int> costRevisionReasons,
+
+
+    required double txtcost_levelzed_cost_cr,
+    required int    is_tpia_engaged_value,
+    required int    concurrent_supervission_scope_value,
+    required String txtpws_status_under_scheme,
+    required int    phy_status,
+
   }) async {
     try {
       final response = await _apiService.post(
@@ -222,6 +246,13 @@ class SchemeRepositoy {
           "delay_work_reason": delayReasons,
           "cost_overrun_reason": costOverrunReasons,
           "cost_revision_reason": costRevisionReasons,
+
+          "txtcost_levelzed_cost_cr":txtcost_levelzed_cost_cr,
+          "is_tpia_engaged_value":is_tpia_engaged_value,
+          "concurrent_supervission_scope_value":concurrent_supervission_scope_value,
+          "txtpws_status_under_scheme":txtpws_status_under_scheme,
+          "phy_status":phy_status,
+
         }),
       );
       return BaseResponse.fromJson(response);

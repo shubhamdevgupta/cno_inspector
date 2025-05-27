@@ -35,9 +35,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
         final schemeId = args['schemeId'] as int?;
         final stateId = args['stateId'] as int?;
 
-        final schemeProvider =
-            Provider.of<Schemeprovider>(context, listen: false);
-        schemeProvider.clearfetchSourceSurvey();
+        final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);schemeProvider.clearfetchSourceSurvey();
 
         if (schemeId != null) {
           schemeProvider.setSchemeId(schemeId);
@@ -45,10 +43,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSourceSurvey(
-            stateId.toString(),
-            schemeId.toString(),
-            _localStorageService.getInt(AppConstants.prefUserId).toString());
+        schemeProvider.fetchSourceSurvey(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -102,8 +97,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
           ),
           body: Consumer<Schemeprovider>(
             builder: (context, schemeProvider, child) {
-              final mode =
-                  Provider.of<AppStateProvider>(context, listen: false).mode;
+              final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
               return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(

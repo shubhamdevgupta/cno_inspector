@@ -5,6 +5,7 @@ import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
@@ -110,6 +111,7 @@ class _RetrofittingAugmentationScreen
           ),
           body: Consumer<Schemeprovider>(
             builder: (context, schemeProvider, child) {
+              final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
               return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
@@ -197,7 +199,7 @@ class _RetrofittingAugmentationScreen
                                 const SizedBox(height: 10),
 
                                 Visibility(
-                                    visible: schemeProvider.formType==1,
+                                    visible: mode==ProjectMode.above10,
                                     child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -263,35 +265,23 @@ class _RetrofittingAugmentationScreen
                                                 "Additional info for Retrofitting/Augmentation Schemes only");
                                         await schemeProvider
                                             .saveRetrofitAdditionalInfo(
-                                                userId: _localStorageService.getInt(
-                                                    AppConstants.prefUserId)!,
-                                                stateId:
-                                                    schemeProvider.stateId!,
-                                                schemeId:
-                                                    schemeProvider.schemeId!,
-                                                isAssessmentDone: schemeProvider
-                                                    .selectedLegacyInfraAssessmentId,
+                                                userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                                stateId: schemeProvider.stateId!,
+                                                schemeId: schemeProvider.schemeId!,
+                                                isAssessmentDone: schemeProvider.selectedLegacyInfraAssessmentId,
                                                 assessmentMethod: '',
                                                 assessmentReason: '',
                                                 //not found
-                                                pipelineKms: double.parse(schemeProvider
-                                                    .transmissionPipelineKmController
-                                                    .text),
-                                                distributionKms: double.parse(
-                                                    schemeProvider
-                                                        .distributionPipelineKmController
-                                                        .text),
-                                                wtpCapacity: double.parse(schemeProvider
-                                                    .wtpCapacityMldController
-                                                    .text),
-                                                structureNos: int.parse(schemeProvider
-                                                    .storageStructureDetailsController
-                                                    .text),
+                                                pipelineKms: schemeProvider.transmissionPipelineKmController.text.isEmpty ? 0.00 : double.parse(schemeProvider.transmissionPipelineKmController.text),
+                                                distributionKms:   schemeProvider.distributionPipelineKmController.text.isEmpty ? 0.00 : double.parse(schemeProvider.distributionPipelineKmController.text),
+                                                wtpCapacity:   schemeProvider.wtpCapacityMldController.text.isEmpty ? 0.00 : double.parse(schemeProvider.wtpCapacityMldController.text),
+                                                structureNos: schemeProvider.storageStructureDetailsController.text.isEmpty ? 0 : int.parse(schemeProvider.storageStructureDetailsController.text),
                                                 structureCapacity: 0.0,
                                                 // not found
                                                 buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
                                                 onPMGati: schemeProvider.onPmGatishaktiID,
-                                                noReason: schemeProvider.reasonController.text);
+                                                noReason: schemeProvider.reasonController.text.isEmpty ? "" : schemeProvider.reasonController.text,
+                                        phyStatus: mode.modeValue);
                                         if (schemeProvider.status!) {
                                           ToastHelper.showToastMessage(
                                               schemeProvider.message!,

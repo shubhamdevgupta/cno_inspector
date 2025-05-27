@@ -177,10 +177,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                               Navigator.pushReplacementNamed(context,
                                   AppConstants.navigateToSchemePlanningScreen,
                                   arguments: {
-                                    'schemeId':
-                                        dashboardProvider.selectedSchemeID,
-                                    'stateId': dashboardProvider
-                                        .dashboardList.first.stateId,
+                                    'schemeId': int.parse(dashboardProvider.selectedSchemeID!),
+                                    'stateId': dashboardProvider.dashboardList.first.stateId,
                                   });
                               // Your onTap logic
                             },
@@ -199,8 +197,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                                   AppConstants
                                       .navigateToRetrofittingAugmentationScreen,
                                   arguments: {
-                                    'schemeId':
-                                        dashboardProvider.selectedSchemeID,
+                                    'schemeId':int.parse(dashboardProvider.selectedSchemeID!),
                                     'stateId': dashboardProvider
                                         .dashboardList.first.stateId,
                                   });
@@ -220,8 +217,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                                   AppConstants
                                       .navigateToSchemeImplementationScreen,
                                   arguments: {
-                                    'schemeId':
-                                        dashboardProvider.selectedSchemeID,
+                                    'schemeId':int.parse(dashboardProvider.selectedSchemeID!),
                                     'stateId': dashboardProvider
                                         .dashboardList.first.stateId,
                                   });
@@ -239,8 +235,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                               Navigator.pushReplacementNamed(context,
                                   AppConstants.navigateToVisualInspectionScreen,
                                   arguments: {
-                                    'schemeId':
-                                        dashboardProvider.selectedSchemeID,
+                                    'schemeId':int.parse(dashboardProvider.selectedSchemeID!),
                                     'stateId': dashboardProvider
                                         .dashboardList.first.stateId,
                                   });
