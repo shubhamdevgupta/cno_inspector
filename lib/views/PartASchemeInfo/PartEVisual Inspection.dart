@@ -55,10 +55,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
       onWillPop: () async {
         // Replace the current route with a new one
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => SchemeImplementationScreen()),
+          MaterialPageRoute(builder: (_) => Dashboardschemeinfo()),
         );
 
-        // Return false to prevent the default back navigation behavior
         return false;
       },
       child: Container(

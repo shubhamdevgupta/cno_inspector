@@ -70,8 +70,36 @@ class _DashboardTabViewState extends State<DashboardTabView>
               bottom: TabBar(
                 controller: _tabController,
                 tabs: const [
-                  Tab(text: 'Below 10 Percent'),
-                  Tab(text: 'Above 10 Percent'),
+                  Tab(
+                    icon: Icon(
+                      Icons.arrow_downward,
+                      color: Colors.white, // Dark green for below 10%
+                    ),
+                    child: Text(
+                      'Below 10 Percent',
+                      style: TextStyle(
+                        color: Colors.white, // Dark green
+                        fontFamily: 'OpenSans',
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    icon: Icon(
+                      Icons.arrow_upward,
+                      color: Colors.white, // Blue for above 10%
+                    ),
+                    child: Text(
+                      'Above 10 Percent',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'OpenSans',
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ],
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.white70,
