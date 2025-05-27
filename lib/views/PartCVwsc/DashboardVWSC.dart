@@ -44,6 +44,8 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
       //part a clear
        vwscprovider.clearValuesforqueA();
 
+       vwscprovider.clearValuesforqueA();
+
        // part b clear
       vwscprovider.clearCommunityInvolvementData();
 

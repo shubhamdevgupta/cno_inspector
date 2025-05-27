@@ -9,6 +9,7 @@ import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/customradiobttn.dart';
@@ -35,6 +36,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
       ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      print("STATE 1111 : ${args.toString()}");
       if (args != null) {
         final schemeId = args['schemeId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -114,7 +116,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
             ),
             body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
-                return SingleChildScrollView(
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
                         top: 20, left: 6, right: 6, bottom: 5),
@@ -148,7 +150,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
 
       // Above 10% part Start
                                 Visibility(
-                                  visible: schemeProvider.formType==1,
+                                  visible: mode==ProjectMode.above10,
                                   child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -193,140 +195,31 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                       ),
                                       const SizedBox(height: 10),
 
-                                      // 2. WTP design hours
-                                      Customtxtfeild(
-                                        label:
-                                        '2.	What are the running hours per day considered for designing of WTP/Transmission main?',
-                                        controller: schemeProvider.wtpHoursController,
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      const SizedBox(height: 10),
-
-                                      // 3. Retention time
-                                      const Text(
-                                        '3.	What is the retention time in hours per day considered for design of ',
-                                        style: TextStyle(fontWeight: FontWeight.w600),
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Customtxtfeild(
-                                        label: '3.1 OHSR/OHT/ESR (in hrs)',
-                                        controller: schemeProvider.ohsrTimeController,
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Customtxtfeild(
-                                        label: '3.2 MBR (in hrs)',
-                                        controller: schemeProvider.mbrTimeController,
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      const SizedBox(height: 10),
-
-                                      // 4. Pipe material selection
-                                      const Text(
-                                        '4.	Please specify the selection of pipe material for distribution network in the following terrain with reasons:',
-                                        style: TextStyle(fontWeight: FontWeight.w600),
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Customtxtfeild(
-                                        label: '4.1 Rocky Strata - Pipe Material Used',
-                                        controller:
-                                        schemeProvider.rockyPipeMaterialController,
-                                        keyboardType: TextInputType.text,
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Customtxtfeild(
-                                        label: '4.2 Soil Strata - Pipe Material Used',
-                                        controller:
-                                        schemeProvider.soilPipeMaterialController,
-                                        keyboardType: TextInputType.text,
-                                      ),
-                                      const SizedBox(height: 10),
-
-                                      // 5. On-spot excavation check (Radio)
-                                      const Text(
-                                        '5.	Do the on-spot excavation on any sample stretch of pipeline and check for pipe material and dia as per DPR:',
-                                        style: TextStyle(fontWeight: FontWeight.w600),
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Customradiobttn(
-                                        question: 'Found as per DPR',
-                                        options: schemeProvider.yesNoMap.keys.toList(),
-                                        selectedOption: schemeProvider.onSpotExcavation,
-                                        onChanged: (val) {
-                                          schemeProvider.onSpotExcavation = val;
-                                        },
-                                      ),
-
-                                      if (schemeProvider.onSpotExcavation == "Yes")
-                                        Customtxtfeild(
-                                          label: 'If deviation found, provide reason',
-                                          controller: schemeProvider.deviationReasonController,
-                                          keyboardType: TextInputType.text,
-                                        ),
-                                      const SizedBox(height: 20),
-                                    ],
-                                  ),
-                                ),
-      // Above 10% part End
-
-
-
-                                // Below 10% part Start
-                                Visibility(
-                                  visible: schemeProvider.formType==2,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                                    // 2. WTP design hours
                                     Customtxtfeild(
-                                      label: '1. What are the reasons if the scheme is approved but the work is not awarded till date?',
-                                      controller: schemeProvider.schemePlanning_Question1Controller,
-                                      keyboardType: TextInputType.text,
+                                      label:
+                                      '2.	What are the running hours per day considered for designing of WTP/Transmission main?',
+                                      controller: schemeProvider.wtpHoursController,
+                                      keyboardType: TextInputType.number,
                                     ),
+                                    const SizedBox(height: 10),
 
-                                    Customtxtfeild(
-                                      label: '2. If the work is awarded, please provide the reasons for no physical progress?',
-                                      controller: schemeProvider.schemePlanning_Question2Controller,
-                                      keyboardType: TextInputType.text,
-                                    ),
-
-
+                                    // 3. Retention time
                                     const Text(
-                                      '3. Has the surveys done for planning of the scheme:',
+                                      '3.	What is the retention time in hours per day considered for design of ',
                                       style: TextStyle(fontWeight: FontWeight.w600),
                                     ),
                                     const SizedBox(height: 6),
-                                    Customradiobttn(
-                                      question: '3.1 Topographical survey',
-                                      options: schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption: schemeProvider.topoSurvey,
-                                      onChanged: (value) {
-                                        schemeProvider.topoSurvey = value;
-                                      },
+                                    Customtxtfeild(
+                                      label: '3.1 OHSR/OHT/ESR (in hrs)',
+                                      controller: schemeProvider.ohsrTimeController,
+                                      keyboardType: TextInputType.number,
                                     ),
-                                    Customradiobttn(
-                                      question: '3.2 GPS/physical survey done',
-                                      options: schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption: schemeProvider.gpsSurvey,
-                                      onChanged: (value) {
-                                        schemeProvider.gpsSurvey = value;
-                                      },
-                                    ),
-                                    Customradiobttn(
-                                      question: '3.3 Google Earth/Maps survey',
-                                      options: schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption:
-                                      schemeProvider.googleEarthSurvey,
-                                      onChanged: (value) {
-                                        schemeProvider.googleEarthSurvey = value;
-                                      },
-                                    ),
-                                    Customradiobttn(
-                                      question: '4.4 No survey done',
-                                      options: schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption: schemeProvider.noSurvey,
-                                      onChanged: (value) {
-                                        schemeProvider.noSurvey = value;
-                                      },
+                                    const SizedBox(height: 6),
+                                    Customtxtfeild(
+                                      label: '3.2 MBR (in hrs)',
+                                      controller: schemeProvider.mbrTimeController,
+                                      keyboardType: TextInputType.number,
                                     ),
                                     const SizedBox(height: 10),
 
@@ -351,22 +244,131 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                     ),
                                     const SizedBox(height: 10),
 
-                                    Customtxtfeild(
-                                      label: '5. Please review the villages which are covered in the scheme and evaluate that villages covered under the scheme have multiple schemes being sanctioned? Kindly see if it is over planning or has any justifiable grounds. Link has been provided for reference...',
-                                      controller: schemeProvider.schemePlanning_Question5Controller,
-                                      keyboardType: TextInputType.text,
+                                    // 5. On-spot excavation check (Radio)
+                                    const Text(
+                                      '5.	Do the on-spot excavation on any sample stretch of pipeline and check for pipe material and dia as per DPR:',
+                                      style: TextStyle(fontWeight: FontWeight.w600),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Customradiobttn(
+                                      question: 'Found as per DPR',
+                                      options: schemeProvider.yesNoMap.keys.toList(),
+                                      selectedOption: schemeProvider.onSpotExcavation,
+                                      onChanged: (val) {
+                                        schemeProvider.onSpotExcavation = val;
+                                      },
                                     ),
 
-                                    Customtxtfeild(
-                                      label: '6. If multiple schemes have been designed for conjunctive use for a short lean period and there is no evidence of dynamic fluctuation in water table, was there a possibility to retain the existing ground water/local source for the scheme?',
-                                      controller: schemeProvider.schemePlanning_Question6Controller,
-                                      keyboardType: TextInputType.text,
-                                    ),
-
-                                    const SizedBox(height: 10),
+                                    if (schemeProvider.onSpotExcavation == "Yes")
+                                      Customtxtfeild(
+                                        label: 'If deviation found, provide reason',
+                                        controller: schemeProvider.deviationReasonController,
+                                        keyboardType: TextInputType.text,
+                                      ),
+                                    const SizedBox(height: 20),
                                   ],
-                                )
                                 ),
+                              ),
+// Above 10% part End
+
+
+
+                                // Below 10% part Start
+                                Visibility(
+                                  visible: mode==ProjectMode.below10,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Customtxtfeild(
+                                      label: '1. What are the reasons if the scheme is approved but the work is not awarded till date?',
+                                      controller: schemeProvider.schemePlanning_Question1Controller,
+                                      keyboardType: TextInputType.text,
+                                    ),
+
+                                  Customtxtfeild(
+                                    label: '2. If the work is awarded, please provide the reasons for no physical progress?',
+                                    controller: schemeProvider.schemePlanning_Question2Controller,
+                                    keyboardType: TextInputType.text,
+                                  ),
+
+
+                                  const Text(
+                                    '3. Has the surveys done for planning of the scheme:',
+                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Customradiobttn(
+                                    question: '3.1 Topographical survey',
+                                    options: schemeProvider.yesNoMap.keys.toList(),
+                                    selectedOption: schemeProvider.topoSurvey,
+                                    onChanged: (value) {
+                                      schemeProvider.topoSurvey = value;
+                                    },
+                                  ),
+                                  Customradiobttn(
+                                    question: '3.2 GPS/physical survey done',
+                                    options: schemeProvider.yesNoMap.keys.toList(),
+                                    selectedOption: schemeProvider.gpsSurvey,
+                                    onChanged: (value) {
+                                      schemeProvider.gpsSurvey = value;
+                                    },
+                                  ),
+                                  Customradiobttn(
+                                    question: '3.3 Google Earth/Maps survey',
+                                    options: schemeProvider.yesNoMap.keys.toList(),
+                                    selectedOption:
+                                    schemeProvider.googleEarthSurvey,
+                                    onChanged: (value) {
+                                      schemeProvider.googleEarthSurvey = value;
+                                    },
+                                  ),
+                                  Customradiobttn(
+                                    question: '4.4 No survey done',
+                                    options: schemeProvider.yesNoMap.keys.toList(),
+                                    selectedOption: schemeProvider.noSurvey,
+                                    onChanged: (value) {
+                                      schemeProvider.noSurvey = value;
+                                    },
+                                  ),
+                                  const SizedBox(height: 10),
+
+                                  // 4. Pipe material selection
+                                  const Text(
+                                    '4.	Please specify the selection of pipe material for distribution network in the following terrain with reasons:',
+                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Customtxtfeild(
+                                    label: '4.1 Rocky Strata - Pipe Material Used',
+                                    controller:
+                                    schemeProvider.rockyPipeMaterialController,
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Customtxtfeild(
+                                    label: '4.2 Soil Strata - Pipe Material Used',
+                                    controller:
+                                    schemeProvider.soilPipeMaterialController,
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                  const SizedBox(height: 10),
+
+                                  Customtxtfeild(
+                                    label: '5. Please review the villages which are covered in the scheme and evaluate that villages covered under the scheme have multiple schemes being sanctioned? Kindly see if it is over planning or has any justifiable grounds. Link has been provided for reference...',
+                                    controller: schemeProvider.schemePlanning_Question5Controller,
+                                    keyboardType: TextInputType.text,
+                                  ),
+
+                                  Customtxtfeild(
+                                    label: '6. If multiple schemes have been designed for conjunctive use for a short lean period and there is no evidence of dynamic fluctuation in water table, was there a possibility to retain the existing ground water/local source for the scheme?',
+                                    controller: schemeProvider.schemePlanning_Question6Controller,
+                                    keyboardType: TextInputType.text,
+                                  ),
+
+                                  const SizedBox(height: 10),
+                                ],
+                              )
+                              ),
 
 
 
@@ -374,7 +376,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
 
 
 
-                                // Below 10% part End
+                              // Below 10% part End
 
 
 
@@ -392,7 +394,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                       ),
                                       onPressed: () async {
                                         LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Scheme Planning...");
-
+print("STATE : ${schemeProvider.stateId}");
                                         await schemeProvider.saveSchemePlanning(
                                             userId: _localStorageService
                                                 .getInt(AppConstants.prefUserId)!,
@@ -405,11 +407,11 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                                 .googleEarthSurveyID,
                                             numberOfSurveys:
                                                 schemeProvider.noSurveyID,
-                                            designRunningHours: int.parse(schemeProvider
+                                            designRunningHours: schemeProvider.wtpHoursController.text.isEmpty ? 0 :int.parse(schemeProvider
                                                 .wtpHoursController.text),
-                                            retentionTimeOHT: int.parse(schemeProvider
+                                            retentionTimeOHT: schemeProvider.ohsrTimeController.text.isEmpty?0:int.parse(schemeProvider
                                                 .ohsrTimeController.text),
-                                            retentionTimeMBR: int.parse(schemeProvider
+                                            retentionTimeMBR: schemeProvider.mbrTimeController.text.isEmpty ?0:int.parse(schemeProvider
                                                 .mbrTimeController.text),
                                             terrainRocky: schemeProvider
                                                 .rockyPipeMaterialController.text,
@@ -417,7 +419,14 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                                 .soilPipeMaterialController.text,
                                             foundAsPerDPR:
                                                 schemeProvider.onSpotExcavationID,
-                                            deviation: schemeProvider.deviationReasonController.text);
+                                            deviation: schemeProvider.deviationReasonController.text,
+
+
+                                         reason_not_awarded_scheme_planning:schemeProvider.schemePlanning_Question1Controller.text ,
+                                         work_awarded_no_physical_progress:schemeProvider. schemePlanning_Question2Controller.text ,
+                                         multiple_schemes_sanctioned_justify_detial: schemeProvider.schemePlanning_Question5Controller.text,
+                                         desgined_conjunctive_detail: schemeProvider.schemePlanning_Question6Controller.text,
+                                         phy_status: mode.modeValue ,);
                                         if (schemeProvider.status!) {
                                           ToastHelper.showToastMessage(
                                               schemeProvider.message!,

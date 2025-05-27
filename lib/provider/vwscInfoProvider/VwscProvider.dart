@@ -404,6 +404,64 @@ class Vwscprovider extends ChangeNotifier {
       .toList();
 
 // que 6666666666666666666666666
+ final Map<String, int> vwscBelowPartAQues2Map = {
+     'JJM new':1,
+     'JJM Retrofitted':2,
+     'NRDWP':3,
+     'State Scheme':4,
+     'No scheme':5,
+ };
+
+ final Map<String, int> vwscBelowPartAQues3Map = {
+     'Meeting daily needs throughout the year':1,
+     'Meeting daily needs partly in the year':2,
+     'Not able to meet daily needs:':3
+ };
+
+  // below 10%  start
+  String? _selectedOption1_belowPartA;
+  String? _selectedOption2_belowPartA;
+  String? _selectedOption3_belowPartA;
+  String? _selectedOption5_belowPartA;
+  String? _selectedOption6_belowPartA;
+
+  String? get selectedOption1_belowPartA => _selectedOption1_belowPartA;
+  String? get selectedOption2_belowPartA => _selectedOption2_belowPartA;
+  String? get selectedOption3_belowPartA => _selectedOption3_belowPartA;
+  String? get selectedOption5_belowPartA => _selectedOption5_belowPartA;
+  String? get selectedOption6_belowPartA => _selectedOption6_belowPartA;
+
+  int get selectedOption1_belowPartAID => yesNoMap[_selectedOption1_belowPartA] ?? 0;
+  int get selectedOption2_belowPartAID => vwscBelowPartAQues2Map[_selectedOption2_belowPartA] ?? 0;
+  int get selectedOption3_belowPartAID => vwscBelowPartAQues3Map[_selectedOption3_belowPartA] ?? 0;
+  int get selectedOption5_belowPartAID => yesNoMap[_selectedOption5_belowPartA] ?? 0;
+ int get selectedOption6_belowPartAID => yesNoMap[_selectedOption6_belowPartA] ?? 0;
+
+  set selectedOption1_belowPartA(String? value) {
+    _selectedOption1_belowPartA = value;
+    notifyListeners();
+  }
+  set selectedOption2_belowPartA(String? value) {
+    _selectedOption2_belowPartA = value;
+    notifyListeners();
+  }
+  set selectedOption3_belowPartA(String? value) {
+    _selectedOption3_belowPartA = value;
+    notifyListeners();
+  }
+
+  set selectedOption5_belowPartA(String? value) {
+    _selectedOption5_belowPartA = value;
+    notifyListeners();
+  }
+  set selectedOption6_belowPartA(String? value) {
+    _selectedOption6_belowPartA = value;
+    notifyListeners();
+  }
+
+  TextEditingController householdPercentageController = TextEditingController();
+  TextEditingController reasonsController = TextEditingController();
+  // below 10%  end
 
   Future<void> saveVwscWaterSupply({
     required int userId,
@@ -545,6 +603,16 @@ class Vwscprovider extends ChangeNotifier {
     selectedTailEnd = null;
     selectedschemeStatus = null;
     selectedinstitutions = [];
+    //below 10 % content clear
+
+    selectedOption1_belowPartA = null;
+    selectedOption2_belowPartA = null;
+    selectedOption3_belowPartA = null;
+    selectedOption5_belowPartA = null;
+    selectedOption6_belowPartA = null;
+    householdPercentageController.clear();
+    reasonsController.clear();
+
     notifyListeners();
   }
 

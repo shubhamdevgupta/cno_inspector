@@ -23,17 +23,6 @@ class PartaBelowWatersupply extends StatefulWidget {
 class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
   LocalStorageService _localStorageService = LocalStorageService();
 
-
-  String? selectedOption1;
-  String? selectedOption2;
-  String? selectedOption3;
-  String? selectedOption4;
-  String? selectedOption5;
-  String? selectedOption6;
-
-  TextEditingController householdPercentageController = TextEditingController();
-  TextEditingController reasonsController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -153,116 +142,89 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
 
-                                  // Question 1
-                                  Customradiobttn(
-                                    question: '1. Is there any piped water supply scheme in the village:',
-                                    options: ['Yes', 'No'],
-                                    selectedOption: selectedOption1,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectedOption1 = value!;
-                                      });
-                                    },
-                                    orientation: Axis.horizontal,
-                                  ),
+                                // Question 1
+                                Customradiobttn(
+                                  question: '1. Is there any piped water supply scheme in the village:',
+                                  options: vwscProvider.yesNoMap.keys.toList(),
+                                  selectedOption: vwscProvider.selectedOption1_belowPartA,
+                                  onChanged: (val) {
+                                    vwscProvider.selectedOption1_belowPartA = val;
+                                  },
+                                  orientation: Axis.horizontal,
+                                ),
 
-                                  // Question 2 - Part 1
-                                  Customradiobttn(
-                                    question: '2. What is the type of scheme presently commissioned:',
-                                    options: [
-                                      'JJM new',
-                                      'JJM Retrofitted',
-                                      'NRDWP',
-                                      'State Scheme',
-                                      'No scheme'
-                                    ],
-                                    selectedOption: selectedOption2,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectedOption2 = value!;
-                                      });
-                                    },
-                                    orientation: Axis.horizontal,
-                                  ),
+                                // Question 2 - Part 1
+                                Customradiobttn(
+                                  question: '2. What is the type of scheme presently commissioned:',
+                                  options: vwscProvider.vwscBelowPartAQues2Map.keys.toList(),
+                                  selectedOption: vwscProvider.selectedOption2_belowPartA,
+                                  onChanged: (value) {
 
-                                  // Question 2 - Part 2 (text field for households %)
-                                  Customtxtfeild(
-                                    label: 'If scheme is commissioned, how many households are being benefitted (%)',
-                                    controller: householdPercentageController,
-                                  ),
+                                      vwscProvider.selectedOption2_belowPartA = value!;
 
-                                  // Question 3
-                                  Customradiobttn(
-                                    question: '3. What is the present status of water supply schemes:',
-                                    options: [
-                                      'Meeting daily needs throughout the year',
-                                      'Meeting daily needs partly in the year',
-                                      'Not able to meet daily needs'
-                                    ],
-                                    selectedOption: selectedOption3,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectedOption3 = value!;
-                                      });
-                                    },
-                                    orientation: Axis.vertical,
-                                  ),
+                                  },
+                                  orientation: Axis.horizontal,
+                                ),
 
-                                  // Question 4
-                                  Customradiobttn(
-                                    question: '4. Water supply frequency assured to villagers in the scheme:',
-                                    options: [
-                                      'Daily',
-                                      'Once in two days',
-                                      'Once in three days',
-                                      'Irregular',
-                                      'Not functional'
-                                    ],
-                                    selectedOption: selectedOption4,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectedOption4 = value!;
-                                      });
-                                    },
-                                    orientation: Axis.vertical,
-                                  ),
+                                // Question 2 - Part 2 (text field for households %)
+                                Customtxtfeild(
+                                  label: 'If scheme is commissioned, how many households are being benefitted (%)',
+                                  controller: vwscProvider.householdPercentageController,
+                                ),
 
-                                  // Question 5 - Part 1
-                                  Customradiobttn(
-                                    question: '5. Whether remote/SC/ST/PVTG groups existing in command area of the scheme has been planned in scheme:',
-                                    options: ['Yes', 'No'],
-                                    selectedOption: selectedOption5,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectedOption5 = value!;
-                                      });
-                                    },
-                                    orientation: Axis.horizontal,
-                                  ),
+                                // Question 3
+                                Customradiobttn(
+                                  question: '3. What is the present status of water supply schemes:',
+                                  options: vwscProvider.vwscBelowPartAQues3Map.keys.toList(),
+                                  selectedOption: vwscProvider.selectedOption3_belowPartA,
+                                  onChanged: (value) {
+                                    vwscProvider.selectedOption3_belowPartA=value;
+                                  },
+                                  orientation: Axis.vertical,
+                                ),
 
-                                  // Question 5 - Part 2 (text field for reasons if no)
-                                  Customtxtfeild(
-                                    label: 'If no, please provide the reasons',
-                                    controller: reasonsController,
-                                  ),
+                                // Question 4
 
-                                  // Question 6
-                                 CustomMultiSelectChipQuestion(
-                                question:
-                                "6. Whether piped water supply services available at institutions:",
-                                options: vwscProvider.institutionsOptions,
-                                selectedValues:
-                                vwscProvider.selectedinstitutions,
-                                onSelectionChanged: (val) {
-                                  vwscProvider.selectedinstitutions = val;
-                                  print(
-                                      'selectedinstitutionsselectedinstitutions------- ${vwscProvider.selectedinstitutions}');
+                                Customradiobttn(
+                                  question: "4. Water supply frequency assured to villagers in the scheme:",
+                                  options: vwscProvider.FrequencyLabelOption,
+                                  selectedOption:
+                                  vwscProvider.selectedFrequency,
+                                  onChanged: (val) {
+                                    vwscProvider.selectedFrequency = val;
+                                    print('-------selectedFrequencyID ${vwscProvider.selectedFrequencyID}');
+                                  },
+                                ),
 
-                                  setState(() {
+
+                                // Question 5 - Part 1
+                                Customradiobttn(
+                                  question: '5. Whether remote/SC/ST/PVTG groups existing in command area of the scheme has been planned in scheme:',
+                                  options: vwscProvider.yesNoMap.keys.toList(),
+                                  selectedOption: vwscProvider.selectedOption5_belowPartA,
+                                  onChanged: (value) {
+                                    vwscProvider.selectedOption5_belowPartA = value;
+                                  },
+                                  orientation: Axis.horizontal,
+                                ),
+
+                                // Question 5 - Part 2 (text field for reasons if no)
+                                Customtxtfeild(
+                                  label: 'If no, please provide the reasons',
+                                  controller: vwscProvider.reasonsController,
+                                ),
+
+                                // Question 6
+                                CustomMultiSelectChipQuestion(
+                                  question:
+                                  "6. Whether piped water supply services available at institutions:",
+                                  options: vwscProvider.institutionsOptions,
+                                  selectedValues:
+                                  vwscProvider.selectedinstitutions,
+                                  onSelectionChanged: (val) {
                                     vwscProvider.selectedinstitutions = val;
-                                  });
-                                },
-                              ),
+                                  },
+                                ),
 
 
 
@@ -304,28 +266,28 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
 
                                           if (vwscProvider.status!) {ToastHelper.showToastMessage(vwscProvider.message!, backgroundColor: Colors.green);
 
-                                            Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      CommunityInvolvementPartB()),
-                                            );
-                                          } else {
-                                            ToastHelper.showToastMessage(
-                                                vwscProvider.message!,
-                                                backgroundColor: Colors.red);
-                                          }
-                                        },
-                                        child: Text(
-                                          "SAVE & NEXT",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
-                                          ),
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    CommunityInvolvementPartB()),
+                                          );
+                                        } else {
+                                          ToastHelper.showToastMessage(
+                                              vwscProvider.message!,
+                                              backgroundColor: Colors.red);
+                                        }
+                                      },
+                                      child: const Text(
+                                        "SAVE & NEXT",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
                                   ),
+                                ),
 
                                 ],
                               )

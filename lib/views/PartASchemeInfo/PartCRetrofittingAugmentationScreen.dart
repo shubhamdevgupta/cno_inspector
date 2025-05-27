@@ -5,6 +5,7 @@ import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
@@ -119,7 +120,7 @@ class _RetrofittingAugmentationScreen
             ),
             body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
-                return SingleChildScrollView(
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
                         top: 20, left: 6, right: 6, bottom: 5),
@@ -162,51 +163,51 @@ class _RetrofittingAugmentationScreen
                                   ),
                                   const SizedBox(height: 2),
 
-                                  // 2. Text Fields for Legacy Infrastructure Usage
-                                  const Text(
-                                    '2. Legacy infrastructure which has been retrofitted and being used in the scheme under JJM:',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  const SizedBox(height: 6),
+                                // 2. Text Fields for Legacy Infrastructure Usage
+                                const Text(
+                                  '2. Legacy infrastructure which has been retrofitted and being used in the scheme under JJM:',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(height: 6),
 
-                                  Customtxtfeild(
-                                    label:
-                                        '2.1 Transmission Pipelines (in Kms)',
-                                    controller: schemeProvider
-                                        .transmissionPipelineKmController,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                  const SizedBox(height: 8),
+                                Customtxtfeild(
+                                  label:
+                                      '2.1 Transmission Pipelines (in Kms)',
+                                  controller: schemeProvider
+                                      .transmissionPipelineKmController,
+                                  keyboardType: TextInputType.number,
+                                ),
+                                const SizedBox(height: 8),
 
-                                  Customtxtfeild(
-                                    label:
-                                        '2.2 Distribution Pipelines (in Kms)',
-                                    controller: schemeProvider
-                                        .distributionPipelineKmController,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                  const SizedBox(height: 8),
+                                Customtxtfeild(
+                                  label:
+                                      '2.2 Distribution Pipelines (in Kms)',
+                                  controller: schemeProvider
+                                      .distributionPipelineKmController,
+                                  keyboardType: TextInputType.number,
+                                ),
+                                const SizedBox(height: 8),
 
-                                  Customtxtfeild(
-                                    label: '2.3 WTP Capacity (in MLD)',
-                                    controller: schemeProvider
-                                        .wtpCapacityMldController,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                  const SizedBox(height: 8),
+                                Customtxtfeild(
+                                  label: '2.3 WTP Capacity (in MLD)',
+                                  controller: schemeProvider
+                                      .wtpCapacityMldController,
+                                  keyboardType: TextInputType.number,
+                                ),
+                                const SizedBox(height: 8),
 
-                                  Customtxtfeild(
-                                    label:
-                                        '2.4 Storage Structures (Nos./Capacity in KL)',
-                                    controller: schemeProvider
-                                        .storageStructureDetailsController,
-                                    keyboardType: TextInputType.text,
-                                  ),
-                                  const SizedBox(height: 10),
+                                Customtxtfeild(
+                                  label:
+                                      '2.4 Storage Structures (Nos./Capacity in KL)',
+                                  controller: schemeProvider
+                                      .storageStructureDetailsController,
+                                  keyboardType: TextInputType.text,
+                                ),
+                                const SizedBox(height: 10),
 
                                   Visibility(
-                                      visible: schemeProvider.formType==1,
+                                      visible: mode==ProjectMode.above10,
                                       child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -223,29 +224,29 @@ class _RetrofittingAugmentationScreen
                                       ),
                                       const SizedBox(height: 20),
 
-                                      if (schemeProvider
-                                          .asBuiltDrawingAvailabilityID ==
-                                          1)
-                                        Customradiobttn(
-                                          question:
-                                          '4. Has it been digitized and uploaded on PM Gatishakti? ',
-                                          options: schemeProvider.yesNoMap.keys
-                                              .toList(),
-                                          selectedOption:
-                                          schemeProvider.onPmGatiShakti,
-                                          onChanged: (val) =>
-                                          schemeProvider.onPmGatiShakti = val,
-                                        ),
-                                      if (schemeProvider.onPmGatishaktiID == 2)
-                                        Customtxtfeild(
-                                          label: '4.1 Reason',
-                                          controller:
-                                          schemeProvider.reasonController,
-                                          keyboardType: TextInputType.text,
-                                        ),
+                                    if (schemeProvider
+                                        .asBuiltDrawingAvailabilityID ==
+                                        1)
+                                      Customradiobttn(
+                                        question:
+                                        '4. Has it been digitized and uploaded on PM Gatishakti? ',
+                                        options: schemeProvider.yesNoMap.keys
+                                            .toList(),
+                                        selectedOption:
+                                        schemeProvider.onPmGatiShakti,
+                                        onChanged: (val) =>
+                                        schemeProvider.onPmGatiShakti = val,
+                                      ),
+                                    if (schemeProvider.onPmGatishaktiID == 2)
+                                      Customtxtfeild(
+                                        label: '4.1 Reason',
+                                        controller:
+                                        schemeProvider.reasonController,
+                                        keyboardType: TextInputType.text,
+                                      ),
 
-                                    ],
-                                  )),
+                                  ],
+                                )),
 
 
                                   SizedBox(
@@ -283,24 +284,25 @@ class _RetrofittingAugmentationScreen
                                                   assessmentMethod: '',
                                                   assessmentReason: '',
                                                   //not found
-                                                  pipelineKms: double.parse(schemeProvider
+                                                  pipelineKms: schemeProvider.transmissionPipelineKmController.text.isEmpty ? 0.00 :double.parse(schemeProvider
                                                       .transmissionPipelineKmController
                                                       .text),
-                                                  distributionKms: double.parse(
+                                                  distributionKms: schemeProvider.distributionPipelineKmController.text.isEmpty ? 0.00 :double.parse(
                                                       schemeProvider
                                                           .distributionPipelineKmController
                                                           .text),
-                                                  wtpCapacity: double.parse(schemeProvider
+                                                  wtpCapacity: schemeProvider.wtpCapacityMldController.text.isEmpty ? 0.00 :double.parse(schemeProvider
                                                       .wtpCapacityMldController
                                                       .text),
-                                                  structureNos: int.parse(schemeProvider
+                                                  structureNos: schemeProvider.storageStructureDetailsController.text.isEmpty ? 0 :int.parse(schemeProvider
                                                       .storageStructureDetailsController
                                                       .text),
                                                   structureCapacity: 0.0,
                                                   // not found
                                                   buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
                                                   onPMGati: schemeProvider.onPmGatishaktiID,
-                                                  noReason: schemeProvider.reasonController.text);
+                                                  noReason: schemeProvider.reasonController.text.isEmpty ? "" : schemeProvider.reasonController.text,
+                                        phyStatus: mode.modeValue);
                                           if (schemeProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 schemeProvider.message!,
