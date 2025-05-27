@@ -34,11 +34,10 @@ class AboveTenPercentTab extends StatelessWidget {
                     arguments: {'source': "10"},
                   );
                 },
-                primaryColor: Colors.deepPurple,
-                accentColor: Colors.deepPurple.shade50,
-                imagePath: "assets/icons/schemes.png", // example local asset
+                primaryColor: Colors.blue,
+                accentColor: Colors.blue.shade50,
+                imagePath: "assets/icons/water-supply.png",
               ),
-
 
 
               DashboardCard(
@@ -51,7 +50,11 @@ class AboveTenPercentTab extends StatelessWidget {
                     arguments: {'source': "10"},
                   );
                 },
+                primaryColor: Colors.deepOrangeAccent,
+                accentColor: Colors.orange.shade50,
+                imagePath: "assets/icons/sanitizer.png",
               ),
+
               DashboardCard(
                 title: "Interaction with VWSC",
                 baselineStatus: "Total VWSC \n$totalVillages",
@@ -62,6 +65,9 @@ class AboveTenPercentTab extends StatelessWidget {
                     arguments: {'source': "10"},
                   );
                 },
+                primaryColor: Colors.green,
+                accentColor: Colors.lightGreen.shade50,
+                imagePath: "assets/icons/village.png",
               ),
             ],
           ),

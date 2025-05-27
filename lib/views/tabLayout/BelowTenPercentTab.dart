@@ -30,6 +30,9 @@ class BelowTenPercentTab extends StatelessWidget {
                     arguments: {'source': "9"},
                   );
                 },
+                primaryColor: Colors.blue,
+                accentColor: Colors.blue.shade50,
+                imagePath: "assets/icons/water-supply.png",
               ),
               DashboardCard(
                 title: "Interaction with DWSM",
@@ -40,6 +43,9 @@ class BelowTenPercentTab extends StatelessWidget {
                     arguments: {'source': "9"},
                   );
                 },
+                primaryColor: Colors.deepOrangeAccent,
+                accentColor: Colors.orange.shade50,
+                imagePath: "assets/icons/sanitizer.png",
               ),
               DashboardCard(
                 title: "Interaction with VWSC",
@@ -50,6 +56,9 @@ class BelowTenPercentTab extends StatelessWidget {
                     arguments: {'source': "9"},
                   );
                 },
+                primaryColor: Colors.green,
+                accentColor: Colors.lightGreen.shade50,
+                imagePath: "assets/icons/village.png",
               ),
             ],
           ),

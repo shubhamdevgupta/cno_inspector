@@ -5,6 +5,7 @@ import 'package:cno_inspection/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
@@ -51,87 +52,98 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
-      ),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            // Removes the default back button
-            centerTitle: true,
-            title: Text(
-              "Water Supply Functionality",
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            ),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.pop(context);
-                } else {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => Dashboardvwsc()),
-                        (route) => false,
-                  );
-                }
-              },
-            ),
+    return WillPopScope(
+      onWillPop: () async {
+        // Replace the current route with a new one
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => Dashboardvwsc()),
+        );
 
-            //elevation
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF096DA8), // Dark blue color
-                    Color(0xFF3C8DBC), // Green color
-                  ],
-                  begin: Alignment.topCenter, // Start at the top center
-                  end: Alignment.bottomCenter, // End at the bottom center
+        return false;
+      },
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
+        ),
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              // Removes the default back button
+              centerTitle: true,
+              title: Text(
+                "Water Supply Functionality",
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () {
+                  if (Navigator.of(context).canPop()) {
+                    Navigator.pop(context);
+                  } else {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => Dashboardvwsc()),
+                          (route) => false,
+                    );
+                  }
+                },
+              ),
+
+              //elevation
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF096DA8), // Dark blue color
+                      Color(0xFF3C8DBC), // Green color
+                    ],
+                    begin: Alignment.topCenter, // Start at the top center
+                    end: Alignment.bottomCenter, // End at the bottom center
+                  ),
                 ),
               ),
+              elevation: 5,
             ),
-            elevation: 5,
-          ),
-          body: Consumer<Vwscprovider>(
-            builder: (context, vwscProvider, child) {
-              return SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.only(
-                      top: 20, left: 6, right: 6, bottom: 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Vwsccommonclass(
-                        no: 1,
-                      ),
-                      Card(
-                        elevation: 5,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.blue, width: 1.4),
-                            borderRadius: BorderRadius.circular(14),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12.withOpacity(0.06),
-                                blurRadius: 6,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          padding: EdgeInsets.all(8),
-                          width: double.infinity,
+            body: Consumer<Vwscprovider>(
+              builder: (context, vwscProvider, child) {
+
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+                return SingleChildScrollView(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 20, left: 6, right: 6, bottom: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Vwsccommonclass(
+                          no: 1,
+                        ),
+                        Card(
+                          elevation: 5,
                           child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.blue, width: 1.4),
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12.withOpacity(0.06),
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(8),
+                            width: double.infinity,
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
 
                                 // Question 1
                                 Customradiobttn(
@@ -214,52 +226,57 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                   vwscProvider.selectedinstitutions,
                                   onSelectionChanged: (val) {
                                     vwscProvider.selectedinstitutions = val;
-                                    print(
-                                        'selectedinstitutionsselectedinstitutions------- ${vwscProvider.selectedinstitutions}');
-
-                                    setState(() {
-                                      vwscProvider.selectedinstitutions = val;
-                                    });
                                   },
                                 ),
 
 
 
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: SizedBox(
-                                    height: 35,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xffb0D6EFD),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              10), // Adjust the radius as needed
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: SizedBox(
+                                      height: 35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xffb0D6EFD),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Adjust the radius as needed
+                                          ),
                                         ),
-                                      ),
-                                      onPressed: () async {
-                                        LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Water Supply Functionality");
+                                        onPressed: () async {
+                                          LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Water Supply Functionality");
 
-                                        await vwscProvider.saveVwscWaterSupply(
 
+                                          await vwscProvider.saveVwscWaterSupply(
                                             userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                             stateId: vwscProvider.stateId!,
                                             villageId: vwscProvider.villageId!,
-
-                                            waterSupplyFrequency: vwscProvider.selectedFTKTestingFrequencyId,
-                                            adequateWaterToHH: vwscProvider.selectedHouseholdWaterId,
-                                            adequateWaterToRemote: vwscProvider.selectedPvtgGroupsId,
-                                            remoteReason: vwscProvider.reasonRemoteGroupsController.text,
-                                            tailEndWaterReach: vwscProvider.selectedTailEndId,
-                                            schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
+                                            waterSupplyFrequency: 0,
+                                            adequateWaterToHH: -1,
+                                            adequateWaterToRemote: -1,
+                                            remoteReason: "",
+                                            tailEndWaterReach: 0,
+                                            schemeOperationalStatus: 0,
                                             pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
-                                            createdBy: _localStorageService.getInt(AppConstants.prefUserId)!
+                                            createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
 
-                                        );
-                                        if (vwscProvider.status!) {
-                                          ToastHelper.showToastMessage(
-                                              vwscProvider.message!,
-                                              backgroundColor: Colors.green);
+                                            // New parameters
+                                            phyStatus: mode.modeValue,
+                                            isPipedWaterSupplyScheme: vwscProvider.selectedOption1_belowPartAID,
+                                            typeOfSchemeCommissioned: vwscProvider.selectedOption2_belowPartAID,
+                                            schemeBeneficiaryHouseholds: vwscProvider.householdPercentageController.text,
+                                            presentStatusOfWaterSupplySchemes: vwscProvider.selectedOption3_belowPartAID,
+                                            waterSupplyFrequencyAssured: vwscProvider.selectedFrequencyID,
+                                            remoteGroupsPlanned: vwscProvider.selectedOption5_belowPartAID,
+                                            remoteGroupsPlannedDetails: vwscProvider.reasonsController.text,
+                                            //TODO feedback
+                                            observationWaterSupplyFunctionality: "",
+                                          );
+
+
+
+
+                                          if (vwscProvider.status!) {ToastHelper.showToastMessage(vwscProvider.message!, backgroundColor: Colors.green);
 
                                           Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
@@ -284,18 +301,19 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                   ),
                                 ),
 
-                              ],
-                            )
-                            ,
+                                ],
+                              )
+                              ,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          )),
+                );
+              },
+            )),
+      ),
     );
   }
 }
