@@ -23,17 +23,6 @@ class PartaBelowWatersupply extends StatefulWidget {
 class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
   LocalStorageService _localStorageService = LocalStorageService();
 
-
-  String? selectedOption1;
-  String? selectedOption2;
-  String? selectedOption3;
-  String? selectedOption4;
-  String? selectedOption5;
-  String? selectedOption6;
-
-  TextEditingController householdPercentageController = TextEditingController();
-  TextEditingController reasonsController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -147,12 +136,10 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                 // Question 1
                                 Customradiobttn(
                                   question: '1. Is there any piped water supply scheme in the village:',
-                                  options: ['Yes', 'No'],
-                                  selectedOption: selectedOption1,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedOption1 = value!;
-                                    });
+                                  options: vwscProvider.yesNoMap.keys.toList(),
+                                  selectedOption: vwscProvider.selectedOption1_belowPartA,
+                                  onChanged: (val) {
+                                    vwscProvider.selectedOption1_belowPartA = val;
                                   },
                                   orientation: Axis.horizontal,
                                 ),
@@ -160,18 +147,12 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                 // Question 2 - Part 1
                                 Customradiobttn(
                                   question: '2. What is the type of scheme presently commissioned:',
-                                  options: [
-                                    'JJM new',
-                                    'JJM Retrofitted',
-                                    'NRDWP',
-                                    'State Scheme',
-                                    'No scheme'
-                                  ],
-                                  selectedOption: selectedOption2,
+                                  options: vwscProvider.vwscBelowPartAQues2Map.keys.toList(),
+                                  selectedOption: vwscProvider.selectedOption2_belowPartA,
                                   onChanged: (value) {
-                                    setState(() {
-                                      selectedOption2 = value!;
-                                    });
+
+                                      vwscProvider.selectedOption2_belowPartA = value!;
+
                                   },
                                   orientation: Axis.horizontal,
                                 ),
@@ -179,54 +160,41 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                 // Question 2 - Part 2 (text field for households %)
                                 Customtxtfeild(
                                   label: 'If scheme is commissioned, how many households are being benefitted (%)',
-                                  controller: householdPercentageController,
+                                  controller: vwscProvider.householdPercentageController,
                                 ),
 
                                 // Question 3
                                 Customradiobttn(
                                   question: '3. What is the present status of water supply schemes:',
-                                  options: [
-                                    'Meeting daily needs throughout the year',
-                                    'Meeting daily needs partly in the year',
-                                    'Not able to meet daily needs'
-                                  ],
-                                  selectedOption: selectedOption3,
+                                  options: vwscProvider.vwscBelowPartAQues3Map.keys.toList(),
+                                  selectedOption: vwscProvider.selectedOption3_belowPartA,
                                   onChanged: (value) {
-                                    setState(() {
-                                      selectedOption3 = value!;
-                                    });
+                                    vwscProvider.selectedOption3_belowPartA=value;
                                   },
                                   orientation: Axis.vertical,
                                 ),
 
                                 // Question 4
+
                                 Customradiobttn(
-                                  question: '4. Water supply frequency assured to villagers in the scheme:',
-                                  options: [
-                                    'Daily',
-                                    'Once in two days',
-                                    'Once in three days',
-                                    'Irregular',
-                                    'Not functional'
-                                  ],
-                                  selectedOption: selectedOption4,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedOption4 = value!;
-                                    });
+                                  question: "4. Water supply frequency assured to villagers in the scheme:",
+                                  options: vwscProvider.FrequencyLabelOption,
+                                  selectedOption:
+                                  vwscProvider.selectedFrequency,
+                                  onChanged: (val) {
+                                    vwscProvider.selectedFrequency = val;
+                                    print('-------selectedFrequencyID ${vwscProvider.selectedFrequencyID}');
                                   },
-                                  orientation: Axis.vertical,
                                 ),
+
 
                                 // Question 5 - Part 1
                                 Customradiobttn(
                                   question: '5. Whether remote/SC/ST/PVTG groups existing in command area of the scheme has been planned in scheme:',
-                                  options: ['Yes', 'No'],
-                                  selectedOption: selectedOption5,
+                                  options: vwscProvider.yesNoMap.keys.toList(),
+                                  selectedOption: vwscProvider.selectedOption5_belowPartA,
                                   onChanged: (value) {
-                                    setState(() {
-                                      selectedOption5 = value!;
-                                    });
+                                    vwscProvider.selectedOption5_belowPartA = value;
                                   },
                                   orientation: Axis.horizontal,
                                 ),
@@ -234,26 +202,26 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                 // Question 5 - Part 2 (text field for reasons if no)
                                 Customtxtfeild(
                                   label: 'If no, please provide the reasons',
-                                  controller: reasonsController,
+                                  controller: vwscProvider.reasonsController,
                                 ),
 
                                 // Question 6
-                               CustomMultiSelectChipQuestion(
-                              question:
-                              "6. Whether piped water supply services available at institutions:",
-                              options: vwscProvider.institutionsOptions,
-                              selectedValues:
-                              vwscProvider.selectedinstitutions,
-                              onSelectionChanged: (val) {
-                                vwscProvider.selectedinstitutions = val;
-                                print(
-                                    'selectedinstitutionsselectedinstitutions------- ${vwscProvider.selectedinstitutions}');
+                                CustomMultiSelectChipQuestion(
+                                  question:
+                                  "6. Whether piped water supply services available at institutions:",
+                                  options: vwscProvider.institutionsOptions,
+                                  selectedValues:
+                                  vwscProvider.selectedinstitutions,
+                                  onSelectionChanged: (val) {
+                                    vwscProvider.selectedinstitutions = val;
+                                    print(
+                                        'selectedinstitutionsselectedinstitutions------- ${vwscProvider.selectedinstitutions}');
 
-                                setState(() {
-                                  vwscProvider.selectedinstitutions = val;
-                                });
-                              },
-                            ),
+                                    setState(() {
+                                      vwscProvider.selectedinstitutions = val;
+                                    });
+                                  },
+                                ),
 
 
 
@@ -270,33 +238,24 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                         ),
                                       ),
                                       onPressed: () async {
-                                      /*  LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Water Supply Functionality");
-
+                                        LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Water Supply Functionality");
 
                                         await vwscProvider.saveVwscWaterSupply(
-                                            userId: _localStorageService.getInt(
-                                                AppConstants.prefUserId)!,
+
+                                            userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                             stateId: vwscProvider.stateId!,
                                             villageId: vwscProvider.villageId!,
-                                            waterSupplyFrequency: vwscProvider
-                                                .selectedFTKTestingFrequencyId,
-                                            adequateWaterToHH: vwscProvider
-                                                .selectedHouseholdWaterId,
-                                            adequateWaterToRemote: vwscProvider
-                                                .selectedPvtgGroupsId,
-                                            remoteReason: vwscProvider
-                                                .reasonRemoteGroupsController
-                                                .text,
-                                            tailEndWaterReach:
-                                            vwscProvider.selectedTailEndId,
-                                            schemeOperationalStatus:
-                                            vwscProvider
-                                                .selectedschemeStatusId,
-                                            pwsReachInstitutions: vwscProvider
-                                                .selectedinstitutionsIds,
-                                            createdBy:
-                                            _localStorageService.getInt(
-                                                AppConstants.prefUserId)!);
+
+                                            waterSupplyFrequency: vwscProvider.selectedFTKTestingFrequencyId,
+                                            adequateWaterToHH: vwscProvider.selectedHouseholdWaterId,
+                                            adequateWaterToRemote: vwscProvider.selectedPvtgGroupsId,
+                                            remoteReason: vwscProvider.reasonRemoteGroupsController.text,
+                                            tailEndWaterReach: vwscProvider.selectedTailEndId,
+                                            schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
+                                            pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
+                                            createdBy: _localStorageService.getInt(AppConstants.prefUserId)!
+
+                                        );
                                         if (vwscProvider.status!) {
                                           ToastHelper.showToastMessage(
                                               vwscProvider.message!,
@@ -311,9 +270,9 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                           ToastHelper.showToastMessage(
                                               vwscProvider.message!,
                                               backgroundColor: Colors.red);
-                                        }*/
+                                        }
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "SAVE & NEXT",
                                         style: TextStyle(
                                           fontSize: 14,
