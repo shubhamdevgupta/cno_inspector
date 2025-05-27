@@ -29,8 +29,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args =
-          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
       if (args != null) {
         final schemeId = args['schemeId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -102,8 +101,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
           ),
           body: Consumer<Schemeprovider>(
             builder: (context, schemeProvider, child) {
-              final mode =
-                  Provider.of<AppStateProvider>(context, listen: false).mode;
+              final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
               return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(

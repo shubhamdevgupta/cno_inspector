@@ -182,36 +182,7 @@ class _PartDoperationandmaintenance
 
 
 
-                              //Below 10 % scheme
-                              Column(
-                                children: [
 
-                                  Customradiobttn(
-                                    question: "1. Who all are authorized to inspect, and measure works during field inspection?",
-                                    options: dwsmProvider.fieldinspectionMap.keys.toList(),
-                                    selectedOption: dwsmProvider.fieldinspection,
-                                    onChanged: (val) => dwsmProvider.fieldinspection = val,
-                                  ),
-
-
-                                  Customradiobttn(
-                                    question: "2. Is the commissioning protocol being proposed:",
-                                    options: dwsmProvider.yesNoMap.keys.toList(),
-                                    selectedOption: dwsmProvider.commisionprotocol,
-                                    onChanged: (val) => dwsmProvider.commisionprotocol = val,
-                                  ),
-
-                                  Customradiobttn(
-                                    question: "3. Has the district has hired any third-party inspection agencies on quality checks for JJM schemes?:",
-                                    options: dwsmProvider.yesNoMap.keys.toList(),
-                                    selectedOption: dwsmProvider.inspectionagencies,
-                                    onChanged: (val) => dwsmProvider.inspectionagencies = val,
-                                  ),
-
-
-
-                                ],
-                              ),
 
                               SizedBox(
                                 height: 10,

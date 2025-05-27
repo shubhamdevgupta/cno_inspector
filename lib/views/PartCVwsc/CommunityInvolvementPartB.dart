@@ -5,6 +5,7 @@ import 'package:cno_inspection/views/PartCVwsc/CommunityFeedbackPartC.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/vwscInfoProvider/VwscProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
@@ -101,6 +102,10 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
             elevation: 5,
           ),
           body: Consumer<Vwscprovider>(builder: (context, vwscProvider, child) {
+            final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+
+
+
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,17 +175,20 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
 
 
                               //TODO this question is not part of below 10%
-                              Customradiobttn(
-                                question:
-                                    "4. As-built Drawing of Pipelines available with GP office:",
-                                options: vwscProvider.yesNoMap.keys.toList(),
-                                selectedOption:
-                                    vwscProvider.selectedAsBuiltDrawing,
-                                onChanged: (val) {
-                                  vwscProvider.selectedAsBuiltDrawing = val;
-                                  print(
-                                      'selectedAsBuiltDrawingID------- ${vwscProvider.selectedAsBuiltDrawingID}');
-                                },
+                              Visibility(
+                                visible: mode == ProjectMode.above10,
+                                child: Customradiobttn(
+                                  question:
+                                      "4. As-built Drawing of Pipelines available with GP office:",
+                                  options: vwscProvider.yesNoMap.keys.toList(),
+                                  selectedOption:
+                                      vwscProvider.selectedAsBuiltDrawing,
+                                  onChanged: (val) {
+                                    vwscProvider.selectedAsBuiltDrawing = val;
+                                    print(
+                                        'selectedAsBuiltDrawingID------- ${vwscProvider.selectedAsBuiltDrawingID}');
+                                  },
+                                ),
                               ),
                               Customradiobttn(
                                 question:
