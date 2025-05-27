@@ -69,7 +69,7 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedFrequencyID => FrequencyLabels[_selectedFrequencyLabels] ?? 0;
+  int get selectedFrequencyID => FrequencyLabels[_selectedFrequencyLabels] ?? -1;
 
   // 4. Convert selected labels to their mapped integer values (for API)
 
@@ -77,7 +77,7 @@ class Vwscprovider extends ChangeNotifier {
   // question 2222222222222222
   final Map<String, int> yesNoMap = {
     "Yes": 1,
-    "No": 2,
+    "No": 0,
   };
 
   List<String> get yesNoOptions => yesNoMap.keys.toList();
@@ -95,7 +95,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedVWSCFormedID => yesNoMap[_selectedVWSCFormed] ?? 0;
+  int get selectedVWSCFormedID => yesNoMap[_selectedVWSCFormed] ?? -1;
 
   String? _selectedVWSCBankAccount; // Yes / No
 
@@ -107,7 +107,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedVWSCBankAccountID => yesNoMap[_selectedVWSCBankAccount] ?? 0;
+  int get selectedVWSCBankAccountID => yesNoMap[_selectedVWSCBankAccount] ?? -1;
 
   String? _selectedAsBuiltDrawing; // Yes / No
 
@@ -119,7 +119,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedAsBuiltDrawingID => yesNoMap[_selectedAsBuiltDrawing] ?? 0;
+  int get selectedAsBuiltDrawingID => yesNoMap[_selectedAsBuiltDrawing] ?? -1;
 
   String? _selectedVWSCMeetingConducted; // Yes / No
 
@@ -132,7 +132,7 @@ class Vwscprovider extends ChangeNotifier {
 
   //
   int get selectedVWSCMeetingConductedID =>
-      yesNoMap[_selectedVWSCMeetingConducted] ?? 0;
+      yesNoMap[_selectedVWSCMeetingConducted] ?? -1;
 
   TextEditingController FrequencyController = TextEditingController();
 
@@ -157,7 +157,7 @@ class Vwscprovider extends ChangeNotifier {
 
   //
   int get selectedVWSCInvolvementID =>
-      VwscGPInvolment[_selectedVWSCInvolvement] ?? 0;
+      VwscGPInvolment[_selectedVWSCInvolvement] ?? -1;
 
   String? _selectedVWSCRecordsAvailable; // Yes / No
 
@@ -170,7 +170,7 @@ class Vwscprovider extends ChangeNotifier {
 
   //
   int get selectedVWSCRecordsAvailableID =>
-      yesNoMap[_selectedVWSCRecordsAvailable] ?? 0;
+      yesNoMap[_selectedVWSCRecordsAvailable] ?? -1;
 
   String? _selectedVWSCOMInvolved; // Yes / No
 
@@ -190,7 +190,7 @@ class Vwscprovider extends ChangeNotifier {
 
   //
   int get selectedVWSCOMInvolvedID =>
-      VWSCOMInvolvedID[_selectedVWSCOMInvolved] ?? 0;
+      VWSCOMInvolvedID[_selectedVWSCOMInvolved] ?? -1;
 
   String? _selectedSchemeHandover; // Yes / No
 
@@ -211,7 +211,7 @@ class Vwscprovider extends ChangeNotifier {
 
   //
   int get selectedSchemeHandoverID =>
-      SchemeHandover[_selectedSchemeHandover] ?? 0;
+      SchemeHandover[_selectedSchemeHandover] ?? -1;
 
   String? _selectedOMArrangements; // Yes / No
 
@@ -233,7 +233,7 @@ class Vwscprovider extends ChangeNotifier {
 
   //
   int get selectedOMArrangementsID =>
-      OMArrangements[_selectedOMArrangements] ?? 0;
+      OMArrangements[_selectedOMArrangements] ?? -1;
 
   String? _selectedCommunityAwareness; // Yes / No
 
@@ -255,7 +255,7 @@ class Vwscprovider extends ChangeNotifier {
 
   //
   int get selectedCommunityAwarenessID =>
-      CommunityAwarenessID[_selectedCommunityAwareness] ?? 0;
+      CommunityAwarenessID[_selectedCommunityAwareness] ?? -1;
 
   String? _selectedVWSCMeetingFrequency; // Yes / No
 
@@ -275,7 +275,7 @@ class Vwscprovider extends ChangeNotifier {
   };
 
   int get selectedVWSCMeetingFrequencyID =>
-      VWSCMeetingFrequency[_selectedVWSCMeetingFrequency] ?? 0;
+      VWSCMeetingFrequency[_selectedVWSCMeetingFrequency] ?? -1;
 
   String? _selectedWaterQualitySatisfaction; // Yes / No
 
@@ -299,7 +299,7 @@ class Vwscprovider extends ChangeNotifier {
       WaterQualitySatisfaction.keys.toList();
 
   int get selectedWaterQualitySatisfactionID =>
-      WaterQualitySatisfaction[_selectedWaterQualitySatisfaction] ?? 0;
+      WaterQualitySatisfaction[_selectedWaterQualitySatisfaction] ?? -1;
 
   String? _selectedHouseholdWater;
 
@@ -311,7 +311,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   // Get mapped ID
-  int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? 0;
+  int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? -1;
 
   // question 2222222222222222
 
@@ -327,7 +327,7 @@ class Vwscprovider extends ChangeNotifier {
 
   TextEditingController reasonRemoteGroupsController = TextEditingController();
 
-  int get selectedPvtgGroupsId => yesNoMap[_selectedPvtgGroups] ?? 0;
+  int get selectedPvtgGroupsId => yesNoMap[_selectedPvtgGroups] ?? -1;
 
   // question 33333
 
@@ -350,7 +350,7 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedTailEndId => tailEndMap[_selectedTailEnd] ?? 0;
+  int get selectedTailEndId => tailEndMap[_selectedTailEnd] ?? -1;
 
   /// 4444444444
 
@@ -374,7 +374,7 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedschemeStatusId => schemeStatusMap[_selectedschemeStatus] ?? 0;
+  int get selectedschemeStatusId => schemeStatusMap[_selectedschemeStatus] ?? -1;
 
   //// ques 5555555555555555555
 
@@ -431,11 +431,11 @@ class Vwscprovider extends ChangeNotifier {
   String? get selectedOption5_belowPartA => _selectedOption5_belowPartA;
   String? get selectedOption6_belowPartA => _selectedOption6_belowPartA;
 
-  int get selectedOption1_belowPartAID => yesNoMap[_selectedOption1_belowPartA] ?? 0;
-  int get selectedOption2_belowPartAID => vwscBelowPartAQues2Map[_selectedOption2_belowPartA] ?? 0;
-  int get selectedOption3_belowPartAID => vwscBelowPartAQues3Map[_selectedOption3_belowPartA] ?? 0;
-  int get selectedOption5_belowPartAID => yesNoMap[_selectedOption5_belowPartA] ?? 0;
- int get selectedOption6_belowPartAID => yesNoMap[_selectedOption6_belowPartA] ?? 0;
+  int get selectedOption1_belowPartAID => yesNoMap[_selectedOption1_belowPartA] ?? -1;
+  int get selectedOption2_belowPartAID => vwscBelowPartAQues2Map[_selectedOption2_belowPartA] ?? -1;
+  int get selectedOption3_belowPartAID => vwscBelowPartAQues3Map[_selectedOption3_belowPartA] ?? -1;
+  int get selectedOption5_belowPartAID => yesNoMap[_selectedOption5_belowPartA] ?? -1;
+ int get selectedOption6_belowPartAID => yesNoMap[_selectedOption6_belowPartA] ?? -1;
 
   set selectedOption1_belowPartA(String? value) {
     _selectedOption1_belowPartA = value;
@@ -867,7 +867,7 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedFTKAvailabilityId => yesNoMap[_selectedFTKAvailability] ?? 0;
+  int get selectedFTKAvailabilityId => yesNoMap[_selectedFTKAvailability] ?? -1;
 
   // 2. FTK Testing Frequency
   String? _selectedFTKTestingFrequency;
@@ -880,7 +880,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   int get selectedFTKTestingFrequencyId =>
-      ftkTestingFrequencyMap[_selectedFTKTestingFrequency] ?? 0;
+      ftkTestingFrequencyMap[_selectedFTKTestingFrequency] ?? -1;
 
   // 3. Women Trained in FTK Testing
   TextEditingController womenTrainedController = TextEditingController();
@@ -899,7 +899,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   int get selectedDisinfectionDoneId =>
-      yesNoMap[_selectedDisinfectionDone] ?? 0;
+      yesNoMap[_selectedDisinfectionDone] ?? -1;
 
   // 6. FRC Level
   String? _selectedFRCLevel;
@@ -911,7 +911,7 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedFRCLevelId => frcLevelMap[_selectedFRCLevel] ?? 0;
+  int get selectedFRCLevelId => frcLevelMap[_selectedFRCLevel] ?? -1;
 
 
   //44
@@ -1048,7 +1048,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   int get selectedGrievanceMechanismId =>
-      yesNoMap[_selectedGrievanceMechanism] ?? 0;
+      yesNoMap[_selectedGrievanceMechanism] ?? -1;
 
 // 8. Grievance registration methods (multi-select)
   List<String> _selectedGrievanceMethods = [];
@@ -1062,7 +1062,7 @@ class Vwscprovider extends ChangeNotifier {
 
 // Expose selected IDs (mapped from selected labels)
   List<int> get selectedGrievanceMethodIds => _selectedGrievanceMethods
-      .map((e) => grievanceRegistrationMethodMap[e] ?? 0)
+      .map((e) => grievanceRegistrationMethodMap[e] ?? -1)
       .toList();
 
 // 9. Turn around time for grievance
@@ -1076,7 +1076,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   int get selectedTurnAroundTimeId =>
-      turnAroundTimeMap[_selectedTurnAroundTime] ?? 0;
+      turnAroundTimeMap[_selectedTurnAroundTime] ?? -1;
 
   //5
 
@@ -1185,7 +1185,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   int get selectedComplaintByCommunityId =>
-      complainByCommunityOptMap[_selectedComplaintByCommunity] ?? 0;
+      complainByCommunityOptMap[_selectedComplaintByCommunity] ?? -1;
 
   /// 11111111
 
@@ -1211,7 +1211,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   int get selectedWhereComplaintAddressOptId =>
-      whereComplaintAddressOptMap[_selectedWhereComplaintAddressOpt] ?? 0;
+      whereComplaintAddressOptMap[_selectedWhereComplaintAddressOpt] ?? -1;
 
   ///////////33333333333/////////////
 
