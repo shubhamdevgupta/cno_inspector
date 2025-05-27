@@ -60,19 +60,46 @@ class _DashboardTabViewState extends State<DashboardTabView>
     return Consumer<DashboardProvider>(
       builder: (context, provider, child) {
         return WillPopScope(
-          onWillPop: () async {
-            Navigator.pop(context);
+          onWillPop: () async {Navigator.pop(context);
             return false;
           },
           child: Scaffold(
             appBar: AppBar(
-              title: const Text("Dashboard"),
+              title: const Text("Dashboard",style: TextStyle(color: Colors.white),),
               backgroundColor: Colors.blue,
               bottom: TabBar(
                 controller: _tabController,
                 tabs: const [
-                  Tab(text: 'Below 10 Percent'),
-                  Tab(text: 'Above 10 Percent'),
+                  Tab(
+                    icon: Icon(
+                      Icons.arrow_downward,
+                      color: Colors.white, // Dark green for below 10%
+                    ),
+                    child: Text(
+                      'Below 10 Percent',
+                      style: TextStyle(
+                        color: Colors.white, // Dark green
+                        fontFamily: 'OpenSans',
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    icon: Icon(
+                      Icons.arrow_upward,
+                      color: Colors.white, // Blue for above 10%
+                    ),
+                    child: Text(
+                      'Above 10 Percent',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'OpenSans',
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ],
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.white70,

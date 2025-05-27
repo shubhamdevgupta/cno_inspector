@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await authProvider.checkLoginStatus();
     print("login statin-->>${authProvider.isLoggedIn}");
     if (authProvider.isLoggedIn) {
-      Navigator.pushReplacementNamed(context, AppConstants.navigateToDashboard);
+      Navigator.pushReplacementNamed(context, AppConstants.navigateToDashboardHome);
     } else {
       Navigator.pushReplacementNamed(context, AppConstants.navigateToLogin);
     }

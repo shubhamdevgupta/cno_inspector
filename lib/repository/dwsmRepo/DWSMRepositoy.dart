@@ -15,6 +15,7 @@ class DWSMRepositoy {
     required int numberOfMeetingsLast6Months,
     required int qualityOfMeeting,
     required int areCoordinationMeetingsRegular,
+    required int modeType,
   }) async {
     try {
       final response = await _apiService.post(
@@ -27,6 +28,7 @@ class DWSMRepositoy {
           "if_yes_no_of_dwsm_meetings_last_6_months": numberOfMeetingsLast6Months,
           "quality_of_meeting_and_record_maintenance": qualityOfMeeting,
           "are_dist_develop_coordinat_monitor_committee_meeting_regularly": areCoordinationMeetingsRegular,
+          "phy_status": modeType
         }),
       );
       return BaseResponse.fromJson(response);
@@ -44,6 +46,10 @@ class DWSMRepositoy {
     required int isRechargeStructureImplemented,
     required String reasonIfNotImplemented,
     required int areImpactStudiesConducted,
+    required int accrediteLabWaterQuality,
+    required String accrediteLabWaterQualityNoRemark,
+    required int modeType,
+
   }) async {
     try {
       final response = await _apiService.post(
@@ -57,6 +63,9 @@ class DWSMRepositoy {
           "is_at_least_one_recharge_structure_gw_source_implemented": isRechargeStructureImplemented,
           "if_no_least_one_recharge_structure_gw_source_implemented_reson": reasonIfNotImplemented,//have to be in string
           "are_any_impact_studies_assessments_conducted_source_sustain_efforts": areImpactStudiesConducted,
+          "Does_district_NABL_accredited_lab_water_quality":accrediteLabWaterQuality,
+          "Does_district_NABL_accredited_lab_water_quality_no_remark":accrediteLabWaterQualityNoRemark,
+          "phy_status":modeType
         }),
       );
       return BaseResponse.fromJson(response);
@@ -72,6 +81,7 @@ class DWSMRepositoy {
     required int areAssetsGeotagged,
     required int hasNABLLab,
     required String testingManagementDescription,
+    required int modeType
   }) async {
     try {
       final response = await _apiService.post(
@@ -83,6 +93,7 @@ class DWSMRepositoy {
           "are_water_supply_assets_geotagged": areAssetsGeotagged,
           "does_the_district_have_an_nabl_accredited_lab_equivalent": hasNABLLab,
           "if_no_how_is_testing_managed_description": testingManagementDescription,
+          "phy_status":modeType
         }),
       );
       return BaseResponse.fromJson(response);
@@ -90,6 +101,38 @@ class DWSMRepositoy {
       rethrow;
     }
   }
+
+  Future<BaseResponse> saveTecnoCommercialViabbility({
+    required int userId,
+    required int stateId,
+    required int districtId,
+    required String omCostScheme,
+    required String chargeStakeHolder,
+    required String remaningExpenses,
+    required String requiredOperation,
+    required int modeType,
+  }) async {
+    try {
+      final response = await _apiService.post(
+        '/CNOSurvey/Save_cno_dwsm_Techno_Commercial_Viability_insert_update',
+        body: jsonEncode({
+          "userid": userId,
+          "stateid": stateId,
+          "districtid": districtId,
+          "What_annual_OM_cost_scheme":omCostScheme,
+          "What_water_charges_stakeholders":chargeStakeHolder,
+          "What_State_plan_meeting_remaining_expenses":remaningExpenses,
+          "Expected_skilled_manpower_required_operations":requiredOperation,
+          "phy_status":modeType
+
+        }),
+      );
+      return BaseResponse.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 
   Future<BaseResponse> saveOperationMaintenance({
     required int userId,
@@ -101,6 +144,7 @@ class DWSMRepositoy {
     required int feeAmountPerMonth,
     required int isUniformFee,
     required double percentVillagesFeeCollected,
+    required int modeType
   }) async {
     try {
       final response = await _apiService.post(
@@ -115,6 +159,7 @@ class DWSMRepositoy {
           "fee_amount_per_month": feeAmountPerMonth,
           "is_it_uniform_based_on_consumption": isUniformFee,
           "per_of_villages_where_User_Fee_collected": percentVillagesFeeCollected,
+          "phy_status":modeType
         }),
       );
       return BaseResponse.fromJson(response);
@@ -131,6 +176,8 @@ class DWSMRepositoy {
     required int isCommissioningProtocolFollowed,
     required int schemesPresentDuringCommissioning,
     required int districtAssessmentAgencies,
+    required int districtHiredAgencies,
+    required int modeType,
   }) async {
     try {
       final response = await _apiService.post(
@@ -143,6 +190,8 @@ class DWSMRepositoy {
           "Is_commissioning_protocol_followed": isCommissioningProtocolFollowed,
           "During_commissioning_schemes_present": schemesPresentDuringCommissioning,
           "Has_district_undertaken_assessment_inspection_agencies": districtAssessmentAgencies,
+          "Has_distric_hired_third_party_inspection_agencies_JJM_schemes":districtHiredAgencies,
+          "phy_status":modeType
         }),
       );
       return BaseResponse.fromJson(response);
@@ -162,6 +211,7 @@ class DWSMRepositoy {
     required String otherComplaints,
     required int resolutionTime,
     required int actionTakenByDepartment,
+    required int modeType,
   }) async {
     try {
       final response = await _apiService.post(
@@ -177,6 +227,7 @@ class DWSMRepositoy {
           "yes_type_complaints_others": otherComplaints,
           "yes_type_complaints_others_What_average_time_resolution": resolutionTime,
           "yes_type_complaints_others_Action_taken_department": actionTakenByDepartment,
+          "phy_status":modeType
         }),
       );
       return BaseResponse.fromJson(response);

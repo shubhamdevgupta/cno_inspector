@@ -37,7 +37,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
 
       final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
 
-      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,1,mode.modeValue);
+      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,2,mode.modeValue);
       dwsmprovider = Provider.of<Dwsmprovider>(context, listen: false);
 
       //clear part a
@@ -61,6 +61,7 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
 
   @override
   Widget build(BuildContext context) {
+    final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -212,78 +213,168 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                         SizedBox(
                           height: 10,
                         ),
-                        buildSampleCard(
-                          qnumber: "C.",
-                          title: "Monitoring, Quality and Lab Infrastructure",
-                          color: Colors.deepOrangeAccent,
-                          onTap: () {
-                            // Your onTap logic
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToMonitoringQuality,
-                                arguments: {
-                                  'districtid':
-                                      dashboardProvider.selectedDwsmID,
-                                  'stateId': dashboardProvider
-                                      .dashboardList.first.stateId,
-                                });
-                          },
+
+
+
+
+
+                        Visibility(
+                          visible: mode == ProjectMode.above10,
+                          child: buildSampleCard(
+                            qnumber: "C.",
+                            title: "Monitoring, Quality and Lab Infrastructure",
+                            color: Colors.deepOrangeAccent,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToMonitoringQuality,
+                                  arguments: {
+                                    'districtid':
+                                        dashboardProvider.selectedDwsmID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
+                        ),
+
+
+                        Visibility(
+                          visible: mode == ProjectMode.below10,
+                          child: buildSampleCard(
+                            qnumber: "C.",
+                            title: "Techno-Commercial Viability",
+                            color: Colors.deepOrangeAccent,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToBelowPartCTechnoCommercialViability,
+                                  arguments: {
+                                    'districtid':
+                                        dashboardProvider.selectedDwsmID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
+                        ),
+
+
+                        SizedBox(
+                          height: 10,
+                        ),
+
+
+
+                        Visibility(
+                          visible: mode == ProjectMode.above10,
+                          child: buildSampleCard(
+                            qnumber: "D.",
+                            title: "Operation & Maintenance (O&M)",
+                            color: Colors.lightGreen,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToOperationandMaintance,
+                                  arguments: {
+                                    'districtid':
+                                        dashboardProvider.selectedDwsmID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        buildSampleCard(
-                          qnumber: "D.",
-                          title: "Operation & Maintenance (O&M)",
-                          color: Colors.lightGreen,
-                          onTap: () {
-                            // Your onTap logic
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToOperationandMaintance,
-                                arguments: {
-                                  'districtid':
-                                      dashboardProvider.selectedDwsmID,
-                                  'stateId': dashboardProvider
-                                      .dashboardList.first.stateId,
-                                });
-                          },
+
+
+
+                        Visibility(
+                          visible: mode == ProjectMode.above10,
+                          child: buildSampleCard(
+                            qnumber: "E.",
+                            title: "Quality Assurance and Commissioning",
+                            color: Colors.green,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToQualityAssurance,
+                                  arguments: {
+                                    'districtid':
+                                        dashboardProvider.selectedDwsmID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
+                        ),
+
+
+
+                        Visibility(
+                          visible: mode == ProjectMode.below10,
+                          child: buildSampleCard(
+                            qnumber: "D",
+                            title: "Quality Assurance and Commissioning",
+                            color: Colors.green,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToQualityAssurance,
+                                  arguments: {
+                                    'districtid':
+                                        dashboardProvider.selectedDwsmID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        buildSampleCard(
-                          qnumber: "E.",
-                          title: "Quality Assurance and Commissioning",
-                          color: Colors.green,
-                          onTap: () {
-                            // Your onTap logic
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToQualityAssurance,
-                                arguments: {
-                                  'districtid':
-                                      dashboardProvider.selectedDwsmID,
-                                  'stateId': dashboardProvider
-                                      .dashboardList.first.stateId,
-                                });
-                          },
+
+
+                        Visibility(
+                          visible: mode == ProjectMode.above10,
+                          child: buildSampleCard(
+                            qnumber: "F.",
+                            title: "Public Complaints and Grievance Redressal",
+                            color: Colors.deepPurpleAccent,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToPartFPublicCompliant,
+                                  arguments: {
+                                    'districtid':
+                                        dashboardProvider.selectedDwsmID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        buildSampleCard(
-                          qnumber: "F.",
-                          title: "Public Complaints and Grievance Redressal",
-                          color: Colors.deepPurpleAccent,
-                          onTap: () {
-                            // Your onTap logic
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToPartFPublicCompliant,
-                                arguments: {
-                                  'districtid':
-                                      dashboardProvider.selectedDwsmID,
-                                  'stateId': dashboardProvider
-                                      .dashboardList.first.stateId,
-                                });
-                          },
+
+                        Visibility(
+                          visible: mode == ProjectMode.below10,
+                          child: buildSampleCard(
+                            qnumber: "E.",
+                            title: "Public Complaints and Grievance Redressal",
+                            color: Colors.deepPurpleAccent,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToPartFPublicCompliant,
+                                  arguments: {
+                                    'districtid':
+                                        dashboardProvider.selectedDwsmID,
+                                    'stateId': dashboardProvider
+                                        .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
                         ),
                       ],
                     )

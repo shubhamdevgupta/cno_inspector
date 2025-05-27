@@ -20,6 +20,7 @@ class AppConstants {
 
 
   static const String navigateToDashboard = '/dashboard';
+  static const String navigateToDashboardHome = '/dashboardHome';
   static const String navigateToLogin = '/login';
   static const String navigateSchemePlanningScreen = '/SchemePlanning';
 
@@ -47,6 +48,10 @@ class AppConstants {
   static const String navigateToPartFPublicCompliant = '/PartFPublicCompliant';
 
 
+  static const String navigateToBelowPartCTechnoCommercialViability = '/BelowPartCTechnoCommercialViability';
+  static const String navigateToBelowPartAWaterSupplyFunctionality= '/BelowPartAWaterSupplyFunctionality';
+
+
   ////vwsc
   static const String navigateToDashboardVWSC = '/dashboardVWSC';
   static const String navigateToWaterSupplyPartA = '/watersupplyA';
@@ -54,5 +59,12 @@ class AppConstants {
   static const String navigateToCommunityFeedbackPartC  = '/dashboardcommunityinvolmentpartC';
   static const String navigateToQulityPartD = '/dashboardqualitypartD';
   static const String navigateToGrievancePartE = '/dashboardgrivenaceE';
+
+  ////
+  static const String BelowDWSMPartEQ3 = '3. Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?';
+  static const String AboveDWSMPartEQ3 = '4. Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?';
+  static const String BelowVWS8CPartBQ4 = '4. Whether meetings of VWSC are conducted in a periodic manner?';
+  static const String AboveVWSCPartBQ4 = '5. Whether meetings of VWSC are conducted in a periodic manner?';
+
 
 }

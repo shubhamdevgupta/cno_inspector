@@ -2,6 +2,7 @@ import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/schemeInfoProvider/SchemeProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
@@ -113,6 +114,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
           ),
           body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
             return Stack(
               children: [
                 SingleChildScrollView(
@@ -146,9 +148,9 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
+// Above 10 % Start
                                 Visibility(
-                                    visible: schemeProvider.formType == 1,
+                visible: mode==ProjectMode.above10,
                                     child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
@@ -352,9 +354,10 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                           ),
                                         ]
                                     )),
-
+// Above 10% End
+                                // Below 10 % Start
                                 Visibility(
-                                    visible: schemeProvider.formType == 2,
+                                    visible: mode==ProjectMode.below10,
                                     child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
@@ -530,99 +533,40 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
 
                                         await schemeProvider
                                             .saveSchemeImplementation(
-                                          userId: _localStorageService
-                                              .getInt(AppConstants.prefUserId)!,
+                                          userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                           stateId: schemeProvider.stateId!,
                                           schemeId: schemeProvider.schemeId!,
-                                          costOverrun: schemeProvider
-                                              .selectedCostOverrunID,
-                                          costRevisedBeforeWork: schemeProvider
-                                              .selectedrevisedCostApprovedID,
-                                          revisedCostPercentage: schemeProvider
-                                              .selectedincreaseInCostID,
-                                          slsscDate:
-                                              schemeProvider.dateApproval ?? "",
-                                          intakeTubeWellNum:
-                                              schemeProvider.intakeTubeWellNum,
-                                          intakeTubeWellCost: double.tryParse(
-                                                  schemeProvider
-                                                          .costControllers[
-                                                              'Intake/Tubewell']
-                                                          ?.text ??
-                                                      '') ??
-                                              0.0,
-                                          electroMechanicalNum: schemeProvider
-                                              .electroMechanicalNum,
-                                          electroMechanicalCost:
-                                              double.tryParse(schemeProvider
-                                                          .costControllers[
-                                                              'Electromechanical components']
-                                                          ?.text ??
-                                                      '') ??
-                                                  0.0,
+                                          costOverrun: schemeProvider.selectedCostOverrunID,
+                                          costRevisedBeforeWork: schemeProvider.selectedrevisedCostApprovedID,
+                                          revisedCostPercentage: schemeProvider.selectedincreaseInCostID,
+                                          slsscDate: schemeProvider.dateApproval ?? "",
+                                          intakeTubeWellNum: schemeProvider.intakeTubeWellNum,
+                                          intakeTubeWellCost: double.tryParse(schemeProvider.costControllers['Intake/Tubewell']?.text ?? '') ?? 0.0,
+                                          electroMechanicalNum: schemeProvider.electroMechanicalNum,
+                                          electroMechanicalCost: double.tryParse(schemeProvider.costControllers['Electromechanical components']?.text ?? '') ?? 0.0,
                                           wtpNum: 1,
-                                          wtpCost: double.parse(schemeProvider
-                                                  .costControllers['WTP']
-                                                  ?.text ??
-                                              ''),
+                                          wtpCost: double.tryParse(schemeProvider.costControllers['WTP']?.text ?? '')??0.0,
                                           mbrNum: 2,
-                                          mbrCost: double.parse(schemeProvider
-                                                  .costControllers['MBR']
-                                                  ?.text ??
-                                              ''),
+                                          mbrCost: double.tryParse(schemeProvider.costControllers['MBR']?.text ?? '')??0.0,
                                           transmissionPipelineNum: 3,
-                                          transmissionPipelineCost:
-                                              double.parse(schemeProvider
-                                                      .costControllers[
-                                                          'Transmission pipeline']
-                                                      ?.text ??
-                                                  ''),
+                                          transmissionPipelineCost: double.tryParse(schemeProvider.costControllers['Transmission pipeline']?.text ?? '')??0.0,
                                           distributionPipelineNum: 4,
-                                          distributionPipelineCost:
-                                              double.parse(schemeProvider
-                                                      .costControllers[
-                                                          'Distribution pipeline']
-                                                      ?.text ??
-                                                  ''),
+                                          distributionPipelineCost: double.tryParse(schemeProvider.costControllers['Distribution pipeline']?.text ?? '')??0.0,
                                           disinfectionUnitNum: 5,
-                                          disinfectionUnitCost: double.parse(
-                                              schemeProvider
-                                                      .costControllers[
-                                                          'OHSR/ESR/OHT/GSR']
-                                                      ?.text ??
-                                                  ''),
+                                          disinfectionUnitCost: double.tryParse(schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ??'')??0.0,
                                           ohtNum: 6,
-                                          ohtCost: double.parse(schemeProvider
-                                                  .costControllers[
-                                                      'Disinfection unit']
-                                                  ?.text ??
-                                              ''),
+                                          ohtCost: double.tryParse(schemeProvider.costControllers['Disinfection unit']?.text ?? '')??0.0,
                                           iotNum: 7,
-                                          iotCost: double.parse(schemeProvider
-                                                  .costControllers['IoT/SCADA']
-                                                  ?.text ??
-                                              ''),
+                                          iotCost: double.tryParse(schemeProvider.costControllers['IoT/SCADA']?.text ?? '')??0.0,
                                           roadRestorationNum: 8,
-                                          roadRestorationCost: double.parse(
-                                              schemeProvider
-                                                      .costControllers[
-                                                          'Road Restoration']
-                                                      ?.text ??
-                                                  ''),
+                                          roadRestorationCost: double.tryParse(
+                                              schemeProvider.costControllers['Road Restoration']?.text ?? '')??0.0,
                                           solarComponentNum: 9,
-                                          solarComponentCost: double.parse(
-                                              schemeProvider
-                                                      .costControllers[
-                                                          'Solar components']
-                                                      ?.text ??
-                                                  ''),
+                                          solarComponentCost: double.tryParse(
+                                              schemeProvider.costControllers['Solar components']?.text ?? '')??0.0,
                                           otherComponentsNum: 10,
-                                          otherComponentsCost: double.parse(
-                                              schemeProvider
-                                                      .costControllers[
-                                                          'Others (DG sets, HH storage)']
-                                                      ?.text ??
-                                                  ''),
+                                          otherComponentsCost: double.tryParse(
+                                              schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '')??0.0,
                                           plannedPTGatiShaktiWTP:
                                               schemeProvider.selectedWTPID,
                                           plannedPTGatiShaktiOHT:
@@ -637,6 +581,14 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                               .selectedcostOverrunReasonsID,
                                           costRevisionReasons: schemeProvider
                                               .selectedrevisionReasonsID,
+
+                                         txtcost_levelzed_cost_cr : 0.00,
+                                         is_tpia_engaged_value : schemeProvider.selectedId_partE5,
+                                         concurrent_supervission_scope_value : schemeProvider.selectedId_partE7,
+                                         txtpws_status_under_scheme : schemeProvider.below10PartD_ques8_Controller.text,
+                                         phy_status :mode.modeValue ,
+
+
                                         );
 
                                         if (schemeProvider.status!) {

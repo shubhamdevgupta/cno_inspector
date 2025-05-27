@@ -22,6 +22,8 @@ class AboveTenPercentTab extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
+
+
               DashboardCard(
                 title: "Scheme Inspection Form",
                 baselineStatus: "Total Schemes \n$totalSchemes",
@@ -32,7 +34,12 @@ class AboveTenPercentTab extends StatelessWidget {
                     arguments: {'source': "10"},
                   );
                 },
+                primaryColor: Colors.blue,
+                accentColor: Colors.blue.shade50,
+                imagePath: "assets/icons/water-supply.png",
               ),
+
+
               DashboardCard(
                 title: "Interaction with DWSM",
                 baselineStatus: "Total Districts \n$totalDistricts",
@@ -43,7 +50,11 @@ class AboveTenPercentTab extends StatelessWidget {
                     arguments: {'source': "10"},
                   );
                 },
+                primaryColor: Colors.deepOrangeAccent,
+                accentColor: Colors.orange.shade50,
+                imagePath: "assets/icons/sanitizer.png",
               ),
+
               DashboardCard(
                 title: "Interaction with VWSC",
                 baselineStatus: "Total VWSC \n$totalVillages",
@@ -54,6 +65,9 @@ class AboveTenPercentTab extends StatelessWidget {
                     arguments: {'source': "10"},
                   );
                 },
+                primaryColor: Colors.green,
+                accentColor: Colors.lightGreen.shade50,
+                imagePath: "assets/icons/village.png",
               ),
             ],
           ),

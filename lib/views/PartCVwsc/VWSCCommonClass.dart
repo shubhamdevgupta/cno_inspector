@@ -1,11 +1,14 @@
 
+import 'package:cno_inspection/provider/AppStateProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/Appcolor.dart';
 import 'CommunityFeedbackPartC.dart';
 import 'CommunityInvolvementPartB.dart';
 import 'GrievancePartE.dart';
+import 'PartA_below_WaterSupply.dart';
 import 'WaterQualityPartD.dart';
 import 'WaterSupplyPartA.dart';
 
@@ -99,12 +102,26 @@ class PointsAndLines extends StatelessWidget {
 
 
   Widget _buildPoint(BuildContext context, String title, bool done) {
+    final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
     return GestureDetector(
       onTap: () {
-        if (title == "A") {
+
+
+        if (title == "A" && mode == ProjectMode.below10) {
+
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => PartaBelowWatersupply()),
+          );
+
+
+        }
+        if (title == "A" && mode == ProjectMode.above10) {
+
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (_) => WaterSupplyPartA()),
           );
+
+
         }
         if (title == "B") {
           Navigator.of(context).pushReplacement(

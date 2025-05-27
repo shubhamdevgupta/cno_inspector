@@ -4,6 +4,7 @@ import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
@@ -108,7 +109,8 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
             ),
             body:
                 Consumer<Dwsmprovider>(builder: (context, dwsmProvider, child) {
-              return SingleChildScrollView(
+                  final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+                  return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
                       top: 20, left: 6, right: 6, bottom: 5),
@@ -224,7 +226,9 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                               qualityOfMeeting: dwsmProvider
                                                   .selectedMeetingQualityID,
                                               areCoordinationMeetingsRegular:
-                                                  dwsmProvider.selectedDISHAID);
+                                                  dwsmProvider.selectedDISHAID,
+                                            modeType: mode.modeValue
+                                      );
 
                                       if (dwsmProvider.status!) {
                                         ToastHelper.showToastMessage(

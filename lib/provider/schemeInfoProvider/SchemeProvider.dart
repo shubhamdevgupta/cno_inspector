@@ -14,8 +14,6 @@ class Schemeprovider extends ChangeNotifier {
   final SchemeRepositoy _schemeRepositoy = SchemeRepositoy();
   final Fetchschemeinfo _fetchschemeinfo = Fetchschemeinfo();
 
-  int formType = 2; // suppose 1 = above 10
-
   String errorMsg = '';
 
 
@@ -337,10 +335,16 @@ class Schemeprovider extends ChangeNotifier {
     required String terrainSoil,
     required int foundAsPerDPR,
     required String deviation,
+
+    required String reason_not_awarded_scheme_planning,
+    required String work_awarded_no_physical_progress,
+    required String multiple_schemes_sanctioned_justify_detial,
+    required String desgined_conjunctive_detail,
+    required int phy_status ,
+
   }) async {
     _isLoading = true;
     notifyListeners();
-
     try {
       final response = await _schemeRepositoy.saveSchemePlanning(
         userId: userId,
@@ -357,6 +361,13 @@ class Schemeprovider extends ChangeNotifier {
         terrainSoil: terrainSoil,
         foundAsPerDPR: foundAsPerDPR,
         deviation: deviation,
+
+
+        reason_not_awarded_scheme_planning:reason_not_awarded_scheme_planning,
+        work_awarded_no_physical_progress:work_awarded_no_physical_progress,
+        multiple_schemes_sanctioned_justify_detial:multiple_schemes_sanctioned_justify_detial,
+        desgined_conjunctive_detail:desgined_conjunctive_detail,
+        phy_status: phy_status ,
       );
 
       _message = response.message;
@@ -461,6 +472,12 @@ class Schemeprovider extends ChangeNotifier {
     soilPipeMaterialController.clear();
     deviationReasonController.clear();
 
+
+    schemePlanning_Question1Controller.clear() ;
+    schemePlanning_Question2Controller.clear() ;
+    schemePlanning_Question5Controller.clear();
+    schemePlanning_Question6Controller.clear();
+
     notifyListeners();
   }
 
@@ -485,6 +502,7 @@ class Schemeprovider extends ChangeNotifier {
       TextEditingController();
   final TextEditingController wtpCapacityMldController =
       TextEditingController();
+
   final TextEditingController storageStructureDetailsController =
       TextEditingController();
 
@@ -532,6 +550,7 @@ class Schemeprovider extends ChangeNotifier {
     required int buildDrawingAvailable,
     required int onPMGati,
     required String noReason,
+    required int phyStatus,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -552,6 +571,7 @@ class Schemeprovider extends ChangeNotifier {
         buildDrawingAvailable: buildDrawingAvailable,
         onPMGati: onPMGati,
         noReason: noReason,
+        phy_status: phyStatus
       );
 
       _message = response.message;
@@ -974,6 +994,13 @@ class Schemeprovider extends ChangeNotifier {
     required List<int> delayReasons,
     required List<int> costOverrunReasons,
     required List<int> costRevisionReasons,
+
+
+    required double txtcost_levelzed_cost_cr,
+    required int    is_tpia_engaged_value,
+    required int    concurrent_supervission_scope_value,
+    required String txtpws_status_under_scheme,
+    required int    phy_status,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1018,6 +1045,13 @@ class Schemeprovider extends ChangeNotifier {
         delayReasons: delayReasons,
         costOverrunReasons: costOverrunReasons,
         costRevisionReasons: costRevisionReasons,
+
+
+        txtcost_levelzed_cost_cr:txtcost_levelzed_cost_cr,
+        is_tpia_engaged_value:is_tpia_engaged_value,
+        concurrent_supervission_scope_value:concurrent_supervission_scope_value,
+        txtpws_status_under_scheme:txtpws_status_under_scheme,
+        phy_status:phy_status,
       );
 
       _message = response.message;
@@ -1063,6 +1097,13 @@ class Schemeprovider extends ChangeNotifier {
     selectedOHSR = null;
     selecteSource = null;
     selectedPipeline = null;
+
+
+
+    setQuesPartE5=null;
+    setQuesPartE7=null;;
+  below10PartD_ques8_Controller.clear();
+
 
     notifyListeners(); // if inside a provider
   }
@@ -1747,11 +1788,11 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedId_partE4 => yesNoMap[_quesPartE4] ?? 0;
 
-  int get selectedId_partE5 => yesNoMap[_quesPartE5] ?? 0;
+  int get selectedId_partE5 => yesNoMap[_quesPartE5] ?? 0;  // this is in D part of Below 10 % too
 
   int get selectedId_partE6 => yesNoMap[_quesPartE6] ?? 0;
 
-  int get selectedId_partE7 => yesNoMap[_quesPartE7] ?? 0;
+  int get selectedId_partE7 => yesNoMap[_quesPartE7] ?? 0; // this is in D part of Below 10 % too
 
   int get selectedId_partE8 => yesNoMap[_quesPartE8] ?? 0;
 
