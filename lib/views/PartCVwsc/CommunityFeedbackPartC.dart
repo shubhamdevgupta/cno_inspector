@@ -3,6 +3,7 @@ import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/vwscInfoProvider/VwscProvider.dart';
 import '../../services/LocalStorageService.dart';
 import '../../utils/AppConstants.dart';
@@ -26,7 +27,7 @@ class CommunityFeedbackPartC extends StatefulWidget {
 }
 
 class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
-  TextEditingController othersComplaintController = TextEditingController();
+
   final LocalStorageService _localStorage = LocalStorageService();
 
   @override
@@ -121,6 +122,8 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
             ),
             body: Consumer<Vwscprovider>(
               builder: (context, vwscProvider, child) {
+
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return Stack(
                   children: [
                     SingleChildScrollView(
@@ -195,8 +198,7 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                             Customtxtfeild(
                                               label:
                                                   "Please specify other complaints:",
-                                              controller:
-                                                  othersComplaintController,
+                                              controller: vwscProvider.othersComplaintController,
                                               maxLines: 2,
                                             ),
                                         ],
@@ -232,22 +234,19 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                                 LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Community feedback on quality of construction");
 
                                                 await vwscProvider.saveCommunityFeedback(
-                                                    userId: _localStorage.getInt(
-                                                        AppConstants.prefUserId)!,
-                                                    stateId:
-                                                        vwscProvider.stateId!,
-                                                    villageId:
-                                                        vwscProvider.villageId!,
-                                                    anyComplaintByCommunity:
-                                                        vwscProvider
-                                                            .selectedComplaintByCommunityId,
-                                                    isComplaintAddressed: vwscProvider
-                                                        .selectedWhereComplaintAddressOptId,
-                                                    complaintType: vwscProvider
-                                                        .selectedTypeOfComplaintIds,
-                                                    createdBy: _localStorage
-                                                        .getInt(AppConstants
-                                                            .prefUserId)!);
+                                                  userId: _localStorage.getInt(AppConstants.prefUserId)!,
+                                                  stateId: vwscProvider.stateId!,
+                                                  villageId: vwscProvider.villageId!,
+                                                  anyComplaintByCommunity: vwscProvider.selectedComplaintByCommunityId,
+                                                  isComplaintAddressed: vwscProvider.selectedWhereComplaintAddressOptId,
+                                                  complaintType: vwscProvider.selectedTypeOfComplaintIds,
+
+                                                  typeComplaintOther: vwscProvider.othersComplaintController.text,
+                                                  phyStatus:  mode.modeValue ,
+                                                  observationCommunityFeedbackQualityConstruction: "",
+                                                  createdBy: _localStorage.getInt(AppConstants.prefUserId)!,
+                                                );
+
                                                 if (vwscProvider.status!) {
                                                   ToastHelper.showToastMessage(
                                                       vwscProvider.message!,

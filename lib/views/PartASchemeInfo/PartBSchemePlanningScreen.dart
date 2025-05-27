@@ -116,7 +116,8 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
             ),
             body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
-                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;return SingleChildScrollView(
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+                return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
                         top: 20, left: 6, right: 6, bottom: 5),

@@ -811,6 +811,9 @@ class Vwscprovider extends ChangeNotifier {
     required int anyComplaintByCommunity,
     required int isComplaintAddressed,
     required List<int> complaintType,
+    required String typeComplaintOther,
+    required int phyStatus,
+    required String observationCommunityFeedbackQualityConstruction,
     required int createdBy,
   }) async {
     _isLoading = true;
@@ -824,6 +827,9 @@ class Vwscprovider extends ChangeNotifier {
         anyComplaintByCommunity: anyComplaintByCommunity,
         isComplaintAddressed: isComplaintAddressed,
         complaintType: complaintType,
+        typeComplaintOther: typeComplaintOther,
+        phyStatus: phyStatus,
+        observationCommunityFeedbackQualityConstruction: observationCommunityFeedbackQualityConstruction,
         createdBy: createdBy,
       );
       _message = response.message;
@@ -835,6 +841,7 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 
   Map<String, int> ftkTestingFrequencyMap = {
     'Regularly tested': 1,
@@ -981,6 +988,8 @@ class Vwscprovider extends ChangeNotifier {
     required String whoTestFtk,
     required int isChlorinationDone,
     required int frcAvailableAtEnd,
+    required int phyStatus,
+    required String observationWaterQualityMonitoring,
     required int createdBy,
   }) async {
     _isLoading = true;
@@ -997,6 +1006,8 @@ class Vwscprovider extends ChangeNotifier {
         whoTestFtk: whoTestFtk,
         isChlorinationDone: isChlorinationDone,
         frcAvailableAtEnd: frcAvailableAtEnd,
+        phyStatus: phyStatus,
+        observationWaterQualityMonitoring: observationWaterQualityMonitoring,
         createdBy: createdBy,
       );
 
@@ -1009,6 +1020,7 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 
   Map<String, int> turnAroundTimeMap = {
     'Same day': 1,
@@ -1122,6 +1134,8 @@ class Vwscprovider extends ChangeNotifier {
     required int grievanceMechanismAvailable,
     required int grievanceTurnAroundTime,
     required List<int> registrationTypes,
+    required String observationGrievanceRedressal, // NEW
+    required int phyStatus, // NEW
     required int createdBy,
   }) async {
     _isLoading = true;
@@ -1135,8 +1149,11 @@ class Vwscprovider extends ChangeNotifier {
         grievanceMechanismAvailable: grievanceMechanismAvailable,
         grievanceTurnAroundTime: grievanceTurnAroundTime,
         registrationTypes: registrationTypes,
+        observationGrievanceRedressal: observationGrievanceRedressal, // NEW
+        phyStatus: phyStatus, // NEW
         createdBy: createdBy,
       );
+
       _status = response.status;
       _message = response.message;
     } catch (e) {
@@ -1146,6 +1163,7 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 
   ///// ques c 1111111
   final Map<String, int> complainByCommunityOptMap = {
@@ -1219,6 +1237,10 @@ class Vwscprovider extends ChangeNotifier {
     _typeOfComplaintLabels = values;
     notifyListeners();
   }
+
+  //other case
+
+  TextEditingController othersComplaintController = TextEditingController();
 
   // 4. Convert selected labels to their mapped integer values (for API)
   List<int> get selectedTypeOfComplaintIds => _typeOfComplaintLabels

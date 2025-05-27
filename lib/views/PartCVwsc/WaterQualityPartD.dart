@@ -210,12 +210,22 @@ void initState() {
                                       onPressed: () async{
                                          LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading,message: "Saving Water Quality Monitoring");
 
-                                        await vwscProvider.saveWaterQualityMonitoring(userId:_localStorageService.getInt(AppConstants.prefUserId)!, stateId: vwscProvider.stateId!,
-                                            villageId: vwscProvider.villageId!, isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,
-                                            ftkTestingPeriod: vwscProvider.selectedFTKTestingFrequencyId, numberWomenTrainedFtk: int.parse(vwscProvider.womenTrainedController.text),
-                                            whoTestFtk: vwscProvider.testerNameController.text, isChlorinationDone: vwscProvider.selectedDisinfectionDoneId,
-                                            frcAvailableAtEnd: vwscProvider.selectedFRCLevelId, createdBy: _localStorageService.getInt(AppConstants.prefUserId)!);
-                                        if(vwscProvider.status!){
+                                         await vwscProvider.saveWaterQualityMonitoring(
+                                           userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                           stateId: vwscProvider.stateId!,
+                                           villageId: vwscProvider.villageId!,
+                                           isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,
+                                           ftkTestingPeriod: vwscProvider.selectedFTKTestingFrequencyId,
+                                           numberWomenTrainedFtk: int.parse(vwscProvider.womenTrainedController.text),
+                                           whoTestFtk: vwscProvider.testerNameController.text,
+                                           isChlorinationDone: vwscProvider.selectedDisinfectionDoneId,
+                                           frcAvailableAtEnd: vwscProvider.selectedFRCLevelId,
+                                           phyStatus: mode.modeValue,
+                                           observationWaterQualityMonitoring: "",
+                                           createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                         );
+
+                                         if(vwscProvider.status!){
                                           ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.green);
                                           Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(

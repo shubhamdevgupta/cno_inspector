@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
@@ -109,6 +110,7 @@ class _GrievancePartE extends State<GrievancePartE> {
             ),
             body: Consumer<Vwscprovider>(
               builder: (context, vwscProvider, child) {
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     child: Column(
@@ -201,21 +203,17 @@ class _GrievancePartE extends State<GrievancePartE> {
                                               isLoading: vwscProvider.isLoading,
                                               message: "Grievance Redressal");
                                           await vwscProvider.saveGrievanceRedressal(
-                                              userId: _localStorageService.getInt(
-                                                  AppConstants.prefUserId)!,
-                                              stateId: vwscProvider.stateId!,
-                                              villageId: vwscProvider.villageId!,
-                                              grievanceMechanismAvailable:
-                                                  vwscProvider
-                                                      .selectedGrievanceMechanismId,
-                                              grievanceTurnAroundTime:
-                                                  vwscProvider
-                                                      .selectedTurnAroundTimeId,
-                                              registrationTypes: vwscProvider
-                                                  .selectedGrievanceMethodIds,
-                                              createdBy:
-                                                  _localStorageService.getInt(
-                                                      AppConstants.prefUserId)!);
+                                            userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                            stateId: vwscProvider.stateId!,
+                                            villageId: vwscProvider.villageId!,
+                                            grievanceMechanismAvailable: vwscProvider.selectedGrievanceMechanismId,
+                                            grievanceTurnAroundTime: vwscProvider.selectedTurnAroundTimeId,
+                                            registrationTypes: vwscProvider.selectedGrievanceMethodIds,
+                                            observationGrievanceRedressal: "", // NEW
+                                            phyStatus: mode.modeValue, // NEW
+                                            createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                          );
+
                                           if (vwscProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 vwscProvider.message!,

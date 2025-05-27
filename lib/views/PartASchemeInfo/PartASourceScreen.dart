@@ -283,12 +283,8 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                               criticalZoneVillages: int.parse(
                                                   schemeProvider
                                                       .criticalController.text),
-                                              semiCriticalZoneVillages: int.parse(
-                                                  schemeProvider
-                                                      .semiCriticalController
-                                                      .text),
-                                              groundWaterAnalysisConducted:
-                                                  schemeProvider.selectedValueQ3Id,
+                                              semiCriticalZoneVillages: int.parse(schemeProvider.semiCriticalController.text),
+                                              groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id,
                                               waterAllocationFromWRD: int.parse(schemeProvider.waterAllocationController.text),
                                               alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text,
                                               repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text,

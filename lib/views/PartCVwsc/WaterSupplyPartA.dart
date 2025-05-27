@@ -5,6 +5,7 @@ import 'package:cno_inspection/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
@@ -110,6 +111,8 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
             ),
             body: Consumer<Vwscprovider>(
               builder: (context, vwscProvider, child) {
+
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -247,9 +250,19 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                               tailEndWaterReach: vwscProvider.selectedTailEndId,
                                               schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
                                               pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
-                                              createdBy: _localStorageService.getInt(AppConstants.prefUserId)!
+                                              createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
 
-                                              // new parameter
+                                            // New parameters
+                                            phyStatus: mode.modeValue ,
+                                            isPipedWaterSupplyScheme:-1,
+                                            typeOfSchemeCommissioned: 0,
+                                            schemeBeneficiaryHouseholds:"",
+                                            presentStatusOfWaterSupplySchemes: 0,
+                                            waterSupplyFrequencyAssured: 0,
+                                            remoteGroupsPlanned: -1,
+                                            remoteGroupsPlannedDetails: "",
+                                            //TODO feedback
+                                            observationWaterSupplyFunctionality: "",
 
 
 

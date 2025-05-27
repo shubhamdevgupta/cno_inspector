@@ -5,6 +5,7 @@ import 'package:cno_inspection/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customradiobttn.dart';
@@ -110,6 +111,8 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
             ),
             body: Consumer<Vwscprovider>(
               builder: (context, vwscProvider, child) {
+
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -245,22 +248,31 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
 
 
                                           await vwscProvider.saveVwscWaterSupply(
-                                              userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                              stateId: vwscProvider.stateId!,
-                                              villageId: vwscProvider.villageId!, waterSupplyFrequency: vwscProvider.selectedFTKTestingFrequencyId,
-                                              adequateWaterToHH: vwscProvider.selectedHouseholdWaterId,
-                                              adequateWaterToRemote: vwscProvider.selectedPvtgGroupsId,
-                                              remoteReason: vwscProvider.reasonRemoteGroupsController.text,
-                                              tailEndWaterReach: vwscProvider.selectedTailEndId,
-                                              schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
-                                              pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
-                                              createdBy: _localStorageService.getInt(AppConstants.prefUserId)!
+                                            userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                            stateId: vwscProvider.stateId!,
+                                            villageId: vwscProvider.villageId!,
+                                            waterSupplyFrequency: 0,
+                                            adequateWaterToHH: -1,
+                                            adequateWaterToRemote: -1,
+                                            remoteReason: "",
+                                            tailEndWaterReach: 0,
+                                            schemeOperationalStatus: 0,
+                                            pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
+                                            createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
 
-                                            // new parameter
-
-
-
+                                            // New parameters
+                                            phyStatus: mode.modeValue,
+                                            isPipedWaterSupplyScheme: vwscProvider.selectedOption1_belowPartAID,
+                                            typeOfSchemeCommissioned: vwscProvider.selectedOption2_belowPartAID,
+                                            schemeBeneficiaryHouseholds: vwscProvider.householdPercentageController.text,
+                                            presentStatusOfWaterSupplySchemes: vwscProvider.selectedOption3_belowPartAID,
+                                            waterSupplyFrequencyAssured: vwscProvider.selectedFrequencyID,
+                                            remoteGroupsPlanned: vwscProvider.selectedOption5_belowPartAID,
+                                            remoteGroupsPlannedDetails: vwscProvider.reasonsController.text,
+                                            //TODO feedback
+                                            observationWaterSupplyFunctionality: "",
                                           );
+
 
 
 

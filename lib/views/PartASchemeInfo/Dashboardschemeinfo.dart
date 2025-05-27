@@ -257,7 +257,7 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
               );
             },
           )),
-    );
+    ));
   }
 
   Widget buildSampleCard({
