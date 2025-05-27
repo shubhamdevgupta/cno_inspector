@@ -1,11 +1,14 @@
 
+import 'package:cno_inspection/provider/AppStateProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/Appcolor.dart';
 import 'PartACoordinationPlanningReviewScreen.dart';
 import 'PartBSourceSustainabilityWaterConservation.dart';
 import 'PartCMonitoringQualityandLabInfrastructure.dart';
+import 'PartC_below_TechnoCommercialViability.dart';
 import 'PartDOperationandMaintenance.dart';
 import 'PartEQualityAssuranceandCommissioning.dart';
 import 'PartFPublicComplaintsandGrievance.dart';
@@ -100,6 +103,7 @@ class PointsAndLines extends StatelessWidget {
 
 
   Widget _buildPoint(BuildContext context, String title, bool done) {
+    final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
     return GestureDetector(
       onTap: () {
         if (title == "A") {
@@ -112,7 +116,12 @@ class PointsAndLines extends StatelessWidget {
             MaterialPageRoute(builder: (_) => SourceSustainablitiyWasterConservation()),
           );
         }
-        if (title == "C") {
+        if (title == "C" && mode == ProjectMode.below10) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => PartcBelowTechnocommercialviabilityP()),
+          );
+        }
+        if (title == "C" && mode == ProjectMode.above10) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (_) => MonitioringQuality()),
           );
