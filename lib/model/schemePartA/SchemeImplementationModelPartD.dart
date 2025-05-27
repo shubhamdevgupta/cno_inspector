@@ -124,7 +124,7 @@ class SchemeImplementationModel {
         delay_work_reasonIds: List<int>.from(json['delay_work_reasonIds'] ?? []),
 // This need to be verify once
       /*
-            "": "",
+
             "cost_overrun_reasonIds": "",
             "cost_revision_reasonIds": "",
             "listdelay_work_reason": [1,2  ],
