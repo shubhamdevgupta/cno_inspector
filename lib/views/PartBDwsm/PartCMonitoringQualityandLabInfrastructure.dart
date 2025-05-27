@@ -4,6 +4,7 @@ import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
@@ -109,6 +110,8 @@ class _MonitioringQuality extends State<MonitioringQuality> {
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, childe) {
+                final mode =
+                    Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -156,7 +159,8 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                   Customradiobttn(
                                     question:
                                         "2. Does the district have an NABL-accredited lab or equivalent for water quality testing?",
-                                    options: dwsmProvider.yesNoMap.keys.toList(),
+                                    options:
+                                        dwsmProvider.yesNoMap.keys.toList(),
                                     selectedOption: dwsmProvider.hasNablLab,
                                     onChanged: (val) {
                                       dwsmProvider.hasNablLab = val;
@@ -205,7 +209,8 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                                   testingManagementDescription:
                                                       dwsmProvider
                                                           .testingManagedController
-                                                          .text);
+                                                          .text,
+                                                  modeType: mode.modeValue);
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,
@@ -235,7 +240,6 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                   ),
                                 ],
                               )),
-
                         )
                       ],
                     ),

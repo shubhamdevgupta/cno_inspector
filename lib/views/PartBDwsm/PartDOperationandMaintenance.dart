@@ -3,6 +3,7 @@ import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
@@ -105,6 +106,8 @@ class _PartDoperationandmaintenance
             elevation: 5,
           ),
           body: Consumer<Dwsmprovider>(builder: (context,dwsmProvider,child){
+            final mode =
+                Provider.of<AppStateProvider>(context, listen: false).mode;
             return SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.only(
@@ -208,7 +211,7 @@ class _PartDoperationandmaintenance
                                         isProtocolInPlace: dwsmProvider.handoverProtocolID, percentVillagesWithManpower: double.parse(dwsmProvider.manpowerPercentController.text),
                                         isWaterFeeCharged: -1, feeAmountPerMonth: int.parse(dwsmProvider.waterFeeController.text),
                                         isUniformFee: dwsmProvider.feeBasisID,
-                                        percentVillagesFeeCollected: double.parse(dwsmProvider.userFeePercentController.text));
+                                        percentVillagesFeeCollected: double.parse(dwsmProvider.userFeePercentController.text),modeType: mode.modeValue);
                                       if (dwsmProvider.status!) {
                                         ToastHelper.showToastMessage(
                                             dwsmProvider.message!,

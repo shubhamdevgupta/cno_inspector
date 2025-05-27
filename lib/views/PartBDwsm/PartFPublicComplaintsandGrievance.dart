@@ -4,6 +4,7 @@ import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
@@ -109,6 +110,8 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
+                final mode =
+                    Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -250,7 +253,10 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                               actionTakenByDepartment:
                                                   int.parse(dwsmProvider
                                                       .actionTakenController
-                                                      .text));
+                                                      .text),
+                                                modeType: mode.modeValue
+                                          );
+
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,

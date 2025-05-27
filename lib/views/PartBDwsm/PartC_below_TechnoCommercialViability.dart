@@ -1,9 +1,9 @@
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
-import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
@@ -17,10 +17,12 @@ class PartcBelowTechnocommercialviabilityP extends StatefulWidget {
   const PartcBelowTechnocommercialviabilityP({Key? key}) : super(key: key);
 
   @override
-  _PartcBelowTechnocommercialviabilityP createState() => _PartcBelowTechnocommercialviabilityP();
+  _PartcBelowTechnocommercialviabilityP createState() =>
+      _PartcBelowTechnocommercialviabilityP();
 }
 
-class _PartcBelowTechnocommercialviabilityP extends State<PartcBelowTechnocommercialviabilityP> {
+class _PartcBelowTechnocommercialviabilityP
+    extends State<PartcBelowTechnocommercialviabilityP> {
   LocalStorageService localStorageService = LocalStorageService();
 
   @override
@@ -28,7 +30,7 @@ class _PartcBelowTechnocommercialviabilityP extends State<PartcBelowTechnocommer
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
-      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
       if (args != null) {
         final districtid = args['districtid'] as int?;
@@ -86,7 +88,7 @@ class _PartcBelowTechnocommercialviabilityP extends State<PartcBelowTechnocommer
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => Dashboarddwsm()),
-                          (route) => false,
+                      (route) => false,
                     );
                   }
                 },
@@ -109,6 +111,8 @@ class _PartcBelowTechnocommercialviabilityP extends State<PartcBelowTechnocommer
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, childe) {
+                final mode =
+                    Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -140,43 +144,43 @@ class _PartcBelowTechnocommercialviabilityP extends State<PartcBelowTechnocommer
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-
                                   //Below 10% scheme
                                   Column(
                                     children: [
-
                                       Customtxtfeild(
-                                        label: "1. What will be the annual O&M cost of the scheme?",
+                                        label:
+                                            "1. What will be the annual O&M cost of the scheme?",
                                         controller:
-                                        dwsmProvider.testingManagedController,
+                                            dwsmProvider.onCostSchemeController,
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Customtxtfeild(
-                                        label: "2.	What shall be water user charges from the stakeholders?",
-                                        controller:
-                                        dwsmProvider.testingManagedController,
+                                        label:
+                                            "2.	What shall be water user charges from the stakeholders?",
+                                        controller: dwsmProvider
+                                            .chargeStakeHolderController,
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Customtxtfeild(
-                                        label: "3. What is the State plan for meeting the remaining O&M expenses?",
-                                        controller:
-                                        dwsmProvider.testingManagedController,
+                                        label:
+                                            "3. What is the State plan for meeting the remaining O&M expenses?",
+                                        controller: dwsmProvider
+                                            .remaningExpensesController,
                                       ),
                                       SizedBox(
                                         height: 10,
                                       ),
                                       Customtxtfeild(
-                                        label: "4. Expected skilled manpower required for operations of the schemes?:?",
-                                        controller:
-                                        dwsmProvider.testingManagedController,
+                                        label:
+                                            "4. Expected skilled manpower required for operations of the schemes?:?",
+                                        controller: dwsmProvider
+                                            .requiredOperationController,
                                       ),
-
                                     ],
-
                                   ),
 
                                   SizedBox(
@@ -195,30 +199,31 @@ class _PartcBelowTechnocommercialviabilityP extends State<PartcBelowTechnocommer
                                           ),
                                         ),
                                         onPressed: () async {
-                                      /*    LoaderUtils.showLoadingWithMessage(
+                                          LoaderUtils.showLoadingWithMessage(
                                               context,
                                               isLoading: dwsmProvider.isLoading,
                                               message:
-                                              "Saving  Monitoring, Quality and Lab Infrastructure");
+                                                  "Saving  Monitoring, Quality and Lab Infrastructure");
 
-                                          await dwsmProvider
-                                              .saveMonitoringQualityLab(
-                                              userId: localStorageService
-                                                  .getInt(AppConstants
-                                                  .prefUserId)!,
-                                              stateId:
-                                              dwsmProvider.stateId!,
+                                          await dwsmProvider.saveTecnoCommercialViabbility(
+                                              userId:
+                                                  localStorageService.getInt(
+                                                      AppConstants.prefUserId)!,
+                                              stateId: dwsmProvider.stateId!,
                                               districtId:
-                                              dwsmProvider.districtId!,
-                                              areAssetsGeotagged:
-                                              dwsmProvider
-                                                  .assetsGeotaggedID,
-                                              hasNABLLab:
-                                              dwsmProvider.hasNablLabID,
-                                              testingManagementDescription:
-                                              dwsmProvider
-                                                  .testingManagedController
-                                                  .text);
+                                                  dwsmProvider.districtId!,
+                                              requiredOperation: dwsmProvider
+                                                  .requiredOperationController
+                                                  .text,
+                                              remaningExpenses: dwsmProvider
+                                                  .remaningExpensesController
+                                                  .text,
+                                              chargeStakeHolder: dwsmProvider
+                                                  .chargeStakeHolderController
+                                                  .text,
+                                              omCostScheme: dwsmProvider
+                                                  .onCostSchemeController.text,
+                                              modeType: mode.modeValue);
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,
@@ -233,7 +238,7 @@ class _PartcBelowTechnocommercialviabilityP extends State<PartcBelowTechnocommer
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,
                                                 backgroundColor: Colors.red);
-                                          }*/
+                                          }
                                         },
                                         child: Text(
                                           "SAVE & NEXT",
@@ -248,7 +253,6 @@ class _PartcBelowTechnocommercialviabilityP extends State<PartcBelowTechnocommer
                                   ),
                                 ],
                               )),
-
                         )
                       ],
                     ),

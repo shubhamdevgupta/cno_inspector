@@ -8,7 +8,6 @@ import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
-import '../../utils/MultiSelectionlist.dart';
 import '../../utils/toast_helper.dart';
 import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
@@ -26,13 +25,13 @@ class _PartEQualityAssuranceCommissioning
     extends State<PartEQualityAssuranceCommissioning> {
   LocalStorageService localStorageService = LocalStorageService();
 
-  String Que = "";
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
-      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
       if (args != null) {
         final districtid = args['districtid'] as int?;
@@ -45,7 +44,10 @@ class _PartEQualityAssuranceCommissioning
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchQualityAssuranceData(stateId.toString(),districtid.toString(),localStorageService.getInt(AppConstants.prefUserId).toString());
+        dwsmProvider.fetchQualityAssuranceData(
+            stateId.toString(),
+            districtid.toString(),
+            localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -110,12 +112,8 @@ class _PartEQualityAssuranceCommissioning
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
-                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
-                if(ProjectMode.below10==mode){
-                  Que = AppConstants.BelowDWSMPartEQ3;
-                }else{
-                  Que = AppConstants.AboveDWSMPartEQ3;
-                }
+                final mode =
+                    Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -153,57 +151,79 @@ class _PartEQualityAssuranceCommissioning
                                     children: [
                                       Customradiobttn(
                                         question:
-                                        "1. Who all are authorized to inspect and measure works during field inspection?",
-                                        options: dwsmProvider.authorizedInspectorsMap.keys.toList(),
+                                            "1. Who all are authorized to inspect and measure works during field inspection?",
+                                        options: dwsmProvider
+                                            .authorizedInspectorsMap.keys
+                                            .toList(),
                                         selectedOption:
-                                        dwsmProvider.authorizedInspectors,
+                                            dwsmProvider.authorizedInspectors,
                                         onChanged: (values) {
-                                          dwsmProvider.authorizedInspectors = values;
+                                          dwsmProvider.authorizedInspectors =
+                                              values;
                                         },
                                       ),
-
                                       const SizedBox(height: 10),
-
                                       Customradiobttn(
                                         question:
-                                        "2. Is the commissioning protocol being followed?",
-                                        options: dwsmProvider.yesNoMap.keys.toList(),
+                                            "2. Is the commissioning protocol being followed?",
+                                        options:
+                                            dwsmProvider.yesNoMap.keys.toList(),
                                         selectedOption: dwsmProvider
                                             .commissioningProtocolFollowed,
                                         onChanged: (val) => dwsmProvider
-                                            .commissioningProtocolFollowed = val,
+                                                .commissioningProtocolFollowed =
+                                            val,
                                       ),
 
-                                      const SizedBox(height: 10),
-
-                                      //TODO this question not part of below 10%
                                       Visibility(
-                                        visible: mode == ProjectMode.above10,
+                                        visible: mode == ProjectMode.below10,
                                         child: Customradiobttn(
                                           question:
-                                          "3. During commissioning of schemes, who are generally present?",
-                                          options: dwsmProvider.commissioningPresenceMap.keys.toList(),
-                                          selectedOption: dwsmProvider.commissioningPresence,
-                                          onChanged: (values) {
-                                            dwsmProvider.commissioningPresence = values;
-                                          },
+                                              "3.Has the district has hired any third-party inspection agencies on quality checks for JJM schemes?",
+                                          options:
+                                              dwsmProvider.yesNoMap.keys.toList(),
+                                          selectedOption: dwsmProvider
+                                              .thirdPartyInspectionAgency,
+                                          onChanged: (val) => dwsmProvider
+                                                  .thirdPartyInspectionAgency =
+                                              val,
                                         ),
                                       ),
-
                                       const SizedBox(height: 10),
-
-                                      Customradiobttn(
-                                        question: Que,
-                                        options: dwsmProvider.thirdPartyAssessmentMap.keys.toList(),
-                                        selectedOption:
-                                        dwsmProvider.thirdPartyAssessment,
-                                        onChanged: (val) =>
-                                        dwsmProvider.thirdPartyAssessment = val,
-                                      ),
+                                      Visibility(
+                                        visible: mode == ProjectMode.above10,
+                                        child: Column(
+                                          children: [
+                                            Customradiobttn(
+                                              question:
+                                              "3. During commissioning of schemes, who are generally present?",
+                                              options: dwsmProvider
+                                                  .commissioningPresenceMap.keys
+                                                  .toList(),
+                                              selectedOption:
+                                              dwsmProvider.commissioningPresence,
+                                              onChanged: (values) {
+                                                dwsmProvider.commissioningPresence =
+                                                    values;
+                                              },
+                                            ),
+                                            const SizedBox(height: 10),
+                                            Customradiobttn(
+                                              question:
+                                              "4.	•	Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?",
+                                              options: dwsmProvider
+                                                  .thirdPartyAssessmentMap.keys
+                                                  .toList(),
+                                              selectedOption:
+                                              dwsmProvider.thirdPartyAssessment,
+                                              onChanged: (val) => dwsmProvider
+                                                  .thirdPartyAssessment = val,
+                                            ),
+                                          ],
+                                        ),
+                                      )
                                     ],
                                   ),
-
-
 
                                   Align(
                                     alignment: Alignment.centerRight,
@@ -217,19 +237,40 @@ class _PartEQualityAssuranceCommissioning
                                                 10), // Adjust the radius as needed
                                           ),
                                         ),
-                                        onPressed: ()  async {
+                                        onPressed: () async {
+                                          LoaderUtils.showLoadingWithMessage(
+                                              context,
+                                              isLoading: dwsmProvider.isLoading,
+                                              message:
+                                                  "Saving Quality Assurance and Commissioning");
 
-                                          LoaderUtils.showLoadingWithMessage(context, isLoading: dwsmProvider.isLoading,message: "Saving Quality Assurance and Commissioning");
+                                          await dwsmProvider.saveQualityAssurance(
+                                              userId:
+                                                  localStorageService.getInt(
+                                                      AppConstants.prefUserId)!,
+                                              stateId: dwsmProvider.stateId!,
+                                              districtId:
+                                                  dwsmProvider.districtId!,
+                                              inspectionAuthority: dwsmProvider
+                                                  .authorizedInspectorID,
+                                              isCommissioningProtocolFollowed:
+                                                  dwsmProvider
+                                                      .commissioningProtocolFollowedID,
+                                              schemesPresentDuringCommissioning:
+                                                  dwsmProvider
+                                                      .commissioningPresenceID,
+                                              districtAssessmentAgencies:
+                                                  dwsmProvider
+                                                      .thirdPartyAssessmentID,
+                                              districtHiredAgencies: dwsmProvider.thirdPartyInspectionAgencyID,
+                                              modeType: mode.modeValue);
 
-                                          await dwsmProvider.saveQualityAssurance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
-                                              inspectionAuthority: dwsmProvider.authorizedInspectorID, isCommissioningProtocolFollowed: dwsmProvider.commissioningProtocolFollowedID,
-                                              schemesPresentDuringCommissioning: dwsmProvider.commissioningPresenceID,
-                                              districtAssessmentAgencies: dwsmProvider.thirdPartyAssessmentID);
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,
                                                 backgroundColor: Colors.green);
-                                            Navigator.of(context).pushReplacement(
+                                            Navigator.of(context)
+                                                .pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (_) =>
                                                       PartFPublicCompliant()),

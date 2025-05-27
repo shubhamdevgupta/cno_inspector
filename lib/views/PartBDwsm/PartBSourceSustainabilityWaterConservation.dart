@@ -3,6 +3,7 @@ import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
@@ -111,6 +112,9 @@ class _SourceSustainablitiyWasterConservation
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
+                final mode =
+                    Provider.of<AppStateProvider>(context, listen: false).mode;
+
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -207,28 +211,27 @@ class _SourceSustainablitiyWasterConservation
                                   height: 10,
                                 ),
 
-
-
                                 //TODO Please add this question in below 10%
-                                Customradiobttn(
-                                  question:
-                                  "5. •	Does the district have an NABL-accredited lab or equivalent for water quality testing?",
-                                  options: dwsmProvider
-                                      .rechargeStructureMap.keys
-                                      .toList(),
-                                  selectedOption:
-                                  dwsmProvider.rechargeStructureImplemented,
-                                  onChanged: (val) => dwsmProvider
-                                      .rechargeStructureImplemented = val,
+                                Visibility(
+                                  visible: mode == ProjectMode.below10,
+                                  child: Customradiobttn(
+                                    question:
+                                        "5. •	Does the district have an NABL-accredited lab or equivalent for water quality testing?",
+                                    options:
+                                        dwsmProvider.yesNoMap.keys.toList(),
+                                    selectedOption:
+                                        dwsmProvider.accreditedLabWaterQuality,
+                                    onChanged: (val) => dwsmProvider
+                                        .accreditedLabWaterQuality = val,
+                                  ),
                                 ),
-                                if (dwsmProvider
-                                    .rechargeStructureImplementedID ==
-                                    3) ...[
+                                if (dwsmProvider.accreditedLabWaterQualityID ==
+                                    2) ...[
                                   const SizedBox(height: 8),
                                   Customtxtfeild(
                                     label: "If no, how is testing managed:",
-                                    controller:
-                                    dwsmProvider.rechargeReasonController,
+                                    controller: dwsmProvider
+                                        .testingManagedDataController,
                                   ),
                                 ],
 
@@ -251,7 +254,7 @@ class _SourceSustainablitiyWasterConservation
                                             message:
                                                 "Saving Source Sustainability and Water Conservation");
 
-                                        dwsmProvider.saveSourceSustainability(
+                                     await  dwsmProvider.saveSourceSustainability(
                                             userId: localStorageService.getInt(
                                                 AppConstants.prefUserId)!,
                                             stateId: dwsmProvider.stateId!,
@@ -268,7 +271,15 @@ class _SourceSustainablitiyWasterConservation
                                             reasonIfNotImplemented: dwsmProvider
                                                 .rechargeReasonController.text,
                                             areImpactStudiesConducted:
-                                                dwsmProvider.impactStudiesID);
+                                                dwsmProvider.impactStudiesID,
+                                            accrediteLabWaterQuality:
+                                                dwsmProvider
+                                                    .accreditedLabWaterQualityID,
+                                            accrediteLabWaterQualityNoRemark:
+                                                dwsmProvider
+                                                    .testingManagedDataController
+                                                    .text,
+                                            modeType: mode.modeValue);
 
                                         if (dwsmProvider.status!) {
                                           ToastHelper.showToastMessage(

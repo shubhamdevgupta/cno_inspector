@@ -17,7 +17,7 @@ class Dwsmprovider extends ChangeNotifier {
   String getRadiobuttonData(int id, Map<String, int> labelMap) {
     return labelMap.entries
         .firstWhere((entry) => entry.value == id,
-        orElse: () => const MapEntry('', 0))
+            orElse: () => const MapEntry('', 0))
         .key;
   }
 
@@ -119,6 +119,7 @@ class Dwsmprovider extends ChangeNotifier {
     required int numberOfMeetingsLast6Months,
     required int qualityOfMeeting,
     required int areCoordinationMeetingsRegular,
+    required int modeType,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -132,6 +133,7 @@ class Dwsmprovider extends ChangeNotifier {
         numberOfMeetingsLast6Months: numberOfMeetingsLast6Months,
         qualityOfMeeting: qualityOfMeeting,
         areCoordinationMeetingsRegular: areCoordinationMeetingsRegular,
+        modeType: modeType,
       );
 
       _message = response.message;
@@ -139,12 +141,12 @@ class Dwsmprovider extends ChangeNotifier {
     } catch (e) {
       _message = 'Something went wrong';
       GlobalExceptionHandler.handleException(e as Exception);
-
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
+
   //fetch for part a start
 
   List<CoordinationPlanningReview> coordinationData = [];
@@ -265,9 +267,30 @@ class Dwsmprovider extends ChangeNotifier {
   int get rechargeStructureImplementedID =>
       rechargeStructureMap[_rechargeStructureImplemented] ?? 0;
 
+  //
+  // Does_district_NABL_accredited_lab_water_quality
+  String? _accredited_lab_water_quality;
+
+  String? get accreditedLabWaterQuality => _accredited_lab_water_quality;
+  final TextEditingController testingManagedDataController =
+      TextEditingController();
+
+  set accreditedLabWaterQuality(String? value) {
+    _accredited_lab_water_quality = value;
+    if (value != "No") {
+      testingManagedDataController.clear();
+    }
+    notifyListeners();
+  }
+
+  int get accreditedLabWaterQualityID =>
+      yesNoMap[_accredited_lab_water_quality] ?? 0;
+
+  //
+
   // Controller for recharge reason (if "No")
   final TextEditingController rechargeReasonController =
-  TextEditingController();
+      TextEditingController();
 
   // Question 4: Impact studies conducted
 
@@ -297,21 +320,26 @@ class Dwsmprovider extends ChangeNotifier {
     required int isRechargeStructureImplemented,
     required String reasonIfNotImplemented,
     required int areImpactStudiesConducted,
+    required int accrediteLabWaterQuality,
+    required String accrediteLabWaterQualityNoRemark,
+    required int modeType,
   }) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _dwsmRepository.saveSourceSustainability(
-        userId: userId,
-        stateId: stateId,
-        districtId: districtId,
-        areSustainabilityMeasuresPromoted: areSustainabilityMeasuresPromoted,
-        areGWSourcesProtected: areGWSourcesProtected,
-        isRechargeStructureImplemented: isRechargeStructureImplemented,
-        reasonIfNotImplemented: reasonIfNotImplemented,
-        areImpactStudiesConducted: areImpactStudiesConducted,
-      );
+          userId: userId,
+          stateId: stateId,
+          districtId: districtId,
+          areSustainabilityMeasuresPromoted: areSustainabilityMeasuresPromoted,
+          areGWSourcesProtected: areGWSourcesProtected,
+          isRechargeStructureImplemented: isRechargeStructureImplemented,
+          reasonIfNotImplemented: reasonIfNotImplemented,
+          areImpactStudiesConducted: areImpactStudiesConducted,
+          accrediteLabWaterQuality: accrediteLabWaterQuality,
+          accrediteLabWaterQualityNoRemark: accrediteLabWaterQualityNoRemark,
+          modeType: modeType);
 
       _message = response.message;
       _status = response.status;
@@ -335,8 +363,8 @@ class Dwsmprovider extends ChangeNotifier {
 
     try {
       final response =
-      await _fetchdwsmrepo.fetchSourceSustainabilityWaterConservation(
-          stateId, districtId, userId);
+          await _fetchdwsmrepo.fetchSourceSustainabilityWaterConservation(
+              stateId, districtId, userId);
       if (response.status) {
         sustainabilityData = response.result;
 
@@ -381,11 +409,11 @@ class Dwsmprovider extends ChangeNotifier {
     rechargeStructureImplemented = null;
     rechargeReasonController.clear();
     impactStudies = null;
-
+    testingManagedDataController.clear();
+    accreditedLabWaterQuality = null;
     // If within a ChangeNotifier or Provider, uncomment:
     // notifyListeners();
   }
-
 
   // fetch for dwsm part B end
 
@@ -424,34 +452,76 @@ class Dwsmprovider extends ChangeNotifier {
 
 // Testing management (if no NABL lab)
   final TextEditingController testingManagedController =
-  TextEditingController();
+      TextEditingController();
 
-  Future<void> saveMonitoringQualityLab({
-    required int userId,
-    required int stateId,
-    required int districtId,
-    required int areAssetsGeotagged,
-    required int hasNABLLab,
-    required String testingManagementDescription,
-  }) async {
+  Future<void> saveMonitoringQualityLab(
+      {required int userId,
+      required int stateId,
+      required int districtId,
+      required int areAssetsGeotagged,
+      required int hasNABLLab,
+      required String testingManagementDescription,
+      required int modeType}) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _dwsmRepository.saveMonitoringQualityLab(
-        userId: userId,
-        stateId: stateId,
-        districtId: districtId,
-        areAssetsGeotagged: areAssetsGeotagged,
-        hasNABLLab: hasNABLLab,
-        testingManagementDescription: testingManagementDescription,
-      );
+          userId: userId,
+          stateId: stateId,
+          districtId: districtId,
+          areAssetsGeotagged: areAssetsGeotagged,
+          hasNABLLab: hasNABLLab,
+          testingManagementDescription: testingManagementDescription,
+          modeType: modeType);
 
       _message = response.message;
       _status = response.status;
     } catch (e) {
       GlobalExceptionHandler.handleException(e as Exception);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 
+  // techno  commercial viablity
+
+  TextEditingController onCostSchemeController = TextEditingController();
+  TextEditingController chargeStakeHolderController = TextEditingController();
+  TextEditingController remaningExpensesController = TextEditingController();
+  TextEditingController requiredOperationController = TextEditingController();
+
+
+
+  Future<void> saveTecnoCommercialViabbility({
+    required int userId,
+    required int stateId,
+    required int districtId,
+    required String omCostScheme,
+    required String chargeStakeHolder,
+    required String remaningExpenses,
+    required String requiredOperation,
+    required int modeType,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _dwsmRepository.saveTecnoCommercialViabbility(
+          userId: userId,
+          stateId: stateId,
+          districtId: districtId,
+          chargeStakeHolder: chargeStakeHolder,
+          omCostScheme: omCostScheme,
+          remaningExpenses: remaningExpenses,
+          requiredOperation: requiredOperation,
+          modeType: modeType);
+
+      _message = response.message;
+      _status = response.status;
+    } catch (e) {
+      GlobalExceptionHandler.handleException(e as Exception);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -506,7 +576,6 @@ class Dwsmprovider extends ChangeNotifier {
     // notifyListeners();
   }
 
-
   // fetch for dwsm part C end
 
   //DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
@@ -531,7 +600,7 @@ class Dwsmprovider extends ChangeNotifier {
 
 // 2. Manpower Percentage Controller
   final TextEditingController manpowerPercentController =
-  TextEditingController();
+      TextEditingController();
 
 // 3. Water Fee Controller
   final TextEditingController waterFeeController = TextEditingController();
@@ -554,7 +623,7 @@ class Dwsmprovider extends ChangeNotifier {
 
 // 5. User Fee Collection Percentage
   final TextEditingController userFeePercentController =
-  TextEditingController();
+      TextEditingController();
 
   Future<void> saveOperationMaintenance({
     required int userId,
@@ -566,6 +635,7 @@ class Dwsmprovider extends ChangeNotifier {
     required int feeAmountPerMonth,
     required int isUniformFee,
     required double percentVillagesFeeCollected,
+    required int modeType
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -581,6 +651,7 @@ class Dwsmprovider extends ChangeNotifier {
         feeAmountPerMonth: feeAmountPerMonth,
         isUniformFee: isUniformFee,
         percentVillagesFeeCollected: percentVillagesFeeCollected,
+        modeType: modeType
       );
 
       _message = response.message;
@@ -602,7 +673,6 @@ class Dwsmprovider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-
     try {
       final response = await _fetchdwsmrepo.fetchOperationMaintenance(
           stateId, districtId, userId);
@@ -612,22 +682,30 @@ class Dwsmprovider extends ChangeNotifier {
         _message = response.message;
         _status = response.status;
 
-
-        handoverProtocol = getRadiobuttonData(operationMaintenanceData.first.isAProtocolHandingInVillageInfrastructurePlace,handoverProtocolMap);
+        handoverProtocol = getRadiobuttonData(
+            operationMaintenanceData
+                .first.isAProtocolHandingInVillageInfrastructurePlace,
+            handoverProtocolMap);
         print('handoverProtocol: $handoverProtocol');
 
-        manpowerPercentController.text = operationMaintenanceData.first.perOfVillagesWhereTrainedMultiSkilledManpowerAvailable.toString();
+        manpowerPercentController.text = operationMaintenanceData
+            .first.perOfVillagesWhereTrainedMultiSkilledManpowerAvailable
+            .toString();
         print('manpowerPercentController: ${manpowerPercentController.text}');
 
-        waterFeeController.text = operationMaintenanceData.first.isWaterFeeChargedFromHouseholds.toString();
+        waterFeeController.text = operationMaintenanceData
+            .first.isWaterFeeChargedFromHouseholds
+            .toString();
         print('waterFeeController: ${waterFeeController.text}');
 
-        feeBasis = getRadiobuttonData(operationMaintenanceData.first.feeAmountPerMonth,feeBasisMap);
+        feeBasis = getRadiobuttonData(
+            operationMaintenanceData.first.feeAmountPerMonth, feeBasisMap);
         print('feeBasis: $feeBasis');
 
-        userFeePercentController.text = operationMaintenanceData.first.perOfVillagesWhereUserFeeCollected.toString();
+        userFeePercentController.text = operationMaintenanceData
+            .first.perOfVillagesWhereUserFeeCollected
+            .toString();
         print('userFeePercentController: ${userFeePercentController.text}');
-
       } else {
         _message = response.message;
       }
@@ -638,7 +716,6 @@ class Dwsmprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   void clearfetchOperationMaintenanceData() {
     handoverProtocol = null;
@@ -731,6 +808,18 @@ class Dwsmprovider extends ChangeNotifier {
   int get thirdPartyAssessmentID =>
       thirdPartyAssessmentMap[_thirdPartyAssessment] ?? 0;
 
+
+  String? _thirdPartyInspectionAgency;
+  String? get thirdPartyInspectionAgency => _thirdPartyInspectionAgency;
+
+  set thirdPartyInspectionAgency(String? value){
+    _thirdPartyInspectionAgency = value;
+    notifyListeners();
+  }
+
+  int get thirdPartyInspectionAgencyID =>
+      yesNoMap[_thirdPartyInspectionAgency] ?? 0;
+
   Future<void> saveQualityAssurance({
     required int userId,
     required int stateId,
@@ -739,6 +828,8 @@ class Dwsmprovider extends ChangeNotifier {
     required int isCommissioningProtocolFollowed,
     required int schemesPresentDuringCommissioning,
     required int districtAssessmentAgencies,
+    required int districtHiredAgencies,
+    required int modeType,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -752,6 +843,8 @@ class Dwsmprovider extends ChangeNotifier {
         isCommissioningProtocolFollowed: isCommissioningProtocolFollowed,
         schemesPresentDuringCommissioning: schemesPresentDuringCommissioning,
         districtAssessmentAgencies: districtAssessmentAgencies,
+        districtHiredAgencies: districtHiredAgencies,
+        modeType: modeType
       );
 
       _message = response.message;
@@ -781,16 +874,26 @@ class Dwsmprovider extends ChangeNotifier {
         _message = response.message;
         _status = response.status;
 
-        authorizedInspectors = getRadiobuttonData(qualityAssuranceData.first.whoAuthorizedInspectMeasureFieldInspection,authorizedInspectorsMap);
+        authorizedInspectors = getRadiobuttonData(
+            qualityAssuranceData
+                .first.whoAuthorizedInspectMeasureFieldInspection,
+            authorizedInspectorsMap);
         print('authorizedInspectors: $authorizedInspectors');
 
-        commissioningProtocolFollowed = getRadiobuttonData(qualityAssuranceData.first.isCommissioningProtocolFollowed,yesNoMap);
+        commissioningProtocolFollowed = getRadiobuttonData(
+            qualityAssuranceData.first.isCommissioningProtocolFollowed,
+            yesNoMap);
         print('commissioningProtocolFollowed: $commissioningProtocolFollowed');
 
-        commissioningPresence = getRadiobuttonData(qualityAssuranceData.first.duringCommissioningSchemesPresent,commissioningPresenceMap);
+        commissioningPresence = getRadiobuttonData(
+            qualityAssuranceData.first.duringCommissioningSchemesPresent,
+            commissioningPresenceMap);
         print('commissioningPresence: $commissioningPresence');
 
-        thirdPartyAssessment = getRadiobuttonData(qualityAssuranceData.first.hasDistrictUndertakenAssessmentInspectionAgencies,thirdPartyAssessmentMap);
+        thirdPartyAssessment = getRadiobuttonData(
+            qualityAssuranceData
+                .first.hasDistrictUndertakenAssessmentInspectionAgencies,
+            thirdPartyAssessmentMap);
         print('thirdPartyAssessment: $thirdPartyAssessment');
       } else {
         _message = response.message;
@@ -803,16 +906,13 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
-
-
   void clearfetchQualityAssuranceData() {
     authorizedInspectors = null;
     commissioningProtocolFollowed = null;
     commissioningPresence = null;
     thirdPartyAssessment = null;
-
-
   }
+
   // fetch for dwsm part E end
 
   ///FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -899,6 +999,7 @@ class Dwsmprovider extends ChangeNotifier {
     required String otherComplaints,
     required int resolutionTime,
     required int actionTakenByDepartment,
+    required int modeType,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -915,6 +1016,7 @@ class Dwsmprovider extends ChangeNotifier {
         otherComplaints: otherComplaints,
         resolutionTime: resolutionTime,
         actionTakenByDepartment: actionTakenByDepartment,
+        modeType: modeType
       );
 
       _message = response.message;
@@ -945,27 +1047,33 @@ class Dwsmprovider extends ChangeNotifier {
         _message = response.message;
         _status = response.status;
 
-        grievanceMechanismAvailable = getRadiobuttonData(grievanceData.first.grievanceRedressalMechanismAvailable,yesNoMap);
+        grievanceMechanismAvailable = getRadiobuttonData(
+            grievanceData.first.grievanceRedressalMechanismAvailable, yesNoMap);
         print('grievanceMechanismAvailable: $grievanceMechanismAvailable');
 
-
-        grievanceRegistrationMethods = getRadiobuttonData(grievanceData.first.howGrievancesRegisteredVillagers,grievanceRegistrationMethodsMap);
+        grievanceRegistrationMethods = getRadiobuttonData(
+            grievanceData.first.howGrievancesRegisteredVillagers,
+            grievanceRegistrationMethodsMap);
         print('grievanceRegistrationMethods: $grievanceRegistrationMethods');
 
-        complaintsReceived = getRadiobuttonData(grievanceData.first.areComplaintsReceivedPublicRegardingSchemes,yesNoMap);
+        complaintsReceived = getRadiobuttonData(
+            grievanceData.first.areComplaintsReceivedPublicRegardingSchemes,
+            yesNoMap);
         print('complaintsReceived: $complaintsReceived');
 
-        complaintTypes = getRadiobuttonData(grievanceData.first.yesTypeComplaints,complaintTypeMap);
+        complaintTypes = getRadiobuttonData(
+            grievanceData.first.yesTypeComplaints, complaintTypeMap);
         print('complaintTypes: $complaintTypes');
 
+        avgResolutionTimeController.text = grievanceData
+            .first.yesTypeComplaintsOthersAverageTimeResolution
+            .toString();
+        print(
+            'avgResolutionTimeController: ${avgResolutionTimeController.text}');
 
-        avgResolutionTimeController.text = grievanceData.first.yesTypeComplaintsOthersAverageTimeResolution.toString();
-        print('avgResolutionTimeController: ${avgResolutionTimeController.text}');
-
-        actionTakenController.text = grievanceData.first.yesTypeComplaintsOthersActionTakenDepartment;
+        actionTakenController.text =
+            grievanceData.first.yesTypeComplaintsOthersActionTakenDepartment;
         print('actionTakenController: ${actionTakenController.text}');
-
-
       } else {
         _message = response.message;
       }
@@ -976,6 +1084,7 @@ class Dwsmprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
   void clearfetchGrievanceRedressalData() {
     grievanceMechanismAvailable = null;
     grievanceRegistrationMethods = null;
@@ -984,11 +1093,9 @@ class Dwsmprovider extends ChangeNotifier {
 
     avgResolutionTimeController.clear();
     actionTakenController.clear();
-
   }
+
 // fetch for dwsm part F end
-
-
 
 ////Below 10%
 
@@ -998,7 +1105,10 @@ class Dwsmprovider extends ChangeNotifier {
   final Map<String, int> fieldinspectionMap = {
     "PHED Engineer": 1,
     "PMC/PMU": 2,
-    "TPIA": 3,"VWSC": 4,"Contractor Representative ": 5,"others": 6,
+    "TPIA": 3,
+    "VWSC": 4,
+    "Contractor Representative ": 5,
+    "others": 6,
   };
 
   String? _fieldinspection;
@@ -1011,7 +1121,6 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get fieldinspectionID => fieldinspectionMap[_fieldinspection] ?? 0;
-
 
   //Q2
   String? _commisionprotocol;
@@ -1037,12 +1146,11 @@ class Dwsmprovider extends ChangeNotifier {
 
   int get inspectionagenciesID => yesNoMap[_inspectionagencies] ?? 0;
 
-
   // Part E
 
 //Q1
 
-  String? _GrievanceRedressalmechanism ;
+  String? _GrievanceRedressalmechanism;
 
   String? get GrievanceRedressalmechanism => _GrievanceRedressalmechanism;
 
@@ -1051,7 +1159,6 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get GrievanceRedressalmechanismID => yesNoMap[_GrievanceRedressalmechanism] ?? 0;
-
-
+  int get GrievanceRedressalmechanismID =>
+      yesNoMap[_GrievanceRedressalmechanism] ?? 0;
 }
