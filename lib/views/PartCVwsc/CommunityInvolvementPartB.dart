@@ -136,158 +136,301 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Customradiobttn(
-                                question: "1. Is VWSC or Pani samiti formed:",
-                                options: vwscProvider.yesNoMap.keys.toList(),
-                                selectedOption: vwscProvider.selectedVWSCFormed,
-                                onChanged: (val) {
-                                  vwscProvider.selectedVWSCFormed = val;
-                                  print(
-                                      'selectedVWSCFormed------- ${vwscProvider.selectedVWSCFormed} : ${vwscProvider.selectedVWSCFormedID}');
-                                },
-                              ),
-                              Customradiobttn(
-                                question: "2. Is VWSC bank account opened:",
-                                options: vwscProvider.yesNoMap.keys.toList(),
-                                selectedOption:
-                                    vwscProvider.selectedVWSCBankAccount,
-                                onChanged: (val) {
-                                  vwscProvider.selectedVWSCBankAccount = val;
-                                  print(
-                                      'selectedVWSCBankAccountID------- ${vwscProvider.selectedVWSCBankAccountID}');
-                                },
-                              ),
-                              Customradiobttn(
-                                question:
-                                    "3. VWSC/GP involvement in scheme operations:",
-                                options: vwscProvider.VwscGPInvolmentOptions,
-                                selectedOption:
-                                    vwscProvider.selectedVWSCInvolvement,
-                                onChanged: (val) {
-                                  vwscProvider.selectedVWSCInvolvement = val;
-                                  print(
-                                      'selectedVWSCInvolvementID------- ${vwscProvider.selectedVWSCInvolvementID}');
-                                },
-                              ),
 
 
-                              //TODO this question is not part of below 10%
+
+
+
+
                               Visibility(
                                 visible: mode == ProjectMode.above10,
-                                child: Customradiobttn(
-                                  question:
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Customradiobttn(
+                                      question: "1. Is VWSC or Pani samiti formed:",
+                                      options: vwscProvider.yesNoMap.keys.toList(),
+                                      selectedOption: vwscProvider.selectedVWSCFormed,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCFormed = val;
+                                        print(
+                                            'selectedVWSCFormed------- ${vwscProvider.selectedVWSCFormed} : ${vwscProvider.selectedVWSCFormedID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question: "2. Is VWSC bank account opened:",
+                                      options: vwscProvider.yesNoMap.keys.toList(),
+                                      selectedOption:
+                                      vwscProvider.selectedVWSCBankAccount,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCBankAccount = val;
+                                        print(
+                                            'selectedVWSCBankAccountID------- ${vwscProvider.selectedVWSCBankAccountID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question:
+                                      "3. VWSC/GP involvement in scheme operations:",
+                                      options: vwscProvider.VwscGPInvolmentOptions,
+                                      selectedOption:
+                                      vwscProvider.selectedVWSCInvolvement,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCInvolvement = val;
+                                        print(
+                                            'selectedVWSCInvolvementID------- ${vwscProvider.selectedVWSCInvolvementID}');
+                                      },
+                                    ),
+
+
+                                    //TODO this question is not part of below 10%
+                                    Customradiobttn(
+                                      question:
                                       "4. As-built Drawing of Pipelines available with GP office:",
-                                  options: vwscProvider.yesNoMap.keys.toList(),
-                                  selectedOption:
+                                      options: vwscProvider.yesNoMap.keys.toList(),
+                                      selectedOption:
                                       vwscProvider.selectedAsBuiltDrawing,
-                                  onChanged: (val) {
-                                    vwscProvider.selectedAsBuiltDrawing = val;
-                                    print(
-                                        'selectedAsBuiltDrawingID------- ${vwscProvider.selectedAsBuiltDrawingID}');
-                                  },
-                                ),
-                              ),
-                              Customradiobttn(
-                                question:
-                                    "5. Whether meetings of VWSC are conducted in a periodic manner?",
-                                options: vwscProvider.yesNoMap.keys.toList(),
-                                selectedOption:
-                                    vwscProvider.selectedVWSCMeetingConducted,
-                                onChanged: (val) {
-                                  vwscProvider.selectedVWSCMeetingConducted =
-                                      val;
-                                  print(
-                                      'selectedVWSCMeetingConductedID------- ${vwscProvider.selectedVWSCMeetingConductedID}');
-                                },
-                              ),
-                              if (vwscProvider.selectedVWSCMeetingConductedID ==
-                                  1)
-                                Customtxtfeild(
-                                  label: 'If meeting held yes, Frequency:',
-                                  controller: vwscProvider.FrequencyController,
-                                  keyboardType: TextInputType.text,
-                                ),
-                              Customradiobttn(
-                                question:
-                                    "6. Whether records of VWSC meetings are available?",
-                                options: vwscProvider.yesNoMap.keys.toList(),
-                                selectedOption:
-                                    vwscProvider.selectedVWSCRecordsAvailable,
-                                onChanged: (val) {
-                                  vwscProvider.selectedVWSCRecordsAvailable =
-                                      val;
-                                  print(
-                                      'selectedVWSCRecordsAvailableID------- ${vwscProvider.selectedVWSCRecordsAvailableID}');
-                                },
-                              ),
-                              Customradiobttn(
-                                question: "7. VWSC/GP involved in O&M:",
-                                options:
-                                    vwscProvider.VWSCOMInvolvedID.keys.toList(),
-                                selectedOption:
-                                    vwscProvider.selectedVWSCOMInvolved,
-                                onChanged: (val) {
-                                  vwscProvider.selectedVWSCOMInvolved = val;
-                                  print(
-                                      'selectedVWSCRecordsAvailableID------- ${vwscProvider.selectedVWSCOMInvolvedID}');
-                                },
-                              ),
+                                      onChanged: (val) {
+                                        vwscProvider.selectedAsBuiltDrawing = val;
+                                        print(
+                                            'selectedAsBuiltDrawingID------- ${vwscProvider.selectedAsBuiltDrawingID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question:
+                                      "5. Whether meetings of VWSC are conducted in a periodic manner?",
+                                      options: vwscProvider.yesNoMap.keys.toList(),
+                                      selectedOption:
+                                      vwscProvider.selectedVWSCMeetingConducted,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCMeetingConducted =
+                                            val;
+                                        print(
+                                            'selectedVWSCMeetingConductedID------- ${vwscProvider.selectedVWSCMeetingConductedID}');
+                                      },
+                                    ),
+                                    if (vwscProvider.selectedVWSCMeetingConductedID ==
+                                        1)
+                                      Customtxtfeild(
+                                        label: 'If meeting held yes, Frequency:',
+                                        controller: vwscProvider.FrequencyController,
+                                        keyboardType: TextInputType.text,
+                                      ),
+                                    Customradiobttn(
+                                      question:
+                                      "6. Whether records of VWSC meetings are available?",
+                                      options: vwscProvider.yesNoMap.keys.toList(),
+                                      selectedOption:
+                                      vwscProvider.selectedVWSCRecordsAvailable,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCRecordsAvailable =
+                                            val;
+                                        print(
+                                            'selectedVWSCRecordsAvailableID------- ${vwscProvider.selectedVWSCRecordsAvailableID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question: "7. VWSC/GP involved in O&M:",
+                                      options:
+                                      vwscProvider.VWSCOMInvolvedID.keys.toList(),
+                                      selectedOption:
+                                      vwscProvider.selectedVWSCOMInvolved,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCOMInvolved = val;
+                                        print(
+                                            'selectedVWSCRecordsAvailableID------- ${vwscProvider.selectedVWSCOMInvolvedID}');
+                                      },
+                                    ),
 
 
-                              //TODO this question is not part of below 10%
-                              Customradiobttn(
-                                question:
-                                    "8. Scheme formally handed over to GP/VWSC:",
-                                options: vwscProvider.SchemeHandoverOptions,
-                                selectedOption:
-                                    vwscProvider.selectedSchemeHandover,
-                                onChanged: (val) {
-                                  vwscProvider.selectedSchemeHandover = val;
-                                  print(
-                                      'selectedSchemeHandoverID------- ${vwscProvider.selectedSchemeHandoverID}');
-                                },
+                                    //TODO this question is not part of below 10%
+                                    Customradiobttn(
+                                      question:
+                                      "8. Scheme formally handed over to GP/VWSC:",
+                                      options: vwscProvider.SchemeHandoverOptions,
+                                      selectedOption:
+                                      vwscProvider.selectedSchemeHandover,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedSchemeHandover = val;
+                                        print(
+                                            'selectedSchemeHandoverID------- ${vwscProvider.selectedSchemeHandoverID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question:
+                                      "9. Operation & Maintenance arrangements:",
+                                      options: vwscProvider.OMArrangementsOptions,
+                                      selectedOption:
+                                      vwscProvider.selectedOMArrangements,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedOMArrangements = val;
+                                        print(
+                                            'selectedOMArrangementsID------- ${vwscProvider.selectedOMArrangementsID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question:
+                                      "10. Community awareness about scheme features:",
+                                      options: vwscProvider.CommunityAwarenessOptions,
+                                      selectedOption:
+                                      vwscProvider.selectedCommunityAwareness,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedCommunityAwareness = val;
+                                        print(
+                                            'selectedCommunityAwarenessID------- ${vwscProvider.selectedCommunityAwarenessID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question:
+                                      "11. Community satisfaction with water quality:",
+                                      options: vwscProvider
+                                          .WaterQualitySatisfactionOptions,
+                                      selectedOption: vwscProvider
+                                          .selectedWaterQualitySatisfaction,
+                                      onChanged: (val) {
+                                        vwscProvider
+                                            .selectedWaterQualitySatisfaction = val;
+                                        print(
+                                            'selectedWaterQualitySatisfactionID------- ${vwscProvider.selectedWaterQualitySatisfactionID}');
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Customradiobttn(
-                                question:
-                                    "9. Operation & Maintenance arrangements:",
-                                options: vwscProvider.OMArrangementsOptions,
-                                selectedOption:
-                                    vwscProvider.selectedOMArrangements,
-                                onChanged: (val) {
-                                  vwscProvider.selectedOMArrangements = val;
-                                  print(
-                                      'selectedOMArrangementsID------- ${vwscProvider.selectedOMArrangementsID}');
-                                },
+
+                              Visibility(
+                                visible: mode == ProjectMode.below10,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+
+                                    Customradiobttn(
+                                      question: "1. Is VWSC or Pani samiti formed:",
+                                      options: vwscProvider.yesNoMap.keys.toList(),
+                                      selectedOption: vwscProvider.selectedVWSCFormed,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCFormed = val;
+                                        print(
+                                            'selectedVWSCFormed------- ${vwscProvider.selectedVWSCFormed} : ${vwscProvider.selectedVWSCFormedID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question: "2. Is VWSC bank account opened:",
+                                      options: vwscProvider.yesNoMap.keys.toList(),
+                                      selectedOption:
+                                      vwscProvider.selectedVWSCBankAccount,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCBankAccount = val;
+                                        print(
+                                            'selectedVWSCBankAccountID------- ${vwscProvider.selectedVWSCBankAccountID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question:
+                                      "3. VWSC/GP involvement in scheme operations:",
+                                      options: vwscProvider.VwscGPInvolmentOptions,
+                                      selectedOption:
+                                      vwscProvider.selectedVWSCInvolvement,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCInvolvement = val;
+                                        print(
+                                            'selectedVWSCInvolvementID------- ${vwscProvider.selectedVWSCInvolvementID}');
+                                      },
+                                    ),
+
+
+
+                                    Customradiobttn(
+                                      question:
+                                      "4. Whether meetings of VWSC are conducted in a periodic manner?",
+                                      options: vwscProvider.yesNoMap.keys.toList(),
+                                      selectedOption:
+                                      vwscProvider.selectedVWSCMeetingConducted,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCMeetingConducted =
+                                            val;
+                                        print(
+                                            'selectedVWSCMeetingConductedID------- ${vwscProvider.selectedVWSCMeetingConductedID}');
+                                      },
+                                    ),
+                                    if (vwscProvider.selectedVWSCMeetingConductedID ==
+                                        1)
+                                      Customtxtfeild(
+                                        label: 'If meeting held yes, Frequency:',
+                                        controller: vwscProvider.FrequencyController,
+                                        keyboardType: TextInputType.text,
+                                      ),
+                                    Customradiobttn(
+                                      question:
+                                      "5. Whether records of VWSC meetings are available?",
+                                      options: vwscProvider.yesNoMap.keys.toList(),
+                                      selectedOption:
+                                      vwscProvider.selectedVWSCRecordsAvailable,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCRecordsAvailable =
+                                            val;
+                                        print(
+                                            'selectedVWSCRecordsAvailableID------- ${vwscProvider.selectedVWSCRecordsAvailableID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question: "6. VWSC/GP involved in O&M:",
+                                      options:
+                                      vwscProvider.VWSCOMInvolvedID.keys.toList(),
+                                      selectedOption:
+                                      vwscProvider.selectedVWSCOMInvolved,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedVWSCOMInvolved = val;
+                                        print(
+                                            'selectedVWSCRecordsAvailableID------- ${vwscProvider.selectedVWSCOMInvolvedID}');
+                                      },
+                                    ),
+
+
+                                    Customradiobttn(
+                                      question:
+                                      "7. Operation & Maintenance arrangements:",
+                                      options: vwscProvider.OMArrangementsOptions,
+                                      selectedOption:
+                                      vwscProvider.selectedOMArrangements,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedOMArrangements = val;
+                                        print(
+                                            'selectedOMArrangementsID------- ${vwscProvider.selectedOMArrangementsID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question:
+                                      "8. Community awareness about scheme features:",
+                                      options: vwscProvider.CommunityAwarenessOptions,
+                                      selectedOption:
+                                      vwscProvider.selectedCommunityAwareness,
+                                      onChanged: (val) {
+                                        vwscProvider.selectedCommunityAwareness = val;
+                                        print(
+                                            'selectedCommunityAwarenessID------- ${vwscProvider.selectedCommunityAwarenessID}');
+                                      },
+                                    ),
+                                    Customradiobttn(
+                                      question:
+                                      "9. Community satisfaction with water quality:",
+                                      options: vwscProvider
+                                          .WaterQualitySatisfactionOptions,
+                                      selectedOption: vwscProvider
+                                          .selectedWaterQualitySatisfaction,
+                                      onChanged: (val) {
+                                        vwscProvider
+                                            .selectedWaterQualitySatisfaction = val;
+                                        print(
+                                            'selectedWaterQualitySatisfactionID------- ${vwscProvider.selectedWaterQualitySatisfactionID}');
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Customradiobttn(
-                                question:
-                                    "10. Community awareness about scheme features:",
-                                options: vwscProvider.CommunityAwarenessOptions,
-                                selectedOption:
-                                    vwscProvider.selectedCommunityAwareness,
-                                onChanged: (val) {
-                                  vwscProvider.selectedCommunityAwareness = val;
-                                  print(
-                                      'selectedCommunityAwarenessID------- ${vwscProvider.selectedCommunityAwarenessID}');
-                                },
-                              ),
-                              Customradiobttn(
-                                question:
-                                    "11. Community satisfaction with water quality:",
-                                options: vwscProvider
-                                    .WaterQualitySatisfactionOptions,
-                                selectedOption: vwscProvider
-                                    .selectedWaterQualitySatisfaction,
-                                onChanged: (val) {
-                                  vwscProvider
-                                      .selectedWaterQualitySatisfaction = val;
-                                  print(
-                                      'selectedWaterQualitySatisfactionID------- ${vwscProvider.selectedWaterQualitySatisfactionID}');
-                                },
-                              ),
+
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: SizedBox(

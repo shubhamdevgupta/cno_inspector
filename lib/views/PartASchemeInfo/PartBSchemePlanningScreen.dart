@@ -9,6 +9,7 @@ import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/customradiobttn.dart';
@@ -35,6 +36,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
       ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      print("STATE 1111 : ${args.toString()}");
       if (args != null) {
         final schemeId = args['schemeId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -105,6 +107,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
           ),
           body: Consumer<Schemeprovider>(
             builder: (context, schemeProvider, child) {
+              final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
               return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
@@ -139,7 +142,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
 
 // Above 10% part Start
                               Visibility(
-                                visible: schemeProvider.formType==1,
+                                visible: mode==ProjectMode.above10,
                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -260,11 +263,9 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               ),
 // Above 10% part End
 
-
-
                               // Below 10% part Start
                               Visibility(
-                                visible: schemeProvider.formType==2,
+                                visible: mode==ProjectMode.below10,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -383,7 +384,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                     ),
                                     onPressed: () async {
                                       LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Scheme Planning...");
-
+print("STATE : ${schemeProvider.stateId}");
                                       await schemeProvider.saveSchemePlanning(
                                           userId: _localStorageService
                                               .getInt(AppConstants.prefUserId)!,
@@ -396,19 +397,22 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                               .googleEarthSurveyID,
                                           numberOfSurveys:
                                               schemeProvider.noSurveyID,
-                                          designRunningHours: int.parse(schemeProvider
-                                              .wtpHoursController.text),
-                                          retentionTimeOHT: int.parse(schemeProvider
-                                              .ohsrTimeController.text),
-                                          retentionTimeMBR: int.parse(schemeProvider
-                                              .mbrTimeController.text),
-                                          terrainRocky: schemeProvider
-                                              .rockyPipeMaterialController.text,
-                                          terrainSoil: schemeProvider
-                                              .soilPipeMaterialController.text,
-                                          foundAsPerDPR:
-                                              schemeProvider.onSpotExcavationID,
-                                          deviation: schemeProvider.deviationReasonController.text);
+                                          designRunningHours: schemeProvider.wtpHoursController.text.isEmpty ? 0 : int.parse(schemeProvider.wtpHoursController.text),
+                                          retentionTimeOHT: schemeProvider.ohsrTimeController.text.isEmpty?0:int.parse(schemeProvider.ohsrTimeController.text),
+                                          retentionTimeMBR: schemeProvider.mbrTimeController.text.isEmpty ?0:int.parse(schemeProvider.mbrTimeController.text),
+                                          terrainRocky: schemeProvider.rockyPipeMaterialController.text,
+                                          terrainSoil: schemeProvider.soilPipeMaterialController.text,
+                                          foundAsPerDPR: schemeProvider.onSpotExcavationID,
+                                          deviation: schemeProvider.deviationReasonController.text,
+
+
+                                         reason_not_awarded_scheme_planning:schemeProvider.schemePlanning_Question1Controller.text ,
+                                         work_awarded_no_physical_progress:schemeProvider. schemePlanning_Question2Controller.text ,
+                                         multiple_schemes_sanctioned_justify_detial: schemeProvider.schemePlanning_Question5Controller.text,
+                                         desgined_conjunctive_detail: schemeProvider.schemePlanning_Question6Controller.text,
+                                         phy_status: mode.modeValue ,
+
+                                      );
                                       if (schemeProvider.status!) {
                                         ToastHelper.showToastMessage(
                                             schemeProvider.message!,
