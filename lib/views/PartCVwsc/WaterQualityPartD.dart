@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomRadioQuestion.dart';
@@ -105,6 +106,7 @@ void initState() {
           elevation: 5,
         ),
         body: Consumer<Vwscprovider>(builder: (context,vwscProvider,child){
+          final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
           return SingleChildScrollView(
             child: Container(
               child: Column(
@@ -163,20 +165,26 @@ void initState() {
                               ),
 
                               //TODO this question is not part of below 10%
-                              Customradiobttn(
-                                question: "5. Disinfection/chlorination done:",
-                                options: vwscProvider.yesNoMap.keys.toList(),
-                                selectedOption: vwscProvider.selectedDisinfectionDone,
-                                onChanged: (val) => vwscProvider.selectedDisinfectionDone = val,
+                              Visibility(
+                                visible: mode == ProjectMode.above10,
+                                child: Customradiobttn(
+                                  question: "5. Disinfection/chlorination done:",
+                                  options: vwscProvider.yesNoMap.keys.toList(),
+                                  selectedOption: vwscProvider.selectedDisinfectionDone,
+                                  onChanged: (val) => vwscProvider.selectedDisinfectionDone = val,
+                                ),
                               ),
 
 
                             //TODO this question is not part of below 10%
-                              Customradiobttn(
-                                question: "6. Free Residual Chlorine Level (FRC) at tail ends:",
-                                options: vwscProvider.frcLevelMap.keys.toList(),
-                                selectedOption: vwscProvider.selectedFRCLevel,
-                                onChanged: (val) => vwscProvider.selectedFRCLevel = val,
+                              Visibility(
+                                visible: mode == ProjectMode.above10,
+                                child: Customradiobttn(
+                                  question: "6. Free Residual Chlorine Level (FRC) at tail ends:",
+                                  options: vwscProvider.frcLevelMap.keys.toList(),
+                                  selectedOption: vwscProvider.selectedFRCLevel,
+                                  onChanged: (val) => vwscProvider.selectedFRCLevel = val,
+                                ),
                               ),
 
                               Align(

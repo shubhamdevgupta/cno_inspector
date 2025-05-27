@@ -60,13 +60,12 @@ class _DashboardTabViewState extends State<DashboardTabView>
     return Consumer<DashboardProvider>(
       builder: (context, provider, child) {
         return WillPopScope(
-          onWillPop: () async {
-            Navigator.pop(context);
+          onWillPop: () async {Navigator.pop(context);
             return false;
           },
           child: Scaffold(
             appBar: AppBar(
-              title: const Text("Dashboard"),
+              title: const Text("Dashboard",style: TextStyle(color: Colors.white),),
               backgroundColor: Colors.blue,
               bottom: TabBar(
                 controller: _tabController,

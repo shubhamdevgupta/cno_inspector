@@ -4,6 +4,7 @@ import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
@@ -25,6 +26,7 @@ class _PartEQualityAssuranceCommissioning
     extends State<PartEQualityAssuranceCommissioning> {
   LocalStorageService localStorageService = LocalStorageService();
 
+  String Que = "";
   @override
   void initState() {
     super.initState();
@@ -108,6 +110,12 @@ class _PartEQualityAssuranceCommissioning
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+                if(ProjectMode.below10==mode){
+                  Que = AppConstants.BelowDWSMPartEQ3;
+                }else{
+                  Que = AppConstants.AboveDWSMPartEQ3;
+                }
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -169,21 +177,23 @@ class _PartEQualityAssuranceCommissioning
                                       const SizedBox(height: 10),
 
                                       //TODO this question not part of below 10%
-                                      Customradiobttn(
-                                        question:
-                                        "3. During commissioning of schemes, who are generally present?",
-                                        options: dwsmProvider.commissioningPresenceMap.keys.toList(),
-                                        selectedOption: dwsmProvider.commissioningPresence,
-                                        onChanged: (values) {
-                                          dwsmProvider.commissioningPresence = values;
-                                        },
+                                      Visibility(
+                                        visible: mode == ProjectMode.above10,
+                                        child: Customradiobttn(
+                                          question:
+                                          "3. During commissioning of schemes, who are generally present?",
+                                          options: dwsmProvider.commissioningPresenceMap.keys.toList(),
+                                          selectedOption: dwsmProvider.commissioningPresence,
+                                          onChanged: (values) {
+                                            dwsmProvider.commissioningPresence = values;
+                                          },
+                                        ),
                                       ),
 
                                       const SizedBox(height: 10),
 
                                       Customradiobttn(
-                                        question:
-                                        "4. Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?",
+                                        question: Que,
                                         options: dwsmProvider.thirdPartyAssessmentMap.keys.toList(),
                                         selectedOption:
                                         dwsmProvider.thirdPartyAssessment,

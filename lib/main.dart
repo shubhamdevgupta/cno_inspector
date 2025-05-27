@@ -12,6 +12,7 @@ import 'package:cno_inspection/views/PartBDwsm/DashboardDWSM.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartACoordinationPlanningReviewScreen.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartBSourceSustainabilityWaterConservation.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartCMonitoringQualityandLabInfrastructure.dart';
+import 'package:cno_inspection/views/PartBDwsm/PartC_below_TechnoCommercialViability.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartDOperationandMaintenance.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartEQualityAssuranceandCommissioning.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartFPublicComplaintsandGrievance.dart';
@@ -19,6 +20,7 @@ import 'package:cno_inspection/views/PartCVwsc/CommunityFeedbackPartC.dart';
 import 'package:cno_inspection/views/PartCVwsc/CommunityInvolvementPartB.dart';
 import 'package:cno_inspection/views/PartCVwsc/DashboardVWSC.dart';
 import 'package:cno_inspection/views/PartCVwsc/GrievancePartE.dart';
+import 'package:cno_inspection/views/PartCVwsc/PartA_below_WaterSupply.dart';
 import 'package:cno_inspection/views/PartCVwsc/WaterQualityPartD.dart';
 import 'package:cno_inspection/views/PartCVwsc/WaterSupplyPartA.dart';
 
@@ -92,6 +94,8 @@ class MyApp extends StatelessWidget {
         AppConstants.navigateToOperationandMaintance: (context) => PartDoperationandmaintenance(),
         AppConstants.navigateToQualityAssurance: (context) => PartEQualityAssuranceCommissioning(),
         AppConstants.navigateToPartFPublicCompliant: (context) => PartFPublicCompliant(),
+        AppConstants.navigateToBelowPartCTechnoCommercialViability: (context) => PartcBelowTechnocommercialviabilityP(),
+        AppConstants.navigateToBelowPartAWaterSupplyFunctionality: (context) => PartaBelowWatersupply(),
 
         AppConstants.navigateToWaterSupplyPartA: (context) => WaterSupplyPartA(),
         AppConstants.navigateToCommunityInvolvementPartB: (context) => CommunityInvolvementPartB(),

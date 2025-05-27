@@ -35,7 +35,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
           Provider.of<DashboardProvider>(context, listen: false);
       final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
 
-      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,1,mode.modeValue);
+      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,3,mode.modeValue);
       _localStorage.saveInt(
           "villageId", dashboardProvider.dashboardList.first.villageId);
 
@@ -111,6 +111,7 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
             if (dashboardProvider.isLoading) {
               return const Center(child: CircularProgressIndicator());
             }
+            final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
             return SingleChildScrollView(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -203,23 +204,48 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         SizedBox(
                           height: 8,
                         ),
-                        buildSampleCard(
-                          qnumber: "A.",
-                          title: "Water Supply Functionality",
-                          color: Colors.blue,
-                          onTap: () {
-                            final selectedVillageId =
-                                dashboardProvider.selectedVwscId;
-                            final stateId =
-                                dashboardProvider.dashboardList.first.stateId;
-                            print('sending----- $stateId');
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToWaterSupplyPartA,
-                                arguments: {
-                                  'villageId': selectedVillageId,
-                                  'stateId': stateId,
-                                });
-                          },
+                        Visibility(
+                          visible: mode == ProjectMode.above10,
+                          child: buildSampleCard(
+                            qnumber: "A.",
+                            title: "Water Supply Functionality",
+                            color: Colors.blue,
+                            onTap: () {
+                              final selectedVillageId =
+                                  dashboardProvider.selectedVwscId;
+                              final stateId =
+                                  dashboardProvider.dashboardList.first.stateId;
+                              print('sending----- $stateId');
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToWaterSupplyPartA,
+                                  arguments: {
+                                    'villageId': selectedVillageId,
+                                    'stateId': stateId,
+                                  });
+                            },
+                          ),
+                        ),
+
+                        Visibility(
+                          visible: mode == ProjectMode.below10,
+                          child: buildSampleCard(
+                            qnumber: "A.",
+                            title: "Water Supply Functionality",
+                            color: Colors.blue,
+                            onTap: () {
+                              final selectedVillageId =
+                                  dashboardProvider.selectedVwscId;
+                              final stateId =
+                                  dashboardProvider.dashboardList.first.stateId;
+                              print('sending----- $stateId');
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToBelowPartAWaterSupplyFunctionality,
+                                  arguments: {
+                                    'villageId': selectedVillageId,
+                                    'stateId': stateId,
+                                  });
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: 10,
@@ -246,63 +272,116 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         SizedBox(
                           height: 10,
                         ),
-                        buildSampleCard(
-                          qnumber: "C.",
-                          title:
-                              "Community feedback on quality of construction",
-                          color: Colors.deepOrangeAccent,
-                          onTap: () {
-                            final selectedVillageId =
-                                dashboardProvider.selectedVwscId;
-                            final stateId =
-                                dashboardProvider.dashboardList.first.stateId;
-                            Navigator.pushReplacementNamed(context,
-                                AppConstants.navigateToCommunityFeedbackPartC,
-                                arguments: {
-                                  'villageId': selectedVillageId,
-                                  'stateId': stateId,
-                                });
-                          },
+
+
+                        Visibility(
+                          visible: mode == ProjectMode.above10,
+                          child: buildSampleCard(
+                            qnumber: "C.",
+                            title:
+                                "Community feedback on quality of construction",
+                            color: Colors.deepOrangeAccent,
+                            onTap: () {
+                              final selectedVillageId =
+                                  dashboardProvider.selectedVwscId;
+                              final stateId =
+                                  dashboardProvider.dashboardList.first.stateId;
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToCommunityFeedbackPartC,
+                                  arguments: {
+                                    'villageId': selectedVillageId,
+                                    'stateId': stateId,
+                                  });
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        buildSampleCard(
-                          qnumber: "D.",
-                          title: "Water Quality Monitoring",
-                          color: Colors.lightGreen,
-                          onTap: () {
-                            final selectedVillageId =
-                                dashboardProvider.selectedVwscId;
-                            final stateId =
-                                dashboardProvider.dashboardList.first.stateId;
-                            Navigator.pushReplacementNamed(
-                                context, AppConstants.navigateToQulityPartD,
-                                arguments: {
-                                  'villageId': selectedVillageId,
-                                  'stateId': stateId,
-                                });
-                          },
+                        Visibility(
+                          visible: mode == ProjectMode.below10,
+                          child: buildSampleCard(
+                            qnumber: "C.",
+                            title: "Water Quality Monitoring",
+                            color: Colors.lightGreen,
+                            onTap: () {
+                              final selectedVillageId =
+                                  dashboardProvider.selectedVwscId;
+                              final stateId =
+                                  dashboardProvider.dashboardList.first.stateId;
+                              Navigator.pushReplacementNamed(
+                                  context, AppConstants.navigateToQulityPartD,
+                                  arguments: {
+                                    'villageId': selectedVillageId,
+                                    'stateId': stateId,
+                                  });
+                            },
+                          ),
+                        ),
+
+                        Visibility(
+                          visible: mode == ProjectMode.above10,
+                          child: buildSampleCard(
+                            qnumber: "D.",
+                            title: "Water Quality Monitoring",
+                            color: Colors.lightGreen,
+                            onTap: () {
+                              final selectedVillageId =
+                                  dashboardProvider.selectedVwscId;
+                              final stateId =
+                                  dashboardProvider.dashboardList.first.stateId;
+                              Navigator.pushReplacementNamed(
+                                  context, AppConstants.navigateToQulityPartD,
+                                  arguments: {
+                                    'villageId': selectedVillageId,
+                                    'stateId': stateId,
+                                  });
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        buildSampleCard(
-                          qnumber: "E.",
-                          title: "Grievance Redressal",
-                          color: Colors.green,
-                          onTap: () {
-                            final selectedVillageId =
-                                dashboardProvider.selectedVwscId;
-                            final stateId =
-                                dashboardProvider.dashboardList.first.stateId;
-                            Navigator.pushReplacementNamed(
-                                context, AppConstants.navigateToGrievancePartE,
-                                arguments: {
-                                  'villageId': selectedVillageId,
-                                  'stateId': stateId,
-                                });
-                          },
+                        Visibility(
+                          visible: mode == ProjectMode.below10,
+                          child: buildSampleCard(
+                            qnumber: "D.",
+                            title: "Grievance Redressal",
+                            color: Colors.green,
+                            onTap: () {
+                              final selectedVillageId =
+                                  dashboardProvider.selectedVwscId;
+                              final stateId =
+                                  dashboardProvider.dashboardList.first.stateId;
+                              Navigator.pushReplacementNamed(
+                                  context, AppConstants.navigateToGrievancePartE,
+                                  arguments: {
+                                    'villageId': selectedVillageId,
+                                    'stateId': stateId,
+                                  });
+                            },
+                          ),
+                        ),
+
+                        Visibility(
+                          visible: mode == ProjectMode.above10,
+                          child: buildSampleCard(
+                            qnumber: "E.",
+                            title: "Grievance Redressal",
+                            color: Colors.green,
+                            onTap: () {
+                              final selectedVillageId =
+                                  dashboardProvider.selectedVwscId;
+                              final stateId =
+                                  dashboardProvider.dashboardList.first.stateId;
+                              Navigator.pushReplacementNamed(
+                                  context, AppConstants.navigateToGrievancePartE,
+                                  arguments: {
+                                    'villageId': selectedVillageId,
+                                    'stateId': stateId,
+                                  });
+                            },
+                          ),
                         ),
                       ],
                     )

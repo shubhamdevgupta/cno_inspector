@@ -22,6 +22,8 @@ class AboveTenPercentTab extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
+
+
               DashboardCard(
                 title: "Scheme Inspection Form",
                 baselineStatus: "Total Schemes \n$totalSchemes",
@@ -32,7 +34,13 @@ class AboveTenPercentTab extends StatelessWidget {
                     arguments: {'source': "10"},
                   );
                 },
+                primaryColor: Colors.deepPurple,
+                accentColor: Colors.deepPurple.shade50,
+                imagePath: "assets/icons/schemes.png", // example local asset
               ),
+
+
+
               DashboardCard(
                 title: "Interaction with DWSM",
                 baselineStatus: "Total Districts \n$totalDistricts",
