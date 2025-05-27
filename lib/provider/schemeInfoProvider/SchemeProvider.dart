@@ -209,6 +209,11 @@ class Schemeprovider extends ChangeNotifier {
         waterAllocationController.text =
             sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw.toString();
         print('waterAllocationController: ${waterAllocationController.text}');
+        //
+       sourceFindingRepresentativesConsulted_Controller.text = sourceSurveyData.first.represe_of_ource_finding_committee;
+       alternativeSourcesAvailable_Controller.text=sourceSurveyData.first.cost_effective_alternative_sources;
+
+        //  Remarks_Source;
       } else {
         _message = response.message;
       }
@@ -432,6 +437,14 @@ class Schemeprovider extends ChangeNotifier {
         deviationReasonController.text =
             schemePlanningData.first.divationIfAny.toString();
         print('deviationReasonController: ${deviationReasonController.text}');
+
+        //
+        schemePlanning_Question1Controller.text  =schemePlanningData.first.txtreason_not_awarded_scheme_planning;
+        schemePlanning_Question2Controller .text  =schemePlanningData.first.txtwork_awarded_no_physical_progress;
+        schemePlanning_Question5Controller .text =schemePlanningData.first.txtmultiple_schemes_sanctioned_justify_detial;
+        schemePlanning_Question6Controller .text  =schemePlanningData.first.txtdesgined_conjunctive_detail;
+        //       =schemePlanningData.first.scheme_planning_Remarks;
+        //
       } else {
         _message = response.message;
       }

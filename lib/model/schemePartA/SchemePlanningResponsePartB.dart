@@ -38,6 +38,12 @@ class SchemePlanningItem {
   final String divationIfAny;
   final dynamic createdby;
   final dynamic createdip;
+  //
+ final String txtreason_not_awarded_scheme_planning;
+ final String txtwork_awarded_no_physical_progress;
+ final String txtmultiple_schemes_sanctioned_justify_detial;
+ final String txtdesgined_conjunctive_detail;
+ final String scheme_planning_Remarks;
 
   SchemePlanningItem({
     required this.userid,
@@ -56,6 +62,13 @@ class SchemePlanningItem {
     required this.divationIfAny,
     this.createdby,
     this.createdip,
+//
+    required this.txtreason_not_awarded_scheme_planning,
+    required this.txtwork_awarded_no_physical_progress,
+    required this.txtmultiple_schemes_sanctioned_justify_detial,
+    required this.txtdesgined_conjunctive_detail,
+    required this.scheme_planning_Remarks,
+
   });
 
   factory SchemePlanningItem.fromJson(Map<String, dynamic> json) {
@@ -76,6 +89,13 @@ class SchemePlanningItem {
       divationIfAny: json['divation_if_any'] ?? '',
       createdby: json['createdby'],
       createdip: json['createdip'],
+      //
+      txtreason_not_awarded_scheme_planning: json['txtreason_not_awarded_scheme_planning'] ?? '',
+      txtwork_awarded_no_physical_progress: json['txtwork_awarded_no_physical_progress'] ?? '',
+      txtmultiple_schemes_sanctioned_justify_detial: json['txtmultiple_schemes_sanctioned_justify_detial'] ?? '',
+      txtdesgined_conjunctive_detail: json['txtdesgined_conjunctive_detail'] ?? '',
+      scheme_planning_Remarks: json['scheme_planning_Remarks'] ?? '',
+
     );
   }
 }
