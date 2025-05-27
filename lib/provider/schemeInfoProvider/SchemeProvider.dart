@@ -132,6 +132,9 @@ class Schemeprovider extends ChangeNotifier {
     required int semiCriticalZoneVillages,
     required int groundWaterAnalysisConducted,
     required int waterAllocationFromWRD,
+    required String alterNativeSource,
+    required String repressFindinCommitte,
+    required int modeType,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -148,6 +151,9 @@ class Schemeprovider extends ChangeNotifier {
         semiCriticalZoneVillages: semiCriticalZoneVillages,
         groundWaterAnalysisConducted: groundWaterAnalysisConducted,
         waterAllocationFromWRD: waterAllocationFromWRD,
+        alterNativeSource: alterNativeSource,
+        repressFindinCommitte: repressFindinCommitte,
+        modeType: modeType
       );
 
       _message = response.message;
@@ -226,6 +232,8 @@ class Schemeprovider extends ChangeNotifier {
     criticalController.clear();
     semiCriticalController.clear();
     waterAllocationController.clear();
+    sourceFindingRepresentativesConsulted_Controller.clear();
+    alternativeSourcesAvailable_Controller.clear();
 
     notifyListeners();
   }

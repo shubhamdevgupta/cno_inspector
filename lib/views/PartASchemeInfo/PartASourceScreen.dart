@@ -1,7 +1,6 @@
 import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
-import 'package:cno_inspection/views/tabLayout/DashboardTabView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +45,10 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSourceSurvey(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+        schemeProvider.fetchSourceSurvey(
+            stateId.toString(),
+            schemeId.toString(),
+            _localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
@@ -100,7 +102,8 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
           ),
           body: Consumer<Schemeprovider>(
             builder: (context, schemeProvider, child) {
-              final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+              final mode =
+                  Provider.of<AppStateProvider>(context, listen: false).mode;
               return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
@@ -216,17 +219,23 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                   visible: mode == ProjectMode.below10,
                                   child: Column(
                                     children: [
-                                      SizedBox(height: 10,),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
                                       Customtxtfeild(
-                                        label: '6.	Whether all representatives of source finding committee such as State WRD/ID, State level offices of CGWB etc. were consulted for making the recommendation or it was a PHED level exercise through Dept. Level hydrogeologist only? Provide details',
-                                        controller: schemeProvider.sourceFindingRepresentativesConsulted_Controller,
+                                        label:
+                                            '6.	Whether all representatives of source finding committee such as State WRD/ID, State level offices of CGWB etc. were consulted for making the recommendation or it was a PHED level exercise through Dept. Level hydrogeologist only? Provide details',
+                                        controller: schemeProvider
+                                            .sourceFindingRepresentativesConsulted_Controller,
                                         keyboardType: TextInputType.text,
                                       ),
                                       const SizedBox(height: 8),
                                       Customtxtfeild(
-                                        label: '7.	What were the other cost-effective alternative sources available to provide the piped water supply in the area? Provide details',
-                                        controller: schemeProvider.alternativeSourcesAvailable_Controller,
-                                        keyboardType: TextInputType.number,
+                                        label:
+                                            '7.	What were the other cost-effective alternative sources available to provide the piped water supply in the area? Provide details',
+                                        controller: schemeProvider
+                                            .alternativeSourcesAvailable_Controller,
+                                        keyboardType: TextInputType.text,
                                       ),
                                       const SizedBox(height: 8),
                                     ],
@@ -234,13 +243,11 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                 ),
 
                                 // pass this additional value when api available
-                               /*
+                                /*
                                schemeProvider.sourceFindingRepresentativesConsulted_Controller.text
                                 schemeProvider.alternativeSourcesAvailable_Controller.text*/
 
                                 // Below 10% part End
-
-
 
                                 const SizedBox(height: 15),
                                 Align(
@@ -261,14 +268,14 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                             isLoading: schemeProvider.isLoading,
                                             message: "Saving Source...");
                                         await schemeProvider.saveSourceSurvey(
-                                            userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                            userId: _localStorageService.getInt(
+                                                AppConstants.prefUserId)!,
                                             stateId: schemeProvider.stateId!,
                                             schemeId: schemeProvider.schemeId!,
                                             isRecommendShiftToSurface: schemeProvider
                                                 .selectedValueQ1Id,
-                                            studyAccessGroundBeforeSurface:
-                                                schemeProvider
-                                                    .selectedValueQ2Id,
+                                            studyAccessGroundBeforeSurface: schemeProvider
+                                                .selectedValueQ2Id,
                                             safeZoneVillages: int.parse(schemeProvider
                                                 .safeController.text),
                                             criticalZoneVillages: int.parse(
@@ -280,7 +287,10 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                                     .text),
                                             groundWaterAnalysisConducted:
                                                 schemeProvider.selectedValueQ3Id,
-                                            waterAllocationFromWRD: int.parse(schemeProvider.waterAllocationController.text));
+                                            waterAllocationFromWRD: int.parse(schemeProvider.waterAllocationController.text),
+                                            alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text,
+                                            repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text,
+                                            modeType: mode.modeValue);
 
                                         if (schemeProvider.status!) {
                                           ToastHelper.showToastMessage(
@@ -309,9 +319,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                   ),
                                 ),
                               ],
-                            )
-
-                        ),
+                            )),
                       )
                     ],
                   ),
