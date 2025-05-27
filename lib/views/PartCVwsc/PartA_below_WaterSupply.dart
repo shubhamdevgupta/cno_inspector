@@ -279,37 +279,30 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                           ),
                                         ),
                                         onPressed: () async {
-                                        /*  LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Water Supply Functionality");
+                                          LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Water Supply Functionality");
 
 
                                           await vwscProvider.saveVwscWaterSupply(
-                                              userId: _localStorageService.getInt(
-                                                  AppConstants.prefUserId)!,
+                                              userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                               stateId: vwscProvider.stateId!,
-                                              villageId: vwscProvider.villageId!,
-                                              waterSupplyFrequency: vwscProvider
-                                                  .selectedFTKTestingFrequencyId,
-                                              adequateWaterToHH: vwscProvider
-                                                  .selectedHouseholdWaterId,
-                                              adequateWaterToRemote: vwscProvider
-                                                  .selectedPvtgGroupsId,
-                                              remoteReason: vwscProvider
-                                                  .reasonRemoteGroupsController
-                                                  .text,
-                                              tailEndWaterReach:
-                                              vwscProvider.selectedTailEndId,
-                                              schemeOperationalStatus:
-                                              vwscProvider
-                                                  .selectedschemeStatusId,
-                                              pwsReachInstitutions: vwscProvider
-                                                  .selectedinstitutionsIds,
-                                              createdBy:
-                                              _localStorageService.getInt(
-                                                  AppConstants.prefUserId)!);
-                                          if (vwscProvider.status!) {
-                                            ToastHelper.showToastMessage(
-                                                vwscProvider.message!,
-                                                backgroundColor: Colors.green);
+                                              villageId: vwscProvider.villageId!, waterSupplyFrequency: vwscProvider.selectedFTKTestingFrequencyId,
+                                              adequateWaterToHH: vwscProvider.selectedHouseholdWaterId,
+                                              adequateWaterToRemote: vwscProvider.selectedPvtgGroupsId,
+                                              remoteReason: vwscProvider.reasonRemoteGroupsController.text,
+                                              tailEndWaterReach: vwscProvider.selectedTailEndId,
+                                              schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
+                                              pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
+                                              createdBy: _localStorageService.getInt(AppConstants.prefUserId)!
+
+                                            // new parameter
+
+
+
+                                          );
+
+
+
+                                          if (vwscProvider.status!) {ToastHelper.showToastMessage(vwscProvider.message!, backgroundColor: Colors.green);
 
                                             Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
@@ -320,7 +313,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                             ToastHelper.showToastMessage(
                                                 vwscProvider.message!,
                                                 backgroundColor: Colors.red);
-                                          }*/
+                                          }
                                         },
                                         child: Text(
                                           "SAVE & NEXT",

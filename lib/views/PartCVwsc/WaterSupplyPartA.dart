@@ -237,39 +237,26 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
 
 
                                           await vwscProvider.saveVwscWaterSupply(
-                                              userId: _localStorageService.getInt(
-                                                  AppConstants.prefUserId)!,
+                                              userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                               stateId: vwscProvider.stateId!,
                                               villageId: vwscProvider.villageId!,
-                                              waterSupplyFrequency: vwscProvider
-                                                  .selectedFTKTestingFrequencyId,
-                                              adequateWaterToHH: vwscProvider
-                                                  .selectedHouseholdWaterId,
-                                              adequateWaterToRemote: vwscProvider
-                                                  .selectedPvtgGroupsId,
-                                              remoteReason: vwscProvider
-                                                  .reasonRemoteGroupsController
-                                                  .text,
-                                              tailEndWaterReach:
-                                                  vwscProvider.selectedTailEndId,
-                                              schemeOperationalStatus:
-                                                  vwscProvider
-                                                      .selectedschemeStatusId,
-                                              pwsReachInstitutions: vwscProvider
-                                                  .selectedinstitutionsIds,
-                                              createdBy:
-                                                  _localStorageService.getInt(
-                                                      AppConstants.prefUserId)!);
-                                          if (vwscProvider.status!) {
-                                            ToastHelper.showToastMessage(
-                                                vwscProvider.message!,
-                                                backgroundColor: Colors.green);
+                                              waterSupplyFrequency: vwscProvider.selectedFTKTestingFrequencyId,
+                                              adequateWaterToHH: vwscProvider.selectedHouseholdWaterId,
+                                              adequateWaterToRemote: vwscProvider.selectedPvtgGroupsId,
+                                              remoteReason: vwscProvider.reasonRemoteGroupsController.text,
+                                              tailEndWaterReach: vwscProvider.selectedTailEndId,
+                                              schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
+                                              pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
+                                              createdBy: _localStorageService.getInt(AppConstants.prefUserId)!
 
-                                            Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      CommunityInvolvementPartB()),
-                                            );
+                                              // new parameter
+
+
+
+
+                                          );
+                                          if (vwscProvider.status!) {ToastHelper.showToastMessage(vwscProvider.message!, backgroundColor: Colors.green);
+                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => CommunityInvolvementPartB()),);
                                           } else {
                                             ToastHelper.showToastMessage(
                                                 vwscProvider.message!,

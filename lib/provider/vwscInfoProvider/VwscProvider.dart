@@ -417,6 +417,17 @@ class Vwscprovider extends ChangeNotifier {
     required int schemeOperationalStatus,
     required List<int> pwsReachInstitutions,
     required int createdBy,
+
+    // New Parameters
+    required int phyStatus,
+    required int isPipedWaterSupplyScheme,
+    required int typeOfSchemeCommissioned,
+    required String schemeBeneficiaryHouseholds,
+    required int presentStatusOfWaterSupplySchemes,
+    required int waterSupplyFrequencyAssured,
+    required int remoteGroupsPlanned,
+    required String remoteGroupsPlannedDetails,
+    required String observationWaterSupplyFunctionality,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -434,17 +445,28 @@ class Vwscprovider extends ChangeNotifier {
         schemeOperationalStatus: schemeOperationalStatus,
         pwsReachInstitutions: pwsReachInstitutions,
         createdBy: createdBy,
+
+        // Pass new parameters
+        phyStatus: phyStatus,
+        isPipedWaterSupplyScheme: isPipedWaterSupplyScheme,
+        typeOfSchemeCommissioned: typeOfSchemeCommissioned,
+        schemeBeneficiaryHouseholds: schemeBeneficiaryHouseholds,
+        presentStatusOfWaterSupplySchemes: presentStatusOfWaterSupplySchemes,
+        waterSupplyFrequencyAssured: waterSupplyFrequencyAssured,
+        remoteGroupsPlanned: remoteGroupsPlanned,
+        remoteGroupsPlannedDetails: remoteGroupsPlannedDetails,
+        observationWaterSupplyFunctionality: observationWaterSupplyFunctionality,
       );
       _message = response.message;
       _status = response.status;
     } catch (e) {
       GlobalExceptionHandler.handleException(e as Exception);
-
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
+
 
   /// get api for que 111
 

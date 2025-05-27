@@ -21,6 +21,17 @@ class VwscRepository {
     required int schemeOperationalStatus,
     required List<int> pwsReachInstitutions,
     required int createdBy,
+
+    // New Parameters
+    required int phyStatus,
+    required int isPipedWaterSupplyScheme,
+    required int typeOfSchemeCommissioned,
+    required String schemeBeneficiaryHouseholds,
+    required int presentStatusOfWaterSupplySchemes,
+    required int waterSupplyFrequencyAssured,
+    required int remoteGroupsPlanned,
+    required String remoteGroupsPlannedDetails,
+    required String observationWaterSupplyFunctionality,
   }) async {
     try {
       final response = await _apiService.post(
@@ -36,7 +47,18 @@ class VwscRepository {
           "whether_water_reach_to_tail_end": tailEndWaterReach,
           "scheme_operational_status_commissioning": schemeOperationalStatus,
           "whether_pws_reach_all_school_anganwadi_phc": pwsReachInstitutions,
-          "createdby": createdBy
+          "createdby": createdBy,
+
+          // New parameters
+          "phy_status": phyStatus,
+          "Is_there_any_piped_water_supply_scheme_in_the_village": isPipedWaterSupplyScheme,
+          "What_is_the_type_of_scheme_presently_commissioned": typeOfSchemeCommissioned,
+          "If_scheme_is_commissioned_how_many_households_are_being_benefitted": schemeBeneficiaryHouseholds,
+          "What_is_the_present_status_of_water_supply_schemes": presentStatusOfWaterSupplySchemes,
+          "Water_supply_frequency_assured_to_villagers_in_the_scheme": waterSupplyFrequencyAssured,
+          "rdb_Whether_remote_SC_ST_PVTG_groups_existing_in_command_area_of_the_scheme_has_been_planned_in_scheme": remoteGroupsPlanned,
+          "txt_Whether_remote_SC_ST_PVTG_groups_existing_in_command_area_of_the_scheme_has_been_planned_in_scheme": remoteGroupsPlannedDetails,
+          "txtObservationWatersupplyFunctionality": observationWaterSupplyFunctionality,
         }),
       );
 
@@ -45,6 +67,7 @@ class VwscRepository {
       rethrow;
     }
   }
+
 
   // vwsc_repository.dart (add this inside same class)
   Future<BaseResponse> saveVwscCommunityInvolvement({
