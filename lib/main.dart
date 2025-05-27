@@ -33,6 +33,7 @@ import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartCRetrofittingAugmentationScreen.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartDSchemeImplementationScreen.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartEVisual%20Inspection.dart';
+import 'package:cno_inspection/views/tabLayout/DashboardTabView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -76,6 +77,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => SplashScreen(),
         AppConstants.navigateToDashboard: (context) => Dashboardscreen(),
+        AppConstants.navigateToDashboardHome: (context) => DashboardTabView(),
         AppConstants.navigateToLogin: (context) => Loginscreen(),
         AppConstants.navigateToDashboardSchemeInfo: (context) => Dashboardschemeinfo(),
         AppConstants.navigateToDashboardDWSM: (context) => Dashboarddwsm(),
