@@ -119,6 +119,27 @@ class SchemeImplementationModel {
       delayWorkReason: List<int>.from(json['delay_work_reason'] ?? []),
       costOverrunReason: List<int>.from(json['cost_overrun_reason'] ?? []),
       costRevisionReason: List<int>.from(json['cost_revision_reason'] ?? []),
+      //
+
+        delay_work_reasonIds: List<int>.from(json['delay_work_reasonIds'] ?? []),
+// This need to be verify once
+      /*
+            "": "",
+            "cost_overrun_reasonIds": "",
+            "cost_revision_reasonIds": "",
+            "listdelay_work_reason": [1,2  ],
+            "listcost_overrun_reason": [ 10, 11,  ],
+            "listcost_revision_reason": [ 12, 13, ],
+
+            "txtcost_levelzed_cost_cr": null,
+            "is_tpia_engaged_value": 1,
+            "concurrent_supervission_scope_value": 1,
+            "txtpws_status_under_scheme": "Test data 1",
+            "phy_status": 0,
+            "Resion_for_delay_after_aword_other": "Test data 2",
+            "scheme_implementation_Remarks": "",
+            "Reason_for_cost_overrun": "",
+            "Reason_for_revision": ""*/
     );
   }
 }

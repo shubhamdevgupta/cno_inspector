@@ -437,7 +437,6 @@ class Schemeprovider extends ChangeNotifier {
         deviationReasonController.text =
             schemePlanningData.first.divationIfAny.toString();
         print('deviationReasonController: ${deviationReasonController.text}');
-
         //
         schemePlanning_Question1Controller.text  =schemePlanningData.first.txtreason_not_awarded_scheme_planning;
         schemePlanning_Question2Controller .text  =schemePlanningData.first.txtwork_awarded_no_physical_progress;
@@ -629,6 +628,8 @@ class Schemeprovider extends ChangeNotifier {
         print('onPmGatiShakti: $onPmGatiShakti');
 
         reasonController.text = retrofitInfoData.first.ifNoReason.toString();
+
+      //  additionalRemarkController retrofitInfoData.first.AdditionalInfo_Remarks.toString();
         print('reasonController: ${reasonController.text}');
       } else {
         _message = response.message;
