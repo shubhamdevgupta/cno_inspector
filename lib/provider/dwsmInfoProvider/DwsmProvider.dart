@@ -60,7 +60,7 @@ class Dwsmprovider extends ChangeNotifier {
 
   final Map<String, int> yesNoMap = {
     "Yes": 1,
-    "No": 2,
+    "No": 0,
   };
 
   //AAAAAAAAaaaaaaaaaa
@@ -75,7 +75,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? 0;
+  int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? -1;
 
   // Controller for 1.1 How many meetings
   final TextEditingController meetingsHeldController = TextEditingController();
@@ -97,7 +97,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get selectedMeetingQualityID =>
-      meetingQualityMap[_selectedMeetingQuality] ?? 0;
+      meetingQualityMap[_selectedMeetingQuality] ?? -1;
 
   // Question 2: DISHA meetings being held
   String? _selectedDISHA;
@@ -109,7 +109,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedDISHAID => yesNoMap[_selectedDISHA] ?? 0;
+  int get selectedDISHAID => yesNoMap[_selectedDISHA] ?? -1;
 
   Future<void> saveCoordinationPlanningReview({
     required int userId,
@@ -225,7 +225,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get sourceSustainabilityId =>
-      sourceSustainabilityMap[_sourceSustainability] ?? 0;
+      sourceSustainabilityMap[_sourceSustainability] ?? -1;
 
   // Question 2: Groundwater protection
   final Map<String, int> groundwaterProtectionMap = {
@@ -243,7 +243,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get groundwaterProtectionId =>
-      groundwaterProtectionMap[_groundwaterProtection] ?? 0;
+      groundwaterProtectionMap[_groundwaterProtection] ?? -1;
 
   // Question 3: Recharge structure implementation
   final Map<String, int> rechargeStructureMap = {
@@ -265,7 +265,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get rechargeStructureImplementedID =>
-      rechargeStructureMap[_rechargeStructureImplemented] ?? 0;
+      rechargeStructureMap[_rechargeStructureImplemented] ?? -1;
 
   //
   // Does_district_NABL_accredited_lab_water_quality
@@ -284,7 +284,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get accreditedLabWaterQualityID =>
-      yesNoMap[_accredited_lab_water_quality] ?? 0;
+      yesNoMap[_accredited_lab_water_quality] ?? -1;
 
   //
 
@@ -309,7 +309,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get impactStudiesID => impactStudiesMap[_impactStudies] ?? 0;
+  int get impactStudiesID => impactStudiesMap[_impactStudies] ?? -1;
 
   Future<bool> saveSourceSustainability({
     required int userId,
@@ -436,7 +436,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get assetsGeotaggedID => assetsGeotaggedMap[_assetsGeotagged] ?? 0;
+  int get assetsGeotaggedID => assetsGeotaggedMap[_assetsGeotagged] ?? -1;
 
 // NABL-accredited lab availability
   String? _hasNablLab;
@@ -448,7 +448,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get hasNablLabID => yesNoMap[_hasNablLab] ?? 0;
+  int get hasNablLabID => yesNoMap[_hasNablLab] ?? -1;
 
 // Testing management (if no NABL lab)
   final TextEditingController testingManagedController =
@@ -596,7 +596,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get handoverProtocolID => handoverProtocolMap[_handoverProtocol] ?? 0;
+  int get handoverProtocolID => handoverProtocolMap[_handoverProtocol] ?? -1;
 
 // 2. Manpower Percentage Controller
   final TextEditingController manpowerPercentController =
@@ -619,7 +619,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get feeBasisID => feeBasisMap[_feeBasis] ?? 0;
+  int get feeBasisID => feeBasisMap[_feeBasis] ?? -1;
 
 // 5. User Fee Collection Percentage
   final TextEditingController userFeePercentController =
@@ -752,7 +752,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get authorizedInspectorID =>
-      authorizedInspectorsMap[_authorizedInspectors] ?? 0;
+      authorizedInspectorsMap[_authorizedInspectors] ?? -1;
 
 // 2. Commissioning Protocol Followed - Radio
   String? _commissioningProtocolFollowed;
@@ -765,7 +765,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get commissioningProtocolFollowedID =>
-      yesNoMap[_commissioningProtocolFollowed] ?? 0;
+      yesNoMap[_commissioningProtocolFollowed] ?? -1;
 
 // 3. Commissioning Presence - Multi Select
 
@@ -787,7 +787,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get commissioningPresenceID =>
-      commissioningPresenceMap[_commissioningPresence] ?? 0;
+      commissioningPresenceMap[_commissioningPresence] ?? -1;
 
 // 4. Third Party Assessment - Radio
   final Map<String, int> thirdPartyAssessmentMap = {
@@ -806,7 +806,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get thirdPartyAssessmentID =>
-      thirdPartyAssessmentMap[_thirdPartyAssessment] ?? 0;
+      thirdPartyAssessmentMap[_thirdPartyAssessment] ?? -1;
 
 
   String? _thirdPartyInspectionAgency;
@@ -818,7 +818,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get thirdPartyInspectionAgencyID =>
-      yesNoMap[_thirdPartyInspectionAgency] ?? 0;
+      yesNoMap[_thirdPartyInspectionAgency] ?? -1;
 
   Future<void> saveQualityAssurance({
     required int userId,
@@ -928,7 +928,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get grievanceMechanismAvailableID =>
-      yesNoMap[_grievanceMechanismAvailable] ?? 0;
+      yesNoMap[_grievanceMechanismAvailable] ?? -1;
 
 // 2. Grievance Registration Methods - Multi Select
 
@@ -950,7 +950,7 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get grievanceRegistrationMethodsID =>
-      grievanceRegistrationMethodsMap[_grievanceRegistrationMethods] ?? 0;
+      grievanceRegistrationMethodsMap[_grievanceRegistrationMethods] ?? -1;
 
 // 3. Complaints Received - Radio
   String? _complaintsReceived;
@@ -962,7 +962,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get complaintsReceivedID => yesNoMap[_complaintsReceived] ?? 0;
+  int get complaintsReceivedID => yesNoMap[_complaintsReceived] ?? -1;
 
 // 3.1 Type of Complaints - Multi Select
   final Map<String, int> complaintTypeMap = {
@@ -983,7 +983,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get complaintTypesID => complaintTypeMap[_complaintTypes] ?? 0;
+  int get complaintTypesID => complaintTypeMap[_complaintTypes] ?? -1;
 
   TextEditingController avgResolutionTimeController = TextEditingController();
   TextEditingController actionTakenController = TextEditingController();
@@ -1120,7 +1120,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get fieldinspectionID => fieldinspectionMap[_fieldinspection] ?? 0;
+  int get fieldinspectionID => fieldinspectionMap[_fieldinspection] ?? -1;
 
   //Q2
   String? _commisionprotocol;
@@ -1132,7 +1132,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get commisionprotocolID => yesNoMap[_commisionprotocol] ?? 0;
+  int get commisionprotocolID => yesNoMap[_commisionprotocol] ?? -1;
 
   //Q3
   String? _inspectionagencies;
@@ -1144,7 +1144,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get inspectionagenciesID => yesNoMap[_inspectionagencies] ?? 0;
+  int get inspectionagenciesID => yesNoMap[_inspectionagencies] ?? -1;
 
   // Part E
 
@@ -1160,5 +1160,5 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   int get GrievanceRedressalmechanismID =>
-      yesNoMap[_GrievanceRedressalmechanism] ?? 0;
+      yesNoMap[_GrievanceRedressalmechanism] ?? -1;
 }

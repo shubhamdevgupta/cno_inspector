@@ -66,11 +66,11 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedValueQ3Id => yesNoMap[_selectedValueQ3] ?? 0;
+  int get selectedValueQ3Id => yesNoMap[_selectedValueQ3] ?? -1;
 
-  int get selectedValueQ2Id => yesNoMap[_selectedValueQ2] ?? 0;
+  int get selectedValueQ2Id => yesNoMap[_selectedValueQ2] ?? -1;
 
-  int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? 0;
+  int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? -1;
 
   final TextEditingController safeController = TextEditingController();
   final TextEditingController criticalController = TextEditingController();
@@ -278,13 +278,13 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get topoSurveyID => yesNoMap[_topoSurvey] ?? 0;
+  int get topoSurveyID => yesNoMap[_topoSurvey] ?? -1;
 
-  int get gpsSurveyID => yesNoMap[_gpsSurvey] ?? 0;
+  int get gpsSurveyID => yesNoMap[_gpsSurvey] ?? -1;
 
-  int get googleEarthSurveyID => yesNoMap[_googleEarthSurvey] ?? 0;
+  int get googleEarthSurveyID => yesNoMap[_googleEarthSurvey] ?? -1;
 
-  int get noSurveyID => yesNoMap[_noSurvey] ?? 0;
+  int get noSurveyID => yesNoMap[_noSurvey] ?? -1;
 
   // --------------------
   // 2. WTP Design Hours (Text Field)
@@ -313,7 +313,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get onSpotExcavationID => yesNoMap[_onSpotExcavation] ?? 0;
+  int get onSpotExcavationID => yesNoMap[_onSpotExcavation] ?? -1;
 
   final TextEditingController deviationReasonController =
       TextEditingController();
@@ -505,7 +505,7 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   int get selectedLegacyInfraAssessmentId =>
-      yesNoMap[_legacyInfraAssessment] ?? 0;
+      yesNoMap[_legacyInfraAssessment] ?? -1;
 
   // TextField Controllers: Legacy Infrastructure Usage
   final TextEditingController transmissionPipelineKmController =
@@ -529,7 +529,7 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   int get asBuiltDrawingAvailabilityID =>
-      yesNoMap[_asBuiltDrawingAvailability] ?? 0;
+      yesNoMap[_asBuiltDrawingAvailability] ?? -1;
 
   // Radio 3: Has it been digitized and uploaded on PM Gatishakti?
   String? _onPmGatishakti;
@@ -541,7 +541,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get onPmGatishaktiID => yesNoMap[_onPmGatishakti] ?? 0;
+  int get onPmGatishaktiID => yesNoMap[_onPmGatishakti] ?? -1;
   final TextEditingController reasonController = TextEditingController();
 
 
@@ -725,7 +725,7 @@ class Schemeprovider extends ChangeNotifier {
     "No overrun": 4,
   };
 
-  int get selectedCostOverrunID => costOverrun[_selectedCostOverrun] ?? 0;
+  int get selectedCostOverrunID => costOverrun[_selectedCostOverrun] ?? -1;
 
   // Q3: Reason(s) for cost overrun (multi-select)
   List<String> _selectedcostOverrunReasons = [];
@@ -782,11 +782,11 @@ class Schemeprovider extends ChangeNotifier {
   };
 
   int get selectedincreaseInCostID =>
-      increaseInCostID[_selectedincreaseInCost] ?? 0;
+      increaseInCostID[_selectedincreaseInCost] ?? -1;
 
   //
   int get selectedrevisedCostApprovedID =>
-      yesNoMap[_selectedrevisedCostApproved] ?? 0;
+      yesNoMap[_selectedrevisedCostApproved] ?? -1;
 
   // Q5.1: Increase in cost (single choice)
   String? _increaseInCost;
@@ -898,7 +898,7 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedWTPID => yesNoMap[_selectedWTP] ?? 0;
+  int get selectedWTPID => yesNoMap[_selectedWTP] ?? -1;
 
   //Q8.2
   String? _selectedOHSR; // Yes / No
@@ -911,7 +911,7 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedOHSRID => yesNoMap[_selectedOHSR] ?? 0;
+  int get selectedOHSRID => yesNoMap[_selectedOHSR] ?? -1;
 
   //Q8.3
   String? _selecteSource; // Yes / No
@@ -924,7 +924,7 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   //
-  int get selecteSourceID => yesNoMap[_selecteSource] ?? 0;
+  int get selecteSourceID => yesNoMap[_selecteSource] ?? -1;
 
   //Q8.4
   String? _selectedPipeline; // Yes / No
@@ -937,7 +937,7 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedPipelineID => yesNoMap[_selectedPipeline] ?? 0;
+  int get selectedPipelineID => yesNoMap[_selectedPipeline] ?? -1;
 
   // List to store entered [id, value] pairs
   List<Map<String, dynamic>> admissibleCostsList = [];
@@ -1760,57 +1760,57 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedId_partEa1 => yesNoMap[_quesPartEa1] ?? 0;
+  int get selectedId_partEa1 => yesNoMap[_quesPartEa1] ?? -1;
 
-  int get selectedId_partEa2 => yesNoMap[_quesPartEa2] ?? 0;
+  int get selectedId_partEa2 => yesNoMap[_quesPartEa2] ?? -1;
 
-  int get selectedId_partEa3 => yesNoMap[_quesPartEa3] ?? 0;
+  int get selectedId_partEa3 => yesNoMap[_quesPartEa3] ?? -1;
 
-  int get selectedId_partEa4 => yesNoMap[_quesPartEa4] ?? 0;
+  int get selectedId_partEa4 => yesNoMap[_quesPartEa4] ?? -1;
 
-  int get selectedId_partEa5 => yesNoMap[_quesPartEa5] ?? 0;
+  int get selectedId_partEa5 => yesNoMap[_quesPartEa5] ?? -1;
 
-  int get selectedId_partEa6 => yesNoMap[_quesPartEa6] ?? 0;
+  int get selectedId_partEa6 => yesNoMap[_quesPartEa6] ?? -1;
 
-  int get selectedId_partEa7 => yesNoMap[_quesPartEa7] ?? 0;
+  int get selectedId_partEa7 => yesNoMap[_quesPartEa7] ?? -1;
 
-  int get selectedId_partEa8 => yesNoMap[_quesPartEa8] ?? 0;
+  int get selectedId_partEa8 => yesNoMap[_quesPartEa8] ?? -1;
 
-  int get selectedId_partEa9 => yesNoMap[_quesPartEa9] ?? 0;
+  int get selectedId_partEa9 => yesNoMap[_quesPartEa9] ?? -1;
 
-  int get selectedId_partEa10 => yesNoMap[_quesPartEa10] ?? 0;
+  int get selectedId_partEa10 => yesNoMap[_quesPartEa10] ?? -1;
 
-  int get selectedId_partEa11 => yesNoMap[_quesPartEa11] ?? 0;
+  int get selectedId_partEa11 => yesNoMap[_quesPartEa11] ?? -1;
 
-  int get selectedId_partEa12 => yesNoMap[_quesPartEa12] ?? 0;
+  int get selectedId_partEa12 => yesNoMap[_quesPartEa12] ?? -1;
 
-  int get selectedId_partEa13 => yesNoMap[_quesPartEa13] ?? 0;
+  int get selectedId_partEa13 => yesNoMap[_quesPartEa13] ?? -1;
 
-  int get selectedId_partEa14 => yesNoMap[_quesPartEa14] ?? 0;
+  int get selectedId_partEa14 => yesNoMap[_quesPartEa14] ?? -1;
 
-  int get selectedId_partEa15 => yesNoMap[_quesPartEa15] ?? 0;
+  int get selectedId_partEa15 => yesNoMap[_quesPartEa15] ?? -1;
 
-  int get selectedId_partEb1 => yesNoMap[_quesPartEb1] ?? 0;
+  int get selectedId_partEb1 => yesNoMap[_quesPartEb1] ?? -1;
 
-  int get selectedId_partEb2 => yesNoMap[_quesPartEb2] ?? 0;
+  int get selectedId_partEb2 => yesNoMap[_quesPartEb2] ?? -1;
 
-  int get selectedId_partEb3 => yesNoMap[_quesPartEb3] ?? 0;
+  int get selectedId_partEb3 => yesNoMap[_quesPartEb3] ?? -1;
 
-  int get selectedId_partE2 => yesNoMap[_quesPartE2] ?? 0;
+  int get selectedId_partE2 => yesNoMap[_quesPartE2] ?? -1;
 
-  int get selectedId_partE3 => yesNoMap[_quesPartE3] ?? 0;
+  int get selectedId_partE3 => yesNoMap[_quesPartE3] ?? -1;
 
-  int get selectedId_partE4 => yesNoMap[_quesPartE4] ?? 0;
+  int get selectedId_partE4 => yesNoMap[_quesPartE4] ?? -1;
 
-  int get selectedId_partE5 => yesNoMap[_quesPartE5] ?? 0;  // this is in D part of Below 10 % too
+  int get selectedId_partE5 => yesNoMap[_quesPartE5] ?? -1;  // this is in D part of Below 10 % too
 
-  int get selectedId_partE6 => yesNoMap[_quesPartE6] ?? 0;
+  int get selectedId_partE6 => yesNoMap[_quesPartE6] ?? -1;
 
-  int get selectedId_partE7 => yesNoMap[_quesPartE7] ?? 0; // this is in D part of Below 10 % too
+  int get selectedId_partE7 => yesNoMap[_quesPartE7] ?? -1; // this is in D part of Below 10 % too
 
-  int get selectedId_partE8 => yesNoMap[_quesPartE8] ?? 0;
+  int get selectedId_partE8 => yesNoMap[_quesPartE8] ?? -1;
 
-  int get selectedId_partE9 => yesNoMap[_quesPartE9] ?? 0;
+  int get selectedId_partE9 => yesNoMap[_quesPartE9] ?? -1;
 
   final Map<String, int> question10Map = {
     "Pipelines without proper depth": 1,
@@ -1847,7 +1847,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedId_partE11 => question11Map[_quesPartE11] ?? 0;
+  int get selectedId_partE11 => question11Map[_quesPartE11] ?? -1;
 
   final Map<String, int> question12Map = {
     "Regularly": 1,
@@ -1865,7 +1865,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedId_partE12 => question12Map[_quesPartE12] ?? 0;
+  int get selectedId_partE12 => question12Map[_quesPartE12] ?? -1;
 
   String? _quesPartE13a;
 
@@ -1876,7 +1876,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedId_partE13a => yesNoMap[_quesPartE13a] ?? 0;
+  int get selectedId_partE13a => yesNoMap[_quesPartE13a] ?? -1;
 
   //
 
@@ -1889,7 +1889,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedId_partE13b => yesNoMap[_quesPartE13b] ?? 0;
+  int get selectedId_partE13b => yesNoMap[_quesPartE13b] ?? -1;
 
   final Map<String, int> question14Map = {
     "Hydrotesting reports": 1,
@@ -1906,7 +1906,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedId_partE14 => question14Map[_quesPartE14] ?? 0;
+  int get selectedId_partE14 => question14Map[_quesPartE14] ?? -1;
 
   final Map<String, int> question15Map = {
     "Frequently ": 1,
@@ -1924,7 +1924,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedId_partE15 => question15Map[_quesPartE15] ?? 0;
+  int get selectedId_partE15 => question15Map[_quesPartE15] ?? -1;
 
   ////
   final Map<String, int> question16Map = {
@@ -1943,7 +1943,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedId_partE16 => question16Map[_quesPartE16] ?? 0;
+  int get selectedId_partE16 => question16Map[_quesPartE16] ?? -1;
 
   ////
   final Map<String, int> question17Map = {
@@ -1963,7 +1963,7 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedId_partE17 => question17Map[_quesPartE17] ?? 0;
+  int get selectedId_partE17 => question17Map[_quesPartE17] ?? -1;
 
   ////
   final Map<String, int> question18Map = {"Yes": 1, "No": 2, "NA": 3};
@@ -1977,5 +1977,5 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedId_partE18 => question18Map[_quesPartE18] ?? 0;
+  int get selectedId_partE18 => question18Map[_quesPartE18] ?? -1;
 }

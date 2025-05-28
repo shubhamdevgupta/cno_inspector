@@ -481,8 +481,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                                 .selectedVWSCRecordsAvailableID,
                                             vwscInvolvementOM: vwscProvider
                                                 .selectedVWSCOMInvolvedID,
-                                            schemeHandedOverGp: vwscProvider
-                                                .selectedSchemeHandoverID,
+                                            schemeHandedOverGp: vwscProvider.selectedSchemeHandoverID,
                                             omArrangement: vwscProvider
                                                 .selectedOMArrangementsID,
                                             communityAwareness: vwscProvider
