@@ -8,8 +8,10 @@ import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
+import 'package:cno_inspection/views/PartASchemeInfo/PartASchemeInfoUserobservation.dart';
 import 'package:cno_inspection/views/PartBDwsm/DashboardDWSM.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartACoordinationPlanningReviewScreen.dart';
+import 'package:cno_inspection/views/PartBDwsm/PartBDWSMUserobservation.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartBSourceSustainabilityWaterConservation.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartCMonitoringQualityandLabInfrastructure.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartC_below_TechnoCommercialViability.dart';
@@ -21,6 +23,7 @@ import 'package:cno_inspection/views/PartCVwsc/CommunityInvolvementPartB.dart';
 import 'package:cno_inspection/views/PartCVwsc/DashboardVWSC.dart';
 import 'package:cno_inspection/views/PartCVwsc/GrievancePartE.dart';
 import 'package:cno_inspection/views/PartCVwsc/PartA_below_WaterSupply.dart';
+import 'package:cno_inspection/views/PartCVwsc/PartCVWSCUserobservation.dart';
 import 'package:cno_inspection/views/PartCVwsc/WaterQualityPartD.dart';
 import 'package:cno_inspection/views/PartCVwsc/WaterSupplyPartA.dart';
 
@@ -90,6 +93,8 @@ class MyApp extends StatelessWidget {
         AppConstants.navigateToSchemeImplementationScreen: (context) => SchemeImplementationScreen(),
         AppConstants.navigateToVisualInspectionScreen: (context) => VisualInspectionScreen(),
 
+        AppConstants.navigateToPartaschemeinfouserobservation: (context) => Partaschemeinfouserobservation(),
+
         AppConstants.navigateToCoordinationPlanningScreen: (context) => CoordinationPlanningReview(),
         AppConstants.navigateToSourceSustainablitiyWasterConservation: (context) => SourceSustainablitiyWasterConservation(),
         AppConstants.navigateToMonitoringQuality: (context) => MonitioringQuality(),
@@ -98,12 +103,14 @@ class MyApp extends StatelessWidget {
         AppConstants.navigateToPartFPublicCompliant: (context) => PartFPublicCompliant(),
         AppConstants.navigateToBelowPartCTechnoCommercialViability: (context) => PartcBelowTechnocommercialviabilityP(),
         AppConstants.navigateToBelowPartAWaterSupplyFunctionality: (context) => PartaBelowWatersupply(),
+        AppConstants.navigateToPartbdwsmuserobservation: (context) => Partbdwsmuserobservation(),
 
         AppConstants.navigateToWaterSupplyPartA: (context) => WaterSupplyPartA(),
         AppConstants.navigateToCommunityInvolvementPartB: (context) => CommunityInvolvementPartB(),
         AppConstants.navigateToCommunityFeedbackPartC: (context) => CommunityFeedbackPartC(),
         AppConstants.navigateToQulityPartD: (context) => WaterQualityPartD(),
         AppConstants.navigateToGrievancePartE: (context) => GrievancePartE(),
+        AppConstants.navigateToPartcvwscuserobservation: (context) => Partcvwscuserobservation(),
 
 
       },

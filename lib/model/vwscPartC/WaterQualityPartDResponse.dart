@@ -9,6 +9,9 @@ class WaterQualityMonitoring {
   final int isChlorinationDisinfectionDone;
   final int frcAvlAtEnd;
 
+  /// New parameter added to capture the user’s observation or remarks
+  final String observationWaterQualityMonitoring;
+
   WaterQualityMonitoring({
     required this.userid,
     required this.stateid,
@@ -19,6 +22,7 @@ class WaterQualityMonitoring {
     required this.whoTestFtk,
     required this.isChlorinationDisinfectionDone,
     required this.frcAvlAtEnd,
+    required this.observationWaterQualityMonitoring, // <-- New parameter
   });
 
   factory WaterQualityMonitoring.fromJson(Map<String, dynamic> json) {
@@ -32,6 +36,9 @@ class WaterQualityMonitoring {
       whoTestFtk: json['who_test_ftk'],
       isChlorinationDisinfectionDone: json['Is_chlorination_disinfection_done'],
       frcAvlAtEnd: json['frc_avl_at_end'],
+
+      /// Parsing the new field from JSON response
+      observationWaterQualityMonitoring: json['observation_water_quality_monitoring'], // <-- New parameter
     );
   }
 }

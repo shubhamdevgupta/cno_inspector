@@ -313,6 +313,10 @@ class Vwscprovider extends ChangeNotifier {
   // Get mapped ID
   int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? 0;
 
+
+  TextEditingController PartBVWSCuserObservationController = TextEditingController();
+
+
   // question 2222222222222222
 
   // question 33333
@@ -461,6 +465,7 @@ class Vwscprovider extends ChangeNotifier {
 
   TextEditingController householdPercentageController = TextEditingController();
   TextEditingController reasonsController = TextEditingController();
+  TextEditingController PartAVWSCuserObservationController = TextEditingController();
   // below 10%  end
 
   Future<void> saveVwscWaterSupply({
@@ -552,21 +557,48 @@ class Vwscprovider extends ChangeNotifier {
             getRadiobuttonData(waterSupplyData.first.isAdequateWaterQuantityReachToRemote,yesNoMap);
         print('selectedPvtgGroups: $selectedPvtgGroups');
 
-        reasonRemoteGroupsController.text =
-            waterSupplyData.first.isAdequateWaterQuantityReachToRemoteReason;
+        reasonRemoteGroupsController.text = waterSupplyData.first.isAdequateWaterQuantityReachToRemoteReason;
         print('reasonRemoteGroupsController: ${reasonRemoteGroupsController.text}');
 
-        selectedTailEnd =
-            getRadiobuttonData(waterSupplyData.first.whetherWaterReachToTailEnd,tailEndMap);
+        selectedTailEnd = getRadiobuttonData(waterSupplyData.first.whetherWaterReachToTailEnd,tailEndMap);
         print('selectedTailEnd: $selectedTailEnd');
 
-        selectedschemeStatus =
-            getRadiobuttonData(waterSupplyData.first.schemeOperationalStatusCommissioning,schemeStatusMap);
+        selectedschemeStatus = getRadiobuttonData(waterSupplyData.first.schemeOperationalStatusCommissioning,schemeStatusMap);
         print('selectedschemeStatus: $selectedschemeStatus');
 
-        selectedinstitutions =
-            getCheckBoxData(waterSupplyData.first.whetherPwsReachAllSchoolAnganwadiPhc,institutionsMap);
+        selectedinstitutions = getCheckBoxData(waterSupplyData.first.whetherPwsReachAllSchoolAnganwadiPhc,institutionsMap);
         print('selectedinstitutions: $selectedinstitutions');
+
+
+        //New Field
+
+        selectedOption1_belowPartA = getRadiobuttonData(waterSupplyData.first.isPipedWaterSupplyScheme,yesNoMap);
+        print('selectedOption1_belowPartA: $selectedOption1_belowPartA');
+
+        selectedOption2_belowPartA = getRadiobuttonData(waterSupplyData.first.typeOfSchemeCommissioned,vwscBelowPartAQues2Map);
+        print('selectedOption2_belowPartA: $selectedOption2_belowPartA');
+
+        householdPercentageController.text = waterSupplyData.first.schemeBeneficiaryHouseholds;
+        print('householdPercentageController: ${householdPercentageController.text}');
+
+        selectedOption3_belowPartA = getRadiobuttonData(waterSupplyData.first.presentStatusOfWaterSupplySchemes,vwscBelowPartAQues3Map);
+        print('selectedOption3_belowPartA: $selectedOption3_belowPartA');
+
+        selectedFrequency = getRadiobuttonData(waterSupplyData.first.waterSupplyFrequencyAssured,FrequencyLabels);
+        print('selectedFrequency: $selectedOption3_belowPartA');
+
+        selectedOption5_belowPartA = getRadiobuttonData(waterSupplyData.first.remoteGroupsPlanned,yesNoMap);
+        print('selectedOption5_belowPartA: $selectedOption5_belowPartA');
+
+        reasonsController.text = waterSupplyData.first.remoteGroupsPlannedDetails;
+        print('reasonsController: ${reasonsController.text}');
+
+        PartAVWSCuserObservationController.text = waterSupplyData.first.remoteGroupsPlannedDetails;
+        print('PartAVWSCuserObservationController: ${PartAVWSCuserObservationController.text}');
+
+
+
+
 
         notifyListeners();
         _message = '';
@@ -782,6 +814,9 @@ class Vwscprovider extends ChangeNotifier {
         SetSelectedWhereComplaintAddress = getRadiobuttonData(communityFeedbackData.first.isComplaintAddressed,whereComplaintAddressOptMap);
      /*   print('selectedComplaintByCommunity: $SetSelectedWhereComplaintAddress');*/
 
+        PartCVWSCuserObservationController.text = communityFeedbackData.first.observationCommunityFeedbackQualityConstruction;
+        print('PartCVWSCuserObservationController: ${PartCVWSCuserObservationController.text}');
+
 
       } else {
         _message = response.message;
@@ -914,6 +949,9 @@ class Vwscprovider extends ChangeNotifier {
   int get selectedFRCLevelId => frcLevelMap[_selectedFRCLevel] ?? 0;
 
 
+  TextEditingController PartDVWSCuserObservationController = TextEditingController();
+
+
   //44
   List<WaterQualityMonitoring> waterQualityData = [];
 
@@ -948,6 +986,10 @@ class Vwscprovider extends ChangeNotifier {
 
         selectedFRCLevel = getRadiobuttonData(waterQualityData.first.frcAvlAtEnd,frcLevelMap);
         print('selectedFRCLevel: $selectedFRCLevel');
+
+
+        PartDVWSCuserObservationController.text = waterQualityData.first.observationWaterQualityMonitoring;
+        print('PartDVWSCuserObservationController: ${PartDVWSCuserObservationController.text}');
 
       } else {
         _message = response.message;
@@ -1078,6 +1120,9 @@ class Vwscprovider extends ChangeNotifier {
   int get selectedTurnAroundTimeId =>
       turnAroundTimeMap[_selectedTurnAroundTime] ?? 0;
 
+  TextEditingController PartEVWSCuserObservationController = TextEditingController();
+
+
   //5
 
   List<VwscGrievance> vwscGrievanceData = [];
@@ -1102,6 +1147,9 @@ class Vwscprovider extends ChangeNotifier {
 
         selectedTurnAroundTime = getRadiobuttonData(vwscGrievanceData.first.grievanceTurnAroundTime,turnAroundTimeMap);
         print('selectedTurnAroundTime: $selectedTurnAroundTime');
+
+        PartEVWSCuserObservationController.text = vwscGrievanceData.first.observationGrievanceRedressal;
+        print('PartEVWSCuserObservationController: ${PartEVWSCuserObservationController.text}');
 
       } else {
         _message = response.message;
@@ -1212,6 +1260,10 @@ class Vwscprovider extends ChangeNotifier {
 
   int get selectedWhereComplaintAddressOptId =>
       whereComplaintAddressOptMap[_selectedWhereComplaintAddressOpt] ?? 0;
+
+
+
+  TextEditingController PartCVWSCuserObservationController = TextEditingController();
 
   ///////////33333333333/////////////
 

@@ -8,11 +8,12 @@ import 'package:provider/provider.dart';
 import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/MultiSelectionlist.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import 'CommunityInvolvementPartB.dart';
 import 'DashboardVWSC.dart';
-import 'VWSCCommonClass.dart';
+import 'AboveVWSCCommonClass.dart';
 
 class WaterSupplyPartA extends StatefulWidget {
   const WaterSupplyPartA({Key? key}) : super(key: key);
@@ -120,7 +121,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Vwsccommonclass(
+                        Abovevwsccommonclass(
                           no: 1,
                         ),
                         Card(
@@ -218,11 +219,16 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                       print(
                                           'selectedinstitutionsselectedinstitutions------- ${vwscProvider.selectedinstitutions}');
 
-                                      setState(() {
-                                        vwscProvider.selectedinstitutions = val;
-                                      });
+
                                     },
                                   ),
+
+
+                                  CustomObservationField(
+                                    labelText: '* User Observation / Remarks:',
+                                    controller:  vwscProvider.PartAVWSCuserObservationController,
+                                  ),
+
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(
@@ -262,7 +268,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                             remoteGroupsPlanned: -1,
                                             remoteGroupsPlannedDetails: "",
                                             //TODO feedback
-                                            observationWaterSupplyFunctionality: "",
+                                            observationWaterSupplyFunctionality: vwscProvider.PartAVWSCuserObservationController.text,
 
 
 

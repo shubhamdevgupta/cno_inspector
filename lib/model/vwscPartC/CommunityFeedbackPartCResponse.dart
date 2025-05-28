@@ -6,6 +6,9 @@ class CommunityFeedback {
   final int isComplaintAddressed;
   final List<int> complaintType;
 
+  /// New parameter added to capture observation or remarks by the user
+  final String observationCommunityFeedbackQualityConstruction;
+
   CommunityFeedback({
     required this.userid,
     required this.stateid,
@@ -13,6 +16,7 @@ class CommunityFeedback {
     required this.anyComplaintByCommunity,
     required this.isComplaintAddressed,
     required this.complaintType,
+    required this.observationCommunityFeedbackQualityConstruction, // <-- New parameter
   });
 
   factory CommunityFeedback.fromJson(Map<String, dynamic> json) {
@@ -23,6 +27,9 @@ class CommunityFeedback {
       anyComplaintByCommunity: json['any_complaint_by_community'],
       isComplaintAddressed: json['is_complaint_addressed'],
       complaintType: List<int>.from(json['complaint_type']),
+
+      /// Parsing the new field from JSON response
+      observationCommunityFeedbackQualityConstruction: json['observation_community_feedback_quality_construction'], // <-- New parameter
     );
   }
 }

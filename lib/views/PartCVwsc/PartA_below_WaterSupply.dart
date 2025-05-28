@@ -8,11 +8,13 @@ import 'package:provider/provider.dart';
 import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/MultiSelectionlist.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
+import 'BelowVWSCCommon.dart';
 import 'CommunityInvolvementPartB.dart';
 import 'DashboardVWSC.dart';
-import 'VWSCCommonClass.dart';
+import 'AboveVWSCCommonClass.dart';
 
 class PartaBelowWatersupply extends StatefulWidget {
   const PartaBelowWatersupply({Key? key}) : super(key: key);
@@ -120,7 +122,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Vwsccommonclass(
+                        Belowvwsccommon(
                           no: 1,
                         ),
                         Card(
@@ -229,6 +231,11 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                   },
                                 ),
 
+                                  CustomObservationField(
+                                    labelText: '* User Observation / Remarks:',
+                                    controller:  vwscProvider.PartAVWSCuserObservationController,
+                                  ),
+
 
 
                                   Align(
@@ -270,7 +277,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                             remoteGroupsPlanned: vwscProvider.selectedOption5_belowPartAID,
                                             remoteGroupsPlannedDetails: vwscProvider.reasonsController.text,
                                             //TODO feedback
-                                            observationWaterSupplyFunctionality: "",
+                                            observationWaterSupplyFunctionality: vwscProvider.PartAVWSCuserObservationController.text,
                                           );
 
 

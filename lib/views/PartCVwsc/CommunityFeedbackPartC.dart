@@ -13,12 +13,14 @@ import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomRadioQuestion.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
+import 'BelowVWSCCommon.dart';
 import 'CommunityInvolvementPartB.dart';
 import 'DashboardVWSC.dart';
-import 'VWSCCommonClass.dart';
+import 'AboveVWSCCommonClass.dart';
 import 'WaterQualityPartD.dart';
 
 class CommunityFeedbackPartC extends StatefulWidget {
@@ -131,9 +133,7 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            NewScreenPoints(
-                              no: 3,
-                            ),
+                             Abovevwsccommonclass(no: 3),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Card(
@@ -217,6 +217,11 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                                 'selected3------- ${vwscProvider.selectedWhereComplaintAddress} ; ${vwscProvider.selectedWhereComplaintAddressOptId}');
                                           },
                                         ),
+
+                                        CustomObservationField(
+                                          labelText: '* User Observation / Remarks:',
+                                          controller:  vwscProvider.PartCVWSCuserObservationController,
+                                        ),
                                         Align(
                                           alignment: Alignment.centerRight,
                                           child: SizedBox(
@@ -243,7 +248,7 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
 
                                                   typeComplaintOther: vwscProvider.othersComplaintController.text,
                                                   phyStatus:  mode.modeValue ,
-                                                  observationCommunityFeedbackQualityConstruction: "",
+                                                  observationCommunityFeedbackQualityConstruction: vwscProvider.PartCVWSCuserObservationController.text,
                                                   createdBy: _localStorage.getInt(AppConstants.prefUserId)!,
                                                 );
 

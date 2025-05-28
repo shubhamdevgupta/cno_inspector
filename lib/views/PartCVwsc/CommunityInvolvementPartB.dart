@@ -1,6 +1,7 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/utils/customtxtfeild.dart';
+import 'package:cno_inspection/views/PartCVwsc/BelowVWSCCommon.dart';
 import 'package:cno_inspection/views/PartCVwsc/CommunityFeedbackPartC.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,9 +13,10 @@ import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/toast_helper.dart';
 import 'DashboardVWSC.dart';
-import 'VWSCCommonClass.dart';
+import 'AboveVWSCCommonClass.dart';
 
 class CommunityInvolvementPartB extends StatefulWidget {
   @override
@@ -119,9 +121,10 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Vwsccommonclass(
-                      no: 2,
-                    ),
+
+                    mode == ProjectMode.below10? Belowvwsccommon(no: 2):  Abovevwsccommonclass(no: 2,),
+
+
                     Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Card(
@@ -440,6 +443,12 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                 ),
 
+                           /*     CustomObservationField(
+                                  labelText: '* User Observation / Remarks:',
+                                  controller:  vwscProvider.PartBVWSCuserObservationController,
+                                ),*/
+
+
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
@@ -464,33 +473,19 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                                 .getInt(AppConstants.prefUserId)!,
                                             stateId: vwscProvider.stateId!,
                                             villageId: vwscProvider.villageId!,
-                                            isPaniSamitiFormed:
-                                                vwscProvider.selectedVWSCFormedID,
-                                            isVwscBankAccount: vwscProvider
-                                                .selectedVWSCBankAccountID,
-                                            vwscGpInvolvementScheme: vwscProvider
-                                                .selectedVWSCInvolvementID,
-                                            drawingPipelineAvlGpOffice:
-                                                vwscProvider
-                                                    .selectedAsBuiltDrawingID,
-                                            isVwscMeetingPeriodic: vwscProvider
-                                                .selectedVWSCMeetingConductedID,
-                                            meetingHeldFrequency: vwscProvider
-                                                .FrequencyController.text,
-                                            isVwscMeetingRecordAvl: vwscProvider
-                                                .selectedVWSCRecordsAvailableID,
-                                            vwscInvolvementOM: vwscProvider
-                                                .selectedVWSCOMInvolvedID,
-                                            schemeHandedOverGp: vwscProvider
-                                                .selectedSchemeHandoverID,
-                                            omArrangement: vwscProvider
-                                                .selectedOMArrangementsID,
-                                            communityAwareness: vwscProvider
-                                                .selectedCommunityAwarenessID,
-                                            communitySatisfactionWithWq: vwscProvider
-                                                .selectedWaterQualitySatisfactionID,
-                                            createdBy: _localStorage.getInt(
-                                                AppConstants.prefUserId)!);
+                                            isPaniSamitiFormed: vwscProvider.selectedVWSCFormedID,
+                                            isVwscBankAccount: vwscProvider.selectedVWSCBankAccountID,
+                                            vwscGpInvolvementScheme: vwscProvider.selectedVWSCInvolvementID,
+                                            drawingPipelineAvlGpOffice: vwscProvider.selectedAsBuiltDrawingID,
+                                            isVwscMeetingPeriodic: vwscProvider.selectedVWSCMeetingConductedID,
+                                            meetingHeldFrequency: vwscProvider.FrequencyController.text,
+                                            isVwscMeetingRecordAvl: vwscProvider.selectedVWSCRecordsAvailableID,
+                                            vwscInvolvementOM: vwscProvider.selectedVWSCOMInvolvedID,
+                                            schemeHandedOverGp: vwscProvider.selectedSchemeHandoverID,
+                                            omArrangement: vwscProvider.selectedOMArrangementsID,
+                                            communityAwareness: vwscProvider.selectedCommunityAwarenessID,
+                                            communitySatisfactionWithWq: vwscProvider.selectedWaterQualitySatisfactionID,
+                                            createdBy: _localStorage.getInt(AppConstants.prefUserId)!);
 
                                         if (vwscProvider.status!) {
                                           ToastHelper.showToastMessage(

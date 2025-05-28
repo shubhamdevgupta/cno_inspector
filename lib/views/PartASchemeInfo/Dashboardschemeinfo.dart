@@ -235,6 +235,9 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           SizedBox(
                             height: 10,
                           ),
+
+
+
                           buildSampleCard(
                             qnumber: "E.",
                             title: "Visual Inspection",
@@ -247,6 +250,26 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                                     'schemeId':int.parse(dashboardProvider.selectedSchemeID!),
                                     'stateId': dashboardProvider
                                         .dashboardList.first.stateId,
+                                  });
+                            },
+                          ),
+
+
+                          SizedBox(
+                            height: 10,
+                          ),
+
+                          buildSampleCard(
+                            qnumber: "*",
+                            title: "User Feedback",
+                            color: Colors.redAccent,
+                            onTap: () {
+                              // Your onTap logic
+                              Navigator.pushReplacementNamed(context,
+                                  AppConstants.navigateToPartaschemeinfouserobservation,
+                                  arguments: {
+                                    'schemeId':int.parse(dashboardProvider.selectedSchemeID!),
+                                    'stateId': dashboardProvider.dashboardList.first.stateId,
                                   });
                             },
                           ),
