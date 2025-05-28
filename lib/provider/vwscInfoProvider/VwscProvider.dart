@@ -314,6 +314,7 @@ class Vwscprovider extends ChangeNotifier {
   int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? 0;
 
   // question 2222222222222222
+  TextEditingController PartBVWSCuserObservationController = TextEditingController();
 
   // question 33333
   String? _selectedPvtgGroups;

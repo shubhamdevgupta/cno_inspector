@@ -1,5 +1,6 @@
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
+import 'package:cno_inspection/views/PartBDwsm/PartC_below_TechnoCommercialViability.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -285,11 +286,20 @@ ProjectMode? modeType;
                                           ToastHelper.showToastMessage(
                                               dwsmProvider.message!,
                                               backgroundColor: Colors.green);
-                                          Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (_) =>
-                                                    MonitioringQuality()),
-                                          );
+                                          if(modeType==ProjectMode.below10){
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      PartcBelowTechnocommercialviabilityP()),
+                                            );
+                                          }else{
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      MonitioringQuality()),
+                                            );
+                                          }
+
                                         } else {
                                           ToastHelper.showToastMessage(
                                               dwsmProvider.message!,
