@@ -27,7 +27,7 @@ class SchemePlanningScreen extends StatefulWidget {
 
 class _SchemePlanningScreen extends State<SchemePlanningScreen> {
   LocalStorageService _localStorageService = LocalStorageService();
-
+  ProjectMode? modeType;
 
   @override
   void initState() {
@@ -37,6 +37,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
       final args =
       ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
       print("STATE 1111 : ${args.toString()}");
+
       if (args != null) {
         final schemeId = args['schemeId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -50,7 +51,9 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSchemePlanning(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+        modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
+        schemeProvider.fetchSchemePlanning(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -116,7 +119,6 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
             ),
             body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
-                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -151,7 +153,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
 
       // Above 10% part Start
                                 Visibility(
-                                  visible: mode==ProjectMode.above10,
+                                  visible: modeType==ProjectMode.above10,
                                   child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -276,7 +278,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
 
                                 // Below 10% part Start
                                 Visibility(
-                                  visible: mode==ProjectMode.below10,
+                                  visible: modeType==ProjectMode.below10,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -427,7 +429,7 @@ print("STATE : ${schemeProvider.stateId}");
                                          work_awarded_no_physical_progress:schemeProvider. schemePlanning_Question2Controller.text ,
                                          multiple_schemes_sanctioned_justify_detial: schemeProvider.schemePlanning_Question5Controller.text,
                                          desgined_conjunctive_detail: schemeProvider.schemePlanning_Question6Controller.text,
-                                         phy_status: mode.modeValue ,);
+                                         phy_status: modeType!.modeValue ,);
                                         if (schemeProvider.status!) {
                                           ToastHelper.showToastMessage(
                                               schemeProvider.message!,

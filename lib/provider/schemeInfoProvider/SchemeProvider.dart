@@ -169,13 +169,13 @@ class Schemeprovider extends ChangeNotifier {
   List<SourceSurveyItem> sourceSurveyData = [];
 
   Future<void> fetchSourceSurvey(
-      String stateId, String schemeId, String userId) async {
+      String stateId, String schemeId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response =
-          await _fetchschemeinfo.fetchSourceSurvey(stateId, schemeId, userId);
+          await _fetchschemeinfo.fetchSourceSurvey(stateId, schemeId, userId,modeType);
       if (response.status) {
         sourceSurveyData = response.result;
         _message = '';
@@ -390,13 +390,13 @@ class Schemeprovider extends ChangeNotifier {
   List<SchemePlanningItem> schemePlanningData = [];
 
   Future<void> fetchSchemePlanning(
-      String stateId, String schemeId, String userId) async {
+      String stateId, String schemeId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response =
-          await _fetchschemeinfo.fetchSchemePlanning(stateId, schemeId, userId);
+          await _fetchschemeinfo.fetchSchemePlanning(stateId, schemeId, userId,modeType);
       if (response.status) {
         schemePlanningData = response.result;
         _message = '';
@@ -601,13 +601,13 @@ class Schemeprovider extends ChangeNotifier {
   List<AdditionalInfoRetrofitItem> retrofitInfoData = [];
 
   Future<void> fetchAdditionalInfoRetrofit(
-      String stateId, String schemeId, String userId) async {
+      String stateId, String schemeId, String userId,int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchschemeinfo.fetchAdditionalInfoRetrofit(
-          stateId, schemeId, userId);
+          stateId, schemeId, userId,modeType);
       if (response.status) {
         retrofitInfoData = response.result;
         _message = '';
@@ -1127,13 +1127,13 @@ class Schemeprovider extends ChangeNotifier {
   List<SchemeImplementationModel> schemeImplementationData = [];
 
   Future<void> fetchSchemeImplementationData(
-      String stateId, String schemeId, String userId) async {
+      String stateId, String schemeId, String userId,int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchschemeinfo.fetchSchemeImplementation(
-          stateId, schemeId, userId);
+          stateId, schemeId, userId,modeType);
       if (response.status) {
         _message = '';
         schemeImplementationData = response.result;
@@ -1352,13 +1352,13 @@ class Schemeprovider extends ChangeNotifier {
   List<SchemeVisualInspectionModel> schemeVisualInspectionData = [];
 
   Future<void> fetchSchemeVisualInspectionData(
-      String stateId, String schemeId, String userId) async {
+      String stateId, String schemeId, String userId,int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchschemeinfo.fetchSchemeVisualInspection(
-          stateId, schemeId, userId);
+          stateId, schemeId, userId,modeType);
 
       if (response.status) {
         schemeVisualInspectionData = response.result;

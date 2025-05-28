@@ -223,7 +223,7 @@ class DWSMRepositoy {
           "Grievance_Redressal_mechanism_available": grievanceMechanismAvailable,
           "How_grievances_registered_villagers": howGrievancesRegistered,
           "Are_complaints_received_public_regarding_schemes": complaintsReceived,
-          "yes_type_complaints": typeOfComplaints,
+          "yes_type_complaints": typeOfComplaints,//todo checkbox
           "yes_type_complaints_others": otherComplaints,
           "yes_type_complaints_others_What_average_time_resolution": resolutionTime,
           "yes_type_complaints_others_Action_taken_department": actionTakenByDepartment,

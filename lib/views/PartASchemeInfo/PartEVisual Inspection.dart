@@ -1,3 +1,4 @@
+import 'package:cno_inspection/provider/AppStateProvider.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/Dashboardschemeinfo.dart';
 import 'package:cno_inspection/views/PartASchemeInfo/PartDSchemeImplementationScreen.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class VisualInspectionScreen extends StatefulWidget {
 
 class _VisualInspectionScreen extends State<VisualInspectionScreen> {
   LocalStorageService _localStorageService = LocalStorageService();
-
+ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -44,7 +45,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSchemeVisualInspectionData(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
+        schemeProvider.fetchSchemeVisualInspectionData(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }

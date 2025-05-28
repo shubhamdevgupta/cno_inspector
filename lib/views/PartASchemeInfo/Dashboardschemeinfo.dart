@@ -23,16 +23,16 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
   late DashboardProvider dashboardProvider;
   late Schemeprovider schemeprovider;
   LocalStorageService localStorageService = LocalStorageService();
-
+  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =Provider.of<DashboardProvider>(context,listen: false);
 
-      final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+      modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
-      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!,1,mode.modeValue);
+      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!,1,modeType!.modeValue);
       dashboardProvider = Provider.of<DashboardProvider>(context, listen: false);
       schemeprovider = Provider.of<Schemeprovider>(context,listen: false);
       //clear for part a
@@ -235,20 +235,23 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
                           SizedBox(
                             height: 10,
                           ),
-                          buildSampleCard(
-                            qnumber: "E.",
-                            title: "Visual Inspection",
-                            color: Colors.green,
-                            onTap: () {
-                              // Your onTap logic
-                              Navigator.pushReplacementNamed(context,
-                                  AppConstants.navigateToVisualInspectionScreen,
-                                  arguments: {
-                                    'schemeId':int.parse(dashboardProvider.selectedSchemeID!),
-                                    'stateId': dashboardProvider
-                                        .dashboardList.first.stateId,
-                                  });
-                            },
+                          Visibility(
+                            visible: modeType==ProjectMode.above10,
+                            child: buildSampleCard(
+                              qnumber: "E.",
+                              title: "Visual Inspection",
+                              color: Colors.green,
+                              onTap: () {
+                                // Your onTap logic
+                                Navigator.pushReplacementNamed(context,
+                                    AppConstants.navigateToVisualInspectionScreen,
+                                    arguments: {
+                                      'schemeId':int.parse(dashboardProvider.selectedSchemeID!),
+                                      'stateId': dashboardProvider
+                                          .dashboardList.first.stateId,
+                                    });
+                              },
+                            ),
                           ),
                         ],
                       ),
