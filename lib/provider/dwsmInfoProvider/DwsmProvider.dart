@@ -80,7 +80,8 @@ class Dwsmprovider extends ChangeNotifier {
 
   // Controller for 1.1 How many meetings
   final TextEditingController meetingsHeldController = TextEditingController();
-  final TextEditingController auditInternalObservation = TextEditingController();
+  final TextEditingController auditInternalObservation =
+      TextEditingController();
   final TextEditingController observationCoordination = TextEditingController();
 
   final Map<String, int> meetingQualityMap = {
@@ -134,7 +135,7 @@ class Dwsmprovider extends ChangeNotifier {
         userId: userId,
         stateId: stateId,
         districtId: districtId,
-        auditInternalObservation:auditInternalObservation,
+        auditInternalObservation: auditInternalObservation,
         areMonthlyMeetingsHeld: areMonthlyMeetingsHeld,
         numberOfMeetingsLast6Months: numberOfMeetingsLast6Months,
         qualityOfMeeting: qualityOfMeeting,
@@ -159,13 +160,13 @@ class Dwsmprovider extends ChangeNotifier {
   List<CoordinationPlanningReview> coordinationData = [];
 
   Future<void> fetchCoordinationData(
-      String stateId, String districtId, String userId,int modeType) async {
+      String stateId, String districtId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchdwsmrepo.fetchCoordinationPlanningReview(
-          stateId, districtId, userId,modeType);
+          stateId, districtId, userId, modeType);
       if (response.status) {
         coordinationData = response.result;
         if (coordinationData.isNotEmpty) {
@@ -183,8 +184,10 @@ class Dwsmprovider extends ChangeNotifier {
               coordinationData.first
                   .areDistDevelopCoordinatMonitorCommitteeMeetingRegularly,
               yesNoMap);
-          auditInternalObservation.text=coordinationData.first.auditInternalObservation;
-          observationCoordination.text=coordinationData.first.observationCoordination;
+          auditInternalObservation.text =
+              coordinationData.first.auditInternalObservation;
+          observationCoordination.text =
+              coordinationData.first.observationCoordination;
         }
         // Add any data processing here if needed
         _message = response.message;
@@ -203,7 +206,7 @@ class Dwsmprovider extends ChangeNotifier {
   void clearCoordinationFields() {
     selectedValueQ1 = null;
 
-    meetingsHeldController.text='0';
+    meetingsHeldController.text = '0';
 
     selectedMeetingQuality = null;
     selectedDISHA = null;
@@ -373,7 +376,7 @@ class Dwsmprovider extends ChangeNotifier {
     try {
       final response =
           await _fetchdwsmrepo.fetchSourceSustainabilityWaterConservation(
-              stateId, districtId, userId,modeType);
+              stateId, districtId, userId, modeType);
       if (response.status) {
         sustainabilityData = response.result;
 
@@ -497,7 +500,6 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
-
   List<MonitoringQualityLabInfrastructure> monitoringData = [];
 
   Future<void> fetchMonitoringLabData(
@@ -506,8 +508,9 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _fetchdwsmrepo
-          .fetchMonitoringQualityLabInfrastructure(stateId, districtId, userId,modeType);
+      final response =
+          await _fetchdwsmrepo.fetchMonitoringQualityLabInfrastructure(
+              stateId, districtId, userId, modeType);
       if (response.status) {
         monitoringData = response.result;
 
@@ -543,7 +546,6 @@ class Dwsmprovider extends ChangeNotifier {
     // If using ChangeNotifier or similar:
     // notifyListeners();
   }
-
 
   // techno  commercial viablity
 
@@ -594,16 +596,20 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _fetchdwsmrepo
-          .fetchTechnoCommercialViablitiy(stateId, districtId, userId,modeType);
+      final response = await _fetchdwsmrepo.fetchTechnoCommercialViablitiy(
+          stateId, districtId, userId, modeType);
       if (response.status) {
         tecnoCommercialList = response.result;
 
         if (monitoringData.isNotEmpty) {
-          onCostSchemeController.text=tecnoCommercialList.first.annualOmCostScheme!;
-          chargeStakeHolderController.text=tecnoCommercialList.first.waterChargesStakeholders!;
-          remaningExpensesController.text=tecnoCommercialList.first.statePlanMeetingRemainingExpenses!;
-          requiredOperationController.text=tecnoCommercialList.first.skilledManpowerRequiredOperations!;
+          onCostSchemeController.text =
+              tecnoCommercialList.first.annualOmCostScheme!;
+          chargeStakeHolderController.text =
+              tecnoCommercialList.first.waterChargesStakeholders!;
+          remaningExpensesController.text =
+              tecnoCommercialList.first.statePlanMeetingRemainingExpenses!;
+          requiredOperationController.text =
+              tecnoCommercialList.first.skilledManpowerRequiredOperations!;
         }
 
         _message = response.message;
@@ -618,7 +624,6 @@ class Dwsmprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   // fetch for dwsm part C start
 
@@ -670,6 +675,8 @@ class Dwsmprovider extends ChangeNotifier {
 // 5. User Fee Collection Percentage
   final TextEditingController userFeePercentController =
       TextEditingController();
+  final TextEditingController observationOperationMaintencen =
+      TextEditingController();
 
   Future<void> saveOperationMaintenance({
     required int userId,
@@ -681,24 +688,25 @@ class Dwsmprovider extends ChangeNotifier {
     required int feeAmountPerMonth,
     required int isUniformFee,
     required double percentVillagesFeeCollected,
-    required int modeType
+    required int modeType,
+    required String obserVationOperationMaintenance,
   }) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _dwsmRepository.saveOperationMaintenance(
-        userId: userId,
-        stateId: stateId,
-        districtId: districtId,
-        isProtocolInPlace: isProtocolInPlace,
-        percentVillagesWithManpower: percentVillagesWithManpower,
-        isWaterFeeCharged: isWaterFeeCharged,
-        feeAmountPerMonth: feeAmountPerMonth,
-        isUniformFee: isUniformFee,
-        percentVillagesFeeCollected: percentVillagesFeeCollected,
-        modeType: modeType
-      );
+          userId: userId,
+          stateId: stateId,
+          districtId: districtId,
+          isProtocolInPlace: isProtocolInPlace,
+          percentVillagesWithManpower: percentVillagesWithManpower,
+          isWaterFeeCharged: isWaterFeeCharged,
+          feeAmountPerMonth: feeAmountPerMonth,
+          isUniformFee: isUniformFee,
+          percentVillagesFeeCollected: percentVillagesFeeCollected,
+          modeType: modeType,
+          obserVationOperationMaintenance: obserVationOperationMaintenance);
 
       _message = response.message;
       _status = response.status;
@@ -721,7 +729,7 @@ class Dwsmprovider extends ChangeNotifier {
 
     try {
       final response = await _fetchdwsmrepo.fetchOperationMaintenance(
-          stateId, districtId, userId,modeType);
+          stateId, districtId, userId, modeType);
       if (response.status) {
         operationMaintenanceData = response.result;
         // Example: you can extract data to UI controllers here
@@ -745,13 +753,16 @@ class Dwsmprovider extends ChangeNotifier {
         print('waterFeeController: ${waterFeeController.text}');
 
         feeBasis = getRadiobuttonData(
-            operationMaintenanceData.first.feeAmountPerMonth, feeBasisMap);
+            operationMaintenanceData.first.isWaterFeeChargedFromHouseholds, feeBasisMap);
         print('feeBasis: $feeBasis');
 
         userFeePercentController.text = operationMaintenanceData
             .first.perOfVillagesWhereUserFeeCollected
             .toString();
         print('userFeePercentController: ${userFeePercentController.text}');
+
+        observationOperationMaintencen.text = operationMaintenanceData.first.obserVationOperationMaintenance;
+
       } else {
         _message = response.message;
       }
@@ -854,11 +865,11 @@ class Dwsmprovider extends ChangeNotifier {
   int get thirdPartyAssessmentID =>
       thirdPartyAssessmentMap[_thirdPartyAssessment] ?? -1;
 
-
   String? _thirdPartyInspectionAgency;
+
   String? get thirdPartyInspectionAgency => _thirdPartyInspectionAgency;
 
-  set thirdPartyInspectionAgency(String? value){
+  set thirdPartyInspectionAgency(String? value) {
     _thirdPartyInspectionAgency = value;
     notifyListeners();
   }
@@ -882,16 +893,15 @@ class Dwsmprovider extends ChangeNotifier {
 
     try {
       final response = await _dwsmRepository.saveQualityAssurance(
-        userId: userId,
-        stateId: stateId,
-        districtId: districtId,
-        inspectionAuthority: inspectionAuthority,
-        isCommissioningProtocolFollowed: isCommissioningProtocolFollowed,
-        schemesPresentDuringCommissioning: schemesPresentDuringCommissioning,
-        districtAssessmentAgencies: districtAssessmentAgencies,
-        districtHiredAgencies: districtHiredAgencies,
-        modeType: modeType
-      );
+          userId: userId,
+          stateId: stateId,
+          districtId: districtId,
+          inspectionAuthority: inspectionAuthority,
+          isCommissioningProtocolFollowed: isCommissioningProtocolFollowed,
+          schemesPresentDuringCommissioning: schemesPresentDuringCommissioning,
+          districtAssessmentAgencies: districtAssessmentAgencies,
+          districtHiredAgencies: districtHiredAgencies,
+          modeType: modeType);
 
       _message = response.message;
       _status = response.status;
@@ -914,7 +924,7 @@ class Dwsmprovider extends ChangeNotifier {
 
     try {
       final response = await _fetchdwsmrepo.fetchQualityAssuranceCommissioning(
-          stateId, districtId, userId,modeType);
+          stateId, districtId, userId, modeType);
       if (response.status) {
         qualityAssuranceData = response.result;
         _message = response.message;
@@ -1052,18 +1062,17 @@ class Dwsmprovider extends ChangeNotifier {
 
     try {
       final response = await _dwsmRepository.saveGrievanceRedressal(
-        userId: userId,
-        stateId: stateId,
-        districtId: districtId,
-        grievanceMechanismAvailable: grievanceMechanismAvailable,
-        howGrievancesRegistered: howGrievancesRegistered,
-        complaintsReceived: complaintsReceived,
-        typeOfComplaints: typeOfComplaints,
-        otherComplaints: otherComplaints,
-        resolutionTime: resolutionTime,
-        actionTakenByDepartment: actionTakenByDepartment,
-        modeType: modeType
-      );
+          userId: userId,
+          stateId: stateId,
+          districtId: districtId,
+          grievanceMechanismAvailable: grievanceMechanismAvailable,
+          howGrievancesRegistered: howGrievancesRegistered,
+          complaintsReceived: complaintsReceived,
+          typeOfComplaints: typeOfComplaints,
+          otherComplaints: otherComplaints,
+          resolutionTime: resolutionTime,
+          actionTakenByDepartment: actionTakenByDepartment,
+          modeType: modeType);
 
       _message = response.message;
       _status = response.status;
@@ -1081,13 +1090,14 @@ class Dwsmprovider extends ChangeNotifier {
   List<PublicComplaintsGrievanceRedressal> grievanceData = [];
 
   Future<void> fetchGrievanceRedressalData(
-      String stateId, String districtId, String userId,modeType) async {
+      String stateId, String districtId, String userId, modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchdwsmrepo
-          .fetchPublicComplaintsGrievanceRedressal(stateId, districtId, userId,modeType);
+      final response =
+          await _fetchdwsmrepo.fetchPublicComplaintsGrievanceRedressal(
+              stateId, districtId, userId, modeType);
       if (response.status) {
         grievanceData = response.result;
         _message = response.message;

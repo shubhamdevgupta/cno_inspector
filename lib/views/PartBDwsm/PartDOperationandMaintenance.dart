@@ -180,6 +180,11 @@ class _PartDoperationandmaintenance
                                 controller: dwsmProvider.userFeePercentController,
                                 keyboardType: TextInputType.number,
                               ),
+                              Customtxtfeild(
+                                label: "6. Observation on Operation & Maintenance",
+                                controller: dwsmProvider.observationOperationMaintencen,
+                                keyboardType: TextInputType.text,
+                              ),
                             ],
                           ),
 
@@ -211,6 +216,7 @@ class _PartDoperationandmaintenance
                                         isProtocolInPlace: dwsmProvider.handoverProtocolID, percentVillagesWithManpower: double.parse(dwsmProvider.manpowerPercentController.text),
                                         isWaterFeeCharged: -1, feeAmountPerMonth: int.parse(dwsmProvider.waterFeeController.text),
                                         isUniformFee: dwsmProvider.feeBasisID,
+                                        obserVationOperationMaintenance: dwsmProvider.observationOperationMaintencen.text,
                                         percentVillagesFeeCollected: double.parse(dwsmProvider.userFeePercentController.text),modeType: modeType!.modeValue);
                                       if (dwsmProvider.status!) {
                                         ToastHelper.showToastMessage(

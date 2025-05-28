@@ -138,7 +138,20 @@ class DWSMRepositoy {
       rethrow;
     }
   }
-
+/*  {
+  "userid": 1726,
+  "stateid": 17,
+  "districtid": 264,
+  "Is_protocol_in_village_infrastructure": 3,
+  "Percentage_villages_trained_manpower": 4.00000,
+  "Is_Water_charged_households_fee_amount": 5,
+  "Is_Water_charged_households_uniform_consumption": 2,
+  "Percentage_villages_User_Fee_collected": 6.00000,
+  "createdby": null,
+  "createdip": null,
+  "phy_status": 0,
+  "Obseration_Operation_Maintenance": ""
+  }*/
 
   Future<BaseResponse> saveOperationMaintenance({
     required int userId,
@@ -150,6 +163,7 @@ class DWSMRepositoy {
     required int feeAmountPerMonth,
     required int isUniformFee,
     required double percentVillagesFeeCollected,
+    required String obserVationOperationMaintenance,
     required int modeType
   }) async {
     try {
@@ -159,13 +173,13 @@ class DWSMRepositoy {
           "userid": userId,
           "stateid": stateId,
           "districtid": districtId,
-          "is_a_protocol_handing_in_village_infrastructure_place": isProtocolInPlace,
-          "Per_of_villages_where_trained_multi_skilled_manpower_available": percentVillagesWithManpower,
-          "is_water_fee_charged_from_households": isWaterFeeCharged,
-          "fee_amount_per_month": feeAmountPerMonth,
-          "is_it_uniform_based_on_consumption": isUniformFee,
-          "per_of_villages_where_User_Fee_collected": percentVillagesFeeCollected,
-          "phy_status":modeType
+          "Is_protocol_in_village_infrastructure": isProtocolInPlace,
+          "Percentage_villages_trained_manpower": percentVillagesWithManpower,
+          "Is_Water_charged_households_fee_amount": feeAmountPerMonth,
+          "Is_Water_charged_households_uniform_consumption": isUniformFee,
+          "Percentage_villages_User_Fee_collected": percentVillagesFeeCollected,
+          "phy_status":modeType,
+          "Obseration_Operation_Maintenance":obserVationOperationMaintenance
         }),
       );
       return BaseResponse.fromJson(response);
