@@ -12,10 +12,10 @@ class Fetchdwsmrepo {
 
   Future<BaseResponseModel<CoordinationPlanningReview>>
       fetchCoordinationPlanningReview(
-          String stateId, String districtId, String userId) async {
+          String stateId, String districtId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_dwsm_coordination_planning_review?stateid=$stateId&districtid=$districtId&userid=$userId');
+          '/CNOSurvey/Get_cno_dwsm_coordination_planning_review?stateid=$stateId&districtid=$districtId&userid=$userId&phy_status=$modeType');
       return BaseResponseModel<CoordinationPlanningReview>.fromJson(
           response, (json) => CoordinationPlanningReview.fromJson(json));
     } catch (e) {
@@ -26,10 +26,10 @@ class Fetchdwsmrepo {
 
   Future<BaseResponseModel<SourceSustainabilityWaterConservation>>
       fetchSourceSustainabilityWaterConservation(
-          String stateId, String districtId, String userId) async {
+          String stateId, String districtId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_dwsm_source_sustainability_water_conservation?stateid=$stateId&districtid=$districtId&userid=$userId');
+          '/CNOSurvey/Get_cno_dwsm_source_sustainability_water_conservation?stateid=$stateId&districtid=$districtId&userid=$userId&phy_status=$modeType');
       return BaseResponseModel<SourceSustainabilityWaterConservation>.fromJson(
           response,
           (json) => SourceSustainabilityWaterConservation.fromJson(json));
@@ -41,10 +41,10 @@ class Fetchdwsmrepo {
 
   Future<BaseResponseModel<MonitoringQualityLabInfrastructure>>
       fetchMonitoringQualityLabInfrastructure(
-          String stateId, String districtId, String userId) async {
+          String stateId, String districtId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_dwsm_monitoring_quality_lab_infrastructure?stateid=$stateId&districtid=$districtId&userid=$userId');
+          '/CNOSurvey/Get_cno_dwsm_monitoring_quality_lab_infrastructure?stateid=$stateId&districtid=$districtId&userid=$userId&phy_status=$modeType');
       return BaseResponseModel<MonitoringQualityLabInfrastructure>.fromJson(
           response,
           (json) => MonitoringQualityLabInfrastructure.fromJson(json));
@@ -55,10 +55,10 @@ class Fetchdwsmrepo {
   }
 
   Future<BaseResponseModel<OperationMaintenance>> fetchOperationMaintenance(
-      String stateId, String districtId, String userId) async {
+      String stateId, String districtId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_dwsm_operation_maintenance?stateid=$stateId&districtid=$districtId&userid=$userId');
+          '/CNOSurvey/Get_cno_dwsm_operation_maintenance?stateid=$stateId&districtid=$districtId&userid=$userId&phy_status=$modeType');
       return BaseResponseModel<OperationMaintenance>.fromJson(
           response, (json) => OperationMaintenance.fromJson(json));
     } catch (e) {
@@ -69,10 +69,10 @@ class Fetchdwsmrepo {
 
   Future<BaseResponseModel<QualityAssuranceCommissioning>>
       fetchQualityAssuranceCommissioning(
-          String stateId, String districtId, String userId) async {
+          String stateId, String districtId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_dwsm_Quality_Assurance_Commissioning?stateid=$stateId&districtid=$districtId&userid=$userId');
+          '/CNOSurvey/Get_cno_dwsm_Quality_Assurance_Commissioning?stateid=$stateId&districtid=$districtId&userid=$userId&phy_status=$modeType');
       return BaseResponseModel<QualityAssuranceCommissioning>.fromJson(
           response, (json) => QualityAssuranceCommissioning.fromJson(json));
     } catch (e) {
@@ -83,10 +83,10 @@ class Fetchdwsmrepo {
 
   Future<BaseResponseModel<PublicComplaintsGrievanceRedressal>>
       fetchPublicComplaintsGrievanceRedressal(
-          String stateId, String districtId, String userId) async {
+          String stateId, String districtId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_dwsm_Public_Complaints_Grievance_Redressal?stateid=$stateId&districtid=$districtId&userid=$userId');
+          '/CNOSurvey/Get_cno_dwsm_Public_Complaints_Grievance_Redressal?stateid=$stateId&districtid=$districtId&userid=$userId&phy_status=$modeType');
       return BaseResponseModel<PublicComplaintsGrievanceRedressal>.fromJson(
           response,
           (json) => PublicComplaintsGrievanceRedressal.fromJson(json));

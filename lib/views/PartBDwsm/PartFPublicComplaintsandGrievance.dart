@@ -22,7 +22,7 @@ class PartFPublicCompliant extends StatefulWidget {
 
 class _PartFPublicCompliant extends State<PartFPublicCompliant> {
   LocalStorageService localStorageService = LocalStorageService();
-
+  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -41,11 +41,12 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
+         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
         dwsmProvider.fetchGrievanceRedressalData(
             stateId.toString(),
             districtid.toString(),
-            localStorageService.getInt(AppConstants.prefUserId).toString());
+            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -110,8 +111,6 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
-                final mode =
-                    Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -254,7 +253,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                                   int.parse(dwsmProvider
                                                       .actionTakenController
                                                       .text),
-                                                modeType: mode.modeValue
+                                                modeType: modeType!.modeValue
                                           );
 
                                           if (dwsmProvider.status!) {

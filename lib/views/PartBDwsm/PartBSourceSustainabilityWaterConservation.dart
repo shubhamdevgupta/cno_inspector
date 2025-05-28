@@ -25,7 +25,7 @@ class SourceSustainablitiyWasterConservation extends StatefulWidget {
 class _SourceSustainablitiyWasterConservation
     extends State<SourceSustainablitiyWasterConservation> {
   LocalStorageService localStorageService = LocalStorageService();
-
+ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -44,10 +44,12 @@ class _SourceSustainablitiyWasterConservation
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
+         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
         dwsmProvider.fetchSustainabilityData(
             stateId.toString(),
             districtid.toString(),
-            localStorageService.getInt(AppConstants.prefUserId).toString());
+            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -112,8 +114,6 @@ class _SourceSustainablitiyWasterConservation
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
-                final mode =
-                    Provider.of<AppStateProvider>(context, listen: false).mode;
 
                 return SingleChildScrollView(
                   child: Container(
@@ -213,7 +213,7 @@ class _SourceSustainablitiyWasterConservation
 
                                 //TODO Please add this question in below 10%
                                 Visibility(
-                                  visible: mode == ProjectMode.below10,
+                                  visible: modeType == ProjectMode.below10,
                                   child: Customradiobttn(
                                     question:
                                         "5. •	Does the district have an NABL-accredited lab or equivalent for water quality testing?",
@@ -279,7 +279,7 @@ class _SourceSustainablitiyWasterConservation
                                                 dwsmProvider
                                                     .testingManagedDataController
                                                     .text,
-                                            modeType: mode.modeValue);
+                                            modeType: modeType!.modeValue);
 
                                         if (dwsmProvider.status!) {
                                           ToastHelper.showToastMessage(

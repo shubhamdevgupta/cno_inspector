@@ -24,7 +24,7 @@ class PartEQualityAssuranceCommissioning extends StatefulWidget {
 class _PartEQualityAssuranceCommissioning
     extends State<PartEQualityAssuranceCommissioning> {
   LocalStorageService localStorageService = LocalStorageService();
-
+ ProjectMode? modeType;
 
   @override
   void initState() {
@@ -44,10 +44,12 @@ class _PartEQualityAssuranceCommissioning
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
+        modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
         dwsmProvider.fetchQualityAssuranceData(
             stateId.toString(),
             districtid.toString(),
-            localStorageService.getInt(AppConstants.prefUserId).toString());
+            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -112,8 +114,7 @@ class _PartEQualityAssuranceCommissioning
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
-                final mode =
-                    Provider.of<AppStateProvider>(context, listen: false).mode;
+
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -176,7 +177,7 @@ class _PartEQualityAssuranceCommissioning
                                       ),
 
                                       Visibility(
-                                        visible: mode == ProjectMode.below10,
+                                        visible: modeType == ProjectMode.below10,
                                         child: Customradiobttn(
                                           question:
                                               "3.Has the district has hired any third-party inspection agencies on quality checks for JJM schemes?",
@@ -191,7 +192,7 @@ class _PartEQualityAssuranceCommissioning
                                       ),
                                       const SizedBox(height: 10),
                                       Visibility(
-                                        visible: mode == ProjectMode.above10,
+                                        visible: modeType == ProjectMode.above10,
                                         child: Column(
                                           children: [
                                             Customradiobttn(
@@ -263,7 +264,7 @@ class _PartEQualityAssuranceCommissioning
                                                   dwsmProvider
                                                       .thirdPartyAssessmentID,
                                               districtHiredAgencies: dwsmProvider.thirdPartyInspectionAgencyID,
-                                              modeType: mode.modeValue);
+                                              modeType: modeType!.modeValue);
 
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(

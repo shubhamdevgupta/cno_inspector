@@ -23,7 +23,7 @@ class CoordinationPlanningReview extends StatefulWidget {
 
 class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
   LocalStorageService localStorageService = LocalStorageService();
-
+  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -42,10 +42,12 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
+        modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
         dwsmProvider.fetchCoordinationData(
             stateId.toString(),
             districtid.toString(),
-            localStorageService.getInt(AppConstants.prefUserId).toString());
+            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -109,7 +111,6 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
             ),
             body:
                 Consumer<Dwsmprovider>(builder: (context, dwsmProvider, child) {
-                  final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                   return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
@@ -227,7 +228,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                                   .selectedMeetingQualityID,
                                               areCoordinationMeetingsRegular:
                                                   dwsmProvider.selectedDISHAID,
-                                            modeType: mode.modeValue
+                                            modeType: modeType!.modeValue
                                       );
 
                                       if (dwsmProvider.status!) {

@@ -152,13 +152,13 @@ class Dwsmprovider extends ChangeNotifier {
   List<CoordinationPlanningReview> coordinationData = [];
 
   Future<void> fetchCoordinationData(
-      String stateId, String districtId, String userId) async {
+      String stateId, String districtId, String userId,int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchdwsmrepo.fetchCoordinationPlanningReview(
-          stateId, districtId, userId);
+          stateId, districtId, userId,modeType);
       if (response.status) {
         coordinationData = response.result;
         if (coordinationData.isNotEmpty) {
@@ -357,14 +357,14 @@ class Dwsmprovider extends ChangeNotifier {
   List<SourceSustainabilityWaterConservation> sustainabilityData = [];
 
   Future<void> fetchSustainabilityData(
-      String stateId, String districtId, String userId) async {
+      String stateId, String districtId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response =
           await _fetchdwsmrepo.fetchSourceSustainabilityWaterConservation(
-              stateId, districtId, userId);
+              stateId, districtId, userId,modeType);
       if (response.status) {
         sustainabilityData = response.result;
 
@@ -533,13 +533,13 @@ class Dwsmprovider extends ChangeNotifier {
   List<MonitoringQualityLabInfrastructure> monitoringData = [];
 
   Future<void> fetchMonitoringLabData(
-      String stateId, String districtId, String userId) async {
+      String stateId, String districtId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchdwsmrepo
-          .fetchMonitoringQualityLabInfrastructure(stateId, districtId, userId);
+          .fetchMonitoringQualityLabInfrastructure(stateId, districtId, userId,modeType);
       if (response.status) {
         monitoringData = response.result;
 
@@ -669,13 +669,13 @@ class Dwsmprovider extends ChangeNotifier {
   List<OperationMaintenance> operationMaintenanceData = [];
 
   Future<void> fetchOperationMaintenanceData(
-      String stateId, String districtId, String userId) async {
+      String stateId, String districtId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchdwsmrepo.fetchOperationMaintenance(
-          stateId, districtId, userId);
+          stateId, districtId, userId,modeType);
       if (response.status) {
         operationMaintenanceData = response.result;
         // Example: you can extract data to UI controllers here
@@ -862,13 +862,13 @@ class Dwsmprovider extends ChangeNotifier {
   List<QualityAssuranceCommissioning> qualityAssuranceData = [];
 
   Future<void> fetchQualityAssuranceData(
-      String stateId, String districtId, String userId) async {
+      String stateId, String districtId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchdwsmrepo.fetchQualityAssuranceCommissioning(
-          stateId, districtId, userId);
+          stateId, districtId, userId,modeType);
       if (response.status) {
         qualityAssuranceData = response.result;
         _message = response.message;
@@ -1035,13 +1035,13 @@ class Dwsmprovider extends ChangeNotifier {
   List<PublicComplaintsGrievanceRedressal> grievanceData = [];
 
   Future<void> fetchGrievanceRedressalData(
-      String stateId, String districtId, String userId) async {
+      String stateId, String districtId, String userId,modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchdwsmrepo
-          .fetchPublicComplaintsGrievanceRedressal(stateId, districtId, userId);
+          .fetchPublicComplaintsGrievanceRedressal(stateId, districtId, userId,modeType);
       if (response.status) {
         grievanceData = response.result;
         _message = response.message;
