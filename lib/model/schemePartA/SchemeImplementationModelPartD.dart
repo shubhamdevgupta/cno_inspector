@@ -120,7 +120,6 @@ class SchemeImplementationModel {
       costOverrunReason: List<int>.from(json['cost_overrun_reason'] ?? []),
       costRevisionReason: List<int>.from(json['cost_revision_reason'] ?? []),
       //
-
         //delay_work_reasonIds: List<int>.from(json['delay_work_reasonIds'] ?? []),
 // This need to be verify once
       /*
