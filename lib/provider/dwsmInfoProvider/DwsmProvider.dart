@@ -79,6 +79,8 @@ class Dwsmprovider extends ChangeNotifier {
 
   // Controller for 1.1 How many meetings
   final TextEditingController meetingsHeldController = TextEditingController();
+  final TextEditingController auditInternalObservation = TextEditingController();
+  final TextEditingController observationCoordination = TextEditingController();
 
   final Map<String, int> meetingQualityMap = {
     'Proper Documentation with actionable decision': 1,
@@ -115,10 +117,12 @@ class Dwsmprovider extends ChangeNotifier {
     required int userId,
     required int stateId,
     required int districtId,
+    required String auditInternalObservation,
     required int areMonthlyMeetingsHeld,
     required int numberOfMeetingsLast6Months,
     required int qualityOfMeeting,
     required int areCoordinationMeetingsRegular,
+    required String observationCoordination,
     required int modeType,
   }) async {
     _isLoading = true;
@@ -129,10 +133,12 @@ class Dwsmprovider extends ChangeNotifier {
         userId: userId,
         stateId: stateId,
         districtId: districtId,
+        auditInternalObservation:auditInternalObservation,
         areMonthlyMeetingsHeld: areMonthlyMeetingsHeld,
         numberOfMeetingsLast6Months: numberOfMeetingsLast6Months,
         qualityOfMeeting: qualityOfMeeting,
         areCoordinationMeetingsRegular: areCoordinationMeetingsRegular,
+        observationCoordination: observationCoordination,
         modeType: modeType,
       );
 
@@ -176,6 +182,8 @@ class Dwsmprovider extends ChangeNotifier {
               coordinationData.first
                   .areDistDevelopCoordinatMonitorCommitteeMeetingRegularly,
               yesNoMap);
+          auditInternalObservation.text=coordinationData.first.auditInternalObservation;
+          observationCoordination.text=coordinationData.first.observationCoordination;
         }
         // Add any data processing here if needed
         _message = response.message;
@@ -194,7 +202,7 @@ class Dwsmprovider extends ChangeNotifier {
   void clearCoordinationFields() {
     selectedValueQ1 = null;
 
-    meetingsHeldController.clear();
+    meetingsHeldController.text='0';
 
     selectedMeetingQuality = null;
     selectedDISHA = null;

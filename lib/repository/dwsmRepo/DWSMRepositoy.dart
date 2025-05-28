@@ -15,6 +15,8 @@ class DWSMRepositoy {
     required int numberOfMeetingsLast6Months,
     required int qualityOfMeeting,
     required int areCoordinationMeetingsRegular,
+    required String auditInternalObservation,
+    required String observationCoordination,
     required int modeType,
   }) async {
     try {
@@ -24,10 +26,12 @@ class DWSMRepositoy {
           "userid": userId,
           "stateid": stateId,
           "districtid": districtId,
+          "Is_audit_internal_Obseration_coordination_planning_review": auditInternalObservation,
           "are_monthly_dwsm_meetings_on_progress_JJM_works": areMonthlyMeetingsHeld,
           "if_yes_no_of_dwsm_meetings_last_6_months": numberOfMeetingsLast6Months,
           "quality_of_meeting_and_record_maintenance": qualityOfMeeting,
           "are_dist_develop_coordinat_monitor_committee_meeting_regularly": areCoordinationMeetingsRegular,
+          "Obseration_coordination_planning_review":observationCoordination,
           "phy_status": modeType
         }),
       );
