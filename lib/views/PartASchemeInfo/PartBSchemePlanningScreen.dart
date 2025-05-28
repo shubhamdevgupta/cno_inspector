@@ -373,15 +373,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               )
                               ),
 
-
-
-
-
-
-
                               // Below 10% part End
-
-
 
                                 Align(
                                   alignment: Alignment.centerRight,

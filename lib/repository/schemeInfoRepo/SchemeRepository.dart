@@ -301,6 +301,8 @@ class SchemeRepositoy {
     required int schemeCommissioned,
     required int commissioningProofAvailable,
     required List<int> tpiaIssueTypes,
+    required int modeType,
+    required int hydroTestingDistribute
   }) async {
     try {
       final response = await _apiService.post(
@@ -344,6 +346,8 @@ class SchemeRepositoy {
           "scheme_commissioned_done_per_commissioning_protocol": schemeCommissioned,
           "document_as_proof_of_commissioning_available": commissioningProofAvailable,
           "type_of_issues_tpias": tpiaIssueTypes,
+          "phy_status":modeType,
+          "Hydrotesting_Distribution_line":hydroTestingDistribute
         }),
       );
       return BaseResponse.fromJson(response);

@@ -16,7 +16,6 @@ class Schemeprovider extends ChangeNotifier {
 
   String errorMsg = '';
 
-
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -31,7 +30,7 @@ class Schemeprovider extends ChangeNotifier {
 
   final Map<String, int> yesNoMap = {
     "Yes": 1,
-    "No": 2,
+    "No": 0,
   };
 
   // Private variables to hold selected values
@@ -139,20 +138,19 @@ class Schemeprovider extends ChangeNotifier {
 
     try {
       final response = await _schemeRepositoy.saveSourceSurvey(
-        userId: userId,
-        stateId: stateId,
-        schemeId: schemeId,
-        isRecommendShiftToSurface: isRecommendShiftToSurface,
-        studyAccessGroundBeforeSurface: studyAccessGroundBeforeSurface,
-        safeZoneVillages: safeZoneVillages,
-        criticalZoneVillages: criticalZoneVillages,
-        semiCriticalZoneVillages: semiCriticalZoneVillages,
-        groundWaterAnalysisConducted: groundWaterAnalysisConducted,
-        waterAllocationFromWRD: waterAllocationFromWRD,
-        alterNativeSource: alterNativeSource,
-        repressFindinCommitte: repressFindinCommitte,
-        modeType: modeType
-      );
+          userId: userId,
+          stateId: stateId,
+          schemeId: schemeId,
+          isRecommendShiftToSurface: isRecommendShiftToSurface,
+          studyAccessGroundBeforeSurface: studyAccessGroundBeforeSurface,
+          safeZoneVillages: safeZoneVillages,
+          criticalZoneVillages: criticalZoneVillages,
+          semiCriticalZoneVillages: semiCriticalZoneVillages,
+          groundWaterAnalysisConducted: groundWaterAnalysisConducted,
+          waterAllocationFromWRD: waterAllocationFromWRD,
+          alterNativeSource: alterNativeSource,
+          repressFindinCommitte: repressFindinCommitte,
+          modeType: modeType);
 
       _message = response.message;
       _status = response.status;
@@ -174,8 +172,8 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response =
-          await _fetchschemeinfo.fetchSourceSurvey(stateId, schemeId, userId,modeType);
+      final response = await _fetchschemeinfo.fetchSourceSurvey(
+          stateId, schemeId, userId, modeType);
       if (response.status) {
         sourceSurveyData = response.result;
         _message = '';
@@ -208,8 +206,10 @@ class Schemeprovider extends ChangeNotifier {
             sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw.toString();
         print('waterAllocationController: ${waterAllocationController.text}');
         //
-       sourceFindingRepresentativesConsulted_Controller.text = sourceSurveyData.first.represe_of_ource_finding_committee;
-       alternativeSourcesAvailable_Controller.text=sourceSurveyData.first.cost_effective_alternative_sources;
+        sourceFindingRepresentativesConsulted_Controller.text =
+            sourceSurveyData.first.represe_of_ource_finding_committee;
+        alternativeSourcesAvailable_Controller.text =
+            sourceSurveyData.first.cost_effective_alternative_sources;
 
         //  Remarks_Source;
       } else {
@@ -319,10 +319,15 @@ class Schemeprovider extends ChangeNotifier {
       TextEditingController();
 
   //// Below 10 % work Started here PArt B
-  final TextEditingController schemePlanning_Question1Controller = TextEditingController();
-  final TextEditingController schemePlanning_Question2Controller = TextEditingController();
-  final TextEditingController schemePlanning_Question5Controller = TextEditingController();
-  final TextEditingController schemePlanning_Question6Controller = TextEditingController();
+  final TextEditingController schemePlanning_Question1Controller =
+      TextEditingController();
+  final TextEditingController schemePlanning_Question2Controller =
+      TextEditingController();
+  final TextEditingController schemePlanning_Question5Controller =
+      TextEditingController();
+  final TextEditingController schemePlanning_Question6Controller =
+      TextEditingController();
+
   //// Below 10 % work Ended here
 
   Future<void> saveSchemePlanning({
@@ -340,13 +345,11 @@ class Schemeprovider extends ChangeNotifier {
     required String terrainSoil,
     required int foundAsPerDPR,
     required String deviation,
-
     required String reason_not_awarded_scheme_planning,
     required String work_awarded_no_physical_progress,
     required String multiple_schemes_sanctioned_justify_detial,
     required String desgined_conjunctive_detail,
-    required int phy_status ,
-
+    required int phy_status,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -366,13 +369,12 @@ class Schemeprovider extends ChangeNotifier {
         terrainSoil: terrainSoil,
         foundAsPerDPR: foundAsPerDPR,
         deviation: deviation,
-
-
-        reason_not_awarded_scheme_planning:reason_not_awarded_scheme_planning,
-        work_awarded_no_physical_progress:work_awarded_no_physical_progress,
-        multiple_schemes_sanctioned_justify_detial:multiple_schemes_sanctioned_justify_detial,
-        desgined_conjunctive_detail:desgined_conjunctive_detail,
-        phy_status: phy_status ,
+        reason_not_awarded_scheme_planning: reason_not_awarded_scheme_planning,
+        work_awarded_no_physical_progress: work_awarded_no_physical_progress,
+        multiple_schemes_sanctioned_justify_detial:
+            multiple_schemes_sanctioned_justify_detial,
+        desgined_conjunctive_detail: desgined_conjunctive_detail,
+        phy_status: phy_status,
       );
 
       _message = response.message;
@@ -395,8 +397,8 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response =
-          await _fetchschemeinfo.fetchSchemePlanning(stateId, schemeId, userId,modeType);
+      final response = await _fetchschemeinfo.fetchSchemePlanning(
+          stateId, schemeId, userId, modeType);
       if (response.status) {
         schemePlanningData = response.result;
         _message = '';
@@ -449,10 +451,14 @@ class Schemeprovider extends ChangeNotifier {
             schemePlanningData.first.divationIfAny.toString();
         print('deviationReasonController: ${deviationReasonController.text}');
         //
-        schemePlanning_Question1Controller.text  =schemePlanningData.first.txtreason_not_awarded_scheme_planning;
-        schemePlanning_Question2Controller .text  =schemePlanningData.first.txtwork_awarded_no_physical_progress;
-        schemePlanning_Question5Controller .text =schemePlanningData.first.txtmultiple_schemes_sanctioned_justify_detial;
-        schemePlanning_Question6Controller .text  =schemePlanningData.first.txtdesgined_conjunctive_detail;
+        schemePlanning_Question1Controller.text =
+            schemePlanningData.first.txtreason_not_awarded_scheme_planning;
+        schemePlanning_Question2Controller.text =
+            schemePlanningData.first.txtwork_awarded_no_physical_progress;
+        schemePlanning_Question5Controller.text = schemePlanningData
+            .first.txtmultiple_schemes_sanctioned_justify_detial;
+        schemePlanning_Question6Controller.text =
+            schemePlanningData.first.txtdesgined_conjunctive_detail;
         //       =schemePlanningData.first.scheme_planning_Remarks;
         //
       } else {
@@ -484,9 +490,8 @@ class Schemeprovider extends ChangeNotifier {
     soilPipeMaterialController.clear();
     deviationReasonController.clear();
 
-
-    schemePlanning_Question1Controller.clear() ;
-    schemePlanning_Question2Controller.clear() ;
+    schemePlanning_Question1Controller.clear();
+    schemePlanning_Question2Controller.clear();
     schemePlanning_Question5Controller.clear();
     schemePlanning_Question6Controller.clear();
 
@@ -544,9 +549,6 @@ class Schemeprovider extends ChangeNotifier {
   int get onPmGatishaktiID => yesNoMap[_onPmGatishakti] ?? -1;
   final TextEditingController reasonController = TextEditingController();
 
-
-
-
   Future<void> saveRetrofitAdditionalInfo({
     required int userId,
     required int stateId,
@@ -569,22 +571,21 @@ class Schemeprovider extends ChangeNotifier {
 
     try {
       final response = await _schemeRepositoy.saveRetrofitAdditionalInfo(
-        userId: userId,
-        stateId: stateId,
-        schemeId: schemeId,
-        isAssessmentDone: isAssessmentDone,
-        assessmentMethod: assessmentMethod,
-        assessmentReason: assessmentReason,
-        pipelineKms: pipelineKms,
-        distributionKms: distributionKms,
-        wtpCapacity: wtpCapacity,
-        structureNos: structureNos,
-        structureCapacity: structureCapacity,
-        buildDrawingAvailable: buildDrawingAvailable,
-        onPMGati: onPMGati,
-        noReason: noReason,
-        phy_status: phyStatus
-      );
+          userId: userId,
+          stateId: stateId,
+          schemeId: schemeId,
+          isAssessmentDone: isAssessmentDone,
+          assessmentMethod: assessmentMethod,
+          assessmentReason: assessmentReason,
+          pipelineKms: pipelineKms,
+          distributionKms: distributionKms,
+          wtpCapacity: wtpCapacity,
+          structureNos: structureNos,
+          structureCapacity: structureCapacity,
+          buildDrawingAvailable: buildDrawingAvailable,
+          onPMGati: onPMGati,
+          noReason: noReason,
+          phy_status: phyStatus);
 
       _message = response.message;
       _status = response.status;
@@ -601,13 +602,13 @@ class Schemeprovider extends ChangeNotifier {
   List<AdditionalInfoRetrofitItem> retrofitInfoData = [];
 
   Future<void> fetchAdditionalInfoRetrofit(
-      String stateId, String schemeId, String userId,int modeType) async {
+      String stateId, String schemeId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchschemeinfo.fetchAdditionalInfoRetrofit(
-          stateId, schemeId, userId,modeType);
+          stateId, schemeId, userId, modeType);
       if (response.status) {
         retrofitInfoData = response.result;
         _message = '';
@@ -649,7 +650,7 @@ class Schemeprovider extends ChangeNotifier {
 
         reasonController.text = retrofitInfoData.first.ifNoReason.toString();
 
-      //  additionalRemarkController retrofitInfoData.first.AdditionalInfo_Remarks.toString();
+        //  additionalRemarkController retrofitInfoData.first.AdditionalInfo_Remarks.toString();
         print('reasonController: ${reasonController.text}');
       } else {
         _message = response.message;
@@ -963,11 +964,9 @@ class Schemeprovider extends ChangeNotifier {
   List<int> get selectedrevisionReasonsID =>
       _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
 
-
   // Below 10% content
-  final TextEditingController below10PartD_ques8_Controller = TextEditingController();
-
-
+  final TextEditingController below10PartD_ques8_Controller =
+      TextEditingController();
 
   Future<void> saveSchemeImplementation({
     required int userId,
@@ -1008,13 +1007,11 @@ class Schemeprovider extends ChangeNotifier {
     required List<int> delayReasons,
     required List<int> costOverrunReasons,
     required List<int> costRevisionReasons,
-
-
     required double txtcost_levelzed_cost_cr,
-    required int    is_tpia_engaged_value,
-    required int    concurrent_supervission_scope_value,
+    required int is_tpia_engaged_value,
+    required int concurrent_supervission_scope_value,
     required String txtpws_status_under_scheme,
-    required int    phy_status,
+    required int phy_status,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1059,13 +1056,12 @@ class Schemeprovider extends ChangeNotifier {
         delayReasons: delayReasons,
         costOverrunReasons: costOverrunReasons,
         costRevisionReasons: costRevisionReasons,
-
-
-        txtcost_levelzed_cost_cr:txtcost_levelzed_cost_cr,
-        is_tpia_engaged_value:is_tpia_engaged_value,
-        concurrent_supervission_scope_value:concurrent_supervission_scope_value,
-        txtpws_status_under_scheme:txtpws_status_under_scheme,
-        phy_status:phy_status,
+        txtcost_levelzed_cost_cr: txtcost_levelzed_cost_cr,
+        is_tpia_engaged_value: is_tpia_engaged_value,
+        concurrent_supervission_scope_value:
+            concurrent_supervission_scope_value,
+        txtpws_status_under_scheme: txtpws_status_under_scheme,
+        phy_status: phy_status,
       );
 
       _message = response.message;
@@ -1112,12 +1108,10 @@ class Schemeprovider extends ChangeNotifier {
     selecteSource = null;
     selectedPipeline = null;
 
-
-
-    setQuesPartE5=null;
-    setQuesPartE7=null;;
-  below10PartD_ques8_Controller.clear();
-
+    setQuesPartE5 = null;
+    setQuesPartE7 = null;
+    ;
+    below10PartD_ques8_Controller.clear();
 
     notifyListeners(); // if inside a provider
   }
@@ -1127,13 +1121,13 @@ class Schemeprovider extends ChangeNotifier {
   List<SchemeImplementationModel> schemeImplementationData = [];
 
   Future<void> fetchSchemeImplementationData(
-      String stateId, String schemeId, String userId,int modeType) async {
+      String stateId, String schemeId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchschemeinfo.fetchSchemeImplementation(
-          stateId, schemeId, userId,modeType);
+          stateId, schemeId, userId, modeType);
       if (response.status) {
         _message = '';
         schemeImplementationData = response.result;
@@ -1291,51 +1285,54 @@ class Schemeprovider extends ChangeNotifier {
     required int schemeCommissioned,
     required int commissioningProofAvailable,
     required List<int> tpiaIssueTypes,
+    required int modeType,
+    required int hydroTestingDistribute
   }) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _schemeRepositoy.saveVisualInspection(
-        userId: userId,
-        stateId: stateId,
-        schemeId: schemeId,
-        costOverrun: costOverrun,
-        spalling: spalling,
-        cracks: cracks,
-        rustMarks: rustMarks,
-        swollenConcrete: swollenConcrete,
-        trappedJute: trappedJute,
-        rustedBars: rustedBars,
-        dampness: dampness,
-        whiteMarks: whiteMarks,
-        stoneAggregates: stoneAggregates,
-        verticalAlignment: verticalAlignment,
-        sagSlabBeam: sagSlabBeam,
-        highVibrationPumps: highVibrationPumps,
-        reservoirLeakage: reservoirLeakage,
-        highLeakagePumps: highLeakagePumps,
-        pipelineLeakageTransmission: pipelineLeakageTransmission,
-        pipelineLeakageDistribution: pipelineLeakageDistribution,
-        wetPatches: wetPatches,
-        verifyPipeQuality: verifyPipeQuality,
-        pipesAsPerDPR: pipesAsPerDPR,
-        complaintsOnPipelineDesign: complaintsOnPipelineDesign,
-        isTPIAEngaged: isTPIAEngaged,
-        sampleChecks: sampleChecks,
-        concurrentSupervision: concurrentSupervision,
-        tpiaStageChecks: tpiaStageChecks,
-        tpiaReports: tpiaReports,
-        actionOnTPIA: actionOnTPIA,
-        tpiaVerifyMB: tpiaVerifyMB,
-        hydroTestingDone: hydroTestingDone,
-        testReportsProvided: testReportsProvided,
-        deptQualityChecks: deptQualityChecks,
-        deptMeasurementVerification: deptMeasurementVerification,
-        schemeCommissioned: schemeCommissioned,
-        commissioningProofAvailable: commissioningProofAvailable,
-        tpiaIssueTypes: tpiaIssueTypes,
-      );
+          userId: userId,
+          stateId: stateId,
+          schemeId: schemeId,
+          costOverrun: costOverrun,
+          spalling: spalling,
+          cracks: cracks,
+          rustMarks: rustMarks,
+          swollenConcrete: swollenConcrete,
+          trappedJute: trappedJute,
+          rustedBars: rustedBars,
+          dampness: dampness,
+          whiteMarks: whiteMarks,
+          stoneAggregates: stoneAggregates,
+          verticalAlignment: verticalAlignment,
+          sagSlabBeam: sagSlabBeam,
+          highVibrationPumps: highVibrationPumps,
+          reservoirLeakage: reservoirLeakage,
+          highLeakagePumps: highLeakagePumps,
+          pipelineLeakageTransmission: pipelineLeakageTransmission,
+          pipelineLeakageDistribution: pipelineLeakageDistribution,
+          wetPatches: wetPatches,
+          verifyPipeQuality: verifyPipeQuality,
+          pipesAsPerDPR: pipesAsPerDPR,
+          complaintsOnPipelineDesign: complaintsOnPipelineDesign,
+          isTPIAEngaged: isTPIAEngaged,
+          sampleChecks: sampleChecks,
+          concurrentSupervision: concurrentSupervision,
+          tpiaStageChecks: tpiaStageChecks,
+          tpiaReports: tpiaReports,
+          actionOnTPIA: actionOnTPIA,
+          tpiaVerifyMB: tpiaVerifyMB,
+          hydroTestingDone: hydroTestingDone,
+          testReportsProvided: testReportsProvided,
+          deptQualityChecks: deptQualityChecks,
+          deptMeasurementVerification: deptMeasurementVerification,
+          schemeCommissioned: schemeCommissioned,
+          commissioningProofAvailable: commissioningProofAvailable,
+          tpiaIssueTypes: tpiaIssueTypes,
+          modeType: modeType,
+          hydroTestingDistribute: hydroTestingDistribute);
 
       _message = response.message;
       _status = response.status;
@@ -1352,13 +1349,13 @@ class Schemeprovider extends ChangeNotifier {
   List<SchemeVisualInspectionModel> schemeVisualInspectionData = [];
 
   Future<void> fetchSchemeVisualInspectionData(
-      String stateId, String schemeId, String userId,int modeType) async {
+      String stateId, String schemeId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchschemeinfo.fetchSchemeVisualInspection(
-          stateId, schemeId, userId,modeType);
+          stateId, schemeId, userId, modeType);
 
       if (response.status) {
         schemeVisualInspectionData = response.result;
@@ -1802,11 +1799,13 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedId_partE4 => yesNoMap[_quesPartE4] ?? -1;
 
-  int get selectedId_partE5 => yesNoMap[_quesPartE5] ?? -1;  // this is in D part of Below 10 % too
+  int get selectedId_partE5 =>
+      yesNoMap[_quesPartE5] ?? -1; // this is in D part of Below 10 % too
 
   int get selectedId_partE6 => yesNoMap[_quesPartE6] ?? -1;
 
-  int get selectedId_partE7 => yesNoMap[_quesPartE7] ?? -1; // this is in D part of Below 10 % too
+  int get selectedId_partE7 =>
+      yesNoMap[_quesPartE7] ?? -1; // this is in D part of Below 10 % too
 
   int get selectedId_partE8 => yesNoMap[_quesPartE8] ?? -1;
 
