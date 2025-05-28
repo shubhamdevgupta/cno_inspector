@@ -760,7 +760,8 @@ class Vwscprovider extends ChangeNotifier {
     required int omArrangement,
     required int communityAwareness,
     required int communitySatisfactionWithWq,
-    required int createdBy,
+
+    required int phyStatus,
     required String observationCommunityInvolvementFunctionality
   }) async {
     _isLoading = true;
@@ -783,7 +784,7 @@ class Vwscprovider extends ChangeNotifier {
         omArrangement: omArrangement,
         communityAwareness: communityAwareness,
         communitySatisfactionWithWq: communitySatisfactionWithWq,
-        createdBy: createdBy,
+       phyStatus: phyStatus,
         ObservationCommunityInvolvementFunctionality: observationCommunityInvolvementFunctionality
 
       );

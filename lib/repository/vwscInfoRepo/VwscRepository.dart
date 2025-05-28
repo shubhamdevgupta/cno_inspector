@@ -86,7 +86,8 @@ class VwscRepository {
     required int omArrangement,
     required int communityAwareness,
     required int communitySatisfactionWithWq,
-    required int createdBy,
+    required int phyStatus,
+
     required String ObservationCommunityInvolvementFunctionality
   }) async {
     try {
@@ -108,7 +109,7 @@ class VwscRepository {
           "om_arrangement": omArrangement,
           "community_awareness": communityAwareness,
           "community_satisfaction_with_wq": communitySatisfactionWithWq,
-          "createdby": createdBy,
+          "phy_status": phyStatus,
           "ObservationCommunity_Involvement_Functionality": ObservationCommunityInvolvementFunctionality,
         }),
       );
@@ -142,7 +143,7 @@ class VwscRepository {
           "villageid": villageId,
           "any_complaint_by_community": anyComplaintByCommunity,
           "is_complaint_addressed": isComplaintAddressed,
-
+          "phy_status": phyStatus,
           /// Complaint type as a list of integers.
           "complainttype": complaintType,
 

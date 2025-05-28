@@ -486,7 +486,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                             omArrangement: vwscProvider.selectedOMArrangementsID,
                                             communityAwareness: vwscProvider.selectedCommunityAwarenessID,
                                             communitySatisfactionWithWq: vwscProvider.selectedWaterQualitySatisfactionID,
-                                            createdBy: _localStorage.getInt(AppConstants.prefUserId)!,
+                                            phyStatus: mode.modeValue,
                                             observationCommunityInvolvementFunctionality:  vwscProvider.PartBVWSCuserObservationController.text
                                         );
 
