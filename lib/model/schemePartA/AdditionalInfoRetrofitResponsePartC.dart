@@ -36,6 +36,7 @@ class AdditionalInfoRetrofitItem {
   final int buildDrawingInfrAvailable;
   final int ifYesIsItOnPMGati;
   final String ifNoReason;
+  final String AdditionalInfo_Remarks;
   final dynamic createdby;
   final dynamic createdip;
 
@@ -54,6 +55,7 @@ class AdditionalInfoRetrofitItem {
     required this.buildDrawingInfrAvailable,
     required this.ifYesIsItOnPMGati,
     required this.ifNoReason,
+    required this.AdditionalInfo_Remarks,
     this.createdby,
     this.createdip,
   });
@@ -74,8 +76,12 @@ class AdditionalInfoRetrofitItem {
       buildDrawingInfrAvailable: json['build_drawing_infr_available'] ?? 0,
       ifYesIsItOnPMGati: json['if_yes_is_it_on_PMGati'] ?? 0,
       ifNoReason: json['if_no_reason'] ?? '',
+      AdditionalInfo_Remarks: json['AdditionalInfo_Remarks'] ?? '',
       createdby: json['createdby'],
       createdip: json['createdip'],
+      //
+
+
     );
   }
 }

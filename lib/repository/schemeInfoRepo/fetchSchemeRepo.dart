@@ -16,10 +16,10 @@ class Fetchschemeinfo {
 
 
   Future<BaseResponseModel<SourceSurveyItem>> fetchSourceSurvey(
-      String stateId, String schemeId, String userId) async {
+      String stateId, String schemeId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_source_survey?stateid=$stateId&schemeid=$schemeId&userid=$userId');
+          '/CNOSurvey/Get_cno_source_survey?stateid=$stateId&schemeid=$schemeId&userid=$userId&phy_status=$modeType');
       return BaseResponseModel<SourceSurveyItem>.fromJson(
         response,
             (json) => SourceSurveyItem.fromJson(json),
@@ -31,10 +31,10 @@ class Fetchschemeinfo {
   }
 
   Future<BaseResponseModel<SchemePlanningItem>> fetchSchemePlanning(
-      String stateId, String schemeId, String userId) async {
+      String stateId, String schemeId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_scheme_planning?stateid=$stateId&schemeid=$schemeId&userid=$userId');
+          '/CNOSurvey/Get_cno_scheme_planning?stateid=$stateId&schemeid=$schemeId&userid=$userId&phy_status=$modeType');
       return BaseResponseModel<SchemePlanningItem>.fromJson(
         response,
             (json) => SchemePlanningItem.fromJson(json),
@@ -47,10 +47,10 @@ class Fetchschemeinfo {
 
   Future<BaseResponseModel<AdditionalInfoRetrofitItem>>
   fetchAdditionalInfoRetrofit(
-      String stateId, String schemeId, String userId) async {
+      String stateId, String schemeId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_additional_info_retrofit?stateid=$stateId&schemeid=$schemeId&userid=$userId');
+          '/CNOSurvey/Get_cno_additional_info_retrofit?stateid=$stateId&schemeid=$schemeId&userid=$userId&phy_status=$modeType');
       return BaseResponseModel<AdditionalInfoRetrofitItem>.fromJson(
         response,
             (json) => AdditionalInfoRetrofitItem.fromJson(json),
@@ -62,10 +62,10 @@ class Fetchschemeinfo {
   }
 
   Future<BaseResponseModel<SchemeImplementationModel>> fetchSchemeImplementation(
-      String stateId, String schemeId, String userId) async {
+      String stateId, String schemeId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_scheme_implementation?stateid=$stateId&schemeid=$schemeId&userid=$userId');
+          '/CNOSurvey/Get_cno_scheme_implementation?stateid=$stateId&schemeid=$schemeId&userid=$userId&phy_status=$modeType');
 
       return BaseResponseModel<SchemeImplementationModel>.fromJson(
         response,
@@ -78,10 +78,10 @@ class Fetchschemeinfo {
   }
 
   Future<BaseResponseModel<SchemeVisualInspectionModel>> fetchSchemeVisualInspection(
-      String stateId, String schemeId, String userId) async {
+      String stateId, String schemeId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
-          '/CNOSurvey/Get_cno_scheme_visual_Inspection?stateid=$stateId&schemeid=$schemeId&userid=$userId');
+          '/CNOSurvey/Get_cno_scheme_visual_Inspection?stateid=$stateId&schemeid=$schemeId&userid=$userId&phy_status=$modeType');
 
       return BaseResponseModel<SchemeVisualInspectionModel>.fromJson(
         response,

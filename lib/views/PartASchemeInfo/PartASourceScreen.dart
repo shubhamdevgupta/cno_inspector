@@ -23,6 +23,7 @@ class SourceScreenQuestions extends StatefulWidget {
 
 class _SourceScreenQuestions extends State<SourceScreenQuestions> {
   LocalStorageService _localStorageService = LocalStorageService();
+   ProjectMode? modeType;
 
   @override
   void initState() {
@@ -30,11 +31,15 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
       if (args != null) {
         final schemeId = args['schemeId'] as int?;
         final stateId = args['stateId'] as int?;
 
-        final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);schemeProvider.clearfetchSourceSurvey();
+        final schemeProvider =
+            Provider.of<Schemeprovider>(context, listen: false);
+        schemeProvider.clearfetchSourceSurvey();
 
         if (schemeId != null) {
           schemeProvider.setSchemeId(schemeId);
@@ -42,7 +47,8 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSourceSurvey(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+        schemeProvider.fetchSourceSurvey(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
+      print('-----------${modeType!.modeValue}');
       }
     });
   }
@@ -61,7 +67,8 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
+              image: AssetImage('assets/icons/header_bg.png'),
+              fit: BoxFit.cover),
         ),
         child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -105,7 +112,6 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
             ),
             body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
-                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -165,7 +171,8 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                   // 3. Number of villages falling under critical zones
                                   const Text(
                                     '3. Number of villages falling under the critical zones as mentioned (https://cgwb.gov.in/en/ground-water-resource-assessment-0):',
-                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600),
                                   ),
                                   const SizedBox(height: 8),
 
@@ -177,8 +184,10 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                   const SizedBox(height: 8),
 
                                   Customtxtfeild(
-                                    label: '3.2 Critical / Over exploited (Nos)',
-                                    controller: schemeProvider.criticalController,
+                                    label:
+                                        '3.2 Critical / Over exploited (Nos)',
+                                    controller:
+                                        schemeProvider.criticalController,
                                     keyboardType: TextInputType.number,
                                   ),
                                   const SizedBox(height: 8),
@@ -210,15 +219,15 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                   Customtxtfeild(
                                     label:
                                         '5. Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose',
-                                    controller:
-                                        schemeProvider.waterAllocationController,
+                                    controller: schemeProvider
+                                        .waterAllocationController,
                                     keyboardType: TextInputType.number,
                                   ),
 
                                   // Below 10% part Start
 
                                   Visibility(
-                                    visible: mode == ProjectMode.below10,
+                                    visible: modeType == ProjectMode.below10,
                                     child: Column(
                                       children: [
                                         SizedBox(
@@ -267,34 +276,42 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                         onPressed: () async {
                                           LoaderUtils.showLoadingWithMessage(
                                               context,
-                                              isLoading: schemeProvider.isLoading,
+                                              isLoading:
+                                                  schemeProvider.isLoading,
                                               message: "Saving Source...");
                                           await schemeProvider.saveSourceSurvey(
-                                              userId: _localStorageService.getInt(
-                                                  AppConstants.prefUserId)!,
+                                              userId:
+                                                  _localStorageService.getInt(
+                                                      AppConstants.prefUserId)!,
                                               stateId: schemeProvider.stateId!,
-                                              schemeId: schemeProvider.schemeId!,
-                                              isRecommendShiftToSurface: schemeProvider
-                                                  .selectedValueQ1Id,
-                                              studyAccessGroundBeforeSurface: schemeProvider
-                                                  .selectedValueQ2Id,
-                                              safeZoneVillages: int.parse(schemeProvider
-                                                  .safeController.text),
+                                              schemeId:
+                                                  schemeProvider.schemeId!,
+                                              isRecommendShiftToSurface:
+                                                  schemeProvider
+                                                      .selectedValueQ1Id,
+                                              studyAccessGroundBeforeSurface:
+                                                  schemeProvider
+                                                      .selectedValueQ2Id,
+                                              safeZoneVillages: int.parse(
+                                                  schemeProvider
+                                                      .safeController.text),
                                               criticalZoneVillages: int.parse(
                                                   schemeProvider
                                                       .criticalController.text),
-                                              semiCriticalZoneVillages: int.parse(schemeProvider.semiCriticalController.text),
+                                              semiCriticalZoneVillages: int.parse(
+                                                  schemeProvider.semiCriticalController.text),
                                               groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id,
                                               waterAllocationFromWRD: int.parse(schemeProvider.waterAllocationController.text),
                                               alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text,
                                               repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text,
-                                              modeType: mode.modeValue);
+                                              modeType: modeType!.modeValue);
 
                                           if (schemeProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 schemeProvider.message!,
                                                 backgroundColor: Colors.green);
-                                            Navigator.of(context).pushReplacement(
+                                            Navigator.of(context)
+                                                .pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (_) =>
                                                       SchemePlanningScreen()),

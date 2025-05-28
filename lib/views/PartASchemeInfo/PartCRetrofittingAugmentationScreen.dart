@@ -31,7 +31,7 @@ class RetrofittingAugmentationScreen extends StatefulWidget {
 class _RetrofittingAugmentationScreen
     extends State<RetrofittingAugmentationScreen> {
   LocalStorageService _localStorageService = LocalStorageService();
-
+  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -53,10 +53,12 @@ class _RetrofittingAugmentationScreen
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
+         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
         schemeProvider.fetchAdditionalInfoRetrofit(
             stateId.toString(),
             schemeId.toString(),
-            _localStorageService.getInt(AppConstants.prefUserId).toString());
+            _localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -120,7 +122,7 @@ class _RetrofittingAugmentationScreen
             ),
             body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
-                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;return SingleChildScrollView(
+               return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
                         top: 20, left: 6, right: 6, bottom: 5),
@@ -207,7 +209,7 @@ class _RetrofittingAugmentationScreen
                                 const SizedBox(height: 10),
 
                                   Visibility(
-                                      visible: mode==ProjectMode.above10,
+                                      visible: modeType==ProjectMode.above10,
                                       child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -302,7 +304,7 @@ class _RetrofittingAugmentationScreen
                                                   buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
                                                   onPMGati: schemeProvider.onPmGatishaktiID,
                                                   noReason: schemeProvider.reasonController.text.isEmpty ? "" : schemeProvider.reasonController.text,
-                                        phyStatus: mode.modeValue);
+                                        phyStatus: modeType!.modeValue);
                                           if (schemeProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 schemeProvider.message!,
