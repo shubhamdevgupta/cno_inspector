@@ -15,6 +15,8 @@ class DWSMRepositoy {
     required int numberOfMeetingsLast6Months,
     required int qualityOfMeeting,
     required int areCoordinationMeetingsRegular,
+    required String auditInternalObservation,
+    required String observationCoordination,
     required int modeType,
   }) async {
     try {
@@ -24,10 +26,12 @@ class DWSMRepositoy {
           "userid": userId,
           "stateid": stateId,
           "districtid": districtId,
+          "Is_audit_internal_Obseration_coordination_planning_review": auditInternalObservation,
           "are_monthly_dwsm_meetings_on_progress_JJM_works": areMonthlyMeetingsHeld,
           "if_yes_no_of_dwsm_meetings_last_6_months": numberOfMeetingsLast6Months,
           "quality_of_meeting_and_record_maintenance": qualityOfMeeting,
           "are_dist_develop_coordinat_monitor_committee_meeting_regularly": areCoordinationMeetingsRegular,
+          "Obseration_coordination_planning_review":observationCoordination,
           "phy_status": modeType
         }),
       );
@@ -81,6 +85,7 @@ class DWSMRepositoy {
     required int areAssetsGeotagged,
     required int hasNABLLab,
     required String testingManagementDescription,
+    required String observationMonitoringQuality,
     required int modeType
   }) async {
     try {
@@ -93,6 +98,7 @@ class DWSMRepositoy {
           "are_water_supply_assets_geotagged": areAssetsGeotagged,
           "does_the_district_have_an_nabl_accredited_lab_equivalent": hasNABLLab,
           "if_no_how_is_testing_managed_description": testingManagementDescription,
+          "Obseration_Monitoring_Quality_lab_Infrastructure":observationMonitoringQuality,
           "phy_status":modeType
         }),
       );
@@ -132,7 +138,20 @@ class DWSMRepositoy {
       rethrow;
     }
   }
-
+/*  {
+  "userid": 1726,
+  "stateid": 17,
+  "districtid": 264,
+  "Is_protocol_in_village_infrastructure": 3,
+  "Percentage_villages_trained_manpower": 4.00000,
+  "Is_Water_charged_households_fee_amount": 5,
+  "Is_Water_charged_households_uniform_consumption": 2,
+  "Percentage_villages_User_Fee_collected": 6.00000,
+  "createdby": null,
+  "createdip": null,
+  "phy_status": 0,
+  "Obseration_Operation_Maintenance": ""
+  }*/
 
   Future<BaseResponse> saveOperationMaintenance({
     required int userId,
@@ -144,6 +163,7 @@ class DWSMRepositoy {
     required int feeAmountPerMonth,
     required int isUniformFee,
     required double percentVillagesFeeCollected,
+    required String obserVationOperationMaintenance,
     required int modeType
   }) async {
     try {
@@ -153,13 +173,13 @@ class DWSMRepositoy {
           "userid": userId,
           "stateid": stateId,
           "districtid": districtId,
-          "is_a_protocol_handing_in_village_infrastructure_place": isProtocolInPlace,
-          "Per_of_villages_where_trained_multi_skilled_manpower_available": percentVillagesWithManpower,
-          "is_water_fee_charged_from_households": isWaterFeeCharged,
-          "fee_amount_per_month": feeAmountPerMonth,
-          "is_it_uniform_based_on_consumption": isUniformFee,
-          "per_of_villages_where_User_Fee_collected": percentVillagesFeeCollected,
-          "phy_status":modeType
+          "Is_protocol_in_village_infrastructure": isProtocolInPlace,
+          "Percentage_villages_trained_manpower": percentVillagesWithManpower,
+          "Is_Water_charged_households_fee_amount": feeAmountPerMonth,
+          "Is_Water_charged_households_uniform_consumption": isUniformFee,
+          "Percentage_villages_User_Fee_collected": percentVillagesFeeCollected,
+          "phy_status":modeType,
+          "Obseration_Operation_Maintenance":obserVationOperationMaintenance
         }),
       );
       return BaseResponse.fromJson(response);
@@ -167,7 +187,15 @@ class DWSMRepositoy {
       rethrow;
     }
   }
-
+/*  {
+  "Who_authorized_inspect_measure_field_inspection": 6,
+  "Is_commissioning_protocol_followed": 0,
+  "During_commissioning_schemes_present": 6,
+  "Has_district_undertaken_assessment_inspection_agencies": 3,
+  "Has_distric_hired_third_party_inspection_agencies_JJM_schemes": -1,
+  "phy_status": 0,
+  "Obseration_Quality_Assurance_Commissioning": ""
+  }*/
   Future<BaseResponse> saveQualityAssurance({
     required int userId,
     required int stateId,
@@ -178,6 +206,7 @@ class DWSMRepositoy {
     required int districtAssessmentAgencies,
     required int districtHiredAgencies,
     required int modeType,
+    required String observationQualityAssurance
   }) async {
     try {
       final response = await _apiService.post(
@@ -191,7 +220,8 @@ class DWSMRepositoy {
           "During_commissioning_schemes_present": schemesPresentDuringCommissioning,
           "Has_district_undertaken_assessment_inspection_agencies": districtAssessmentAgencies,
           "Has_distric_hired_third_party_inspection_agencies_JJM_schemes":districtHiredAgencies,
-          "phy_status":modeType
+          "phy_status":modeType,
+          "Obseration_Quality_Assurance_Commissioning":observationQualityAssurance
         }),
       );
       return BaseResponse.fromJson(response);
@@ -207,7 +237,7 @@ class DWSMRepositoy {
     required int grievanceMechanismAvailable,
     required int howGrievancesRegistered,
     required int complaintsReceived,
-    required int typeOfComplaints,
+    required List<int> typeOfComplaints,
     required String otherComplaints,
     required int resolutionTime,
     required int actionTakenByDepartment,
@@ -223,7 +253,7 @@ class DWSMRepositoy {
           "Grievance_Redressal_mechanism_available": grievanceMechanismAvailable,
           "How_grievances_registered_villagers": howGrievancesRegistered,
           "Are_complaints_received_public_regarding_schemes": complaintsReceived,
-          "yes_type_complaints": typeOfComplaints,//todo checkbox
+          "yes_type_complaint": typeOfComplaints,
           "yes_type_complaints_others": otherComplaints,
           "yes_type_complaints_others_What_average_time_resolution": resolutionTime,
           "yes_type_complaints_others_Action_taken_department": actionTakenByDepartment,

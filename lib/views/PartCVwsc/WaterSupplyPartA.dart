@@ -8,11 +8,12 @@ import 'package:provider/provider.dart';
 import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/MultiSelectionlist.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import 'CommunityInvolvementPartB.dart';
 import 'DashboardVWSC.dart';
-import 'VWSCCommonClass.dart';
+import 'AboveVWSCCommonClass.dart';
 
 class WaterSupplyPartA extends StatefulWidget {
   const WaterSupplyPartA({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
+      ProjectMode? ModeType;
       if (args != null) {
         final villageId = args['villageId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -44,8 +45,8 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
         if (stateId != null) {
           vwscProvider.setStateId(stateId);
         }
-
-        await vwscProvider.fetchWaterSupply(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+        await vwscProvider.fetchWaterSupply(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),ModeType!.modeValue );
       }
     });
   }
@@ -120,7 +121,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Vwsccommonclass(
+                        Abovevwsccommonclass(
                           no: 1,
                         ),
                         Card(
@@ -218,11 +219,16 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                       print(
                                           'selectedinstitutionsselectedinstitutions------- ${vwscProvider.selectedinstitutions}');
 
-                                      setState(() {
-                                        vwscProvider.selectedinstitutions = val;
-                                      });
+
                                     },
                                   ),
+
+
+                                  CustomObservationField(
+                                    labelText: '* User Observation / Remarks:',
+                                    controller:  vwscProvider.PartAVWSCuserObservationController,
+                                  ),
+
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(
@@ -250,7 +256,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                               tailEndWaterReach: vwscProvider.selectedTailEndId,
                                               schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
                                               pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
-                                              createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
+
 
                                             // New parameters
                                             phyStatus: mode.modeValue ,
@@ -262,7 +268,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                             remoteGroupsPlanned: -1,
                                             remoteGroupsPlannedDetails: "",
                                             //TODO feedback
-                                            observationWaterSupplyFunctionality: "",
+                                            observationWaterSupplyFunctionality: vwscProvider.PartAVWSCuserObservationController.text,
 
 
 

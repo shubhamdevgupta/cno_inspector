@@ -1,6 +1,7 @@
 import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:cno_inspection/utils/customtxtfeild.dart';
+import 'package:cno_inspection/views/PartCVwsc/BelowVWSCCommon.dart';
 import 'package:cno_inspection/views/PartCVwsc/CommunityFeedbackPartC.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,9 +13,11 @@ import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/toast_helper.dart';
 import 'DashboardVWSC.dart';
-import 'VWSCCommonClass.dart';
+import 'AboveVWSCCommonClass.dart';
+import 'WaterQualityPartD.dart';
 
 class CommunityInvolvementPartB extends StatefulWidget {
   @override
@@ -32,6 +35,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
+      ProjectMode? ModeType;
       if (args != null) {
         final villageId = args['villageId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -46,10 +50,9 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
         if (stateId != null) {
           vwscProvider.setStateId(stateId);
         }
-        vwscProvider.fetchCommunityInvolvement(
-            stateId.toString(),
-            villageId.toString(),
-            _localStorage.getInt(AppConstants.prefUserId).toString());
+
+        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+        vwscProvider.fetchCommunityInvolvement(stateId.toString(), villageId.toString(), _localStorage.getInt(AppConstants.prefUserId).toString(), ModeType!.modeValue);
       }
     });
   }
@@ -119,9 +122,10 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Vwsccommonclass(
-                      no: 2,
-                    ),
+
+                    mode == ProjectMode.below10? Belowvwsccommon(no: 2):  Abovevwsccommonclass(no: 2,),
+
+
                     Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Card(
@@ -440,6 +444,12 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                 ),
 
+                                CustomObservationField(
+                                  labelText: '* User Observation / Remarks:',
+                                  controller:  vwscProvider.PartBVWSCuserObservationController,
+                                ),
+
+
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
@@ -464,42 +474,42 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                                 .getInt(AppConstants.prefUserId)!,
                                             stateId: vwscProvider.stateId!,
                                             villageId: vwscProvider.villageId!,
-                                            isPaniSamitiFormed:
-                                                vwscProvider.selectedVWSCFormedID,
-                                            isVwscBankAccount: vwscProvider
-                                                .selectedVWSCBankAccountID,
-                                            vwscGpInvolvementScheme: vwscProvider
-                                                .selectedVWSCInvolvementID,
-                                            drawingPipelineAvlGpOffice:
-                                                vwscProvider
-                                                    .selectedAsBuiltDrawingID,
-                                            isVwscMeetingPeriodic: vwscProvider
-                                                .selectedVWSCMeetingConductedID,
-                                            meetingHeldFrequency: vwscProvider
-                                                .FrequencyController.text,
-                                            isVwscMeetingRecordAvl: vwscProvider
-                                                .selectedVWSCRecordsAvailableID,
-                                            vwscInvolvementOM: vwscProvider
-                                                .selectedVWSCOMInvolvedID,
+                                            isPaniSamitiFormed: vwscProvider.selectedVWSCFormedID,
+                                            isVwscBankAccount: vwscProvider.selectedVWSCBankAccountID,
+                                            vwscGpInvolvementScheme: vwscProvider.selectedVWSCInvolvementID,
+                                            drawingPipelineAvlGpOffice: vwscProvider.selectedAsBuiltDrawingID,
+                                            isVwscMeetingPeriodic: vwscProvider.selectedVWSCMeetingConductedID,
+                                            meetingHeldFrequency: vwscProvider.FrequencyController.text,
+                                            isVwscMeetingRecordAvl: vwscProvider.selectedVWSCRecordsAvailableID,
+                                            vwscInvolvementOM: vwscProvider.selectedVWSCOMInvolvedID,
                                             schemeHandedOverGp: vwscProvider.selectedSchemeHandoverID,
-                                            omArrangement: vwscProvider
-                                                .selectedOMArrangementsID,
-                                            communityAwareness: vwscProvider
-                                                .selectedCommunityAwarenessID,
-                                            communitySatisfactionWithWq: vwscProvider
-                                                .selectedWaterQualitySatisfactionID,
-                                            createdBy: _localStorage.getInt(
-                                                AppConstants.prefUserId)!);
+                                            omArrangement: vwscProvider.selectedOMArrangementsID,
+                                            communityAwareness: vwscProvider.selectedCommunityAwarenessID,
+                                            communitySatisfactionWithWq: vwscProvider.selectedWaterQualitySatisfactionID,
+                                            phyStatus: mode.modeValue,
+                                            observationCommunityInvolvementFunctionality:  vwscProvider.PartBVWSCuserObservationController.text
+                                        );
 
                                         if (vwscProvider.status!) {
                                           ToastHelper.showToastMessage(
                                               vwscProvider.message!,
                                               backgroundColor: Colors.green);
-                                          Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (_) =>
-                                                    CommunityFeedbackPartC()),
-                                          );
+
+                                          if (mode == ProjectMode.below10){
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      WaterQualityPartD()),
+                                            );
+                                          }
+                                          else{
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      CommunityFeedbackPartC()),
+                                            );
+                                          }
+
                                         } else {
                                           ToastHelper.showToastMessage(
                                               vwscProvider.message!,

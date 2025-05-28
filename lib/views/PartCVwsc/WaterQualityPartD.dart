@@ -11,11 +11,13 @@ import '../../provider/AppStateProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/CommonScreen.dart';
 import '../../utils/CustomRadioQuestion.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
+import 'BelowVWSCCommon.dart';
 import 'DashboardVWSC.dart';
 import 'GrievancePartE.dart';
-import 'VWSCCommonClass.dart';
+import 'AboveVWSCCommonClass.dart';
 
 class WaterQualityPartD extends StatefulWidget {
   @override
@@ -32,6 +34,7 @@ void initState() {
     final args =
     ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
+    ProjectMode? ModeType;
     if (args != null) {
       final villageId = args['villageId'] as int?;
       final stateId = args['stateId'] as int?;
@@ -48,8 +51,8 @@ void initState() {
         vwscProvider.setStateId(stateId);
       }
 
-
-      vwscProvider.fetchWaterQuality(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+      ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+      vwscProvider.fetchWaterQuality(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(), ModeType!.modeValue);
     }
   });
 
@@ -121,9 +124,8 @@ void initState() {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    NewScreenPoints(
-                      no: 4,
-                    ),
+
+                    mode == ProjectMode.below10? Belowvwsccommon(no: 3):  Abovevwsccommonclass(no:  4),
 
 
                     Padding(
@@ -196,6 +198,11 @@ void initState() {
                                   ),
                                 ),
 
+                                CustomObservationField(
+                                  labelText: '* User Observation / Remarks:',
+                                  controller:  vwscProvider.PartDVWSCuserObservationController,
+                                ),
+
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
@@ -221,8 +228,7 @@ void initState() {
                                            isChlorinationDone: vwscProvider.selectedDisinfectionDoneId,
                                            frcAvailableAtEnd: vwscProvider.selectedFRCLevelId,
                                            phyStatus: mode.modeValue,
-                                           observationWaterQualityMonitoring: "",
-                                           createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                           observationWaterQualityMonitoring: vwscProvider.PartDVWSCuserObservationController.text,
                                          );
 
                                          if(vwscProvider.status!){

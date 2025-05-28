@@ -5,9 +5,10 @@ class OperationMaintenance {
   final int isAProtocolHandingInVillageInfrastructurePlace;
   final double perOfVillagesWhereTrainedMultiSkilledManpowerAvailable;
   final int isWaterFeeChargedFromHouseholds;
-  final int feeAmountPerMonth;
   final int isItUniformBasedOnConsumption;
   final double perOfVillagesWhereUserFeeCollected;
+  final int modeType;
+  final String obserVationOperationMaintenance;
 
   OperationMaintenance({
     required this.userid,
@@ -16,9 +17,10 @@ class OperationMaintenance {
     required this.isAProtocolHandingInVillageInfrastructurePlace,
     required this.perOfVillagesWhereTrainedMultiSkilledManpowerAvailable,
     required this.isWaterFeeChargedFromHouseholds,
-    required this.feeAmountPerMonth,
     required this.isItUniformBasedOnConsumption,
     required this.perOfVillagesWhereUserFeeCollected,
+    required this.modeType,
+    required this.obserVationOperationMaintenance
   });
 
   factory OperationMaintenance.fromJson(Map<String, dynamic> json) {
@@ -27,15 +29,16 @@ class OperationMaintenance {
       stateid: json['stateid'],
       districtid: json['districtid'],
       isAProtocolHandingInVillageInfrastructurePlace:
-      json['is_a_protocol_handing_in_village_infrastructure_place'],
+      json['Is_protocol_in_village_infrastructure'],
       perOfVillagesWhereTrainedMultiSkilledManpowerAvailable:
-      (json['Per_of_villages_where_trained_multi_skilled_manpower_available']).toDouble(),
+      (json['Percentage_villages_trained_manpower']).toDouble(),
       isWaterFeeChargedFromHouseholds:
-      json['is_water_fee_charged_from_households'],
-      feeAmountPerMonth: json['fee_amount_per_month'],
-      isItUniformBasedOnConsumption: json['is_it_uniform_based_on_consumption'],
+      json['Is_Water_charged_households_fee_amount'],
+      isItUniformBasedOnConsumption: json['Is_Water_charged_households_uniform_consumption'],
       perOfVillagesWhereUserFeeCollected:
-      (json['per_of_villages_where_User_Fee_collected']).toDouble(),
+      (json['Percentage_villages_User_Fee_collected']).toDouble(),
+      modeType:json['phy_status'],
+      obserVationOperationMaintenance:json['Obseration_Operation_Maintenance']
     );
   }
 }

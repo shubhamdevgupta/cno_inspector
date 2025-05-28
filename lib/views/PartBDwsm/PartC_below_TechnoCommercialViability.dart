@@ -24,7 +24,7 @@ class PartcBelowTechnocommercialviabilityP extends StatefulWidget {
 class _PartcBelowTechnocommercialviabilityP
     extends State<PartcBelowTechnocommercialviabilityP> {
   LocalStorageService localStorageService = LocalStorageService();
-
+  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -43,10 +43,12 @@ class _PartcBelowTechnocommercialviabilityP
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchMonitoringLabData(
+         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
+        dwsmProvider.fetchTecnoCommercial(
             stateId.toString(),
             districtid.toString(),
-            localStorageService.getInt(AppConstants.prefUserId).toString());
+            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -111,8 +113,6 @@ class _PartcBelowTechnocommercialviabilityP
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, childe) {
-                final mode =
-                    Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -176,7 +176,7 @@ class _PartcBelowTechnocommercialviabilityP
                                       ),
                                       Customtxtfeild(
                                         label:
-                                            "4. Expected skilled manpower required for operations of the schemes?:?",
+                                            "4. Expected skilled manpower required for operations of the schemes?",
                                         controller: dwsmProvider
                                             .requiredOperationController,
                                       ),
@@ -223,7 +223,7 @@ class _PartcBelowTechnocommercialviabilityP
                                                   .text,
                                               omCostScheme: dwsmProvider
                                                   .onCostSchemeController.text,
-                                              modeType: mode.modeValue);
+                                              modeType: modeType!.modeValue);
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,

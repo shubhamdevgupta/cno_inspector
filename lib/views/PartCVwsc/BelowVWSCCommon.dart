@@ -14,11 +14,11 @@ import 'WaterSupplyPartA.dart';
 
 
 
-class Vwsccommonclass extends StatelessWidget {
+class Belowvwsccommon extends StatelessWidget {
   int no;
 
 
-  Vwsccommonclass({required this.no});
+  Belowvwsccommon({required this.no});
 
   @override
   Widget build(BuildContext context) {
@@ -115,14 +115,7 @@ class PointsAndLines extends StatelessWidget {
 
 
         }
-        if (title == "A" && mode == ProjectMode.above10) {
 
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => WaterSupplyPartA()),
-          );
-
-
-        }
         if (title == "B") {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (_) => CommunityInvolvementPartB()),
@@ -130,14 +123,10 @@ class PointsAndLines extends StatelessWidget {
         }
         if (title == "C") {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => CommunityFeedbackPartC()),
+            MaterialPageRoute(builder: (_) => WaterQualityPartD()),
           );
         }
         if (title == "D") {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => WaterQualityPartD()),
-          );
-        }     if (title == "E") {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (_) => GrievancePartE()),
           );

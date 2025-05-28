@@ -23,7 +23,7 @@ class CoordinationPlanningReview extends StatefulWidget {
 
 class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
   LocalStorageService localStorageService = LocalStorageService();
-
+  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -42,10 +42,12 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
+        modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
         dwsmProvider.fetchCoordinationData(
             stateId.toString(),
             districtid.toString(),
-            localStorageService.getInt(AppConstants.prefUserId).toString());
+            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -109,7 +111,6 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
             ),
             body:
                 Consumer<Dwsmprovider>(builder: (context, dwsmProvider, child) {
-                  final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                   return SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.only(
@@ -140,9 +141,16 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Customtxtfeild(
+                                label:
+                                '1. Is there any audit (internal/ concurrent/ performance) observations and findings related to the JJM schemes for the district?',
+                                controller:
+                                dwsmProvider.auditInternalObservation,
+                                keyboardType: TextInputType.text,
+                              ),
                               Customradiobttn(
                                 question:
-                                    '1. Are monthly DWSM meetings on progress of JJM works being held?',
+                                    '2. Are monthly DWSM meetings on progress of JJM works being held?',
                                 options: dwsmProvider.yesNoMap.keys.toList(),
                                 selectedOption: dwsmProvider.selectedValueQ1,
                                 onChanged: (value) {
@@ -155,7 +163,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                 const SizedBox(height: 8),
                                 Customtxtfeild(
                                   label:
-                                      '1.1 How many meetings were held in the last six months?',
+                                      '2.1 How many meetings were held in the last six months?',
                                   controller:
                                       dwsmProvider.meetingsHeldController,
                                   keyboardType: TextInputType.number,
@@ -163,7 +171,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                 const SizedBox(height: 8),
                                 Customradiobttn(
                                   question:
-                                      '1.2 Quality of Meeting and Record maintenance:',
+                                      '2.2 Quality of Meeting and Record maintenance:',
                                   options: dwsmProvider.meetingQualityMap.keys
                                       .toList(),
                                   selectedOption:
@@ -179,12 +187,19 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                               // Question 2
                               Customradiobttn(
                                 question:
-                                    '2. Are District Development Coordination and Monitoring Committee (DISHA) meetings being held regularly?',
-                                options: const ['Yes', 'No'],
+                                    '3. Are District Development Coordination and Monitoring Committee (DISHA) meetings being held regularly?',
+                                options: dwsmProvider.yesNoMap.keys.toList(),
                                 selectedOption: dwsmProvider.selectedDISHA,
                                 onChanged: (value) {
                                   dwsmProvider.selectedDISHA = value;
                                 },
+                              ),
+                              Customtxtfeild(
+                                label:
+                                '4. Obseration on "Coordination, Planning & Review Mechanism"',
+                                controller:
+                                dwsmProvider.observationCoordination,
+                                keyboardType: TextInputType.text,
                               ),
                               SizedBox(
                                 height: 10,
@@ -218,17 +233,17 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                               stateId: dwsmProvider.stateId!,
                                               districtId: dwsmProvider
                                                   .districtId!,
+                                          auditInternalObservation:dwsmProvider.auditInternalObservation.text,
                                               areMonthlyMeetingsHeld:
                                                   dwsmProvider
                                                       .selectedValueQ1Id,
-                                              numberOfMeetingsLast6Months:
-                                                  int.parse(dwsmProvider.meetingsHeldController.text),
+                                              numberOfMeetingsLast6Months: dwsmProvider.meetingsHeldController.text.isEmpty ?0:int.parse(dwsmProvider.meetingsHeldController.text),
                                               qualityOfMeeting: dwsmProvider
                                                   .selectedMeetingQualityID,
                                               areCoordinationMeetingsRegular:
                                                   dwsmProvider.selectedDISHAID,
-                                            modeType: mode.modeValue
-                                      );
+                                            modeType: modeType!.modeValue,
+                                            observationCoordination: dwsmProvider.observationCoordination.text);
 
                                       if (dwsmProvider.status!) {
                                         ToastHelper.showToastMessage(

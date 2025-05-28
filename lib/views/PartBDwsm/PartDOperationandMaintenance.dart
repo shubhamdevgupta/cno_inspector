@@ -25,7 +25,7 @@ class PartDoperationandmaintenance extends StatefulWidget {
 class _PartDoperationandmaintenance
     extends State<PartDoperationandmaintenance> {
   LocalStorageService localStorageService = LocalStorageService();
-
+  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -43,7 +43,9 @@ class _PartDoperationandmaintenance
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        dwsmProvider.fetchOperationMaintenanceData(stateId.toString(),districtid.toString(),localStorageService.getInt(AppConstants.prefUserId).toString());
+         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
+        dwsmProvider.fetchOperationMaintenanceData(stateId.toString(),districtid.toString(),localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -106,8 +108,6 @@ class _PartDoperationandmaintenance
             elevation: 5,
           ),
           body: Consumer<Dwsmprovider>(builder: (context,dwsmProvider,child){
-            final mode =
-                Provider.of<AppStateProvider>(context, listen: false).mode;
             return SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.only(
@@ -180,6 +180,11 @@ class _PartDoperationandmaintenance
                                 controller: dwsmProvider.userFeePercentController,
                                 keyboardType: TextInputType.number,
                               ),
+                              Customtxtfeild(
+                                label: "6. Observation on Operation & Maintenance",
+                                controller: dwsmProvider.observationOperationMaintencen,
+                                keyboardType: TextInputType.text,
+                              ),
                             ],
                           ),
 
@@ -211,7 +216,8 @@ class _PartDoperationandmaintenance
                                         isProtocolInPlace: dwsmProvider.handoverProtocolID, percentVillagesWithManpower: double.parse(dwsmProvider.manpowerPercentController.text),
                                         isWaterFeeCharged: -1, feeAmountPerMonth: int.parse(dwsmProvider.waterFeeController.text),
                                         isUniformFee: dwsmProvider.feeBasisID,
-                                        percentVillagesFeeCollected: double.parse(dwsmProvider.userFeePercentController.text),modeType: mode.modeValue);
+                                        obserVationOperationMaintenance: dwsmProvider.observationOperationMaintencen.text,
+                                        percentVillagesFeeCollected: double.parse(dwsmProvider.userFeePercentController.text),modeType: modeType!.modeValue);
                                       if (dwsmProvider.status!) {
                                         ToastHelper.showToastMessage(
                                             dwsmProvider.message!,

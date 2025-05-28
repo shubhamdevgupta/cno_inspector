@@ -23,7 +23,7 @@ class MonitioringQuality extends StatefulWidget {
 
 class _MonitioringQuality extends State<MonitioringQuality> {
   LocalStorageService localStorageService = LocalStorageService();
-
+  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -42,10 +42,12 @@ class _MonitioringQuality extends State<MonitioringQuality> {
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
+         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
         dwsmProvider.fetchMonitoringLabData(
             stateId.toString(),
             districtid.toString(),
-            localStorageService.getInt(AppConstants.prefUserId).toString());
+            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -110,8 +112,6 @@ class _MonitioringQuality extends State<MonitioringQuality> {
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, childe) {
-                final mode =
-                    Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -166,13 +166,19 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                       dwsmProvider.hasNablLab = val;
                                     },
                                   ),
-                                  if (dwsmProvider.hasNablLabID == 2)
+                                  if (dwsmProvider.hasNablLabID == 0)
                                     Customtxtfeild(
                                       label:
                                           "2.1 If no, how is testing managed?",
                                       controller:
                                           dwsmProvider.testingManagedController,
                                     ),
+                                  Customtxtfeild(
+                                    label:
+                                    "3. Observation on Monitoring Quality and Lab Infastructure",
+                                    controller: dwsmProvider
+                                        .obserVationControllerQuality,
+                                  ),
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(
@@ -210,7 +216,8 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                                       dwsmProvider
                                                           .testingManagedController
                                                           .text,
-                                                  modeType: mode.modeValue);
+                                                  observationMonitoringQuality: dwsmProvider.obserVationControllerQuality.text,
+                                                  modeType: modeType!.modeValue);
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 dwsmProvider.message!,
