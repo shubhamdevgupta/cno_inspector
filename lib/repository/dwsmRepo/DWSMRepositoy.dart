@@ -85,6 +85,7 @@ class DWSMRepositoy {
     required int areAssetsGeotagged,
     required int hasNABLLab,
     required String testingManagementDescription,
+    required String observationMonitoringQuality,
     required int modeType
   }) async {
     try {
@@ -97,6 +98,7 @@ class DWSMRepositoy {
           "are_water_supply_assets_geotagged": areAssetsGeotagged,
           "does_the_district_have_an_nabl_accredited_lab_equivalent": hasNABLLab,
           "if_no_how_is_testing_managed_description": testingManagementDescription,
+          "Obseration_Monitoring_Quality_lab_Infrastructure":observationMonitoringQuality,
           "phy_status":modeType
         }),
       );

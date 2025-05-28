@@ -48,6 +48,10 @@ class _MonitioringQuality extends State<MonitioringQuality> {
             stateId.toString(),
             districtid.toString(),
             localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
+
+        dwsmProvider.fetchTecnoCommercial(stateId.toString(),
+            districtid.toString(),
+            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
@@ -166,13 +170,19 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                       dwsmProvider.hasNablLab = val;
                                     },
                                   ),
-                                  if (dwsmProvider.hasNablLabID == 2)
+                                  if (dwsmProvider.hasNablLabID == 0)
                                     Customtxtfeild(
                                       label:
                                           "2.1 If no, how is testing managed?",
                                       controller:
                                           dwsmProvider.testingManagedController,
                                     ),
+                                  Customtxtfeild(
+                                    label:
+                                    "3. Observation on Monitoring Quality and Lab Infastructure",
+                                    controller: dwsmProvider
+                                        .obserVationControllerQuality,
+                                  ),
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(
@@ -210,6 +220,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                                       dwsmProvider
                                                           .testingManagedController
                                                           .text,
+                                                  observationMonitoringQuality: dwsmProvider.obserVationControllerQuality.text,
                                                   modeType: modeType!.modeValue);
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(

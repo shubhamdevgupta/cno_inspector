@@ -1,3 +1,4 @@
+import 'package:cno_inspection/model/dwsmPartB/TecnoCommercialViabilityResponseBelow.dart';
 import 'package:cno_inspection/repository/dwsmRepo/DWSMRepositoy.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -461,6 +462,7 @@ class Dwsmprovider extends ChangeNotifier {
 // Testing management (if no NABL lab)
   final TextEditingController testingManagedController =
       TextEditingController();
+  TextEditingController obserVationControllerQuality = TextEditingController();
 
   Future<void> saveMonitoringQualityLab(
       {required int userId,
@@ -469,6 +471,7 @@ class Dwsmprovider extends ChangeNotifier {
       required int areAssetsGeotagged,
       required int hasNABLLab,
       required String testingManagementDescription,
+      required String observationMonitoringQuality,
       required int modeType}) async {
     _isLoading = true;
     notifyListeners();
@@ -481,6 +484,7 @@ class Dwsmprovider extends ChangeNotifier {
           areAssetsGeotagged: areAssetsGeotagged,
           hasNABLLab: hasNABLLab,
           testingManagementDescription: testingManagementDescription,
+          observationMonitoringQuality: observationMonitoringQuality,
           modeType: modeType);
 
       _message = response.message;
@@ -493,50 +497,6 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
-  // techno  commercial viablity
-
-  TextEditingController onCostSchemeController = TextEditingController();
-  TextEditingController chargeStakeHolderController = TextEditingController();
-  TextEditingController remaningExpensesController = TextEditingController();
-  TextEditingController requiredOperationController = TextEditingController();
-
-
-
-  Future<void> saveTecnoCommercialViabbility({
-    required int userId,
-    required int stateId,
-    required int districtId,
-    required String omCostScheme,
-    required String chargeStakeHolder,
-    required String remaningExpenses,
-    required String requiredOperation,
-    required int modeType,
-  }) async {
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      final response = await _dwsmRepository.saveTecnoCommercialViabbility(
-          userId: userId,
-          stateId: stateId,
-          districtId: districtId,
-          chargeStakeHolder: chargeStakeHolder,
-          omCostScheme: omCostScheme,
-          remaningExpenses: remaningExpenses,
-          requiredOperation: requiredOperation,
-          modeType: modeType);
-
-      _message = response.message;
-      _status = response.status;
-    } catch (e) {
-      GlobalExceptionHandler.handleException(e as Exception);
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
-  // fetch for dwsm part C start
 
   List<MonitoringQualityLabInfrastructure> monitoringData = [];
 
@@ -583,6 +543,84 @@ class Dwsmprovider extends ChangeNotifier {
     // If using ChangeNotifier or similar:
     // notifyListeners();
   }
+
+
+  // techno  commercial viablity
+
+  TextEditingController onCostSchemeController = TextEditingController();
+  TextEditingController chargeStakeHolderController = TextEditingController();
+  TextEditingController remaningExpensesController = TextEditingController();
+  TextEditingController requiredOperationController = TextEditingController();
+
+  Future<void> saveTecnoCommercialViabbility({
+    required int userId,
+    required int stateId,
+    required int districtId,
+    required String omCostScheme,
+    required String chargeStakeHolder,
+    required String remaningExpenses,
+    required String requiredOperation,
+    required int modeType,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _dwsmRepository.saveTecnoCommercialViabbility(
+          userId: userId,
+          stateId: stateId,
+          districtId: districtId,
+          chargeStakeHolder: chargeStakeHolder,
+          omCostScheme: omCostScheme,
+          remaningExpenses: remaningExpenses,
+          requiredOperation: requiredOperation,
+          modeType: modeType);
+
+      _message = response.message;
+      _status = response.status;
+    } catch (e) {
+      GlobalExceptionHandler.handleException(e as Exception);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  List<Tecnocommercialviabilityresponsebelow> tecnoCommercialList = [];
+
+  Future<void> fetchTecnoCommercial(
+      String stateId, String districtId, String userId, int modeType) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _fetchdwsmrepo
+          .fetchTechnoCommercialViablitiy(stateId, districtId, userId,modeType);
+      if (response.status) {
+        tecnoCommercialList = response.result;
+
+        if (monitoringData.isNotEmpty) {
+          onCostSchemeController.text=tecnoCommercialList.first.annualOmCostScheme!;
+          chargeStakeHolderController.text=tecnoCommercialList.first.waterChargesStakeholders!;
+          remaningExpensesController.text=tecnoCommercialList.first.statePlanMeetingRemainingExpenses!;
+          requiredOperationController.text=tecnoCommercialList.first.skilledManpowerRequiredOperations!;
+        }
+
+        _message = response.message;
+        _status = response.status;
+      } else {
+        _message = response.message;
+      }
+    } catch (e) {
+      GlobalExceptionHandler.handleException(e as Exception);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+
+  // fetch for dwsm part C start
 
   // fetch for dwsm part C end
 

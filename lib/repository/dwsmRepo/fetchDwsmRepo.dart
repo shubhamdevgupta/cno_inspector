@@ -1,3 +1,5 @@
+import 'package:cno_inspection/model/dwsmPartB/TecnoCommercialViabilityResponseBelow.dart';
+
 import '../../model/BaseResponseModel.dart';
 import '../../model/dwsmPartB/CoordinationPlanningReviewPARTA.dart';
 import '../../model/dwsmPartB/MonitoringQualityLabInfrastructurePARTC.dart';
@@ -39,6 +41,20 @@ class Fetchdwsmrepo {
     }
   }
 
+  Future<BaseResponseModel<Tecnocommercialviabilityresponsebelow>>
+      fetchTechnoCommercialViablitiy(
+          String stateId, String districtId, String userId,int modeType) async {
+    try {
+      final response = await _apiService.get(
+          '/CNOSurvey/Get_cno_dwsm_Techno_Commercial_Viability?stateid=$stateId&districtid=$districtId&userid=$userId&phy_status=$modeType');
+      return BaseResponseModel<Tecnocommercialviabilityresponsebelow>.fromJson(
+          response,
+          (json) => Tecnocommercialviabilityresponsebelow.fromJson(json));
+    } catch (e) {
+      print('Error fetching Monitoring Quality and Lab Infrastructure: $e');
+      rethrow;
+    }
+  }
   Future<BaseResponseModel<MonitoringQualityLabInfrastructure>>
       fetchMonitoringQualityLabInfrastructure(
           String stateId, String districtId, String userId,int modeType) async {
