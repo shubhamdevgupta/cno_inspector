@@ -17,6 +17,7 @@ import '../../utils/UserFeedback.dart';
 import '../../utils/toast_helper.dart';
 import 'DashboardVWSC.dart';
 import 'AboveVWSCCommonClass.dart';
+import 'WaterQualityPartD.dart';
 
 class CommunityInvolvementPartB extends StatefulWidget {
   @override
@@ -34,6 +35,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
+      ProjectMode? ModeType;
       if (args != null) {
         final villageId = args['villageId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -48,10 +50,9 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
         if (stateId != null) {
           vwscProvider.setStateId(stateId);
         }
-        vwscProvider.fetchCommunityInvolvement(
-            stateId.toString(),
-            villageId.toString(),
-            _localStorage.getInt(AppConstants.prefUserId).toString());
+
+        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+        vwscProvider.fetchCommunityInvolvement(stateId.toString(), villageId.toString(), _localStorage.getInt(AppConstants.prefUserId).toString(), ModeType!.modeValue);
       }
     });
   }
@@ -443,10 +444,10 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                   ),
                                 ),
 
-                           /*     CustomObservationField(
+                                CustomObservationField(
                                   labelText: '* User Observation / Remarks:',
                                   controller:  vwscProvider.PartBVWSCuserObservationController,
-                                ),*/
+                                ),
 
 
                                 Align(
@@ -485,17 +486,30 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                             omArrangement: vwscProvider.selectedOMArrangementsID,
                                             communityAwareness: vwscProvider.selectedCommunityAwarenessID,
                                             communitySatisfactionWithWq: vwscProvider.selectedWaterQualitySatisfactionID,
-                                            createdBy: _localStorage.getInt(AppConstants.prefUserId)!);
+                                            createdBy: _localStorage.getInt(AppConstants.prefUserId)!,
+                                            observationCommunityInvolvementFunctionality:  vwscProvider.PartBVWSCuserObservationController.text
+                                        );
 
                                         if (vwscProvider.status!) {
                                           ToastHelper.showToastMessage(
                                               vwscProvider.message!,
                                               backgroundColor: Colors.green);
-                                          Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (_) =>
-                                                    CommunityFeedbackPartC()),
-                                          );
+
+                                          if (mode == ProjectMode.below10){
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      WaterQualityPartD()),
+                                            );
+                                          }
+                                          else{
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      CommunityFeedbackPartC()),
+                                            );
+                                          }
+
                                         } else {
                                           ToastHelper.showToastMessage(
                                               vwscProvider.message!,

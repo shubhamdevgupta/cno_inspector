@@ -32,7 +32,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
+      ProjectMode? ModeType;
       if (args != null) {
         final villageId = args['villageId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -45,8 +45,8 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
         if (stateId != null) {
           vwscProvider.setStateId(stateId);
         }
-
-        await vwscProvider.fetchWaterSupply(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+        await vwscProvider.fetchWaterSupply(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),ModeType!.modeValue );
       }
     });
   }
@@ -256,7 +256,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                               tailEndWaterReach: vwscProvider.selectedTailEndId,
                                               schemeOperationalStatus: vwscProvider.selectedschemeStatusId,
                                               pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
-                                              createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
+
 
                                             // New parameters
                                             phyStatus: mode.modeValue ,

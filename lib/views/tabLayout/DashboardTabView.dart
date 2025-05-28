@@ -63,55 +63,62 @@ class _DashboardTabViewState extends State<DashboardTabView>
           onWillPop: () async {Navigator.pop(context);
             return false;
           },
-          child: Scaffold(
-            appBar: AppBar(
-              title: const Text("Dashboard",style: TextStyle(color: Colors.white),),
-              backgroundColor: Colors.blue,
-              bottom: TabBar(
-                controller: _tabController,
-                tabs: const [
-                  Tab(
-                    icon: Icon(
-                      Icons.arrow_downward,
-                      color: Colors.white, // Dark green for below 10%
-                    ),
-                    child: Text(
-                      'Below 10 Percent',
-                      style: TextStyle(
-                        color: Colors.white, // Dark green
-                        fontFamily: 'OpenSans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    icon: Icon(
-                      Icons.arrow_upward,
-                      color: Colors.white, // Blue for above 10%
-                    ),
-                    child: Text(
-                      'Above 10 Percent',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'OpenSans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.white70,
-                indicatorColor: Colors.white,
-              ),
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
             ),
-            body: TabBarView(
-              controller: _tabController,
-              children: const [
-                BelowTenPercentTab(),
-                AboveTenPercentTab(),
-              ],
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                title: Center(child: const Text("Dashboard",style: TextStyle(color: Colors.white),)),
+                backgroundColor: Colors.blue,
+                bottom: TabBar(
+                  controller: _tabController,
+                  tabs: const [
+                    Tab(
+                      icon: Icon(
+                        Icons.arrow_downward,
+                        color: Colors.white, // Dark green for below 10%
+                      ),
+                      child: Text(
+                        'Below 10 Percent',
+                        style: TextStyle(
+                          color: Colors.white, // Dark green
+                          fontFamily: 'OpenSans',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.arrow_upward,
+                        color: Colors.white, // Blue for above 10%
+                      ),
+                      child: Text(
+                        'Above 10 Percent',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.white70,
+                  indicatorColor: Colors.white,
+                ),
+              ),
+              body: TabBarView(
+                controller: _tabController,
+                children: const [
+                  BelowTenPercentTab(),
+                  AboveTenPercentTab(),
+                ],
+              ),
             ),
           ),
         );

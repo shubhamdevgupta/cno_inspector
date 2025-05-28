@@ -40,6 +40,7 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
+      ProjectMode? ModeType;
       if (args != null) {
         final villageId = args['villageId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -55,10 +56,11 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
           vwscProvider.setStateId(stateId);
         }
 
+        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
         vwscProvider.fetchCommunityFeedback(
             stateId.toString(),
             villageId.toString(),
-            _localStorage.getInt(AppConstants.prefUserId).toString());
+            _localStorage.getInt(AppConstants.prefUserId).toString(), ModeType!.modeValue);
       }
     });
   }

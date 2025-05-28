@@ -12,11 +12,11 @@ class WaterSupplyFunctionality {
 
   // New fields
   final int phyStatus;
-  final int isPipedWaterSupplyScheme;
-  final int typeOfSchemeCommissioned;
-  final String schemeBeneficiaryHouseholds;
-  final int presentStatusOfWaterSupplySchemes;
-  final int waterSupplyFrequencyAssured;
+  final int isThereAnyPipedWaterSupplySchemeInTheVillage;
+  final int whatIsTheTypeOfSchemePresentlyCommissioned;
+  final String ifSchemeIsCommissionedHowManyHouseholdsAreBeingBenefitted;
+  final int whatIsThePresentStatusOfWaterSupplySchemes;
+  final int waterSupplyFrequencyAssuredToVillagersInTheScheme;
   final int remoteGroupsPlanned;
   final String remoteGroupsPlannedDetails;
   final String observationWaterSupplyFunctionality;
@@ -35,11 +35,11 @@ class WaterSupplyFunctionality {
 
     // New fields
     required this.phyStatus,
-    required this.isPipedWaterSupplyScheme,
-    required this.typeOfSchemeCommissioned,
-    required this.schemeBeneficiaryHouseholds,
-    required this.presentStatusOfWaterSupplySchemes,
-    required this.waterSupplyFrequencyAssured,
+    required this.isThereAnyPipedWaterSupplySchemeInTheVillage,
+    required this.whatIsTheTypeOfSchemePresentlyCommissioned,
+    required this.ifSchemeIsCommissionedHowManyHouseholdsAreBeingBenefitted,
+    required this.whatIsThePresentStatusOfWaterSupplySchemes,
+    required this.waterSupplyFrequencyAssuredToVillagersInTheScheme,
     required this.remoteGroupsPlanned,
     required this.remoteGroupsPlannedDetails,
     required this.observationWaterSupplyFunctionality,
@@ -56,18 +56,18 @@ class WaterSupplyFunctionality {
       isAdequateWaterQuantityReachToRemoteReason: json['is_adequate_water_quantity_reach_to_remote_reason'],
       whetherWaterReachToTailEnd: json['whether_water_reach_to_tail_end'],
       schemeOperationalStatusCommissioning: json['scheme_operational_status_commissioning'],
-      whetherPwsReachAllSchoolAnganwadiPhc: List<int>.from(json['whether_pws_reach_all_school_anganwadi_phc']),
+      whetherPwsReachAllSchoolAnganwadiPhc: List<int>.from(json['whether_pws_reach_all_school_anganwadiphc']),
 
       // New fields
       phyStatus: json['phy_status'],
-      isPipedWaterSupplyScheme: json['is_piped_water_supply_scheme'],
-      typeOfSchemeCommissioned: json['type_of_scheme_commissioned'],
-      schemeBeneficiaryHouseholds: json['scheme_beneficiary_households'],
-      presentStatusOfWaterSupplySchemes: json['present_status_of_water_supply_schemes'],
-      waterSupplyFrequencyAssured: json['water_supply_frequency_assured'],
-      remoteGroupsPlanned: json['remote_groups_planned'],
-      remoteGroupsPlannedDetails: json['remote_groups_planned_details'],
-      observationWaterSupplyFunctionality: json['observation_water_supply_functionality'],
+      isThereAnyPipedWaterSupplySchemeInTheVillage: json['Is_there_any_piped_water_supply_scheme_in_the_village'],
+      whatIsTheTypeOfSchemePresentlyCommissioned: json['What_is_the_type_of_scheme_presently_commissioned'],
+      ifSchemeIsCommissionedHowManyHouseholdsAreBeingBenefitted: json['If_scheme_is_commissioned_how_many_households_are_being_benefitted'],
+      whatIsThePresentStatusOfWaterSupplySchemes: json['What_is_the_present_status_of_water_supply_schemes'],
+      waterSupplyFrequencyAssuredToVillagersInTheScheme: json['Water_supply_frequency_assured_to_villagers_in_the_scheme'],
+      remoteGroupsPlanned: json['rdb_Whether_remote_SC_ST_PVTG_groups_existing_in_command_area_of_the_scheme_has_been_planned_in_scheme'],
+      remoteGroupsPlannedDetails: json['txt_Whether_remote_SC_ST_PVTG_groups_existing_in_command_area_of_the_scheme_has_been_planned_in_scheme'],
+      observationWaterSupplyFunctionality: json['ObservationWatersupplyFunctionality'],
     );
   }
 
@@ -82,18 +82,18 @@ class WaterSupplyFunctionality {
       'is_adequate_water_quantity_reach_to_remote_reason': isAdequateWaterQuantityReachToRemoteReason,
       'whether_water_reach_to_tail_end': whetherWaterReachToTailEnd,
       'scheme_operational_status_commissioning': schemeOperationalStatusCommissioning,
-      'whether_pws_reach_all_school_anganwadi_phc': whetherPwsReachAllSchoolAnganwadiPhc,
+      'whether_pws_reach_all_school_anganwadiphc': whetherPwsReachAllSchoolAnganwadiPhc,
 
       // New fields
       'phy_status': phyStatus,
-      'is_piped_water_supply_scheme': isPipedWaterSupplyScheme,
-      'type_of_scheme_commissioned': typeOfSchemeCommissioned,
-      'scheme_beneficiary_households': schemeBeneficiaryHouseholds,
-      'present_status_of_water_supply_schemes': presentStatusOfWaterSupplySchemes,
-      'water_supply_frequency_assured': waterSupplyFrequencyAssured,
-      'remote_groups_planned': remoteGroupsPlanned,
-      'remote_groups_planned_details': remoteGroupsPlannedDetails,
-      'observation_water_supply_functionality': observationWaterSupplyFunctionality,
+      'Is_there_any_piped_water_supply_scheme_in_the_village': isThereAnyPipedWaterSupplySchemeInTheVillage,
+      'What_is_the_type_of_scheme_presently_commissioned': whatIsTheTypeOfSchemePresentlyCommissioned,
+      'If_scheme_is_commissioned_how_many_households_are_being_benefitted': ifSchemeIsCommissionedHowManyHouseholdsAreBeingBenefitted,
+      'What_is_the_present_status_of_water_supply_schemes': whatIsThePresentStatusOfWaterSupplySchemes,
+      'Water_supply_frequency_assured_to_villagers_in_the_scheme': waterSupplyFrequencyAssuredToVillagersInTheScheme,
+      'rdb_Whether_remote_SC_ST_PVTG_groups_existing_in_command_area_of_the_scheme_has_been_planned_in_scheme': remoteGroupsPlanned,
+      'txt_Whether_remote_SC_ST_PVTG_groups_existing_in_command_area_of_the_scheme_has_been_planned_in_scheme': remoteGroupsPlannedDetails,
+      'ObservationWatersupplyFunctionality': observationWaterSupplyFunctionality,
     };
   }
 }

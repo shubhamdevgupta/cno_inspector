@@ -30,6 +30,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
   void initState() {
     super.initState();
 
+    ProjectMode? ModeType;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args =
       ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
@@ -47,7 +48,8 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
           vwscProvider.setStateId(stateId);
         }
 
-        await vwscProvider.fetchWaterSupply(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+        await vwscProvider.fetchWaterSupply(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),ModeType!.modeValue );
       }
     });
   }
@@ -214,7 +216,8 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                 ),
 
                                 // Question 5 - Part 2 (text field for reasons if no)
-                                Customtxtfeild(
+                                if( vwscProvider.selectedOption5_belowPartA == "No" )
+                                  Customtxtfeild(
                                   label: 'If no, please provide the reasons',
                                   controller: vwscProvider.reasonsController,
                                 ),
@@ -265,7 +268,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                             tailEndWaterReach: 0,
                                             schemeOperationalStatus: 0,
                                             pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
-                                            createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
+
 
                                             // New parameters
                                             phyStatus: mode.modeValue,

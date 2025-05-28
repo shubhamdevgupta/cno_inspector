@@ -25,7 +25,7 @@ class GrievancePartE extends StatefulWidget {
 
 class _GrievancePartE extends State<GrievancePartE> {
   LocalStorageService _localStorageService = LocalStorageService();
-
+  ProjectMode?ModeType;
   @override
   void initState() {
     super.initState();
@@ -33,6 +33,7 @@ class _GrievancePartE extends State<GrievancePartE> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
 
       if (args != null) {
         final villageId = args['villageId'] as int?;
@@ -47,10 +48,11 @@ class _GrievancePartE extends State<GrievancePartE> {
           vwscProvider.setStateId(stateId);
         }
 
+        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
         vwscProvider.fetchVwscGrievance(
             stateId.toString(),
             villageId.toString(),
-            _localStorageService.getInt(AppConstants.prefUserId).toString());
+            _localStorageService.getInt(AppConstants.prefUserId).toString(), ModeType!.modeValue);
       }
     });
   }
@@ -152,7 +154,7 @@ class _GrievancePartE extends State<GrievancePartE> {
                                     onChanged: (val) => vwscProvider
                                         .selectedGrievanceMechanism = val,
                                   ),
-                                  SizedBox(height: 16),
+
 
                                   // 2. How grievances are registered by villagers (multi-select)
                                   CustomMultiSelectChipQuestion(
@@ -171,7 +173,7 @@ class _GrievancePartE extends State<GrievancePartE> {
                                     },
                                   ),
 
-                                  SizedBox(height: 20),
+
 
                                   // 3. Turn around time for grievance
 
@@ -220,7 +222,7 @@ class _GrievancePartE extends State<GrievancePartE> {
                                             registrationTypes: vwscProvider.selectedGrievanceMethodIds,
                                             observationGrievanceRedressal: vwscProvider.PartEVWSCuserObservationController.text, // NEW
                                             phyStatus: mode.modeValue, // NEW
-                                            createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
+
                                           );
 
                                           if (vwscProvider.status!) {

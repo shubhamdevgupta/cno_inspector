@@ -20,7 +20,7 @@ class VwscRepository {
     required int tailEndWaterReach,
     required int schemeOperationalStatus,
     required List<int> pwsReachInstitutions,
-    required int createdBy,
+
 
     // New Parameters
     required int phyStatus,
@@ -46,8 +46,8 @@ class VwscRepository {
           "is_adequate_water_quantity_reach_to_remote_reason": remoteReason,
           "whether_water_reach_to_tail_end": tailEndWaterReach,
           "scheme_operational_status_commissioning": schemeOperationalStatus,
-          "whether_pws_reach_all_school_anganwadi_phc": pwsReachInstitutions,
-          "createdby": createdBy,
+          "whether_pws_reach_all_school_anganwadiphc": pwsReachInstitutions,
+
 
           // New parameters
           "phy_status": phyStatus,
@@ -58,7 +58,7 @@ class VwscRepository {
           "Water_supply_frequency_assured_to_villagers_in_the_scheme": waterSupplyFrequencyAssured,
           "rdb_Whether_remote_SC_ST_PVTG_groups_existing_in_command_area_of_the_scheme_has_been_planned_in_scheme": remoteGroupsPlanned,
           "txt_Whether_remote_SC_ST_PVTG_groups_existing_in_command_area_of_the_scheme_has_been_planned_in_scheme": remoteGroupsPlannedDetails,
-          "txtObservationWatersupplyFunctionality": observationWaterSupplyFunctionality,
+          "ObservationWatersupplyFunctionality": observationWaterSupplyFunctionality,
         }),
       );
 
@@ -87,6 +87,7 @@ class VwscRepository {
     required int communityAwareness,
     required int communitySatisfactionWithWq,
     required int createdBy,
+    required String ObservationCommunityInvolvementFunctionality
   }) async {
     try {
       final response = await _apiService.post(
@@ -108,6 +109,7 @@ class VwscRepository {
           "community_awareness": communityAwareness,
           "community_satisfaction_with_wq": communitySatisfactionWithWq,
           "createdby": createdBy,
+          "ObservationCommunity_Involvement_Functionality": ObservationCommunityInvolvementFunctionality,
         }),
       );
 
@@ -117,6 +119,7 @@ class VwscRepository {
     }
   }
 
+  /// Function in the repository to save community feedback data to the API.
   Future<BaseResponse> saveCommunityFeedback({
     required int userId,
     required int stateId,
@@ -130,6 +133,7 @@ class VwscRepository {
     required int createdBy,
   }) async {
     try {
+      /// Prepare the request body as a JSON-encoded map.
       final response = await _apiService.post(
         '/CNOSurvey/Save_cno_vwsc_community_feedback_insert_update',
         body: jsonEncode({
@@ -138,19 +142,34 @@ class VwscRepository {
           "villageid": villageId,
           "any_complaint_by_community": anyComplaintByCommunity,
           "is_complaint_addressed": isComplaintAddressed,
-          "complaint_type": complaintType,
+
+          /// Complaint type as a list of integers.
+          "complainttype": complaintType,
+
+
+
+          /// If the complaint type is "Other", its description.
           "Type_complaint_other": typeComplaintOther,
+
+          /// Physical status of the observation.
           "phy_status": phyStatus,
-          "txtObservationCommunity_feedback_quality_construction": observationCommunityFeedbackQualityConstruction,
+
+          /// Additional observations or remarks.
+          "ObservationCommunity_feedback_quality_construction": observationCommunityFeedbackQualityConstruction,
+
+          /// User ID of the person who created the record.
           "createdby": createdBy,
         }),
       );
 
+      /// Return the parsed response as a BaseResponse object.
       return BaseResponse.fromJson(response);
     } catch (e) {
+      /// Rethrow the error to be handled by the calling function.
       rethrow;
     }
   }
+
 
 
   Future<BaseResponse> saveWaterQualityMonitoring({
@@ -165,7 +184,7 @@ class VwscRepository {
     required int frcAvailableAtEnd,
     required int phyStatus,
     required String observationWaterQualityMonitoring,
-    required int createdBy,
+
   }) async {
     try {
       final response = await _apiService.post(
@@ -181,8 +200,8 @@ class VwscRepository {
           "Is_chlorination_disinfection_done": isChlorinationDone,
           "frc_avl_at_end": frcAvailableAtEnd,
           "phy_status": phyStatus,
-          "txtObservationWater_Quality_Monitoring": observationWaterQualityMonitoring,
-          "createdby": createdBy,
+          "ObservationWater_Quality_Monitoring": observationWaterQualityMonitoring,
+
         }),
       );
 
@@ -202,7 +221,7 @@ class VwscRepository {
     required List<int> registrationTypes,
     required String observationGrievanceRedressal, // NEW
     required int phyStatus, // NEW
-    required int createdBy,
+
   }) async {
     try {
       final response = await _apiService.post(
@@ -215,8 +234,8 @@ class VwscRepository {
           "grievance_turn_around_time": grievanceTurnAroundTime,
           "registration_type": registrationTypes,
           "phy_status": phyStatus, // NEW
-          "txtObservationGrievance_Redressal": observationGrievanceRedressal, // NEW
-          "createdby": createdBy,
+          "ObservationGrievance_Redressal": observationGrievanceRedressal, // NEW
+
         }),
       );
 

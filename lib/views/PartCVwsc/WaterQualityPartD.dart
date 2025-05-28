@@ -34,6 +34,7 @@ void initState() {
     final args =
     ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
+    ProjectMode? ModeType;
     if (args != null) {
       final villageId = args['villageId'] as int?;
       final stateId = args['stateId'] as int?;
@@ -50,8 +51,8 @@ void initState() {
         vwscProvider.setStateId(stateId);
       }
 
-
-      vwscProvider.fetchWaterQuality(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+      ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+      vwscProvider.fetchWaterQuality(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(), ModeType!.modeValue);
     }
   });
 
@@ -124,7 +125,7 @@ void initState() {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    mode == ProjectMode.below10? Belowvwsccommon(no: 3):  Abovevwsccommonclass(no: 4),
+                    mode == ProjectMode.below10? Belowvwsccommon(no: 3):  Abovevwsccommonclass(no:  4),
 
 
                     Padding(
@@ -228,7 +229,6 @@ void initState() {
                                            frcAvailableAtEnd: vwscProvider.selectedFRCLevelId,
                                            phyStatus: mode.modeValue,
                                            observationWaterQualityMonitoring: vwscProvider.PartDVWSCuserObservationController.text,
-                                           createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
                                          );
 
                                          if(vwscProvider.status!){

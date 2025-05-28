@@ -77,7 +77,7 @@ class Vwscprovider extends ChangeNotifier {
   // question 2222222222222222
   final Map<String, int> yesNoMap = {
     "Yes": 1,
-    "No": 2,
+    "No": 0,
   };
 
   List<String> get yesNoOptions => yesNoMap.keys.toList();
@@ -95,7 +95,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedVWSCFormedID => yesNoMap[_selectedVWSCFormed] ?? 0;
+  int get selectedVWSCFormedID => yesNoMap[_selectedVWSCFormed] ?? -1;
 
   String? _selectedVWSCBankAccount; // Yes / No
 
@@ -107,7 +107,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedVWSCBankAccountID => yesNoMap[_selectedVWSCBankAccount] ?? 0;
+  int get selectedVWSCBankAccountID => yesNoMap[_selectedVWSCBankAccount] ?? -1;
 
   String? _selectedAsBuiltDrawing; // Yes / No
 
@@ -119,7 +119,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   //
-  int get selectedAsBuiltDrawingID => yesNoMap[_selectedAsBuiltDrawing] ?? 0;
+  int get selectedAsBuiltDrawingID => yesNoMap[_selectedAsBuiltDrawing] ?? -1;
 
   String? _selectedVWSCMeetingConducted; // Yes / No
 
@@ -132,7 +132,7 @@ class Vwscprovider extends ChangeNotifier {
 
   //
   int get selectedVWSCMeetingConductedID =>
-      yesNoMap[_selectedVWSCMeetingConducted] ?? 0;
+      yesNoMap[_selectedVWSCMeetingConducted] ?? -1;
 
   TextEditingController FrequencyController = TextEditingController();
 
@@ -170,7 +170,7 @@ class Vwscprovider extends ChangeNotifier {
 
   //
   int get selectedVWSCRecordsAvailableID =>
-      yesNoMap[_selectedVWSCRecordsAvailable] ?? 0;
+      yesNoMap[_selectedVWSCRecordsAvailable] ?? -1;
 
   String? _selectedVWSCOMInvolved; // Yes / No
 
@@ -311,7 +311,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   // Get mapped ID
-  int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? 0;
+  int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? -1;
 
 
   TextEditingController PartBVWSCuserObservationController = TextEditingController();
@@ -331,7 +331,7 @@ class Vwscprovider extends ChangeNotifier {
 
   TextEditingController reasonRemoteGroupsController = TextEditingController();
 
-  int get selectedPvtgGroupsId => yesNoMap[_selectedPvtgGroups] ?? 0;
+  int get selectedPvtgGroupsId => yesNoMap[_selectedPvtgGroups] ?? -1;
 
   // question 33333
 
@@ -435,11 +435,11 @@ class Vwscprovider extends ChangeNotifier {
   String? get selectedOption5_belowPartA => _selectedOption5_belowPartA;
   String? get selectedOption6_belowPartA => _selectedOption6_belowPartA;
 
-  int get selectedOption1_belowPartAID => yesNoMap[_selectedOption1_belowPartA] ?? 0;
+  int get selectedOption1_belowPartAID => yesNoMap[_selectedOption1_belowPartA] ?? -1;
   int get selectedOption2_belowPartAID => vwscBelowPartAQues2Map[_selectedOption2_belowPartA] ?? 0;
   int get selectedOption3_belowPartAID => vwscBelowPartAQues3Map[_selectedOption3_belowPartA] ?? 0;
-  int get selectedOption5_belowPartAID => yesNoMap[_selectedOption5_belowPartA] ?? 0;
- int get selectedOption6_belowPartAID => yesNoMap[_selectedOption6_belowPartA] ?? 0;
+  int get selectedOption5_belowPartAID => yesNoMap[_selectedOption5_belowPartA] ?? -1;
+ int get selectedOption6_belowPartAID => yesNoMap[_selectedOption6_belowPartA] ?? -1;
 
   set selectedOption1_belowPartA(String? value) {
     _selectedOption1_belowPartA = value;
@@ -479,7 +479,7 @@ class Vwscprovider extends ChangeNotifier {
     required int tailEndWaterReach,
     required int schemeOperationalStatus,
     required List<int> pwsReachInstitutions,
-    required int createdBy,
+
 
     // New Parameters
     required int phyStatus,
@@ -507,7 +507,7 @@ class Vwscprovider extends ChangeNotifier {
         tailEndWaterReach: tailEndWaterReach,
         schemeOperationalStatus: schemeOperationalStatus,
         pwsReachInstitutions: pwsReachInstitutions,
-        createdBy: createdBy,
+
 
         // Pass new parameters
         phyStatus: phyStatus,
@@ -536,13 +536,13 @@ class Vwscprovider extends ChangeNotifier {
   List<WaterSupplyFunctionality> waterSupplyData = [];
 
   Future<void> fetchWaterSupply(
-      String stateId, String villageId, String userId) async {
+      String stateId, String villageId, String userId, int phystatus) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchvwscrepo.fetchWaterSupplyFunctionality(
-          stateId, villageId, userId);
+          stateId, villageId, userId, phystatus);
       if (response.status) {
         waterSupplyData = response.result;
 
@@ -572,20 +572,20 @@ class Vwscprovider extends ChangeNotifier {
 
         //New Field
 
-        selectedOption1_belowPartA = getRadiobuttonData(waterSupplyData.first.isPipedWaterSupplyScheme,yesNoMap);
+
+
+        selectedOption1_belowPartA = getRadiobuttonData(waterSupplyData.first.isThereAnyPipedWaterSupplySchemeInTheVillage,yesNoMap);
         print('selectedOption1_belowPartA: $selectedOption1_belowPartA');
 
-        selectedOption2_belowPartA = getRadiobuttonData(waterSupplyData.first.typeOfSchemeCommissioned,vwscBelowPartAQues2Map);
+        selectedOption2_belowPartA = getRadiobuttonData(waterSupplyData.first.whatIsTheTypeOfSchemePresentlyCommissioned,vwscBelowPartAQues2Map);
         print('selectedOption2_belowPartA: $selectedOption2_belowPartA');
 
-        householdPercentageController.text = waterSupplyData.first.schemeBeneficiaryHouseholds;
+        householdPercentageController.text = waterSupplyData.first.ifSchemeIsCommissionedHowManyHouseholdsAreBeingBenefitted;
         print('householdPercentageController: ${householdPercentageController.text}');
 
-        selectedOption3_belowPartA = getRadiobuttonData(waterSupplyData.first.presentStatusOfWaterSupplySchemes,vwscBelowPartAQues3Map);
+        selectedOption3_belowPartA = getRadiobuttonData(waterSupplyData.first.whatIsThePresentStatusOfWaterSupplySchemes,vwscBelowPartAQues3Map);
         print('selectedOption3_belowPartA: $selectedOption3_belowPartA');
 
-        selectedFrequency = getRadiobuttonData(waterSupplyData.first.waterSupplyFrequencyAssured,FrequencyLabels);
-        print('selectedFrequency: $selectedOption3_belowPartA');
 
         selectedOption5_belowPartA = getRadiobuttonData(waterSupplyData.first.remoteGroupsPlanned,yesNoMap);
         print('selectedOption5_belowPartA: $selectedOption5_belowPartA');
@@ -644,6 +644,7 @@ class Vwscprovider extends ChangeNotifier {
     selectedOption6_belowPartA = null;
     householdPercentageController.clear();
     reasonsController.clear();
+    PartAVWSCuserObservationController.clear();
 
     notifyListeners();
   }
@@ -656,12 +657,12 @@ class Vwscprovider extends ChangeNotifier {
 
   List<CommunityInvolvement> communityInvolvementData = [];
 
-  Future<void> fetchCommunityInvolvement(String stateId, String villageId, String userId) async {
+  Future<void> fetchCommunityInvolvement(String stateId, String villageId, String userId, int phystatus) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchvwscrepo.fetchCommunityInvolvement(stateId, villageId, userId);
+      final response = await _fetchvwscrepo.fetchCommunityInvolvement(stateId, villageId, userId, phystatus);
       if (response.status) {
         communityInvolvementData = response.result;
         selectedVWSCFormed = getRadiobuttonData(communityInvolvementData.first.isPaniSamitiFormed,yesNoMap);
@@ -684,6 +685,8 @@ class Vwscprovider extends ChangeNotifier {
         FrequencyController.text = communityInvolvementData.first.meetingHeldYesFrequency;
         print('FrequencyController: ${FrequencyController.text}');
 
+
+
         selectedVWSCRecordsAvailable = getRadiobuttonData(communityInvolvementData.first.isVwscMeetingRecordAvl,yesNoMap);
         print('selectedVWSCMeetingConducted: $selectedVWSCRecordsAvailable');
 
@@ -701,6 +704,9 @@ class Vwscprovider extends ChangeNotifier {
 
         selectedWaterQualitySatisfaction = getRadiobuttonData(communityInvolvementData.first.communitySatisfactionWithWq,WaterQualitySatisfaction);
         print('selectedWaterQualitySatisfaction: $selectedWaterQualitySatisfaction');
+
+        PartBVWSCuserObservationController.text = communityInvolvementData.first.meetingHeldYesFrequency;
+        print('PartBVWSCuserObservationController: ${PartBVWSCuserObservationController.text}');
 
 
         communityInvolvementData = response.result;
@@ -755,6 +761,7 @@ class Vwscprovider extends ChangeNotifier {
     required int communityAwareness,
     required int communitySatisfactionWithWq,
     required int createdBy,
+    required String observationCommunityInvolvementFunctionality
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -777,6 +784,8 @@ class Vwscprovider extends ChangeNotifier {
         communityAwareness: communityAwareness,
         communitySatisfactionWithWq: communitySatisfactionWithWq,
         createdBy: createdBy,
+        ObservationCommunityInvolvementFunctionality: observationCommunityInvolvementFunctionality
+
       );
       _status = response.status;
       _message = response.message;
@@ -793,12 +802,12 @@ class Vwscprovider extends ChangeNotifier {
   /// get api for que 33
   List<CommunityFeedback> communityFeedbackData = [];
 
-  Future<void> fetchCommunityFeedback(String stateId, String villageId, String userId) async {
+  Future<void> fetchCommunityFeedback(String stateId, String villageId, String userId, int phystatus) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchvwscrepo.fetchCommunityFeedback(stateId, villageId, userId);
+      final response = await _fetchvwscrepo.fetchCommunityFeedback(stateId, villageId, userId, phystatus);
       if (response.status) {
 
         communityFeedbackData = response.result;
@@ -833,12 +842,14 @@ class Vwscprovider extends ChangeNotifier {
     selectedComplaintByCommunity = null;
     selectedTypeOfComplaint = [];
     SetSelectedWhereComplaintAddress = null;
+    PartCVWSCuserObservationController.clear();
     notifyListeners();
   }
 
 
   //33
 
+  /// Function in the Provider/ViewModel to handle the community feedback save action.
   Future<void> saveCommunityFeedback({
     required int userId,
     required int stateId,
@@ -855,6 +866,8 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
 
     try {
+
+      /// Call the repository function with the new variable.
       final response = await _vwscRepository.saveCommunityFeedback(
         userId: userId,
         stateId: stateId,
@@ -862,20 +875,26 @@ class Vwscprovider extends ChangeNotifier {
         anyComplaintByCommunity: anyComplaintByCommunity,
         isComplaintAddressed: isComplaintAddressed,
         complaintType: complaintType,
+
         typeComplaintOther: typeComplaintOther,
         phyStatus: phyStatus,
         observationCommunityFeedbackQualityConstruction: observationCommunityFeedbackQualityConstruction,
         createdBy: createdBy,
       );
+
+      /// Update local state variables based on the response.
       _message = response.message;
       _status = response.status;
     } catch (e) {
+      /// Handle any exceptions that occur.
       GlobalExceptionHandler.handleException(e as Exception);
     } finally {
+      /// Notify UI that loading is complete.
       _isLoading = false;
       notifyListeners();
     }
   }
+
 
 
   Map<String, int> ftkTestingFrequencyMap = {
@@ -955,12 +974,12 @@ class Vwscprovider extends ChangeNotifier {
   //44
   List<WaterQualityMonitoring> waterQualityData = [];
 
-  Future<void> fetchWaterQuality(String stateId, String villageId, String userId) async {
+  Future<void> fetchWaterQuality(String stateId, String villageId, String userId, int phystatus) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchvwscrepo.fetchWaterQualityMonitoring(stateId, villageId, userId);
+      final response = await _fetchvwscrepo.fetchWaterQualityMonitoring(stateId, villageId, userId, phystatus );
       if (response.status) {
         waterQualityData = response.result;
         _message = '';
@@ -1013,6 +1032,7 @@ class Vwscprovider extends ChangeNotifier {
     // Clear frequency text field
     womenTrainedController.clear();
     testerNameController.clear();
+    PartDVWSCuserObservationController.clear();
 
     notifyListeners();
   }
@@ -1032,7 +1052,7 @@ class Vwscprovider extends ChangeNotifier {
     required int frcAvailableAtEnd,
     required int phyStatus,
     required String observationWaterQualityMonitoring,
-    required int createdBy,
+
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1050,7 +1070,7 @@ class Vwscprovider extends ChangeNotifier {
         frcAvailableAtEnd: frcAvailableAtEnd,
         phyStatus: phyStatus,
         observationWaterQualityMonitoring: observationWaterQualityMonitoring,
-        createdBy: createdBy,
+
       );
 
       _status = response.status;
@@ -1127,12 +1147,12 @@ class Vwscprovider extends ChangeNotifier {
 
   List<VwscGrievance> vwscGrievanceData = [];
 
-  Future<void> fetchVwscGrievance(String stateId, String villageId, String userId) async {
+  Future<void> fetchVwscGrievance(String stateId, String villageId, String userId, int phystatus) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchvwscrepo.fetchVwscGrievance(stateId, villageId, userId);
+      final response = await _fetchvwscrepo.fetchVwscGrievance(stateId, villageId, userId, phystatus);
       if (response.status) {
         vwscGrievanceData = response.result;
         _message = '';
@@ -1166,6 +1186,7 @@ class Vwscprovider extends ChangeNotifier {
     selectedGrievanceMechanism = null;
     grievanceRegistrationMethods = [];
     selectedTurnAroundTime = null;
+    PartEVWSCuserObservationController.clear();
 
 
 
@@ -1184,7 +1205,7 @@ class Vwscprovider extends ChangeNotifier {
     required List<int> registrationTypes,
     required String observationGrievanceRedressal, // NEW
     required int phyStatus, // NEW
-    required int createdBy,
+
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1199,7 +1220,7 @@ class Vwscprovider extends ChangeNotifier {
         registrationTypes: registrationTypes,
         observationGrievanceRedressal: observationGrievanceRedressal, // NEW
         phyStatus: phyStatus, // NEW
-        createdBy: createdBy,
+
       );
 
       _status = response.status;
