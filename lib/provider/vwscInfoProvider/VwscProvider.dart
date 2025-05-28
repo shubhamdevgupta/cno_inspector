@@ -404,6 +404,64 @@ class Vwscprovider extends ChangeNotifier {
       .toList();
 
 // que 6666666666666666666666666
+ final Map<String, int> vwscBelowPartAQues2Map = {
+     'JJM new':1,
+     'JJM Retrofitted':2,
+     'NRDWP':3,
+     'State Scheme':4,
+     'No scheme':5,
+ };
+
+ final Map<String, int> vwscBelowPartAQues3Map = {
+     'Meeting daily needs throughout the year':1,
+     'Meeting daily needs partly in the year':2,
+     'Not able to meet daily needs:':3
+ };
+
+  // below 10%  start
+  String? _selectedOption1_belowPartA;
+  String? _selectedOption2_belowPartA;
+  String? _selectedOption3_belowPartA;
+  String? _selectedOption5_belowPartA;
+  String? _selectedOption6_belowPartA;
+
+  String? get selectedOption1_belowPartA => _selectedOption1_belowPartA;
+  String? get selectedOption2_belowPartA => _selectedOption2_belowPartA;
+  String? get selectedOption3_belowPartA => _selectedOption3_belowPartA;
+  String? get selectedOption5_belowPartA => _selectedOption5_belowPartA;
+  String? get selectedOption6_belowPartA => _selectedOption6_belowPartA;
+
+  int get selectedOption1_belowPartAID => yesNoMap[_selectedOption1_belowPartA] ?? 0;
+  int get selectedOption2_belowPartAID => vwscBelowPartAQues2Map[_selectedOption2_belowPartA] ?? 0;
+  int get selectedOption3_belowPartAID => vwscBelowPartAQues3Map[_selectedOption3_belowPartA] ?? 0;
+  int get selectedOption5_belowPartAID => yesNoMap[_selectedOption5_belowPartA] ?? 0;
+ int get selectedOption6_belowPartAID => yesNoMap[_selectedOption6_belowPartA] ?? 0;
+
+  set selectedOption1_belowPartA(String? value) {
+    _selectedOption1_belowPartA = value;
+    notifyListeners();
+  }
+  set selectedOption2_belowPartA(String? value) {
+    _selectedOption2_belowPartA = value;
+    notifyListeners();
+  }
+  set selectedOption3_belowPartA(String? value) {
+    _selectedOption3_belowPartA = value;
+    notifyListeners();
+  }
+
+  set selectedOption5_belowPartA(String? value) {
+    _selectedOption5_belowPartA = value;
+    notifyListeners();
+  }
+  set selectedOption6_belowPartA(String? value) {
+    _selectedOption6_belowPartA = value;
+    notifyListeners();
+  }
+
+  TextEditingController householdPercentageController = TextEditingController();
+  TextEditingController reasonsController = TextEditingController();
+  // below 10%  end
 
   Future<void> saveVwscWaterSupply({
     required int userId,
@@ -417,6 +475,17 @@ class Vwscprovider extends ChangeNotifier {
     required int schemeOperationalStatus,
     required List<int> pwsReachInstitutions,
     required int createdBy,
+
+    // New Parameters
+    required int phyStatus,
+    required int isPipedWaterSupplyScheme,
+    required int typeOfSchemeCommissioned,
+    required String schemeBeneficiaryHouseholds,
+    required int presentStatusOfWaterSupplySchemes,
+    required int waterSupplyFrequencyAssured,
+    required int remoteGroupsPlanned,
+    required String remoteGroupsPlannedDetails,
+    required String observationWaterSupplyFunctionality,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -434,17 +503,28 @@ class Vwscprovider extends ChangeNotifier {
         schemeOperationalStatus: schemeOperationalStatus,
         pwsReachInstitutions: pwsReachInstitutions,
         createdBy: createdBy,
+
+        // Pass new parameters
+        phyStatus: phyStatus,
+        isPipedWaterSupplyScheme: isPipedWaterSupplyScheme,
+        typeOfSchemeCommissioned: typeOfSchemeCommissioned,
+        schemeBeneficiaryHouseholds: schemeBeneficiaryHouseholds,
+        presentStatusOfWaterSupplySchemes: presentStatusOfWaterSupplySchemes,
+        waterSupplyFrequencyAssured: waterSupplyFrequencyAssured,
+        remoteGroupsPlanned: remoteGroupsPlanned,
+        remoteGroupsPlannedDetails: remoteGroupsPlannedDetails,
+        observationWaterSupplyFunctionality: observationWaterSupplyFunctionality,
       );
       _message = response.message;
       _status = response.status;
     } catch (e) {
       GlobalExceptionHandler.handleException(e as Exception);
-
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
+
 
   /// get api for que 111
 
@@ -523,6 +603,16 @@ class Vwscprovider extends ChangeNotifier {
     selectedTailEnd = null;
     selectedschemeStatus = null;
     selectedinstitutions = [];
+    //below 10 % content clear
+
+    selectedOption1_belowPartA = null;
+    selectedOption2_belowPartA = null;
+    selectedOption3_belowPartA = null;
+    selectedOption5_belowPartA = null;
+    selectedOption6_belowPartA = null;
+    householdPercentageController.clear();
+    reasonsController.clear();
+
     notifyListeners();
   }
 
@@ -721,6 +811,9 @@ class Vwscprovider extends ChangeNotifier {
     required int anyComplaintByCommunity,
     required int isComplaintAddressed,
     required List<int> complaintType,
+    required String typeComplaintOther,
+    required int phyStatus,
+    required String observationCommunityFeedbackQualityConstruction,
     required int createdBy,
   }) async {
     _isLoading = true;
@@ -734,6 +827,9 @@ class Vwscprovider extends ChangeNotifier {
         anyComplaintByCommunity: anyComplaintByCommunity,
         isComplaintAddressed: isComplaintAddressed,
         complaintType: complaintType,
+        typeComplaintOther: typeComplaintOther,
+        phyStatus: phyStatus,
+        observationCommunityFeedbackQualityConstruction: observationCommunityFeedbackQualityConstruction,
         createdBy: createdBy,
       );
       _message = response.message;
@@ -745,6 +841,7 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 
   Map<String, int> ftkTestingFrequencyMap = {
     'Regularly tested': 1,
@@ -891,6 +988,8 @@ class Vwscprovider extends ChangeNotifier {
     required String whoTestFtk,
     required int isChlorinationDone,
     required int frcAvailableAtEnd,
+    required int phyStatus,
+    required String observationWaterQualityMonitoring,
     required int createdBy,
   }) async {
     _isLoading = true;
@@ -907,6 +1006,8 @@ class Vwscprovider extends ChangeNotifier {
         whoTestFtk: whoTestFtk,
         isChlorinationDone: isChlorinationDone,
         frcAvailableAtEnd: frcAvailableAtEnd,
+        phyStatus: phyStatus,
+        observationWaterQualityMonitoring: observationWaterQualityMonitoring,
         createdBy: createdBy,
       );
 
@@ -919,6 +1020,7 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 
   Map<String, int> turnAroundTimeMap = {
     'Same day': 1,
@@ -1032,6 +1134,8 @@ class Vwscprovider extends ChangeNotifier {
     required int grievanceMechanismAvailable,
     required int grievanceTurnAroundTime,
     required List<int> registrationTypes,
+    required String observationGrievanceRedressal, // NEW
+    required int phyStatus, // NEW
     required int createdBy,
   }) async {
     _isLoading = true;
@@ -1045,8 +1149,11 @@ class Vwscprovider extends ChangeNotifier {
         grievanceMechanismAvailable: grievanceMechanismAvailable,
         grievanceTurnAroundTime: grievanceTurnAroundTime,
         registrationTypes: registrationTypes,
+        observationGrievanceRedressal: observationGrievanceRedressal, // NEW
+        phyStatus: phyStatus, // NEW
         createdBy: createdBy,
       );
+
       _status = response.status;
       _message = response.message;
     } catch (e) {
@@ -1056,6 +1163,7 @@ class Vwscprovider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 
   ///// ques c 1111111
   final Map<String, int> complainByCommunityOptMap = {
@@ -1129,6 +1237,10 @@ class Vwscprovider extends ChangeNotifier {
     _typeOfComplaintLabels = values;
     notifyListeners();
   }
+
+  //other case
+
+  TextEditingController othersComplaintController = TextEditingController();
 
   // 4. Convert selected labels to their mapped integer values (for API)
   List<int> get selectedTypeOfComplaintIds => _typeOfComplaintLabels

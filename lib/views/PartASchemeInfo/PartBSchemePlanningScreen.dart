@@ -9,6 +9,7 @@ import 'package:cno_inspection/views/PartASchemeInfo/PartASourceScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/AppStateProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/customradiobttn.dart';
@@ -35,6 +36,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
       ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      print("STATE 1111 : ${args.toString()}");
       if (args != null) {
         final schemeId = args['schemeId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -57,132 +59,142 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
-      ),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            // Removes the default back button
-            centerTitle: true,
-            title: Text(
-              "Scheme Planning",
-              style: AppStyles.appBarTitle,
-            ),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.pop(context);
-                } else {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Dashboardschemeinfo()),
-                    (route) => false,
-                  );
-                }
-              },
-            ),
+    return WillPopScope(
+      onWillPop: () async {
+        // Replace the current route with a new one
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => Dashboardschemeinfo()),
+        );
 
-            //elevation
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF096DA8), // Dark blue color
-                    Color(0xFF3C8DBC), // Green color
-                  ],
-                  begin: Alignment.topCenter, // Start at the top center
-                  end: Alignment.bottomCenter, // End at the bottom center
+        return false;
+      },
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
+        ),
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              // Removes the default back button
+              centerTitle: true,
+              title: Text(
+                "Scheme Planning",
+                style: AppStyles.appBarTitle,
+              ),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () {
+                  if (Navigator.of(context).canPop()) {
+                    Navigator.pop(context);
+                  } else {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Dashboardschemeinfo()),
+                      (route) => false,
+                    );
+                  }
+                },
+              ),
+
+              //elevation
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF096DA8), // Dark blue color
+                      Color(0xFF3C8DBC), // Green color
+                    ],
+                    begin: Alignment.topCenter, // Start at the top center
+                    end: Alignment.bottomCenter, // End at the bottom center
+                  ),
                 ),
               ),
+              elevation: 5,
             ),
-            elevation: 5,
-          ),
-          body: Consumer<Schemeprovider>(
-            builder: (context, schemeProvider, child) {
-              return SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.only(
-                      top: 20, left: 6, right: 6, bottom: 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Schemeinfocommonscreen(
-                        no: 2,
-                      ),
-                      Card(
-                        elevation: 5,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                                color: Colors.orangeAccent, width: 1.4),
-                            borderRadius: BorderRadius.circular(14),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12.withOpacity(0.06),
-                                blurRadius: 6,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          padding: EdgeInsets.all(5),
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+            body: Consumer<Schemeprovider>(
+              builder: (context, schemeProvider, child) {
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+                return SingleChildScrollView(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 20, left: 6, right: 6, bottom: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Schemeinfocommonscreen(
+                          no: 2,
+                        ),
+                        Card(
+                          elevation: 5,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                  color: Colors.orangeAccent, width: 1.4),
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12.withOpacity(0.06),
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(5),
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
 
-// Above 10% part Start
-                              Visibility(
-                                visible: schemeProvider.formType==1,
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // 1. Survey questions
-                                    const Text(
-                                      '1. Has the surveys done for planning of the scheme:',
-                                      style: TextStyle(fontWeight: FontWeight.w600),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Customradiobttn(
-                                      question: '1.1 Topographical survey',
-                                      options: schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption: schemeProvider.topoSurvey,
-                                      onChanged: (value) {
-                                        schemeProvider.topoSurvey = value;
-                                      },
-                                    ),
-                                    Customradiobttn(
-                                      question: '1.2 GPS/physical survey done',
-                                      options: schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption: schemeProvider.gpsSurvey,
-                                      onChanged: (value) {
-                                        schemeProvider.gpsSurvey = value;
-                                      },
-                                    ),
-                                    Customradiobttn(
-                                      question: '1.3 Google Earth/Maps survey',
-                                      options: schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption:
-                                      schemeProvider.googleEarthSurvey,
-                                      onChanged: (value) {
-                                        schemeProvider.googleEarthSurvey = value;
-                                      },
-                                    ),
-                                    Customradiobttn(
-                                      question: '1.4 No survey done',
-                                      options: schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption: schemeProvider.noSurvey,
-                                      onChanged: (value) {
-                                        schemeProvider.noSurvey = value;
-                                      },
-                                    ),
-                                    const SizedBox(height: 10),
+      // Above 10% part Start
+                                Visibility(
+                                  visible: mode==ProjectMode.above10,
+                                  child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // 1. Survey questions
+                                      const Text(
+                                        '1. Has the surveys done for planning of the scheme:',
+                                        style: TextStyle(fontWeight: FontWeight.w600),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Customradiobttn(
+                                        question: '1.1 Topographical survey',
+                                        options: schemeProvider.yesNoMap.keys.toList(),
+                                        selectedOption: schemeProvider.topoSurvey,
+                                        onChanged: (value) {
+                                          schemeProvider.topoSurvey = value;
+                                        },
+                                      ),
+                                      Customradiobttn(
+                                        question: '1.2 GPS/physical survey done',
+                                        options: schemeProvider.yesNoMap.keys.toList(),
+                                        selectedOption: schemeProvider.gpsSurvey,
+                                        onChanged: (value) {
+                                          schemeProvider.gpsSurvey = value;
+                                        },
+                                      ),
+                                      Customradiobttn(
+                                        question: '1.3 Google Earth/Maps survey',
+                                        options: schemeProvider.yesNoMap.keys.toList(),
+                                        selectedOption:
+                                        schemeProvider.googleEarthSurvey,
+                                        onChanged: (value) {
+                                          schemeProvider.googleEarthSurvey = value;
+                                        },
+                                      ),
+                                      Customradiobttn(
+                                        question: '1.4 No survey done',
+                                        options: schemeProvider.yesNoMap.keys.toList(),
+                                        selectedOption: schemeProvider.noSurvey,
+                                        onChanged: (value) {
+                                          schemeProvider.noSurvey = value;
+                                        },
+                                      ),
+                                      const SizedBox(height: 10),
 
                                     // 2. WTP design hours
                                     Customtxtfeild(
@@ -262,17 +274,17 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
 
 
 
-                              // Below 10% part Start
-                              Visibility(
-                                visible: schemeProvider.formType==2,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Customtxtfeild(
-                                    label: '1. What are the reasons if the scheme is approved but the work is not awarded till date?',
-                                    controller: schemeProvider.schemePlanning_Question1Controller,
-                                    keyboardType: TextInputType.text,
-                                  ),
+                                // Below 10% part Start
+                                Visibility(
+                                  visible: mode==ProjectMode.below10,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Customtxtfeild(
+                                      label: '1. What are the reasons if the scheme is approved but the work is not awarded till date?',
+                                      controller: schemeProvider.schemePlanning_Question1Controller,
+                                      keyboardType: TextInputType.text,
+                                    ),
 
                                   Customtxtfeild(
                                     label: '2. If the work is awarded, please provide the reasons for no physical progress?',
@@ -369,82 +381,90 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
 
 
 
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
-                                  height: 35,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.orangeAccent,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10), // Adjust the radius as needed
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: SizedBox(
+                                    height: 35,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.orangeAccent,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              10), // Adjust the radius as needed
+                                        ),
                                       ),
-                                    ),
-                                    onPressed: () async {
-                                      LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Scheme Planning...");
+                                      onPressed: () async {
+                                        LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Scheme Planning...");
+print("STATE : ${schemeProvider.stateId}");
+                                        await schemeProvider.saveSchemePlanning(
+                                            userId: _localStorageService
+                                                .getInt(AppConstants.prefUserId)!,
+                                            stateId: schemeProvider.stateId!,
+                                            schemeId: schemeProvider.schemeId!,
+                                            topoSurvey:
+                                                schemeProvider.topoSurveyID,
+                                            gpsSurvey: schemeProvider.gpsSurveyID,
+                                            googleSurvey: schemeProvider
+                                                .googleEarthSurveyID,
+                                            numberOfSurveys:
+                                                schemeProvider.noSurveyID,
+                                            designRunningHours: schemeProvider.wtpHoursController.text.isEmpty ? 0 :int.parse(schemeProvider
+                                                .wtpHoursController.text),
+                                            retentionTimeOHT: schemeProvider.ohsrTimeController.text.isEmpty?0:int.parse(schemeProvider
+                                                .ohsrTimeController.text),
+                                            retentionTimeMBR: schemeProvider.mbrTimeController.text.isEmpty ?0:int.parse(schemeProvider
+                                                .mbrTimeController.text),
+                                            terrainRocky: schemeProvider
+                                                .rockyPipeMaterialController.text,
+                                            terrainSoil: schemeProvider
+                                                .soilPipeMaterialController.text,
+                                            foundAsPerDPR:
+                                                schemeProvider.onSpotExcavationID,
+                                            deviation: schemeProvider.deviationReasonController.text,
 
-                                      await schemeProvider.saveSchemePlanning(
-                                          userId: _localStorageService
-                                              .getInt(AppConstants.prefUserId)!,
-                                          stateId: schemeProvider.stateId!,
-                                          schemeId: schemeProvider.schemeId!,
-                                          topoSurvey:
-                                              schemeProvider.topoSurveyID,
-                                          gpsSurvey: schemeProvider.gpsSurveyID,
-                                          googleSurvey: schemeProvider
-                                              .googleEarthSurveyID,
-                                          numberOfSurveys:
-                                              schemeProvider.noSurveyID,
-                                          designRunningHours: int.parse(schemeProvider
-                                              .wtpHoursController.text),
-                                          retentionTimeOHT: int.parse(schemeProvider
-                                              .ohsrTimeController.text),
-                                          retentionTimeMBR: int.parse(schemeProvider
-                                              .mbrTimeController.text),
-                                          terrainRocky: schemeProvider
-                                              .rockyPipeMaterialController.text,
-                                          terrainSoil: schemeProvider
-                                              .soilPipeMaterialController.text,
-                                          foundAsPerDPR:
-                                              schemeProvider.onSpotExcavationID,
-                                          deviation: schemeProvider.deviationReasonController.text);
-                                      if (schemeProvider.status!) {
-                                        ToastHelper.showToastMessage(
-                                            schemeProvider.message!,
-                                            backgroundColor: Colors.green);
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (_) =>
-                                                  RetrofittingAugmentationScreen()),
-                                        );
-                                      } else {
-                                        ToastHelper.showToastMessage(
-                                            schemeProvider.message!,
-                                            backgroundColor: Colors.red);
-                                      }
-                                    },
-                                    child: Text(
-                                      "SAVE & NEXT",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
+
+                                         reason_not_awarded_scheme_planning:schemeProvider.schemePlanning_Question1Controller.text ,
+                                         work_awarded_no_physical_progress:schemeProvider. schemePlanning_Question2Controller.text ,
+                                         multiple_schemes_sanctioned_justify_detial: schemeProvider.schemePlanning_Question5Controller.text,
+                                         desgined_conjunctive_detail: schemeProvider.schemePlanning_Question6Controller.text,
+                                         phy_status: mode.modeValue ,);
+                                        if (schemeProvider.status!) {
+                                          ToastHelper.showToastMessage(
+                                              schemeProvider.message!,
+                                              backgroundColor: Colors.green);
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    RetrofittingAugmentationScreen()),
+                                          );
+                                        } else {
+                                          ToastHelper.showToastMessage(
+                                              schemeProvider.message!,
+                                              backgroundColor: Colors.red);
+                                        }
+                                      },
+                                      child: Text(
+                                        "SAVE & NEXT",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          )),
+                );
+              },
+            )),
+      ),
     );
   }
 }

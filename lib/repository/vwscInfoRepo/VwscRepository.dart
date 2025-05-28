@@ -21,6 +21,17 @@ class VwscRepository {
     required int schemeOperationalStatus,
     required List<int> pwsReachInstitutions,
     required int createdBy,
+
+    // New Parameters
+    required int phyStatus,
+    required int isPipedWaterSupplyScheme,
+    required int typeOfSchemeCommissioned,
+    required String schemeBeneficiaryHouseholds,
+    required int presentStatusOfWaterSupplySchemes,
+    required int waterSupplyFrequencyAssured,
+    required int remoteGroupsPlanned,
+    required String remoteGroupsPlannedDetails,
+    required String observationWaterSupplyFunctionality,
   }) async {
     try {
       final response = await _apiService.post(
@@ -36,7 +47,18 @@ class VwscRepository {
           "whether_water_reach_to_tail_end": tailEndWaterReach,
           "scheme_operational_status_commissioning": schemeOperationalStatus,
           "whether_pws_reach_all_school_anganwadi_phc": pwsReachInstitutions,
-          "createdby": createdBy
+          "createdby": createdBy,
+
+          // New parameters
+          "phy_status": phyStatus,
+          "Is_there_any_piped_water_supply_scheme_in_the_village": isPipedWaterSupplyScheme,
+          "What_is_the_type_of_scheme_presently_commissioned": typeOfSchemeCommissioned,
+          "If_scheme_is_commissioned_how_many_households_are_being_benefitted": schemeBeneficiaryHouseholds,
+          "What_is_the_present_status_of_water_supply_schemes": presentStatusOfWaterSupplySchemes,
+          "Water_supply_frequency_assured_to_villagers_in_the_scheme": waterSupplyFrequencyAssured,
+          "rdb_Whether_remote_SC_ST_PVTG_groups_existing_in_command_area_of_the_scheme_has_been_planned_in_scheme": remoteGroupsPlanned,
+          "txt_Whether_remote_SC_ST_PVTG_groups_existing_in_command_area_of_the_scheme_has_been_planned_in_scheme": remoteGroupsPlannedDetails,
+          "txtObservationWatersupplyFunctionality": observationWaterSupplyFunctionality,
         }),
       );
 
@@ -45,6 +67,7 @@ class VwscRepository {
       rethrow;
     }
   }
+
 
   // vwsc_repository.dart (add this inside same class)
   Future<BaseResponse> saveVwscCommunityInvolvement({
@@ -101,6 +124,9 @@ class VwscRepository {
     required int anyComplaintByCommunity,
     required int isComplaintAddressed,
     required List<int> complaintType,
+    required String typeComplaintOther,
+    required int phyStatus,
+    required String observationCommunityFeedbackQualityConstruction,
     required int createdBy,
   }) async {
     try {
@@ -113,6 +139,9 @@ class VwscRepository {
           "any_complaint_by_community": anyComplaintByCommunity,
           "is_complaint_addressed": isComplaintAddressed,
           "complaint_type": complaintType,
+          "Type_complaint_other": typeComplaintOther,
+          "phy_status": phyStatus,
+          "txtObservationCommunity_feedback_quality_construction": observationCommunityFeedbackQualityConstruction,
           "createdby": createdBy,
         }),
       );
@@ -122,6 +151,7 @@ class VwscRepository {
       rethrow;
     }
   }
+
 
   Future<BaseResponse> saveWaterQualityMonitoring({
     required int userId,
@@ -133,6 +163,8 @@ class VwscRepository {
     required String whoTestFtk,
     required int isChlorinationDone,
     required int frcAvailableAtEnd,
+    required int phyStatus,
+    required String observationWaterQualityMonitoring,
     required int createdBy,
   }) async {
     try {
@@ -148,6 +180,8 @@ class VwscRepository {
           "who_test_ftk": whoTestFtk,
           "Is_chlorination_disinfection_done": isChlorinationDone,
           "frc_avl_at_end": frcAvailableAtEnd,
+          "phy_status": phyStatus,
+          "txtObservationWater_Quality_Monitoring": observationWaterQualityMonitoring,
           "createdby": createdBy,
         }),
       );
@@ -158,6 +192,7 @@ class VwscRepository {
     }
   }
 
+
   Future<BaseResponse> saveGrievanceRedressal({
     required int userId,
     required int stateId,
@@ -165,6 +200,8 @@ class VwscRepository {
     required int grievanceMechanismAvailable,
     required int grievanceTurnAroundTime,
     required List<int> registrationTypes,
+    required String observationGrievanceRedressal, // NEW
+    required int phyStatus, // NEW
     required int createdBy,
   }) async {
     try {
@@ -177,6 +214,8 @@ class VwscRepository {
           "grievance_mech_avl": grievanceMechanismAvailable,
           "grievance_turn_around_time": grievanceTurnAroundTime,
           "registration_type": registrationTypes,
+          "phy_status": phyStatus, // NEW
+          "txtObservationGrievance_Redressal": observationGrievanceRedressal, // NEW
           "createdby": createdBy,
         }),
       );
@@ -186,6 +225,7 @@ class VwscRepository {
       rethrow;
     }
   }
+
 
 
 

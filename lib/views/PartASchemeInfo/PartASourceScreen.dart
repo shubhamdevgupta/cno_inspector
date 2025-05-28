@@ -29,15 +29,12 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args =
-          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
       if (args != null) {
         final schemeId = args['schemeId'] as int?;
         final stateId = args['stateId'] as int?;
 
-        final schemeProvider =
-            Provider.of<Schemeprovider>(context, listen: false);
-        schemeProvider.clearfetchSourceSurvey();
+        final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);schemeProvider.clearfetchSourceSurvey();
 
         if (schemeId != null) {
           schemeProvider.setSchemeId(schemeId);
@@ -45,288 +42,290 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSourceSurvey(
-            stateId.toString(),
-            schemeId.toString(),
-            _localStorageService.getInt(AppConstants.prefUserId).toString());
+        schemeProvider.fetchSourceSurvey(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
-      ),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            // Removes the default back button
-            centerTitle: true,
-            title: Text(
-              "Source",
-              style: AppStyles.appBarTitle,
-            ),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.pop(context);
-                } else {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Dashboardschemeinfo()),
-                    (route) => false,
-                  );
-                }
-              },
-            ),
-            //elevation
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF096DA8), // Dark blue color
-                    Color(0xFF3C8DBC), // Green color
-                  ],
-                  begin: Alignment.topCenter, // Start at the top center
-                  end: Alignment.bottomCenter, // End at the bottom center
+    return WillPopScope(
+      onWillPop: () async {
+        // Replace the current route with a new one
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => Dashboardschemeinfo()),
+        );
+
+        return false;
+      },
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
+        ),
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              // Removes the default back button
+              centerTitle: true,
+              title: Text(
+                "Source",
+                style: AppStyles.appBarTitle,
+              ),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () {
+                  if (Navigator.of(context).canPop()) {
+                    Navigator.pop(context);
+                  } else {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Dashboardschemeinfo()),
+                      (route) => false,
+                    );
+                  }
+                },
+              ),
+              //elevation
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF096DA8), // Dark blue color
+                      Color(0xFF3C8DBC), // Green color
+                    ],
+                    begin: Alignment.topCenter, // Start at the top center
+                    end: Alignment.bottomCenter, // End at the bottom center
+                  ),
                 ),
               ),
+              elevation: 5,
             ),
-            elevation: 5,
-          ),
-          body: Consumer<Schemeprovider>(
-            builder: (context, schemeProvider, child) {
-              final mode =
-                  Provider.of<AppStateProvider>(context, listen: false).mode;
-              return SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.only(
-                      top: 20, left: 6, right: 6, bottom: 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Schemeinfocommonscreen(
-                        no: 1,
-                      ),
-                      Card(
-                        elevation: 5,
-                        child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border:
-                                  Border.all(color: Colors.blue, width: 1.4),
-                              borderRadius: BorderRadius.circular(14),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black12.withOpacity(0.06),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            padding: EdgeInsets.all(5),
-                            width: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // 1. Source finding committee recommended shift to surface water? (Yes/No)
-                                Customradiobttn(
-                                  question:
-                                      '1. If the source is surface water, then, did the Source finding committee recommend the shift to surface water?',
-                                  options:
-                                      schemeProvider.yesNoMap.keys.toList(),
-                                  selectedOption:
-                                      schemeProvider.selectedValueQ1,
-                                  onChanged: (val) {
-                                    schemeProvider.selectedValueQ1 = val;
-                                  },
-                                ),
-
-                                Customradiobttn(
-                                  question:
-                                      '2. Any study done to assess ground water before going for surface water?',
-                                  options:
-                                      schemeProvider.yesNoMap.keys.toList(),
-                                  selectedOption:
-                                      schemeProvider.selectedValueQ2,
-                                  onChanged: (val) {
-                                    schemeProvider.selectedValueQ2 = val;
-                                  },
-                                ),
-
-                                // 3. Number of villages falling under critical zones
-                                const Text(
-                                  '3. Number of villages falling under the critical zones as mentioned (https://cgwb.gov.in/en/ground-water-resource-assessment-0):',
-                                  style: TextStyle(fontWeight: FontWeight.w600),
-                                ),
-                                const SizedBox(height: 8),
-
-                                Customtxtfeild(
-                                  label: '3.1 Safe (Nos)',
-                                  controller: schemeProvider.safeController,
-                                  keyboardType: TextInputType.number,
-                                ),
-                                const SizedBox(height: 8),
-
-                                Customtxtfeild(
-                                  label: '3.2 Critical / Over exploited (Nos)',
-                                  controller: schemeProvider.criticalController,
-                                  keyboardType: TextInputType.number,
-                                ),
-                                const SizedBox(height: 8),
-
-                                Customtxtfeild(
-                                  label: '3.3 Semi-critical (Nos)',
-                                  controller:
-                                      schemeProvider.semiCriticalController,
-                                  keyboardType: TextInputType.number,
-                                ),
-                                const SizedBox(height: 12),
-
-                                // 4. Groundwater contamination analysis? (Yes/No)
-                                Customradiobttn(
-                                  question:
-                                      '4. In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option — treating the contaminated groundwater or switching to a surface water source?',
-                                  options:
-                                      schemeProvider.yesNoMap.keys.toList(),
-                                  selectedOption:
-                                      schemeProvider.selectedValueQ3,
-                                  onChanged: (val) {
-                                    schemeProvider.selectedValueQ3 = val;
-                                    print(
-                                        'val----- ${schemeProvider.selectedValueQ3Id}');
-                                  },
-                                ),
-
-                                // 5. Water allocation from State WRD / Irrigation Department (text input)
-                                Customtxtfeild(
-                                  label:
-                                      '5. Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose',
-                                  controller:
-                                      schemeProvider.waterAllocationController,
-                                  keyboardType: TextInputType.number,
-                                ),
-
-                                // Below 10% part Start
-
-                                Visibility(
-                                  visible: mode == ProjectMode.below10,
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Customtxtfeild(
-                                        label:
-                                            '6.	Whether all representatives of source finding committee such as State WRD/ID, State level offices of CGWB etc. were consulted for making the recommendation or it was a PHED level exercise through Dept. Level hydrogeologist only? Provide details',
-                                        controller: schemeProvider
-                                            .sourceFindingRepresentativesConsulted_Controller,
-                                        keyboardType: TextInputType.text,
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Customtxtfeild(
-                                        label:
-                                            '7.	What were the other cost-effective alternative sources available to provide the piped water supply in the area? Provide details',
-                                        controller: schemeProvider
-                                            .alternativeSourcesAvailable_Controller,
-                                        keyboardType: TextInputType.text,
-                                      ),
-                                      const SizedBox(height: 8),
-                                    ],
+            body: Consumer<Schemeprovider>(
+              builder: (context, schemeProvider, child) {
+                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+                return SingleChildScrollView(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 20, left: 6, right: 6, bottom: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Schemeinfocommonscreen(
+                          no: 1,
+                        ),
+                        Card(
+                          elevation: 5,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border:
+                                    Border.all(color: Colors.blue, width: 1.4),
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12.withOpacity(0.06),
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 3),
                                   ),
-                                ),
+                                ],
+                              ),
+                              padding: EdgeInsets.all(5),
+                              width: double.infinity,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // 1. Source finding committee recommended shift to surface water? (Yes/No)
+                                  Customradiobttn(
+                                    question:
+                                        '1. If the source is surface water, then, did the Source finding committee recommend the shift to surface water?',
+                                    options:
+                                        schemeProvider.yesNoMap.keys.toList(),
+                                    selectedOption:
+                                        schemeProvider.selectedValueQ1,
+                                    onChanged: (val) {
+                                      schemeProvider.selectedValueQ1 = val;
+                                    },
+                                  ),
 
-                                // pass this additional value when api available
-                                /*
-                               schemeProvider.sourceFindingRepresentativesConsulted_Controller.text
-                                schemeProvider.alternativeSourcesAvailable_Controller.text*/
+                                  Customradiobttn(
+                                    question:
+                                        '2. Any study done to assess ground water before going for surface water?',
+                                    options:
+                                        schemeProvider.yesNoMap.keys.toList(),
+                                    selectedOption:
+                                        schemeProvider.selectedValueQ2,
+                                    onChanged: (val) {
+                                      schemeProvider.selectedValueQ2 = val;
+                                    },
+                                  ),
 
-                                // Below 10% part End
+                                  // 3. Number of villages falling under critical zones
+                                  const Text(
+                                    '3. Number of villages falling under the critical zones as mentioned (https://cgwb.gov.in/en/ground-water-resource-assessment-0):',
+                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                  const SizedBox(height: 8),
 
-                                const SizedBox(height: 15),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: SizedBox(
-                                    height: 35,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xffb0D6EFD),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              10), // Adjust the radius as needed
+                                  Customtxtfeild(
+                                    label: '3.1 Safe (Nos)',
+                                    controller: schemeProvider.safeController,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                  const SizedBox(height: 8),
+
+                                  Customtxtfeild(
+                                    label: '3.2 Critical / Over exploited (Nos)',
+                                    controller: schemeProvider.criticalController,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                  const SizedBox(height: 8),
+
+                                  Customtxtfeild(
+                                    label: '3.3 Semi-critical (Nos)',
+                                    controller:
+                                        schemeProvider.semiCriticalController,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                  const SizedBox(height: 12),
+
+                                  // 4. Groundwater contamination analysis? (Yes/No)
+                                  Customradiobttn(
+                                    question:
+                                        '4. In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option — treating the contaminated groundwater or switching to a surface water source?',
+                                    options:
+                                        schemeProvider.yesNoMap.keys.toList(),
+                                    selectedOption:
+                                        schemeProvider.selectedValueQ3,
+                                    onChanged: (val) {
+                                      schemeProvider.selectedValueQ3 = val;
+                                      print(
+                                          'val----- ${schemeProvider.selectedValueQ3Id}');
+                                    },
+                                  ),
+
+                                  // 5. Water allocation from State WRD / Irrigation Department (text input)
+                                  Customtxtfeild(
+                                    label:
+                                        '5. Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose',
+                                    controller:
+                                        schemeProvider.waterAllocationController,
+                                    keyboardType: TextInputType.number,
+                                  ),
+
+                                  // Below 10% part Start
+
+                                  Visibility(
+                                    visible: mode == ProjectMode.below10,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 10,
                                         ),
-                                      ),
-                                      onPressed: () async {
-                                        LoaderUtils.showLoadingWithMessage(
-                                            context,
-                                            isLoading: schemeProvider.isLoading,
-                                            message: "Saving Source...");
-                                        await schemeProvider.saveSourceSurvey(
-                                            userId: _localStorageService.getInt(
-                                                AppConstants.prefUserId)!,
-                                            stateId: schemeProvider.stateId!,
-                                            schemeId: schemeProvider.schemeId!,
-                                            isRecommendShiftToSurface: schemeProvider
-                                                .selectedValueQ1Id,
-                                            studyAccessGroundBeforeSurface: schemeProvider
-                                                .selectedValueQ2Id,
-                                            safeZoneVillages: int.parse(schemeProvider
-                                                .safeController.text),
-                                            criticalZoneVillages: int.parse(
-                                                schemeProvider
-                                                    .criticalController.text),
-                                            semiCriticalZoneVillages: int.parse(
-                                                schemeProvider
-                                                    .semiCriticalController
-                                                    .text),
-                                            groundWaterAnalysisConducted:
-                                                schemeProvider.selectedValueQ3Id,
-                                            waterAllocationFromWRD: int.parse(schemeProvider.waterAllocationController.text),
-                                            alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text,
-                                            repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text,
-                                            modeType: mode.modeValue);
+                                        Customtxtfeild(
+                                          label:
+                                              '6.	Whether all representatives of source finding committee such as State WRD/ID, State level offices of CGWB etc. were consulted for making the recommendation or it was a PHED level exercise through Dept. Level hydrogeologist only? Provide details',
+                                          controller: schemeProvider
+                                              .sourceFindingRepresentativesConsulted_Controller,
+                                          keyboardType: TextInputType.text,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Customtxtfeild(
+                                          label:
+                                              '7.	What were the other cost-effective alternative sources available to provide the piped water supply in the area? Provide details',
+                                          controller: schemeProvider
+                                              .alternativeSourcesAvailable_Controller,
+                                          keyboardType: TextInputType.text,
+                                        ),
+                                        const SizedBox(height: 8),
+                                      ],
+                                    ),
+                                  ),
 
-                                        if (schemeProvider.status!) {
-                                          ToastHelper.showToastMessage(
-                                              schemeProvider.message!,
-                                              backgroundColor: Colors.green);
-                                          Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (_) =>
-                                                    SchemePlanningScreen()),
-                                          );
-                                        } else {
-                                          ToastHelper.showToastMessage(
-                                              schemeProvider.message!,
-                                              backgroundColor: Colors.red);
-                                        }
-                                      },
-                                      child: Text(
-                                        "SAVE & NEXT",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
+                                  // pass this additional value when api available
+                                  /*
+                                 schemeProvider.sourceFindingRepresentativesConsulted_Controller.text
+                                  schemeProvider.alternativeSourcesAvailable_Controller.text*/
+
+                                  // Below 10% part End
+
+                                  const SizedBox(height: 15),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: SizedBox(
+                                      height: 35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xffb0D6EFD),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Adjust the radius as needed
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          LoaderUtils.showLoadingWithMessage(
+                                              context,
+                                              isLoading: schemeProvider.isLoading,
+                                              message: "Saving Source...");
+                                          await schemeProvider.saveSourceSurvey(
+                                              userId: _localStorageService.getInt(
+                                                  AppConstants.prefUserId)!,
+                                              stateId: schemeProvider.stateId!,
+                                              schemeId: schemeProvider.schemeId!,
+                                              isRecommendShiftToSurface: schemeProvider
+                                                  .selectedValueQ1Id,
+                                              studyAccessGroundBeforeSurface: schemeProvider
+                                                  .selectedValueQ2Id,
+                                              safeZoneVillages: int.parse(schemeProvider
+                                                  .safeController.text),
+                                              criticalZoneVillages: int.parse(
+                                                  schemeProvider
+                                                      .criticalController.text),
+                                              semiCriticalZoneVillages: int.parse(schemeProvider.semiCriticalController.text),
+                                              groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id,
+                                              waterAllocationFromWRD: int.parse(schemeProvider.waterAllocationController.text),
+                                              alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text,
+                                              repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text,
+                                              modeType: mode.modeValue);
+
+                                          if (schemeProvider.status!) {
+                                            ToastHelper.showToastMessage(
+                                                schemeProvider.message!,
+                                                backgroundColor: Colors.green);
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      SchemePlanningScreen()),
+                                            );
+                                          } else {
+                                            ToastHelper.showToastMessage(
+                                                schemeProvider.message!,
+                                                backgroundColor: Colors.red);
+                                          }
+                                        },
+                                        child: Text(
+                                          "SAVE & NEXT",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )),
-                      )
-                    ],
+                                ],
+                              )),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          )),
+                );
+              },
+            )),
+      ),
     );
   }
 }
