@@ -6,6 +6,8 @@ class QualityAssuranceCommissioning {
   final int isCommissioningProtocolFollowed;
   final int duringCommissioningSchemesPresent;
   final int hasDistrictUndertakenAssessmentInspectionAgencies;
+  final int modeType;
+  final String observationQualityAssurance;
 
   QualityAssuranceCommissioning({
     required this.userid,
@@ -15,6 +17,8 @@ class QualityAssuranceCommissioning {
     required this.isCommissioningProtocolFollowed,
     required this.duringCommissioningSchemesPresent,
     required this.hasDistrictUndertakenAssessmentInspectionAgencies,
+    required this.modeType,
+    required this.observationQualityAssurance
   });
 
   factory QualityAssuranceCommissioning.fromJson(Map<String, dynamic> json) {
@@ -28,6 +32,8 @@ class QualityAssuranceCommissioning {
       duringCommissioningSchemesPresent: json['During_commissioning_schemes_present'],
       hasDistrictUndertakenAssessmentInspectionAgencies:
       json['Has_district_undertaken_assessment_inspection_agencies'],
+      modeType:json['phy_status'],
+      observationQualityAssurance:json['Obseration_Quality_Assurance_Commissioning']
     );
   }
 }

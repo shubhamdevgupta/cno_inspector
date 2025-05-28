@@ -187,7 +187,15 @@ class DWSMRepositoy {
       rethrow;
     }
   }
-
+/*  {
+  "Who_authorized_inspect_measure_field_inspection": 6,
+  "Is_commissioning_protocol_followed": 0,
+  "During_commissioning_schemes_present": 6,
+  "Has_district_undertaken_assessment_inspection_agencies": 3,
+  "Has_distric_hired_third_party_inspection_agencies_JJM_schemes": -1,
+  "phy_status": 0,
+  "Obseration_Quality_Assurance_Commissioning": ""
+  }*/
   Future<BaseResponse> saveQualityAssurance({
     required int userId,
     required int stateId,
@@ -198,6 +206,7 @@ class DWSMRepositoy {
     required int districtAssessmentAgencies,
     required int districtHiredAgencies,
     required int modeType,
+    required String observationQualityAssurance
   }) async {
     try {
       final response = await _apiService.post(
@@ -211,7 +220,8 @@ class DWSMRepositoy {
           "During_commissioning_schemes_present": schemesPresentDuringCommissioning,
           "Has_district_undertaken_assessment_inspection_agencies": districtAssessmentAgencies,
           "Has_distric_hired_third_party_inspection_agencies_JJM_schemes":districtHiredAgencies,
-          "phy_status":modeType
+          "phy_status":modeType,
+          "Obseration_Quality_Assurance_Commissioning":observationQualityAssurance
         }),
       );
       return BaseResponse.fromJson(response);
@@ -227,7 +237,7 @@ class DWSMRepositoy {
     required int grievanceMechanismAvailable,
     required int howGrievancesRegistered,
     required int complaintsReceived,
-    required int typeOfComplaints,
+    required List<int> typeOfComplaints,
     required String otherComplaints,
     required int resolutionTime,
     required int actionTakenByDepartment,
@@ -243,7 +253,7 @@ class DWSMRepositoy {
           "Grievance_Redressal_mechanism_available": grievanceMechanismAvailable,
           "How_grievances_registered_villagers": howGrievancesRegistered,
           "Are_complaints_received_public_regarding_schemes": complaintsReceived,
-          "yes_type_complaints": typeOfComplaints,//todo checkbox
+          "yes_type_complaint": typeOfComplaints,
           "yes_type_complaints_others": otherComplaints,
           "yes_type_complaints_others_What_average_time_resolution": resolutionTime,
           "yes_type_complaints_others_Action_taken_department": actionTakenByDepartment,

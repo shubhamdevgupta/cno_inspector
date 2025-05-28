@@ -176,7 +176,7 @@ class _PartcBelowTechnocommercialviabilityP
                                       ),
                                       Customtxtfeild(
                                         label:
-                                            "4. Expected skilled manpower required for operations of the schemes?:?",
+                                            "4. Expected skilled manpower required for operations of the schemes?",
                                         controller: dwsmProvider
                                             .requiredOperationController,
                                       ),

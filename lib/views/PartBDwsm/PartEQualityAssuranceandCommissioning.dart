@@ -8,6 +8,7 @@ import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'DWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
@@ -222,7 +223,12 @@ class _PartEQualityAssuranceCommissioning
                                             ),
                                           ],
                                         ),
-                                      )
+                                      ),
+                                      Customtxtfeild(
+                                        label: "5. Observation for Quality Assurance and Commissioning.",
+                                        controller: dwsmProvider
+                                            .obserVationQualityAssurance,
+                                      ),
                                     ],
                                   ),
 
@@ -264,7 +270,9 @@ class _PartEQualityAssuranceCommissioning
                                                   dwsmProvider
                                                       .thirdPartyAssessmentID,
                                               districtHiredAgencies: dwsmProvider.thirdPartyInspectionAgencyID,
-                                              modeType: modeType!.modeValue);
+                                              modeType: modeType!.modeValue,
+                                            observationQualityAssurance: dwsmProvider.obserVationQualityAssurance.text
+                                          );
 
                                           if (dwsmProvider.status!) {
                                             ToastHelper.showToastMessage(

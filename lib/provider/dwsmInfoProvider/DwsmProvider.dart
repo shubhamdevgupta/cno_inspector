@@ -753,7 +753,8 @@ class Dwsmprovider extends ChangeNotifier {
         print('waterFeeController: ${waterFeeController.text}');
 
         feeBasis = getRadiobuttonData(
-            operationMaintenanceData.first.isWaterFeeChargedFromHouseholds, feeBasisMap);
+            operationMaintenanceData.first.isWaterFeeChargedFromHouseholds,
+            feeBasisMap);
         print('feeBasis: $feeBasis');
 
         userFeePercentController.text = operationMaintenanceData
@@ -761,8 +762,8 @@ class Dwsmprovider extends ChangeNotifier {
             .toString();
         print('userFeePercentController: ${userFeePercentController.text}');
 
-        observationOperationMaintencen.text = operationMaintenanceData.first.obserVationOperationMaintenance;
-
+        observationOperationMaintencen.text =
+            operationMaintenanceData.first.obserVationOperationMaintenance;
       } else {
         _message = response.message;
       }
@@ -877,6 +878,7 @@ class Dwsmprovider extends ChangeNotifier {
   int get thirdPartyInspectionAgencyID =>
       yesNoMap[_thirdPartyInspectionAgency] ?? -1;
 
+  TextEditingController obserVationQualityAssurance = TextEditingController();
   Future<void> saveQualityAssurance({
     required int userId,
     required int stateId,
@@ -887,6 +889,7 @@ class Dwsmprovider extends ChangeNotifier {
     required int districtAssessmentAgencies,
     required int districtHiredAgencies,
     required int modeType,
+    required String observationQualityAssurance,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -901,7 +904,8 @@ class Dwsmprovider extends ChangeNotifier {
           schemesPresentDuringCommissioning: schemesPresentDuringCommissioning,
           districtAssessmentAgencies: districtAssessmentAgencies,
           districtHiredAgencies: districtHiredAgencies,
-          modeType: modeType);
+          modeType: modeType,
+          observationQualityAssurance: observationQualityAssurance);
 
       _message = response.message;
       _status = response.status;
@@ -951,6 +955,8 @@ class Dwsmprovider extends ChangeNotifier {
                 .first.hasDistrictUndertakenAssessmentInspectionAgencies,
             thirdPartyAssessmentMap);
         print('thirdPartyAssessment: $thirdPartyAssessment');
+
+        obserVationQualityAssurance.text = qualityAssuranceData.first.observationQualityAssurance;
       } else {
         _message = response.message;
       }
@@ -1030,16 +1036,19 @@ class Dwsmprovider extends ChangeNotifier {
     "Others": 6,
   };
 
-  String? _complaintTypes;
+  List<String> _complaintTypes = [];
 
-  String? get complaintTypes => _complaintTypes;
+  List<String> get complaintTypes => _complaintTypes;
 
-  set complaintTypes(String? value) {
+  set complaintTypes(List<String> value) {
     _complaintTypes = value;
     notifyListeners();
   }
 
-  int get complaintTypesID => complaintTypeMap[_complaintTypes] ?? -1;
+  List<int> get complaintTypesID =>
+      _complaintTypes.map((type) => complaintTypeMap[type] ?? -1).toList();
+
+ // List<int> get complaintTypesID => complaintTypeMap.map((e) => complaintTypeMap[e] ?? -1).toList();
 
   TextEditingController avgResolutionTimeController = TextEditingController();
   TextEditingController actionTakenController = TextEditingController();
@@ -1051,7 +1060,7 @@ class Dwsmprovider extends ChangeNotifier {
     required int grievanceMechanismAvailable,
     required int howGrievancesRegistered,
     required int complaintsReceived,
-    required int typeOfComplaints,
+    required List<int> typeOfComplaints,
     required String otherComplaints,
     required int resolutionTime,
     required int actionTakenByDepartment,
@@ -1117,8 +1126,8 @@ class Dwsmprovider extends ChangeNotifier {
             yesNoMap);
         print('complaintsReceived: $complaintsReceived');
 
-        complaintTypes = getRadiobuttonData(
-            grievanceData.first.yesTypeComplaints, complaintTypeMap);
+       /* complaintTypes = getRadiobuttonData(
+            grievanceData.first.yesTypeComplaints, complaintTypeMap);*/
         print('complaintTypes: $complaintTypes');
 
         avgResolutionTimeController.text = grievanceData
@@ -1145,7 +1154,7 @@ class Dwsmprovider extends ChangeNotifier {
     grievanceMechanismAvailable = null;
     grievanceRegistrationMethods = null;
     complaintsReceived = null;
-    complaintTypes = null;
+    complaintTypes.clear();
 
     avgResolutionTimeController.clear();
     actionTakenController.clear();

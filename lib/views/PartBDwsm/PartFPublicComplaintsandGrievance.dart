@@ -8,6 +8,7 @@ import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'DWSMCommonClass.dart';
@@ -179,17 +180,15 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                   if (dwsmProvider.complaintsReceived ==
                                       "Yes") ...[
                                     const SizedBox(height: 10),
-                                    Customradiobttn(
-                                      question:
-                                          "3.1 If yes, type of complaints (tick all applicable):",
-                                      options: dwsmProvider
-                                          .complaintTypeMap.keys
-                                          .toList(),
-                                      selectedOption:
-                                          dwsmProvider.complaintTypes,
-                                      onChanged: (values) =>
-                                          dwsmProvider.complaintTypes = values,
+                                    CustomMultiSelectChipQuestion(
+                                      question: '3.1 If yes, type of complaints (tick all applicable):',
+                                      options: dwsmProvider.complaintTypeMap.keys.toList(),
+                                      selectedValues: dwsmProvider.complaintTypes,
+                                      onSelectionChanged: (val) {
+                                        dwsmProvider.complaintTypes = val;
+                                      },
                                     ),
+
                                     const SizedBox(height: 10),
                                     Customtxtfeild(
                                       label:
@@ -228,6 +227,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                               isLoading: dwsmProvider.isLoading,
                                               message:
                                                   "Saving Public Complaints and Grievance Redressal");
+                                          print('------------------- ${dwsmProvider.complaintTypesID}');
                                           await dwsmProvider.saveGrievanceRedressal(
                                               userId:
                                                   localStorageService.getInt(
@@ -245,12 +245,9 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                               typeOfComplaints:
                                                   dwsmProvider.complaintTypesID,
                                               otherComplaints: '',
-                                              resolutionTime: int.parse(
-                                                  dwsmProvider
-                                                      .avgResolutionTimeController
-                                                      .text),
+                                              resolutionTime: dwsmProvider.avgResolutionTimeController.text.isEmpty ? 0:int.parse(dwsmProvider.avgResolutionTimeController.text),
                                               actionTakenByDepartment:
-                                                  int.parse(dwsmProvider
+                                              dwsmProvider.actionTakenController.text.isEmpty ? 0:  int.parse(dwsmProvider
                                                       .actionTakenController
                                                       .text),
                                                 modeType: modeType!.modeValue
