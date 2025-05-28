@@ -311,7 +311,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   // Get mapped ID
-  int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? -1;
+  int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? 0;
 
   // question 2222222222222222
 
@@ -461,6 +461,7 @@ class Vwscprovider extends ChangeNotifier {
 
   TextEditingController householdPercentageController = TextEditingController();
   TextEditingController reasonsController = TextEditingController();
+  TextEditingController PartAVWSCuserObservationController = TextEditingController();
   // below 10%  end
 
   Future<void> saveVwscWaterSupply({
@@ -474,7 +475,7 @@ class Vwscprovider extends ChangeNotifier {
     required int tailEndWaterReach,
     required int schemeOperationalStatus,
     required List<int> pwsReachInstitutions,
-    required int createdBy,
+
 
     // New Parameters
     required int phyStatus,
@@ -502,7 +503,7 @@ class Vwscprovider extends ChangeNotifier {
         tailEndWaterReach: tailEndWaterReach,
         schemeOperationalStatus: schemeOperationalStatus,
         pwsReachInstitutions: pwsReachInstitutions,
-        createdBy: createdBy,
+
 
         // Pass new parameters
         phyStatus: phyStatus,
@@ -531,13 +532,13 @@ class Vwscprovider extends ChangeNotifier {
   List<WaterSupplyFunctionality> waterSupplyData = [];
 
   Future<void> fetchWaterSupply(
-      String stateId, String villageId, String userId) async {
+      String stateId, String villageId, String userId, int phystatus) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _fetchvwscrepo.fetchWaterSupplyFunctionality(
-          stateId, villageId, userId);
+          stateId, villageId, userId, phystatus);
       if (response.status) {
         waterSupplyData = response.result;
 
@@ -552,21 +553,48 @@ class Vwscprovider extends ChangeNotifier {
             getRadiobuttonData(waterSupplyData.first.isAdequateWaterQuantityReachToRemote,yesNoMap);
         print('selectedPvtgGroups: $selectedPvtgGroups');
 
-        reasonRemoteGroupsController.text =
-            waterSupplyData.first.isAdequateWaterQuantityReachToRemoteReason;
+        reasonRemoteGroupsController.text = waterSupplyData.first.isAdequateWaterQuantityReachToRemoteReason;
         print('reasonRemoteGroupsController: ${reasonRemoteGroupsController.text}');
 
-        selectedTailEnd =
-            getRadiobuttonData(waterSupplyData.first.whetherWaterReachToTailEnd,tailEndMap);
+        selectedTailEnd = getRadiobuttonData(waterSupplyData.first.whetherWaterReachToTailEnd,tailEndMap);
         print('selectedTailEnd: $selectedTailEnd');
 
-        selectedschemeStatus =
-            getRadiobuttonData(waterSupplyData.first.schemeOperationalStatusCommissioning,schemeStatusMap);
+        selectedschemeStatus = getRadiobuttonData(waterSupplyData.first.schemeOperationalStatusCommissioning,schemeStatusMap);
         print('selectedschemeStatus: $selectedschemeStatus');
 
-        selectedinstitutions =
-            getCheckBoxData(waterSupplyData.first.whetherPwsReachAllSchoolAnganwadiPhc,institutionsMap);
+        selectedinstitutions = getCheckBoxData(waterSupplyData.first.whetherPwsReachAllSchoolAnganwadiPhc,institutionsMap);
         print('selectedinstitutions: $selectedinstitutions');
+
+
+        //New Field
+
+
+
+        selectedOption1_belowPartA = getRadiobuttonData(waterSupplyData.first.isThereAnyPipedWaterSupplySchemeInTheVillage,yesNoMap);
+        print('selectedOption1_belowPartA: $selectedOption1_belowPartA');
+
+        selectedOption2_belowPartA = getRadiobuttonData(waterSupplyData.first.whatIsTheTypeOfSchemePresentlyCommissioned,vwscBelowPartAQues2Map);
+        print('selectedOption2_belowPartA: $selectedOption2_belowPartA');
+
+        householdPercentageController.text = waterSupplyData.first.ifSchemeIsCommissionedHowManyHouseholdsAreBeingBenefitted;
+        print('householdPercentageController: ${householdPercentageController.text}');
+
+        selectedOption3_belowPartA = getRadiobuttonData(waterSupplyData.first.whatIsThePresentStatusOfWaterSupplySchemes,vwscBelowPartAQues3Map);
+        print('selectedOption3_belowPartA: $selectedOption3_belowPartA');
+
+
+        selectedOption5_belowPartA = getRadiobuttonData(waterSupplyData.first.remoteGroupsPlanned,yesNoMap);
+        print('selectedOption5_belowPartA: $selectedOption5_belowPartA');
+
+        reasonsController.text = waterSupplyData.first.remoteGroupsPlannedDetails;
+        print('reasonsController: ${reasonsController.text}');
+
+        PartAVWSCuserObservationController.text = waterSupplyData.first.remoteGroupsPlannedDetails;
+        print('PartAVWSCuserObservationController: ${PartAVWSCuserObservationController.text}');
+
+
+
+
 
         notifyListeners();
         _message = '';
@@ -612,6 +640,7 @@ class Vwscprovider extends ChangeNotifier {
     selectedOption6_belowPartA = null;
     householdPercentageController.clear();
     reasonsController.clear();
+    PartAVWSCuserObservationController.clear();
 
     notifyListeners();
   }
@@ -624,12 +653,12 @@ class Vwscprovider extends ChangeNotifier {
 
   List<CommunityInvolvement> communityInvolvementData = [];
 
-  Future<void> fetchCommunityInvolvement(String stateId, String villageId, String userId) async {
+  Future<void> fetchCommunityInvolvement(String stateId, String villageId, String userId, int phystatus) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchvwscrepo.fetchCommunityInvolvement(stateId, villageId, userId);
+      final response = await _fetchvwscrepo.fetchCommunityInvolvement(stateId, villageId, userId, phystatus);
       if (response.status) {
         communityInvolvementData = response.result;
         selectedVWSCFormed = getRadiobuttonData(communityInvolvementData.first.isPaniSamitiFormed,yesNoMap);
@@ -652,6 +681,8 @@ class Vwscprovider extends ChangeNotifier {
         FrequencyController.text = communityInvolvementData.first.meetingHeldYesFrequency;
         print('FrequencyController: ${FrequencyController.text}');
 
+
+
         selectedVWSCRecordsAvailable = getRadiobuttonData(communityInvolvementData.first.isVwscMeetingRecordAvl,yesNoMap);
         print('selectedVWSCMeetingConducted: $selectedVWSCRecordsAvailable');
 
@@ -669,6 +700,9 @@ class Vwscprovider extends ChangeNotifier {
 
         selectedWaterQualitySatisfaction = getRadiobuttonData(communityInvolvementData.first.communitySatisfactionWithWq,WaterQualitySatisfaction);
         print('selectedWaterQualitySatisfaction: $selectedWaterQualitySatisfaction');
+
+        PartBVWSCuserObservationController.text = communityInvolvementData.first.meetingHeldYesFrequency;
+        print('PartBVWSCuserObservationController: ${PartBVWSCuserObservationController.text}');
 
 
         communityInvolvementData = response.result;
@@ -723,6 +757,7 @@ class Vwscprovider extends ChangeNotifier {
     required int communityAwareness,
     required int communitySatisfactionWithWq,
     required int createdBy,
+    required String observationCommunityInvolvementFunctionality
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -745,6 +780,8 @@ class Vwscprovider extends ChangeNotifier {
         communityAwareness: communityAwareness,
         communitySatisfactionWithWq: communitySatisfactionWithWq,
         createdBy: createdBy,
+        ObservationCommunityInvolvementFunctionality: observationCommunityInvolvementFunctionality
+
       );
       _status = response.status;
       _message = response.message;
@@ -761,12 +798,12 @@ class Vwscprovider extends ChangeNotifier {
   /// get api for que 33
   List<CommunityFeedback> communityFeedbackData = [];
 
-  Future<void> fetchCommunityFeedback(String stateId, String villageId, String userId) async {
+  Future<void> fetchCommunityFeedback(String stateId, String villageId, String userId, int phystatus) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchvwscrepo.fetchCommunityFeedback(stateId, villageId, userId);
+      final response = await _fetchvwscrepo.fetchCommunityFeedback(stateId, villageId, userId, phystatus);
       if (response.status) {
 
         communityFeedbackData = response.result;
@@ -781,6 +818,9 @@ class Vwscprovider extends ChangeNotifier {
 
         SetSelectedWhereComplaintAddress = getRadiobuttonData(communityFeedbackData.first.isComplaintAddressed,whereComplaintAddressOptMap);
      /*   print('selectedComplaintByCommunity: $SetSelectedWhereComplaintAddress');*/
+
+        PartCVWSCuserObservationController.text = communityFeedbackData.first.observationCommunityFeedbackQualityConstruction;
+        print('PartCVWSCuserObservationController: ${PartCVWSCuserObservationController.text}');
 
 
       } else {
@@ -798,12 +838,14 @@ class Vwscprovider extends ChangeNotifier {
     selectedComplaintByCommunity = null;
     selectedTypeOfComplaint = [];
     SetSelectedWhereComplaintAddress = null;
+    PartCVWSCuserObservationController.clear();
     notifyListeners();
   }
 
 
   //33
 
+  /// Function in the Provider/ViewModel to handle the community feedback save action.
   Future<void> saveCommunityFeedback({
     required int userId,
     required int stateId,
@@ -820,6 +862,8 @@ class Vwscprovider extends ChangeNotifier {
     notifyListeners();
 
     try {
+
+      /// Call the repository function with the new variable.
       final response = await _vwscRepository.saveCommunityFeedback(
         userId: userId,
         stateId: stateId,
@@ -914,15 +958,18 @@ class Vwscprovider extends ChangeNotifier {
   int get selectedFRCLevelId => frcLevelMap[_selectedFRCLevel] ?? -1;
 
 
+  TextEditingController PartDVWSCuserObservationController = TextEditingController();
+
+
   //44
   List<WaterQualityMonitoring> waterQualityData = [];
 
-  Future<void> fetchWaterQuality(String stateId, String villageId, String userId) async {
+  Future<void> fetchWaterQuality(String stateId, String villageId, String userId, int phystatus) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchvwscrepo.fetchWaterQualityMonitoring(stateId, villageId, userId);
+      final response = await _fetchvwscrepo.fetchWaterQualityMonitoring(stateId, villageId, userId, phystatus );
       if (response.status) {
         waterQualityData = response.result;
         _message = '';
@@ -949,6 +996,10 @@ class Vwscprovider extends ChangeNotifier {
         selectedFRCLevel = getRadiobuttonData(waterQualityData.first.frcAvlAtEnd,frcLevelMap);
         print('selectedFRCLevel: $selectedFRCLevel');
 
+
+        PartDVWSCuserObservationController.text = waterQualityData.first.observationWaterQualityMonitoring;
+        print('PartDVWSCuserObservationController: ${PartDVWSCuserObservationController.text}');
+
       } else {
         _message = response.message;
       }
@@ -971,6 +1022,7 @@ class Vwscprovider extends ChangeNotifier {
     // Clear frequency text field
     womenTrainedController.clear();
     testerNameController.clear();
+    PartDVWSCuserObservationController.clear();
 
     notifyListeners();
   }
@@ -990,7 +1042,7 @@ class Vwscprovider extends ChangeNotifier {
     required int frcAvailableAtEnd,
     required int phyStatus,
     required String observationWaterQualityMonitoring,
-    required int createdBy,
+
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1008,7 +1060,7 @@ class Vwscprovider extends ChangeNotifier {
         frcAvailableAtEnd: frcAvailableAtEnd,
         phyStatus: phyStatus,
         observationWaterQualityMonitoring: observationWaterQualityMonitoring,
-        createdBy: createdBy,
+
       );
 
       _status = response.status;
@@ -1078,16 +1130,19 @@ class Vwscprovider extends ChangeNotifier {
   int get selectedTurnAroundTimeId =>
       turnAroundTimeMap[_selectedTurnAroundTime] ?? -1;
 
+  TextEditingController PartEVWSCuserObservationController = TextEditingController();
+
+
   //5
 
   List<VwscGrievance> vwscGrievanceData = [];
 
-  Future<void> fetchVwscGrievance(String stateId, String villageId, String userId) async {
+  Future<void> fetchVwscGrievance(String stateId, String villageId, String userId, int phystatus) async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final response = await _fetchvwscrepo.fetchVwscGrievance(stateId, villageId, userId);
+      final response = await _fetchvwscrepo.fetchVwscGrievance(stateId, villageId, userId, phystatus);
       if (response.status) {
         vwscGrievanceData = response.result;
         _message = '';
@@ -1102,6 +1157,9 @@ class Vwscprovider extends ChangeNotifier {
 
         selectedTurnAroundTime = getRadiobuttonData(vwscGrievanceData.first.grievanceTurnAroundTime,turnAroundTimeMap);
         print('selectedTurnAroundTime: $selectedTurnAroundTime');
+
+        PartEVWSCuserObservationController.text = vwscGrievanceData.first.observationGrievanceRedressal;
+        print('PartEVWSCuserObservationController: ${PartEVWSCuserObservationController.text}');
 
       } else {
         _message = response.message;
@@ -1118,6 +1176,7 @@ class Vwscprovider extends ChangeNotifier {
     selectedGrievanceMechanism = null;
     grievanceRegistrationMethods = [];
     selectedTurnAroundTime = null;
+    PartEVWSCuserObservationController.clear();
 
 
 
@@ -1136,7 +1195,7 @@ class Vwscprovider extends ChangeNotifier {
     required List<int> registrationTypes,
     required String observationGrievanceRedressal, // NEW
     required int phyStatus, // NEW
-    required int createdBy,
+
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1151,7 +1210,7 @@ class Vwscprovider extends ChangeNotifier {
         registrationTypes: registrationTypes,
         observationGrievanceRedressal: observationGrievanceRedressal, // NEW
         phyStatus: phyStatus, // NEW
-        createdBy: createdBy,
+
       );
 
       _status = response.status;
@@ -1212,6 +1271,10 @@ class Vwscprovider extends ChangeNotifier {
 
   int get selectedWhereComplaintAddressOptId =>
       whereComplaintAddressOptMap[_selectedWhereComplaintAddressOpt] ?? -1;
+
+
+
+  TextEditingController PartCVWSCuserObservationController = TextEditingController();
 
   ///////////33333333333/////////////
 

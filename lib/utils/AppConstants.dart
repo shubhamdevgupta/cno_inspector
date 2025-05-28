@@ -34,6 +34,8 @@ class AppConstants {
   static const String navigateToSchemeImplementationScreen = '/SchemeImplementationScreen';
   static const String navigateToVisualInspectionScreen = '/VisualInspectionScreen';
 
+  static const String navigateToPartaschemeinfouserobservation = '/Partaschemeinfouserobservation';
+
 
 
 
@@ -51,6 +53,8 @@ class AppConstants {
   static const String navigateToBelowPartCTechnoCommercialViability = '/BelowPartCTechnoCommercialViability';
   static const String navigateToBelowPartAWaterSupplyFunctionality= '/BelowPartAWaterSupplyFunctionality';
 
+  static const String navigateToPartbdwsmuserobservation = '/Partbdwsmuserobservation';
+
 
   ////vwsc
   static const String navigateToDashboardVWSC = '/dashboardVWSC';
@@ -59,6 +63,8 @@ class AppConstants {
   static const String navigateToCommunityFeedbackPartC  = '/dashboardcommunityinvolmentpartC';
   static const String navigateToQulityPartD = '/dashboardqualitypartD';
   static const String navigateToGrievancePartE = '/dashboardgrivenaceE';
+
+  static const String navigateToPartcvwscuserobservation = '/navigateToPartcvwscuserobservation';
 
   ////
   static const String BelowDWSMPartEQ3 = '3. Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?';

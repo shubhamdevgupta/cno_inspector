@@ -14,6 +14,10 @@ class CommunityInvolvement {
   final int omArrangement;
   final int communityAwareness;
   final int communitySatisfactionWithWq;
+  final int createdby;
+  final String? createdip;
+  final int phyStatus;
+  final String observationCommunityInvolvementFunctionality;
 
   CommunityInvolvement({
     required this.userid,
@@ -31,6 +35,10 @@ class CommunityInvolvement {
     required this.omArrangement,
     required this.communityAwareness,
     required this.communitySatisfactionWithWq,
+    required this.createdby,
+    required this.createdip,
+    required this.phyStatus,
+    required this.observationCommunityInvolvementFunctionality,
   });
 
   factory CommunityInvolvement.fromJson(Map<String, dynamic> json) {
@@ -50,6 +58,11 @@ class CommunityInvolvement {
       omArrangement: json['om_arrangement'],
       communityAwareness: json['community_awareness'],
       communitySatisfactionWithWq: json['community_satisfaction_with_wq'],
+      createdby: json['createdby'],
+      createdip: json['createdip'],
+      phyStatus: json['phy_status'],
+      observationCommunityInvolvementFunctionality:
+      json['ObservationCommunity_Involvement_Functionality'],
     );
   }
 }

@@ -394,6 +394,26 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                               },
                             ),
                           ),
+
+                          SizedBox(height: 10,),
+
+                          buildSampleCard(
+                            qnumber: "*",
+                            title: "User Feedback",
+                            color: Colors.redAccent,
+                            onTap: () {
+                              final selectedVillageId =
+                                  dashboardProvider.selectedVwscId;
+                              final stateId =
+                                  dashboardProvider.dashboardList.first.stateId;
+                              Navigator.pushReplacementNamed(
+                                  context, AppConstants.navigateToPartcvwscuserobservation,
+                                  arguments: {
+                                    'villageId': selectedVillageId,
+                                    'stateId': stateId,
+                                  });
+                            },
+                          ),
                         ],
                       )
                   ],

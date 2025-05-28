@@ -8,11 +8,13 @@ import 'package:provider/provider.dart';
 import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/MultiSelectionlist.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
+import 'BelowVWSCCommon.dart';
 import 'CommunityInvolvementPartB.dart';
 import 'DashboardVWSC.dart';
-import 'VWSCCommonClass.dart';
+import 'AboveVWSCCommonClass.dart';
 
 class PartaBelowWatersupply extends StatefulWidget {
   const PartaBelowWatersupply({Key? key}) : super(key: key);
@@ -28,6 +30,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
   void initState() {
     super.initState();
 
+    ProjectMode? ModeType;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args =
       ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
@@ -45,7 +48,8 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
           vwscProvider.setStateId(stateId);
         }
 
-        await vwscProvider.fetchWaterSupply(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString());
+        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+        await vwscProvider.fetchWaterSupply(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),ModeType!.modeValue );
       }
     });
   }
@@ -120,7 +124,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Vwsccommonclass(
+                        Belowvwsccommon(
                           no: 1,
                         ),
                         Card(
@@ -212,7 +216,8 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                 ),
 
                                 // Question 5 - Part 2 (text field for reasons if no)
-                                Customtxtfeild(
+                                if( vwscProvider.selectedOption5_belowPartA == "No" )
+                                  Customtxtfeild(
                                   label: 'If no, please provide the reasons',
                                   controller: vwscProvider.reasonsController,
                                 ),
@@ -228,6 +233,11 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                     vwscProvider.selectedinstitutions = val;
                                   },
                                 ),
+
+                                  CustomObservationField(
+                                    labelText: '* User Observation / Remarks:',
+                                    controller:  vwscProvider.PartAVWSCuserObservationController,
+                                  ),
 
 
 
@@ -258,7 +268,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                             tailEndWaterReach: 0,
                                             schemeOperationalStatus: 0,
                                             pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
-                                            createdBy: _localStorageService.getInt(AppConstants.prefUserId)!,
+
 
                                             // New parameters
                                             phyStatus: mode.modeValue,
@@ -270,7 +280,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                             remoteGroupsPlanned: vwscProvider.selectedOption5_belowPartAID,
                                             remoteGroupsPlannedDetails: vwscProvider.reasonsController.text,
                                             //TODO feedback
-                                            observationWaterSupplyFunctionality: "",
+                                            observationWaterSupplyFunctionality: vwscProvider.PartAVWSCuserObservationController.text,
                                           );
 
 
