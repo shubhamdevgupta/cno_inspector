@@ -45,7 +45,7 @@ class _PartcBelowTechnocommercialviabilityP
         }
          modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
-        dwsmProvider.fetchMonitoringLabData(
+        dwsmProvider.fetchTecnoCommercial(
             stateId.toString(),
             districtid.toString(),
             localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);

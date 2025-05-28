@@ -48,10 +48,6 @@ class _MonitioringQuality extends State<MonitioringQuality> {
             stateId.toString(),
             districtid.toString(),
             localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
-
-        dwsmProvider.fetchTecnoCommercial(stateId.toString(),
-            districtid.toString(),
-            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
     });
   }
