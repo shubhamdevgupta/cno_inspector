@@ -237,7 +237,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                               areMonthlyMeetingsHeld:
                                                   dwsmProvider
                                                       .selectedValueQ1Id,
-                                              numberOfMeetingsLast6Months: dwsmProvider.meetingsHeldController.text.isEmpty ?0:int.parse(dwsmProvider.meetingsHeldController.text),
+                                              numberOfMeetingsLast6Months: int.tryParse(dwsmProvider.meetingsHeldController.text)!,
                                               qualityOfMeeting: dwsmProvider
                                                   .selectedMeetingQualityID,
                                               areCoordinationMeetingsRegular:

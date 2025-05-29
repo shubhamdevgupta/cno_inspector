@@ -214,10 +214,10 @@ class _PartDoperationandmaintenance
 
                                       await dwsmProvider.saveOperationMaintenance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                         isProtocolInPlace: dwsmProvider.handoverProtocolID, percentVillagesWithManpower: double.parse(dwsmProvider.manpowerPercentController.text),
-                                        isWaterFeeCharged: -1, feeAmountPerMonth: int.parse(dwsmProvider.waterFeeController.text),
+                                        isWaterFeeCharged: -1, feeAmountPerMonth: int.tryParse(dwsmProvider.waterFeeController.text)!,
                                         isUniformFee: dwsmProvider.feeBasisID,
                                         obserVationOperationMaintenance: dwsmProvider.observationOperationMaintencen.text,
-                                        percentVillagesFeeCollected: double.parse(dwsmProvider.userFeePercentController.text),modeType: modeType!.modeValue);
+                                        percentVillagesFeeCollected: double.tryParse(dwsmProvider.userFeePercentController.text)!,modeType: modeType!.modeValue);
                                       if (dwsmProvider.status!) {
                                         ToastHelper.showToastMessage(
                                             dwsmProvider.message!,
