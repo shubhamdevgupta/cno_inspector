@@ -8,6 +8,7 @@ import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'DWSMCommonClass.dart';
@@ -173,12 +174,15 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                       controller:
                                           dwsmProvider.testingManagedController,
                                     ),
-                                  Customtxtfeild(
-                                    label:
-                                    "3. Observation on Monitoring Quality and Lab Infastructure",
-                                    controller: dwsmProvider
-                                        .obserVationControllerQuality,
+
+                                  SizedBox(height: 10,),
+                                  CustomObservationField(
+                                    labelText: '* Obseration on "Source Sustainability and Water Conservation":',
+                                    controller:  dwsmProvider.obserVationControllerQuality,
                                   ),
+
+
+
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(

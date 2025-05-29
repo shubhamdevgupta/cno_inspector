@@ -9,6 +9,7 @@ import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
@@ -149,23 +150,29 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                           children: [
             // Above 10 % Start
                             Visibility(
-            visible: modeType==ProjectMode.above10,
+                                 visible: modeType==ProjectMode.above10,
                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       // Q1: Reason(s) for delay
                                       CustomMultiSelectChipQuestion(
-                                        question:
-                                        '1. Reason(s) for delay after award of work:',
+                                        question: '1. What are the reason(s) for delay after award of work Please select that are relatable:',
                                         options: schemeProvider.delayReasonsOptions,
-                                        selectedValues:
-                                        schemeProvider.selectedDelayReasons,
+                                        selectedValues: schemeProvider.selectedDelayReasons,
                                         onSelectionChanged: (val) {
                                           schemeProvider.selectedDelayReasons = val;
-                                          print(
-                                              'SelecteddelayReasons: ${schemeProvider.selectedDelayReasons} : ${schemeProvider.selectedDelayReasonsID}');
+                                          print('SelecteddelayReasons: ${schemeProvider.selectedDelayReasons} : ${schemeProvider.selectedDelayReasonsID}');
                                         },
                                       ),
+
+                                       // Show text field if 'Others' is selected
+                                      if (schemeProvider.selectedDelayReasons.contains("Others"))
+                                        Customtxtfeild(
+                                          label: "In Case of Other please provide details:",
+                                          controller: schemeProvider.PartDothersComplaintController,
+                                          maxLines: 2,
+                                        ),
+
                                       const SizedBox(height: 10),
 
                                       // Q2: Cost overrun
@@ -361,17 +368,22 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       CustomMultiSelectChipQuestion(
-                                        question:
-                                        '1. Reason(s) for delay after award of work:',
+                                        question: '1. What are the reason(s) for delay after award of work Please select that are relatable:',
                                         options: schemeProvider.delayReasonsOptions,
-                                        selectedValues:
-                                        schemeProvider.selectedDelayReasons,
+                                        selectedValues: schemeProvider.selectedDelayReasons,
                                         onSelectionChanged: (val) {
                                           schemeProvider.selectedDelayReasons = val;
-                                          print(
-                                              'SelecteddelayReasons: ${schemeProvider.selectedDelayReasons} : ${schemeProvider.selectedDelayReasonsID}');
+                                          print('SelecteddelayReasons: ${schemeProvider.selectedDelayReasons} : ${schemeProvider.selectedDelayReasonsID}');
                                         },
                                       ),
+
+                                      // Show text field if 'Others' is selected
+                                      if (schemeProvider.selectedDelayReasons.contains("Others"))
+                                        Customtxtfeild(
+                                          label: "In Case of Other please provide details:",
+                                          controller: schemeProvider.PartEothersComplaintController,
+                                          maxLines: 2,
+                                        ),
                                       const SizedBox(height: 10),
 
                                       // Q4: Revised cost approval
@@ -392,8 +404,12 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       ),
 
                                       const Text(
-                                        '5. Whether revised cost has been approved by SLSSC?',
+                                        '3. Whether revised cost has been approved by SLSSC?',
                                         style: TextStyle(fontWeight: FontWeight.w600),
+                                      ),
+
+                                      SizedBox(
+                                        height: 10,
                                       ),
                                       Customradiobttn(
                                         question: '3.1 If yes, increase in cost:',
@@ -508,7 +524,12 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                 )
                             ),
 
+                            SizedBox(height: 10,),
 
+                            CustomObservationField(
+                              labelText: '* Obseration on "Scheme implementation" :',
+                              controller:  schemeProvider.PartDUserObservation,
+                            ),
 
                             const SizedBox(height: 20),
                             Align(
@@ -586,6 +607,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                      concurrent_supervission_scope_value : schemeProvider.selectedId_partE7,
                                      txtpws_status_under_scheme : schemeProvider.below10PartD_ques8_Controller.text,
                                      phy_status :modeType!.modeValue ,
+                                      user_remark: schemeProvider.PartDUserObservation.text
 
 
                                     );
@@ -646,6 +668,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
       ['Road Restoration', 'Nos.', 'Length in Kms', ''],
       ['Solar components', 'Nos.', '-', ''],
       ['Others (DG sets, HH storage)', 'Nos.', '-', ''],
+      ['Levelized cost per FHTC (considering conjunctive scheme, if any)', '-', '-', ''],
     ];
 
     return Table(

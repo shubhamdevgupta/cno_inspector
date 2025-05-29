@@ -12,6 +12,7 @@ import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
@@ -251,6 +252,18 @@ class _RetrofittingAugmentationScreen
                                 )),
 
 
+
+
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+
+
+                                  CustomObservationField(
+                                    labelText: 'Obseration on "Additional information for Retrofitting/Augmentation Schemes only"',
+                                    controller:  schemeProvider.PartCUserObservation,
+                                  ),
+
                                   SizedBox(
                                     height: 20,
                                   ),
@@ -304,7 +317,11 @@ class _RetrofittingAugmentationScreen
                                                   buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
                                                   onPMGati: schemeProvider.onPmGatishaktiID,
                                                   noReason: schemeProvider.reasonController.text.isEmpty ? "" : schemeProvider.reasonController.text,
-                                        phyStatus: modeType!.modeValue);
+                                        phyStatus: modeType!.modeValue,
+                                            user_remark: schemeProvider.PartCUserObservation.text
+
+
+                                          );
                                           if (schemeProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 schemeProvider.message!,

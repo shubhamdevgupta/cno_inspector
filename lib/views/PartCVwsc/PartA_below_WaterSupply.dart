@@ -177,6 +177,8 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                 Customtxtfeild(
                                   label: 'If scheme is commissioned, how many households are being benefitted (%)',
                                   controller: vwscProvider.householdPercentageController,
+                                  keyboardType: TextInputType.number,
+
                                 ),
 
                                 // Question 3
@@ -235,7 +237,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                 ),
 
                                   CustomObservationField(
-                                    labelText: '* User Observation / Remarks:',
+                                    labelText: '* Obseration on "Water Supply Functionality":',
                                     controller:  vwscProvider.PartAVWSCuserObservationController,
                                   ),
 
