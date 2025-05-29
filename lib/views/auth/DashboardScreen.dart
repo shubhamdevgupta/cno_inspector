@@ -28,6 +28,7 @@ class _DashboardscreenState extends State<Dashboardscreen> {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
       await dashboardProvider.fetchDashboardHomeData(0);
+      dashboardProvider.clearDashboardData();
     });
   }
 

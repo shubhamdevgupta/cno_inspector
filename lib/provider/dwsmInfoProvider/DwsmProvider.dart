@@ -18,7 +18,7 @@ class Dwsmprovider extends ChangeNotifier {
   String getRadiobuttonData(int id, Map<String, int> labelMap) {
     return labelMap.entries
         .firstWhere((entry) => entry.value == id,
-            orElse: () => const MapEntry('', 0))
+            orElse: () => const MapEntry('', -1))
         .key;
   }
 
@@ -1226,4 +1226,24 @@ class Dwsmprovider extends ChangeNotifier {
 
   int get GrievanceRedressalmechanismID =>
       yesNoMap[_GrievanceRedressalmechanism] ?? -1;
+
+  clearDwsmProvider(){
+    //clear part a
+    clearCoordinationFields();
+
+    // clear part b
+    clearSustainabilityFields();
+
+    // clear part c
+
+    clearMonitoringFields();
+
+    //clear part d
+    clearfetchOperationMaintenanceData();
+    //clear part e
+    clearfetchQualityAssuranceData();
+    // clear part f
+    clearfetchGrievanceRedressalData();
+  }
+
 }
