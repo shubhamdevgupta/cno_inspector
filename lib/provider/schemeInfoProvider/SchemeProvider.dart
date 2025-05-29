@@ -71,10 +71,10 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? -1;
 
-  final TextEditingController safeController = TextEditingController();
-  final TextEditingController criticalController = TextEditingController();
-  final TextEditingController semiCriticalController = TextEditingController();
-  final TextEditingController waterAllocationController =
+   TextEditingController safeController = TextEditingController();
+   TextEditingController criticalController = TextEditingController();
+   TextEditingController semiCriticalController = TextEditingController();
+   TextEditingController waterAllocationController =
       TextEditingController();
 
   int? _schemeId;
@@ -224,6 +224,19 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  void clearSchemeProvider(){
+
+    clearfetchSourceSurvey();
+    //clear for part b
+    clearfetchSchemePlanning();
+    //clear for part c
+    clearfetchAdditionalInfoRetrofit();
+    //clear for part d
+    clearSchemeImplementationData();
+    //clear for par e
+    clearVisualInspectionAnswers();
+  }
+
   void clearfetchSourceSurvey() {
     // Clear selected radio button values
     selectedValueQ1 = null;
@@ -231,12 +244,12 @@ class Schemeprovider extends ChangeNotifier {
     selectedValueQ3 = null;
 
     // Clear frequency text field
-    safeController.clear();
-    criticalController.clear();
-    semiCriticalController.clear();
-    waterAllocationController.clear();
-    sourceFindingRepresentativesConsulted_Controller.clear();
-    alternativeSourcesAvailable_Controller.clear();
+    safeController.text='';
+    criticalController.text='';
+    semiCriticalController.text='';
+    waterAllocationController.text='';
+    sourceFindingRepresentativesConsulted_Controller.text='';
+    alternativeSourcesAvailable_Controller.text='';
 
     notifyListeners();
   }
@@ -482,9 +495,9 @@ class Schemeprovider extends ChangeNotifier {
     onSpotExcavation = null;
 
     // Clear frequency text field
-    wtpHoursController.clear();
-    ohsrTimeController.clear();
-    mbrTimeController.clear();
+    wtpHoursController.text='0';
+    ohsrTimeController.text='0';
+    mbrTimeController.text='0';
     waterAllocationController.clear();
     rockyPipeMaterialController.clear();
     soilPipeMaterialController.clear();
@@ -707,7 +720,7 @@ class Schemeprovider extends ChangeNotifier {
   List<String> get delayReasonsOptions => delayReasons.keys.toList();
 
   List<int> get selectedDelayReasonsID =>
-      _selectedDelayReasons.map((e) => delayReasons[e] ?? 0).toList();
+      _selectedDelayReasons.map((e) => delayReasons[e] ?? -1).toList();
 
   // Q2: Cost overrun (single choice)
   String? _selectedCostOverrun;
@@ -753,7 +766,7 @@ class Schemeprovider extends ChangeNotifier {
   List<String> get ReasonsOptionsOptions => ReasonsOptions.keys.toList();
 
   List<int> get selectedcostOverrunReasonsID =>
-      _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
+      _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? -1).toList();
 
   // Q4: Revised cost approved before award (yes/no)
   String? _selectedrevisedCostApproved; // Yes / No
@@ -962,7 +975,7 @@ class Schemeprovider extends ChangeNotifier {
   List<String> get revisionReasonsIDOptions => revisionReasonsID.keys.toList();
 
   List<int> get selectedrevisionReasonsID =>
-      _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
+      _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? -1).toList();
 
   // Below 10% content
   final TextEditingController below10PartD_ques8_Controller =
@@ -1829,7 +1842,7 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   List<int> get selectedId_partE10 =>
-      _quesPartE10.map((e) => question10Map[e] ?? 0).toList();
+      _quesPartE10.map((e) => question10Map[e] ?? -1).toList();
 
   final Map<String, int> question11Map = {
     "Rectification/Demolition Done": 1,

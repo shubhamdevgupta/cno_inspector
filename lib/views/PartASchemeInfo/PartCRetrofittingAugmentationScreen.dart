@@ -286,19 +286,19 @@ class _RetrofittingAugmentationScreen
                                                   assessmentMethod: '',
                                                   assessmentReason: '',
                                                   //not found
-                                                  pipelineKms: schemeProvider.transmissionPipelineKmController.text.isEmpty ? 0.00 :double.parse(schemeProvider
+                                                  pipelineKms:double.tryParse(schemeProvider
                                                       .transmissionPipelineKmController
-                                                      .text),
-                                                  distributionKms: schemeProvider.distributionPipelineKmController.text.isEmpty ? 0.00 :double.parse(
+                                                      .text)!,
+                                                  distributionKms: double.tryParse(
                                                       schemeProvider
                                                           .distributionPipelineKmController
-                                                          .text),
-                                                  wtpCapacity: schemeProvider.wtpCapacityMldController.text.isEmpty ? 0.00 :double.parse(schemeProvider
+                                                          .text)!,
+                                                  wtpCapacity: double.tryParse(schemeProvider
                                                       .wtpCapacityMldController
-                                                      .text),
-                                                  structureNos: schemeProvider.storageStructureDetailsController.text.isEmpty ? 0 :int.parse(schemeProvider
+                                                      .text)!,
+                                                  structureNos: int.tryParse(schemeProvider
                                                       .storageStructureDetailsController
-                                                      .text),
+                                                      .text)!,
                                                   structureCapacity: 0.0,
                                                   // not found
                                                   buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,

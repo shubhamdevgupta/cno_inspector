@@ -279,6 +279,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                               isLoading:
                                                   schemeProvider.isLoading,
                                               message: "Saving Source...");
+                                          print('---------------${int.tryParse(schemeProvider.safeController.text)} ');
                                           await schemeProvider.saveSourceSurvey(
                                               userId:
                                                   _localStorageService.getInt(
@@ -292,16 +293,16 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                               studyAccessGroundBeforeSurface:
                                                   schemeProvider
                                                       .selectedValueQ2Id,
-                                              safeZoneVillages: int.parse(
+                                              safeZoneVillages: int.tryParse(
                                                   schemeProvider
-                                                      .safeController.text),
-                                              criticalZoneVillages: int.parse(
+                                                      .safeController.text)!,
+                                              criticalZoneVillages: int.tryParse(
                                                   schemeProvider
-                                                      .criticalController.text),
-                                              semiCriticalZoneVillages: int.parse(
-                                                  schemeProvider.semiCriticalController.text),
+                                                      .criticalController.text)!,
+                                              semiCriticalZoneVillages: int.tryParse(
+                                                  schemeProvider.semiCriticalController.text)!,
                                               groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id,
-                                              waterAllocationFromWRD: int.parse(schemeProvider.waterAllocationController.text),
+                                              waterAllocationFromWRD: int.tryParse(schemeProvider.waterAllocationController.text)!,
                                               alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text,
                                               repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text,
                                               modeType: modeType!.modeValue);

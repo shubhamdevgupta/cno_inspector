@@ -402,12 +402,12 @@ print("STATE : ${schemeProvider.stateId}");
                                                 .googleEarthSurveyID,
                                             numberOfSurveys:
                                                 schemeProvider.noSurveyID,
-                                            designRunningHours: schemeProvider.wtpHoursController.text.isEmpty ? 0 :int.parse(schemeProvider
-                                                .wtpHoursController.text),
-                                            retentionTimeOHT: schemeProvider.ohsrTimeController.text.isEmpty?0:int.parse(schemeProvider
-                                                .ohsrTimeController.text),
-                                            retentionTimeMBR: schemeProvider.mbrTimeController.text.isEmpty ?0:int.parse(schemeProvider
-                                                .mbrTimeController.text),
+                                            designRunningHours: int.tryParse(schemeProvider
+                                                .wtpHoursController.text)!,
+                                            retentionTimeOHT: int.tryParse(schemeProvider
+                                                .ohsrTimeController.text)!,
+                                            retentionTimeMBR: int.tryParse(schemeProvider
+                                                .mbrTimeController.text)!,
                                             terrainRocky: schemeProvider
                                                 .rockyPipeMaterialController.text,
                                             terrainSoil: schemeProvider

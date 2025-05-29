@@ -311,7 +311,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   // Get mapped ID
-  int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? 0;
+  int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? -1;
 
   // question 2222222222222222
   TextEditingController PartBVWSCuserObservationController = TextEditingController();
@@ -613,7 +613,7 @@ class Vwscprovider extends ChangeNotifier {
   String getRadiobuttonData(int id, Map<String, int> labelMap) {
     return labelMap.entries
         .firstWhere((entry) => entry.value == id,
-        orElse: () => const MapEntry('', 0))
+        orElse: () => const MapEntry('', -1))
         .key;
   }
 
@@ -1313,5 +1313,22 @@ class Vwscprovider extends ChangeNotifier {
       .whereType<int>()
       .toList();
 
-//
+  clearVwscProvider(){
+    //part a clear
+    clearValuesforqueA();
+
+    clearValuesforqueA();
+
+    // part b clear
+    clearCommunityInvolvementData();
+
+    // part c clear
+    clearCommunityFeedback();
+
+    // part d clear
+    clearFetchWaterQuality();
+
+    //part e clear
+    clearFetchGrievance();
+  }
 }
