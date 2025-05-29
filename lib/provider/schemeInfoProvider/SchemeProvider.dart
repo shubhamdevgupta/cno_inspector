@@ -713,8 +713,8 @@ class Schemeprovider extends ChangeNotifier {
     "Land/site issues": 5,
     "Weather/natural calamities": 6,
     "Inter-departmental coordination": 7,
-    "Others": 8,
-    "Clearances from Highway/Forest/Railways etc.": 9,
+    "Clearances from Highway/Forest/Railways etc.": 8,
+    "Others": 9,
   };
 
   List<String> get delayReasonsOptions => delayReasons.keys.toList();
@@ -753,13 +753,13 @@ class Schemeprovider extends ChangeNotifier {
 
   final Map<String, int> ReasonsOptions = {
     "Price escalation of materials": 1,
-    "Additional scope of work added post-DPR": 2,
-    "Delay in project execution leading to cost inflation": 3,
-    "Revision in technical design/specifications": 4,
-    "Change in site conditions or unforeseen site challenges": 5,
-    "Contractor claim settlement/additional payments": 6,
-    "Logistic/transportation constraints": 7,
-    "Poor estimation at DPR stage": 8,
+    "Logistic/transportation constraints": 2,
+    "Additional scope of work added post-DPR": 3,
+    "Poor estimation at DPR stage": 4,
+    "Delay in project execution leading to cost inflation": 5,
+    "Revision in technical design/specifications": 6,
+    "Change in site conditions or unforeseen site challenges": 7,
+    "Contractor claim settlement/additional payments": 8,
     "Others": 9,
   };
 
@@ -1825,11 +1825,11 @@ class Schemeprovider extends ChangeNotifier {
   int get selectedId_partE9 => yesNoMap[_quesPartE9] ?? -1;
 
   final Map<String, int> question10Map = {
-    "Pipelines without proper depth": 1,
-    "Pipelines leaking": 2,
+    "Pipelines without proper depth/cushion": 1,
+    "Pipelines damages & leaking ": 2,
     "OHT leaking": 3,
     "Cracks in RCC works": 4,
-    "Water connections in drains": 5,
+    "Water connections passing through drains": 5,
     "Others": 6
   };
   List<String> _quesPartE10 = [];
