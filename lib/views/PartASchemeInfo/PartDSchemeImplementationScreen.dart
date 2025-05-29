@@ -197,6 +197,14 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       ),
                                       const SizedBox(height: 10),
 
+                                      if (schemeProvider.ReasonsOptions.containsValue("Others"))
+                                        Customtxtfeild(
+                                          label: '3.1 Reason',
+                                          controller:
+                                          schemeProvider.reasonController,
+                                          keyboardType: TextInputType.text,
+                                        ),
+
                                       // Q4: Revised cost approval
                                       Customradiobttn(
                                         question:

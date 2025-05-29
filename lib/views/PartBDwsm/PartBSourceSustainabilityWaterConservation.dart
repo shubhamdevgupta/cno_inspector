@@ -227,7 +227,7 @@ ProjectMode? modeType;
                                   ),
                                 ),
                                 if (dwsmProvider.accreditedLabWaterQualityID ==
-                                    2) ...[
+                                    0) ...[
                                   const SizedBox(height: 8),
                                   Customtxtfeild(
                                     label: "If no, how is testing managed:",

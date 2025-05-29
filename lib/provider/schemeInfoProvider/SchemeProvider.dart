@@ -541,6 +541,9 @@ class Schemeprovider extends ChangeNotifier {
   final TextEditingController storageStructureDetailsController =
       TextEditingController();
 
+  final TextEditingController storageStructureInKL =
+      TextEditingController();
+
   // Radio 2: As-built Drawing Availability
   String? _asBuiltDrawingAvailability;
 
@@ -653,10 +656,12 @@ class Schemeprovider extends ChangeNotifier {
         print('wtpCapacityMldController: ${wtpCapacityMldController.text}');
 
         storageStructureDetailsController.text = retrofitInfoData
-            .first.legacyInfrastructureStorageStrCapacityKl
+            .first.legacyInfrastructureStorageStrNos
             .toString();
-        print(
-            'storageStructureDetailsController: ${storageStructureDetailsController.text}');
+        print('storageStructureDetailsController: ${storageStructureDetailsController.text}');
+
+        storageStructureInKL.text= retrofitInfoData.first.legacyInfrastructureStorageStrCapacityKl.toString();
+        print('storageStructureInKL: ${storageStructureInKL.text}');
 
         asBuiltDrawingAvailability = getRadiobuttonData(
             retrofitInfoData.first.buildDrawingInfrAvailable, yesNoMap);
@@ -693,6 +698,7 @@ class Schemeprovider extends ChangeNotifier {
     distributionPipelineKmController.clear();
     wtpCapacityMldController.clear();
     storageStructureDetailsController.clear();
+    storageStructureInKL.clear();
     reasonController.clear();
 
     notifyListeners();
