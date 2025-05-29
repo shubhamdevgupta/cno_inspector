@@ -206,8 +206,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                         '4. In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option — treating the contaminated groundwater or switching to a surface water source?',
                                     options:
                                         schemeProvider.yesNoMap.keys.toList(),
-                                    selectedOption:
-                                        schemeProvider.selectedValueQ3,
+                                    selectedOption: schemeProvider.selectedValueQ3,
                                     onChanged: (val) {
                                       schemeProvider.selectedValueQ3 = val;
                                       print(
@@ -216,12 +215,13 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                   ),
 
                                   // 5. Water allocation from State WRD / Irrigation Department (text input)
-                                  Customtxtfeild(
-                                    label:
-                                        '5. Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose',
-                                    controller: schemeProvider
-                                        .waterAllocationController,
-                                    keyboardType: TextInputType.number,
+                                  Customradiobttn(
+                                    question: '5. Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose',
+                                    options: schemeProvider.yesNoMap.keys.toList(),
+                                    selectedOption: schemeProvider.waterAllocationPurpose,
+                                    onChanged: (val){
+                                      schemeProvider.selectedWaterAllocation = val;
+                                    },
                                   ),
 
                                   // Below 10% part Start
@@ -302,7 +302,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                               semiCriticalZoneVillages: int.tryParse(
                                                   schemeProvider.semiCriticalController.text)!,
                                               groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id,
-                                              waterAllocationFromWRD: int.tryParse(schemeProvider.waterAllocationController.text)!,
+                                              waterAllocationFromWRD: schemeProvider.selectedWaterAllocationId,
                                               alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text,
                                               repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text,
                                               modeType: modeType!.modeValue);

@@ -37,6 +37,7 @@ class Schemeprovider extends ChangeNotifier {
   String? _selectedValueQ1;
   String? _selectedValueQ2;
   String? _selectedValueQ3;
+  String? _waterAllocationPurpose;
 
   // Getter for Q1
   String? get selectedValueQ1 => _selectedValueQ1;
@@ -65,17 +66,24 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? get waterAllocationPurpose => _waterAllocationPurpose;
+
+  set selectedWaterAllocation(String? value){
+    _waterAllocationPurpose = value;
+    notifyListeners();
+  }
+
   int get selectedValueQ3Id => yesNoMap[_selectedValueQ3] ?? -1;
 
   int get selectedValueQ2Id => yesNoMap[_selectedValueQ2] ?? -1;
 
   int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? -1;
 
+  int get selectedWaterAllocationId => yesNoMap[_waterAllocationPurpose]??-1;
+
    TextEditingController safeController = TextEditingController();
    TextEditingController criticalController = TextEditingController();
    TextEditingController semiCriticalController = TextEditingController();
-   TextEditingController waterAllocationController =
-      TextEditingController();
 
   int? _schemeId;
 
@@ -202,9 +210,8 @@ class Schemeprovider extends ChangeNotifier {
             sourceSurveyData.first.incaseGwContAnyAnalysisConduct, yesNoMap);
         print('selectedValueQ3: $selectedValueQ3');
 
-        waterAllocationController.text =
+       selectedWaterAllocation =
             sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw.toString();
-        print('waterAllocationController: ${waterAllocationController.text}');
         //
         sourceFindingRepresentativesConsulted_Controller.text =
             sourceSurveyData.first.represe_of_ource_finding_committee;
@@ -242,12 +249,11 @@ class Schemeprovider extends ChangeNotifier {
     selectedValueQ1 = null;
     selectedValueQ2 = null;
     selectedValueQ3 = null;
-
+    selectedWaterAllocation=null;
     // Clear frequency text field
     safeController.text='';
     criticalController.text='';
     semiCriticalController.text='';
-    waterAllocationController.text='';
     sourceFindingRepresentativesConsulted_Controller.text='';
     alternativeSourcesAvailable_Controller.text='';
 
@@ -498,7 +504,6 @@ class Schemeprovider extends ChangeNotifier {
     wtpHoursController.text='0';
     ohsrTimeController.text='0';
     mbrTimeController.text='0';
-    waterAllocationController.clear();
     rockyPipeMaterialController.clear();
     soilPipeMaterialController.clear();
     deviationReasonController.clear();
