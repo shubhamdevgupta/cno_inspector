@@ -198,8 +198,11 @@ void initState() {
                                   ),
                                 ),
 
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 CustomObservationField(
-                                  labelText: '* User Observation / Remarks:',
+                                  labelText: '* Obseration on "Water Quality Monitoring":',
                                   controller:  vwscProvider.PartDVWSCuserObservationController,
                                 ),
 

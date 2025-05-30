@@ -115,6 +115,11 @@ class Dwsmprovider extends ChangeNotifier {
 
   int get selectedDISHAID => yesNoMap[_selectedDISHA] ?? -1;
 
+
+  TextEditingController PartBUserObservation = TextEditingController();
+  TextEditingController PartCUserObservation = TextEditingController();
+  TextEditingController PartDUserObservation = TextEditingController();
+
   Future<void> saveCoordinationPlanningReview({
     required int userId,
     required int stateId,
@@ -184,10 +189,10 @@ class Dwsmprovider extends ChangeNotifier {
               coordinationData.first
                   .areDistDevelopCoordinatMonitorCommitteeMeetingRegularly,
               yesNoMap);
-          auditInternalObservation.text =
-              coordinationData.first.auditInternalObservation;
-          observationCoordination.text =
-              coordinationData.first.observationCoordination;
+          auditInternalObservation.text = coordinationData.first.auditInternalObservation;
+          observationCoordination.text = coordinationData.first.observationCoordination;
+
+
         }
         // Add any data processing here if needed
         _message = response.message;
@@ -335,6 +340,7 @@ class Dwsmprovider extends ChangeNotifier {
     required int accrediteLabWaterQuality,
     required String accrediteLabWaterQualityNoRemark,
     required int modeType,
+    required String user_remark,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -351,7 +357,9 @@ class Dwsmprovider extends ChangeNotifier {
           areImpactStudiesConducted: areImpactStudiesConducted,
           accrediteLabWaterQuality: accrediteLabWaterQuality,
           accrediteLabWaterQualityNoRemark: accrediteLabWaterQualityNoRemark,
-          modeType: modeType);
+          modeType: modeType,
+          userremark: user_remark
+      );
 
       _message = response.message;
       _status = response.status;
@@ -396,10 +404,10 @@ class Dwsmprovider extends ChangeNotifier {
           rechargeReasonController.text = sustainabilityData
               .first.ifNoLeastOneRechargeStructureGwSourceImplementedReson
               .toString();
-          impactStudies = getRadiobuttonData(
-              sustainabilityData.first
-                  .areAnyImpactStudiesAssessmentsConductedSourceSustainEfforts,
-              impactStudiesMap);
+          impactStudies = getRadiobuttonData(sustainabilityData.first.areAnyImpactStudiesAssessmentsConductedSourceSustainEfforts, impactStudiesMap);
+
+          PartBUserObservation.text = sustainabilityData.first.userremark;
+
         }
         // Process sustainabilityData if needed
         _message = response.message;
@@ -1050,6 +1058,7 @@ class Dwsmprovider extends ChangeNotifier {
 
  // List<int> get complaintTypesID => complaintTypeMap.map((e) => complaintTypeMap[e] ?? -1).toList();
 
+  TextEditingController othersComplaintController = TextEditingController();
   TextEditingController avgResolutionTimeController = TextEditingController();
   TextEditingController actionTakenController = TextEditingController();
 

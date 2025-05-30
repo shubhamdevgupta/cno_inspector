@@ -140,6 +140,7 @@ class Schemeprovider extends ChangeNotifier {
     required String alterNativeSource,
     required String repressFindinCommitte,
     required int modeType,
+    required String userremark
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -158,7 +159,9 @@ class Schemeprovider extends ChangeNotifier {
           waterAllocationFromWRD: waterAllocationFromWRD,
           alterNativeSource: alterNativeSource,
           repressFindinCommitte: repressFindinCommitte,
-          modeType: modeType);
+          modeType: modeType,
+          userremark: userremark
+      );
 
       _message = response.message;
       _status = response.status;
@@ -215,8 +218,8 @@ class Schemeprovider extends ChangeNotifier {
         //
         sourceFindingRepresentativesConsulted_Controller.text =
             sourceSurveyData.first.represe_of_ource_finding_committee;
-        alternativeSourcesAvailable_Controller.text =
-            sourceSurveyData.first.cost_effective_alternative_sources;
+        alternativeSourcesAvailable_Controller.text = sourceSurveyData.first.cost_effective_alternative_sources;
+        PartAUserObservation.text = sourceSurveyData.first.Remarks_Source;
 
         //  Remarks_Source;
       } else {
@@ -256,6 +259,7 @@ class Schemeprovider extends ChangeNotifier {
     semiCriticalController.text='';
     sourceFindingRepresentativesConsulted_Controller.text='';
     alternativeSourcesAvailable_Controller.text='';
+    PartAUserObservation.clear();
 
     notifyListeners();
   }
@@ -369,6 +373,7 @@ class Schemeprovider extends ChangeNotifier {
     required String multiple_schemes_sanctioned_justify_detial,
     required String desgined_conjunctive_detail,
     required int phy_status,
+    required String user_remark,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -394,6 +399,7 @@ class Schemeprovider extends ChangeNotifier {
             multiple_schemes_sanctioned_justify_detial,
         desgined_conjunctive_detail: desgined_conjunctive_detail,
         phy_status: phy_status,
+        userremark: user_remark
       );
 
       _message = response.message;
@@ -476,8 +482,10 @@ class Schemeprovider extends ChangeNotifier {
             schemePlanningData.first.txtwork_awarded_no_physical_progress;
         schemePlanning_Question5Controller.text = schemePlanningData
             .first.txtmultiple_schemes_sanctioned_justify_detial;
-        schemePlanning_Question6Controller.text =
-            schemePlanningData.first.txtdesgined_conjunctive_detail;
+        schemePlanning_Question6Controller.text = schemePlanningData.first.txtdesgined_conjunctive_detail;
+
+        PartBUserObservation.text = schemePlanningData.first.scheme_planning_Remarks;
+
         //       =schemePlanningData.first.scheme_planning_Remarks;
         //
       } else {
@@ -512,6 +520,7 @@ class Schemeprovider extends ChangeNotifier {
     schemePlanning_Question2Controller.clear();
     schemePlanning_Question5Controller.clear();
     schemePlanning_Question6Controller.clear();
+    PartBUserObservation.clear();
 
     notifyListeners();
   }
@@ -586,6 +595,7 @@ class Schemeprovider extends ChangeNotifier {
     required int onPMGati,
     required String noReason,
     required int phyStatus,
+    required String user_remark,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -606,7 +616,10 @@ class Schemeprovider extends ChangeNotifier {
           buildDrawingAvailable: buildDrawingAvailable,
           onPMGati: onPMGati,
           noReason: noReason,
-          phy_status: phyStatus);
+          phy_status: phyStatus,
+          userremark: user_remark
+
+      );
 
       _message = response.message;
       _status = response.status;
@@ -728,10 +741,16 @@ class Schemeprovider extends ChangeNotifier {
     "Others": 9,
   };
 
+
   List<String> get delayReasonsOptions => delayReasons.keys.toList();
 
   List<int> get selectedDelayReasonsID =>
       _selectedDelayReasons.map((e) => delayReasons[e] ?? -1).toList();
+
+
+
+  TextEditingController PartDothersComplaintController = TextEditingController();
+  TextEditingController PartEothersComplaintController = TextEditingController();
 
   // Q2: Cost overrun (single choice)
   String? _selectedCostOverrun;
@@ -859,6 +878,7 @@ class Schemeprovider extends ChangeNotifier {
   int roadRestorationNum;
   int solarComponentNum;
   int otherComponentsNum;
+  int LevelizedcostNum;
 
   Schemeprovider({
     this.intakeTubeWellNum = 0,
@@ -873,6 +893,7 @@ class Schemeprovider extends ChangeNotifier {
     this.roadRestorationNum = 0,
     this.solarComponentNum = 0,
     this.otherComponentsNum = 0,
+    this.LevelizedcostNum = 0,
   }) {
     _initCostControllers();
   }
@@ -891,6 +912,7 @@ class Schemeprovider extends ChangeNotifier {
       'Road Restoration': TextEditingController(),
       'Solar components': TextEditingController(),
       'Others (DG sets, HH storage)': TextEditingController(),
+      'Levelized cost per FHTC (considering conjunctive scheme, if any)': TextEditingController(),
     };
   }
 
@@ -908,8 +930,8 @@ class Schemeprovider extends ChangeNotifier {
         'roadRestorationNum': roadRestorationNum,
         'solarComponentNum': solarComponentNum,
         'otherComponentsNum': otherComponentsNum,
-        'costControllers':
-            costControllers.map((key, value) => MapEntry(key, value.text)),
+        'levelizedcostNum': LevelizedcostNum,
+        'costControllers': costControllers.map((key, value) => MapEntry(key, value.text)),
       };
 
   //Q8.1
@@ -989,8 +1011,15 @@ class Schemeprovider extends ChangeNotifier {
       _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? -1).toList();
 
   // Below 10% content
-  final TextEditingController below10PartD_ques8_Controller =
-      TextEditingController();
+  final TextEditingController below10PartD_ques8_Controller = TextEditingController();
+
+  final TextEditingController PartAUserObservation = TextEditingController();
+  final TextEditingController PartBUserObservation = TextEditingController();
+  final TextEditingController PartCUserObservation = TextEditingController();
+  final TextEditingController PartDUserObservation = TextEditingController();
+  final TextEditingController PartEUserObservation = TextEditingController();
+
+
 
   Future<void> saveSchemeImplementation({
     required int userId,
@@ -1036,6 +1065,7 @@ class Schemeprovider extends ChangeNotifier {
     required int concurrent_supervission_scope_value,
     required String txtpws_status_under_scheme,
     required int phy_status,
+    required String user_remark,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1086,6 +1116,7 @@ class Schemeprovider extends ChangeNotifier {
             concurrent_supervission_scope_value,
         txtpws_status_under_scheme: txtpws_status_under_scheme,
         phy_status: phy_status,
+        userremark: user_remark
       );
 
       _message = response.message;
@@ -1310,7 +1341,9 @@ class Schemeprovider extends ChangeNotifier {
     required int commissioningProofAvailable,
     required List<int> tpiaIssueTypes,
     required int modeType,
-    required int hydroTestingDistribute
+    required int hydroTestingDistribute,
+    required String typeofissuestpiasOther,
+    required String visualInspectionRemarks
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1356,7 +1389,11 @@ class Schemeprovider extends ChangeNotifier {
           commissioningProofAvailable: commissioningProofAvailable,
           tpiaIssueTypes: tpiaIssueTypes,
           modeType: modeType,
-          hydroTestingDistribute: hydroTestingDistribute);
+          hydroTestingDistribute: hydroTestingDistribute,
+        visualInspectionRemarks: visualInspectionRemarks,
+        typeofissuestpiasOther: typeofissuestpiasOther
+
+      );
 
       _message = response.message;
       _status = response.status;
@@ -1510,9 +1547,11 @@ class Schemeprovider extends ChangeNotifier {
     quesPartE17 = getRadiobuttonData(
         schemeVisualInspectionModel.schemeCommissionedAsPerProtocol,
         question17Map);
-    quesPartE18 = getRadiobuttonData(
-        schemeVisualInspectionModel.documentAsProofOfCommissioningAvailable,
-        question18Map);
+    quesPartE18 = getRadiobuttonData(schemeVisualInspectionModel.documentAsProofOfCommissioningAvailable, question18Map);
+
+    PartEUserObservation.text = schemeVisualInspectionModel.typeofissuestpiasOther!;
+    PartEothersComplaintController.text = schemeVisualInspectionModel.visualInspectionRemarks!;
+
   }
 
   void clearVisualInspectionAnswers() {
@@ -1856,8 +1895,8 @@ class Schemeprovider extends ChangeNotifier {
       _quesPartE10.map((e) => question10Map[e] ?? -1).toList();
 
   final Map<String, int> question11Map = {
-    "Rectification/Demolition Done": 1,
-    "Partial Action": 2,
+    "Yes - Rectification/Demolition Done": 1,
+    "Yes - Partial Action": 2,
     "No Action": 3,
     "Not Known": 4
   };
@@ -1873,8 +1912,8 @@ class Schemeprovider extends ChangeNotifier {
   int get selectedId_partE11 => question11Map[_quesPartE11] ?? -1;
 
   final Map<String, int> question12Map = {
-    "Regularly": 1,
-    "Occasionally": 2,
+    "Yes - Regularly": 1,
+    "Yes - Occasionally": 2,
     "No": 3,
     "Not Known": 4
   };

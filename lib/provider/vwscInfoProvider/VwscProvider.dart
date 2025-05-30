@@ -225,7 +225,7 @@ class Vwscprovider extends ChangeNotifier {
   final Map<String, int> OMArrangements = {
     "VWSC": 1,
     "PHED": 2,
-    "Outsourced": 3,
+    "Outsourced Contractor": 3,
     "No arrangement": 4,
   };
 

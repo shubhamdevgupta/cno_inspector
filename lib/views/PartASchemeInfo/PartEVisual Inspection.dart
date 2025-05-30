@@ -10,7 +10,9 @@ import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customradiobttn.dart';
+import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'SchemeInfoCommonScreen.dart';
 
@@ -242,20 +244,10 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                       schemeProvider.setQuesPartEa6 = val;
                                     },
                                   ),
+
                                   Customradiobttn(
                                     question:
-                                    "a.7 spalling (peeling off surface)",
-                                    options:
-                                    schemeProvider.yesNoMap.keys.toList(),
-                                    selectedOption:
-                                    schemeProvider.getSelectedPartEa7,
-                                    onChanged: (val) {
-                                      schemeProvider.setQuesPartEa7 = val;
-                                    },
-                                  ),
-                                  Customradiobttn(
-                                    question:
-                                    "a.8 dampness of concrete surfaces",
+                                    "a.7 dampness of concrete surfaces",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -265,7 +257,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                     },
                                   ),
                                   Customradiobttn(
-                                    question: "a.9 visible white marks)",
+                                    question: "a.8 visible white marks)",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -275,7 +267,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                     },
                                   ),
                                   Customradiobttn(
-                                    question: "a.10 visible stone aggregates)",
+                                    question: "a.9 visible stone aggregates)",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -286,7 +278,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   ),
                                   Customradiobttn(
                                     question:
-                                    "a.11 structures missing vertical alignment)",
+                                    "a.10 structures missing vertical alignment)",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -297,7 +289,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   ),
                                   Customradiobttn(
                                     question:
-                                    "a.12 visible sag in the slab/beam)",
+                                    "a.11 visible sag in the slab/beam)",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -308,7 +300,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   ),
                                   Customradiobttn(
                                     question:
-                                    "a.13 high vibration observed in the pumps)",
+                                    "a.12 high vibration observed in the pumps)",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -318,7 +310,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                     },
                                   ),
                                   Customradiobttn(
-                                    question: "a.14	leakages in reservoirs)",
+                                    question: "a.13	leakages in reservoirs)",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -329,7 +321,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                   ),
                                   Customradiobttn(
                                     question:
-                                    "a.15high leakages from the pumps	)",
+                                    "a.14 high leakages from the pumps	)",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -383,7 +375,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
 
                                   Customradiobttn(
                                     question:
-                                    "2. Is third-party/State department verifying pipe quality?",
+                                    "2. Whether quality verification is being done by the third party or the State department during manufacturing of pipe (random quality checks reports to be seen)?",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -395,7 +387,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
 
                                   Customradiobttn(
                                     question:
-                                    "3. Are pipe materials as per DPR implemented?",
+                                    "3. Are the pipes as mentioned in the DPR (material such as HDPE, DI, etc., diameter) being implemented on ground (random check to be done)?",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -407,7 +399,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
 
                                   Customradiobttn(
                                     question:
-                                    "4. Any complaints regarding pipeline laying?",
+                                    "4. Are there any complaints regarding pipeline laying as per the approved design as per DPR?",
                                     options:
                                     schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption:
@@ -481,7 +473,7 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
 
                                   CustomMultiSelectChipQuestion(
                                     question:
-                                    '10. Serious issues observed by TPIAs:',
+                                    '10. Are there any serious issues observed by TPIAs about construction of schemes: If, yes, type of issues:',
                                     options: schemeProvider.question10Map.keys
                                         .toList(),
                                     selectedValues:
@@ -495,6 +487,16 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                     },
                                   ),
 
+                                  if (schemeProvider.getSelectedPartE10.contains("Others"))
+                                    Customtxtfeild(
+                                      label: "In Case of Other please provide details:",
+                                      controller: schemeProvider.PartEothersComplaintController,
+                                      maxLines: 2,
+                                    ),
+
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   Customradiobttn(
                                     question:
                                     "11. Action based on TPIA observations",
@@ -606,6 +608,13 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                     },
                                   ),
 
+
+                                  CustomObservationField(
+                                    labelText: '*  Obseration on "Visual Inspection" :',
+                                    controller:  schemeProvider.PartEUserObservation,
+                                  ),
+
+
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(
@@ -630,26 +639,16 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               .isLoading,
                                               message: "Additional info for Retrofitting/Augmentation Schemes only");
 
-                                          await schemeProvider
-                                              .saveVisualInspection(
-                                              userId: _localStorageService
-                                                  .getInt(
-                                                  AppConstants.prefUserId)!,
+                                          await schemeProvider.saveVisualInspection(
+                                              userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                               stateId: schemeProvider.stateId!,
-                                              schemeId: schemeProvider
-                                                  .schemeId!,
+                                              schemeId: schemeProvider.schemeId!,
                                               costOverrun: 000,
-
-                                              spalling: schemeProvider
-                                                  .selectedId_partEa1,
-                                              cracks: schemeProvider
-                                                  .selectedId_partEa2,
-                                              rustMarks: schemeProvider
-                                                  .selectedId_partEa3,
-                                              swollenConcrete: schemeProvider
-                                                  .selectedId_partEa4,
-                                              trappedJute: schemeProvider
-                                                  .selectedId_partEa5,
+                                              spalling: schemeProvider.selectedId_partEa1,
+                                              cracks: schemeProvider.selectedId_partEa2,
+                                              rustMarks: schemeProvider.selectedId_partEa3,
+                                              swollenConcrete: schemeProvider.selectedId_partEa4,
+                                              trappedJute: schemeProvider.selectedId_partEa5,
                                               rustedBars: schemeProvider
                                                   .selectedId_partEa6,
                                               //a7
@@ -713,8 +712,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               tpiaIssueTypes: schemeProvider
                                                   .selectedId_partE10,
                                               modeType: modeType!.modeValue,
-                                              hydroTestingDistribute:-1
-
+                                              hydroTestingDistribute:-1,
+                                            visualInspectionRemarks: schemeProvider.PartEUserObservation.text,
+                                            typeofissuestpiasOther: schemeProvider.PartEothersComplaintController.text
                                           ); // TODO check that parameter hydroTestingDistribute
 
                                           if (schemeProvider.status!) {

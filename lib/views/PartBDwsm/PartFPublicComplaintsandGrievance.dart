@@ -189,6 +189,14 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                       },
                                     ),
 
+
+                                    // Show text field if 'Others' is selected
+                                    if (dwsmProvider.complaintTypes.contains("Others"))
+                                      Customtxtfeild(
+                                        label: "In Case of Other please provide details:",
+                                        controller: dwsmProvider.othersComplaintController,
+                                        maxLines: 2,
+                                      ),
                                     const SizedBox(height: 10),
                                     Customtxtfeild(
                                       label:
@@ -202,7 +210,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                       label: "3.3 Action taken by department:",
                                       controller:
                                           dwsmProvider.actionTakenController,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: TextInputType.text,
                                     ),
                                   ],
                                   SizedBox(

@@ -445,7 +445,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                 ),
 
                                 CustomObservationField(
-                                  labelText: '* User Observation / Remarks:',
+                                  labelText: '* Obseration on "Community Involvement & VWSC Functionality" :',
                                   controller:  vwscProvider.PartBVWSCuserObservationController,
                                 ),
 
