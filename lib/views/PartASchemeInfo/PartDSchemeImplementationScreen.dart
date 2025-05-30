@@ -212,15 +212,6 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         ),
 
 
-                                      const SizedBox(height: 10),
-
-                                      if (schemeProvider.ReasonsOptions.containsValue("Others"))
-                                        Customtxtfeild(
-                                          label: '3.1 Reason',
-                                          controller:
-                                          schemeProvider.reasonController,
-                                          keyboardType: TextInputType.text,
-                                        ),
 
                                       // Q4: Revised cost approval
                                       Customradiobttn(
@@ -234,16 +225,22 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                           schemeProvider.selectedrevisedCostApproved =
                                               value;
 
-                                          print(
-                                              'selectedrevisedCostApproved:  ${schemeProvider.selectedrevisedCostApprovedID}');
+                                          print('selectedrevisedCostApproved:  ${schemeProvider.selectedrevisedCostApprovedID}');
                                         },
                                       ),
                                       const SizedBox(height: 10),
 
                                       // Q5: Revised cost by SLSSC
-                                      const Text(
-                                        '5. Whether revised cost has been approved by SLSSC?',
-                                        style: TextStyle(fontWeight: FontWeight.w600),
+                                      Customradiobttn(
+                                        question:
+                                        "5. Whether revised cost has been approved by SLSSC?",
+                                        options:
+                                        schemeProvider.yesNoMap.keys.toList(),
+                                        selectedOption:
+                                        schemeProvider.getSelectedPartE5,
+                                        onChanged: (val) {
+                                          schemeProvider.setQuesPartE5 = val;
+                                        },
                                       ),
                                       Customradiobttn(
                                         question: '5.1 If yes, increase in cost:',
@@ -252,8 +249,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         selectedOption:
                                         schemeProvider.selectedincreaseInCost,
                                         onChanged: (value) {
-                                          schemeProvider.selectedincreaseInCost =
-                                              value;
+                                          schemeProvider.selectedincreaseInCost = value;
 
                                           print(
                                               'selectedincreaseInCost:  ${schemeProvider.selectedincreaseInCostID}');
@@ -305,6 +301,15 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                               ' schemeProvider.selectedrevisionReasons  ${schemeProvider.selectedrevisionReasonsID}');
                                         },
                                       ),
+
+                                      if (schemeProvider.revisionReasonsID.containsValue("Others"))
+                                        Customtxtfeild(
+                                          label: '6.1 Reason',
+                                          controller:
+                                          schemeProvider.PartDQ4reasonController,
+                                          keyboardType: TextInputType.text,
+                                        ),
+
 
                                       const SizedBox(height: 10),
                                       const Text(
@@ -399,7 +404,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       if (schemeProvider.selectedDelayReasons.contains("Others"))
                                         Customtxtfeild(
                                           label: "In Case of Other please provide details:",
-                                          controller: schemeProvider.PartEothersComplaintController,
+                                          controller: schemeProvider.PartDQ1othersComplaintController,
                                           maxLines: 2,
                                         ),
                                       const SizedBox(height: 10),
@@ -421,9 +426,17 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         },
                                       ),
 
-                                      const Text(
-                                        '3. Whether revised cost has been approved by SLSSC?',
-                                        style: TextStyle(fontWeight: FontWeight.w600),
+
+                                      Customradiobttn(
+                                        question:
+                                        "3. Whether revised cost has been approved by SLSSC?",
+                                        options:
+                                        schemeProvider.yesNoMap.keys.toList(),
+                                        selectedOption:
+                                        schemeProvider.getSelectedPartE5,
+                                        onChanged: (val) {
+                                          schemeProvider.setQuesPartE5 = val;
+                                        },
                                       ),
 
                                       SizedBox(
@@ -434,13 +447,12 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         options: schemeProvider.increaseInCostID.keys
                                             .toList(),
                                         selectedOption:
-                                        schemeProvider.selectedincreaseInCost,
+                                        schemeProvider.selectslsscapp,
                                         onChanged: (value) {
-                                          schemeProvider.selectedincreaseInCost =
+                                          schemeProvider.selectslsscapp =
                                               value;
 
-                                          print(
-                                              'selectedincreaseInCost:  ${schemeProvider.selectedincreaseInCostID}');
+                                          print('selectslsscappID:  ${schemeProvider.selectslsscappID}');
                                         },
                                       ),
                                       const SizedBox(height: 10),
@@ -478,10 +490,8 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
 
                                       CustomMultiSelectChipQuestion(
                                         question: '4. Reason(s) for revision:',
-                                        options:
-                                        schemeProvider.revisionReasonsIDOptions,
-                                        selectedValues:
-                                        schemeProvider.selectedrevisionReasons,
+                                        options: schemeProvider.revisionReasonsIDOptions,
+                                        selectedValues: schemeProvider.selectedrevisionReasons,
                                         onSelectionChanged: (values) {
                                           setState(() => schemeProvider
                                               .selectedrevisionReasons = values);
@@ -490,6 +500,13 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         },
                                       ),
 
+                                      if (schemeProvider.revisionReasonsID.containsValue("Others"))
+                                        Customtxtfeild(
+                                          label: '4.1 Reason',
+                                          controller:
+                                          schemeProvider.PartDQ4reasonController,
+                                          keyboardType: TextInputType.text,
+                                        ),
 
                                       const SizedBox(height: 10),
                                       const Text(
@@ -498,6 +515,8 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                             fontSize: 15,
                                             fontWeight: FontWeight.w600),
                                       ),
+
+
                                       const SizedBox(height: 6),
 
                                       _buildAdmissibleCostTable(
@@ -613,17 +632,19 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       plannedPTGatiShaktiPipeline:
                                           schemeProvider.selectedPipelineID,
                                       delayReasons: modeType == ProjectMode.below10? schemeProvider.belowselectedDelayReasonsID:schemeProvider.selectedDelayReasonsID,
-                                      costOverrunReasons: schemeProvider
-                                          .selectedcostOverrunReasonsID,
-                                      costRevisionReasons: schemeProvider
-                                          .selectedrevisionReasonsID,
+                                      costOverrunReasons: schemeProvider.selectedcostOverrunReasonsID,
+                                      costRevisionReasons: schemeProvider.selectedrevisionReasonsID,
 
                                      txtcost_levelzed_cost_cr : 0.00,
                                      is_tpia_engaged_value : schemeProvider.selectedId_partE5,
                                      concurrent_supervission_scope_value : schemeProvider.selectedId_partE7,
                                      txtpws_status_under_scheme : schemeProvider.below10PartD_ques8_Controller.text,
                                      phy_status :modeType!.modeValue ,
-                                      user_remark: schemeProvider.PartDUserObservation.text
+                                      user_remark: schemeProvider.PartDUserObservation.text,
+                                      Resion_for_delay_after_aword_other: schemeProvider.PartDQ1othersComplaintController.text,
+                                      Reason_for_revision: schemeProvider.PartDQ4reasonController.text,
+                                        Reason_for_cost_overrun: schemeProvider.PartDQ3othersComplaintController.text
+
 
 
                                     );

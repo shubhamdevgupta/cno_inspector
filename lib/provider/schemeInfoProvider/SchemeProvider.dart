@@ -578,6 +578,7 @@ class Schemeprovider extends ChangeNotifier {
 
   int get onPmGatishaktiID => yesNoMap[_onPmGatishakti] ?? -1;
   final TextEditingController reasonController = TextEditingController();
+  final TextEditingController PartDQ4reasonController = TextEditingController();
 
   Future<void> saveRetrofitAdditionalInfo({
     required int userId,
@@ -835,6 +836,16 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   // Q5: Cost overrun (single choice)
+  String? _selectslsscapp;
+
+  String? get selectslsscapp => _selectslsscapp;
+
+  set selectslsscapp(String? value) {
+    _selectslsscapp = value;
+    notifyListeners();
+  }
+  int get selectslsscappID => yesNoMap[_selectslsscapp] ?? -1;
+
   String? _selectedincreaseInCost;
 
   String? get selectedincreaseInCost => _selectedincreaseInCost;
@@ -851,12 +862,9 @@ class Schemeprovider extends ChangeNotifier {
     "No overrun": 4,
   };
 
-  int get selectedincreaseInCostID =>
-      increaseInCostID[_selectedincreaseInCost] ?? -1;
-
+  int get selectedincreaseInCostID => increaseInCostID[_selectedincreaseInCost] ?? -1;
   //
-  int get selectedrevisedCostApprovedID =>
-      yesNoMap[_selectedrevisedCostApproved] ?? -1;
+  int get selectedrevisedCostApprovedID => yesNoMap[_selectedrevisedCostApproved] ?? -1;
 
   // Q5.1: Increase in cost (single choice)
   String? _increaseInCost;
@@ -1092,6 +1100,9 @@ class Schemeprovider extends ChangeNotifier {
     required String txtpws_status_under_scheme,
     required int phy_status,
     required String user_remark,
+    required String Resion_for_delay_after_aword_other,
+    required String Reason_for_revision,
+    required String Reason_for_cost_overrun,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1142,7 +1153,11 @@ class Schemeprovider extends ChangeNotifier {
             concurrent_supervission_scope_value,
         txtpws_status_under_scheme: txtpws_status_under_scheme,
         phy_status: phy_status,
-        userremark: user_remark
+        userremark: user_remark,
+        Resionfordelayafterawordother:  Resion_for_delay_after_aword_other,
+          Reasonforrevision: Reason_for_revision,
+        Reasonforcostoverrun: Reason_for_cost_overrun
+
       );
 
       _message = response.message;

@@ -209,6 +209,9 @@ class SchemeRepositoy {
     required String txtpws_status_under_scheme,
     required int    phy_status,
     required String    userremark,
+    required String    Resionfordelayafterawordother ,
+    required String    Reasonforrevision ,
+    required String    Reasonforcostoverrun ,
 
   }) async {
     try {
@@ -260,6 +263,9 @@ class SchemeRepositoy {
           "txtpws_status_under_scheme":txtpws_status_under_scheme,
           "phy_status":phy_status,
           "scheme_implementation_Remarks":userremark,
+          "Resion_for_delay_after_aword_other":Resionfordelayafterawordother,
+          "Reason_for_revision":Reasonforrevision,
+          "Reason_for_cost_overrun":Reasonforcostoverrun,
 
         }),
       );
