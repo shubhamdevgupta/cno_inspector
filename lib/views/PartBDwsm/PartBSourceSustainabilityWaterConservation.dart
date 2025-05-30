@@ -9,6 +9,7 @@ import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'DWSMCommonClass.dart';
@@ -227,7 +228,7 @@ ProjectMode? modeType;
                                   ),
                                 ),
                                 if (dwsmProvider.accreditedLabWaterQualityID ==
-                                    2) ...[
+                                    0) ...[
                                   const SizedBox(height: 8),
                                   Customtxtfeild(
                                     label: "If no, how is testing managed:",
@@ -235,6 +236,11 @@ ProjectMode? modeType;
                                         .testingManagedDataController,
                                   ),
                                 ],
+
+                                CustomObservationField(
+                                  labelText: '* Obseration on "Source Sustainability and Water Conservation":',
+                                  controller:  dwsmProvider.PartBUserObservation,
+                                ),
 
                                 Align(
                                   alignment: Alignment.centerRight,
@@ -280,7 +286,12 @@ ProjectMode? modeType;
                                                 dwsmProvider
                                                     .testingManagedDataController
                                                     .text,
-                                            modeType: modeType!.modeValue);
+                                            modeType: modeType!.modeValue,
+                                       user_remark: dwsmProvider.PartBUserObservation.text
+
+
+
+                                     );
 
                                         if (dwsmProvider.status!) {
                                           ToastHelper.showToastMessage(

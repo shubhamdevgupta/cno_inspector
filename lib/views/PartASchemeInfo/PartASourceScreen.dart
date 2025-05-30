@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../provider/AppStateProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
@@ -206,8 +207,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                         '4. In case of groundwater contamination, was any analysis conducted to determine the most techno-economical option — treating the contaminated groundwater or switching to a surface water source?',
                                     options:
                                         schemeProvider.yesNoMap.keys.toList(),
-                                    selectedOption:
-                                        schemeProvider.selectedValueQ3,
+                                    selectedOption: schemeProvider.selectedValueQ3,
                                     onChanged: (val) {
                                       schemeProvider.selectedValueQ3 = val;
                                       print(
@@ -216,12 +216,13 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                   ),
 
                                   // 5. Water allocation from State WRD / Irrigation Department (text input)
-                                  Customtxtfeild(
-                                    label:
-                                        '5. Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose',
-                                    controller: schemeProvider
-                                        .waterAllocationController,
-                                    keyboardType: TextInputType.number,
+                                  Customradiobttn(
+                                    question: '5. Water allocation from the State Water Resource Department (WRD)/ Irrigation Department (ID) from surface source for drinking purpose',
+                                    options: schemeProvider.yesNoMap.keys.toList(),
+                                    selectedOption: schemeProvider.waterAllocationPurpose,
+                                    onChanged: (val){
+                                      schemeProvider.selectedWaterAllocation = val;
+                                    },
                                   ),
 
                                   // Below 10% part Start
@@ -236,16 +237,14 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                         Customtxtfeild(
                                           label:
                                               '6.	Whether all representatives of source finding committee such as State WRD/ID, State level offices of CGWB etc. were consulted for making the recommendation or it was a PHED level exercise through Dept. Level hydrogeologist only? Provide details',
-                                          controller: schemeProvider
-                                              .sourceFindingRepresentativesConsulted_Controller,
+                                          controller: schemeProvider.sourceFindingRepresentativesConsulted_Controller,
                                           keyboardType: TextInputType.text,
                                         ),
                                         const SizedBox(height: 8),
                                         Customtxtfeild(
                                           label:
                                               '7.	What were the other cost-effective alternative sources available to provide the piped water supply in the area? Provide details',
-                                          controller: schemeProvider
-                                              .alternativeSourcesAvailable_Controller,
+                                          controller: schemeProvider.alternativeSourcesAvailable_Controller,
                                           keyboardType: TextInputType.text,
                                         ),
                                         const SizedBox(height: 8),
@@ -260,6 +259,12 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
 
                                   // Below 10% part End
 
+                                  const SizedBox(height: 15),
+
+                                  CustomObservationField(
+                                    labelText: '* Obseration on "Source" :',
+                                    controller:  schemeProvider.PartAUserObservation,
+                                  ),
                                   const SizedBox(height: 15),
                                   Align(
                                     alignment: Alignment.centerRight,
@@ -279,32 +284,23 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                               isLoading:
                                                   schemeProvider.isLoading,
                                               message: "Saving Source...");
+                                          print('---------------${int.tryParse(schemeProvider.safeController.text)} ');
                                           await schemeProvider.saveSourceSurvey(
-                                              userId:
-                                                  _localStorageService.getInt(
-                                                      AppConstants.prefUserId)!,
+                                              userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                               stateId: schemeProvider.stateId!,
-                                              schemeId:
-                                                  schemeProvider.schemeId!,
-                                              isRecommendShiftToSurface:
-                                                  schemeProvider
-                                                      .selectedValueQ1Id,
-                                              studyAccessGroundBeforeSurface:
-                                                  schemeProvider
-                                                      .selectedValueQ2Id,
-                                              safeZoneVillages: int.parse(
-                                                  schemeProvider
-                                                      .safeController.text),
-                                              criticalZoneVillages: int.parse(
-                                                  schemeProvider
-                                                      .criticalController.text),
-                                              semiCriticalZoneVillages: int.parse(
-                                                  schemeProvider.semiCriticalController.text),
+                                              schemeId: schemeProvider.schemeId!,
+                                              isRecommendShiftToSurface: schemeProvider.selectedValueQ1Id,
+                                              studyAccessGroundBeforeSurface: schemeProvider.selectedValueQ2Id,
+                                              safeZoneVillages: int.tryParse(schemeProvider.safeController.text)!,
+                                              criticalZoneVillages: int.tryParse(schemeProvider.criticalController.text)!,
+                                              semiCriticalZoneVillages: int.tryParse(schemeProvider.semiCriticalController.text)!,
                                               groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id,
-                                              waterAllocationFromWRD: int.parse(schemeProvider.waterAllocationController.text),
+                                              waterAllocationFromWRD: schemeProvider.selectedWaterAllocationId,
                                               alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text,
                                               repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text,
-                                              modeType: modeType!.modeValue);
+                                              modeType: modeType!.modeValue,
+                                              userremark: schemeProvider.PartAUserObservation.text
+                                          );
 
                                           if (schemeProvider.status!) {
                                             ToastHelper.showToastMessage(

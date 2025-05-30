@@ -37,6 +37,8 @@ class SchemeVisualInspectionModel {
   final int schemeCommissionedAsPerProtocol;
   final int documentAsProofOfCommissioningAvailable;
   final String? typeOfIssuesTpias;
+  final String? typeofissuestpiasOther;
+  final String? visualInspectionRemarks;
 
   SchemeVisualInspectionModel({
     required this.userid,
@@ -77,6 +79,8 @@ class SchemeVisualInspectionModel {
     required this.schemeCommissionedAsPerProtocol,
     required this.documentAsProofOfCommissioningAvailable,
     this.typeOfIssuesTpias,
+    this.typeofissuestpiasOther,
+    this.visualInspectionRemarks
   });
 
   factory SchemeVisualInspectionModel.fromJson(Map<String, dynamic> json) {
@@ -119,6 +123,8 @@ class SchemeVisualInspectionModel {
       schemeCommissionedAsPerProtocol: json['scheme_commissioned_done_per_commissioning_protocol'] ?? 0,
       documentAsProofOfCommissioningAvailable: json['document_as_proof_of_commissioning_available'] ?? 0,
       typeOfIssuesTpias: json['type_of_issues_tpias'],
+      typeofissuestpiasOther: json['type_of_issues_tpias_Other'],
+      visualInspectionRemarks: json['visual_Inspection_Remarks'],
     );
   }
 }

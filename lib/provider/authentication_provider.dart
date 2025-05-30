@@ -63,14 +63,14 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
     try {
       _sendOtpResponse = await _authRepository.sendOtp(loginId);
-      if (_sendOtpResponse!.Status == true) {
+      if (_sendOtpResponse!.status == true) {
         _isLoggedIn = true;
         _localStorage.saveBool(AppConstants.prefIsLoggedIn, true);
         _startOtpTimer();
         notifyListeners();
         onSuccess();
       } else {
-        errorMsg = _sendOtpResponse!.Message!;
+        errorMsg = _sendOtpResponse!.message!;
         onFailure(errorMsg);
       }
     } catch (e) {

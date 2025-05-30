@@ -176,12 +176,10 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                                 'selected---- ${vwscProvider.selectedComplaintByCommunity} : ${vwscProvider.selectedComplaintByCommunityId}');
                                           },
                                         ),
-                                        if (vwscProvider
-                                                .selectedComplaintByCommunity ==
-                                            "Yes") ...[
+
                                           CustomMultiSelectChipQuestion(
                                             question:
-                                                "1.1 Type of complaint (select all that apply):",
+                                                "2 Type of complaint (select all that apply):",
                                             options: vwscProvider
                                                 .typeOfComplaintMapOptions,
                                             selectedValues: vwscProvider
@@ -195,15 +193,14 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                           ),
 
                                           // Show text field if 'Others' is selected
-                                          if (vwscProvider.selectedTypeOfComplaint
-                                              .contains("Others"))
+                                          if (vwscProvider.selectedTypeOfComplaint.contains("Others"))
                                             Customtxtfeild(
                                               label:
                                                   "Please specify other complaints:",
                                               controller: vwscProvider.othersComplaintController,
                                               maxLines: 2,
                                             ),
-                                        ],
+
                                         Customradiobttn(
                                           question:
                                               "3. Whether complaint is addressed:",

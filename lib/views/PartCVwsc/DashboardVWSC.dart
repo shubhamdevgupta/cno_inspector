@@ -189,23 +189,39 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 10,),
                     if (dashboardProvider.selectedVwscId != 0)
-                      Column(
+                    Column(
                         children: [
                           Visibility(
                             visible: path.isNotEmpty,
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _iconCircle(Icons.location_on, Colors.red),
-                                const SizedBox(width: 10),
                                 Expanded(
-                                  child: Text(
-                                    path,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black87,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red.withOpacity(0.4),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        _iconCircle(Icons.location_on, Colors.red),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                            path,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: 'OpenSans',
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

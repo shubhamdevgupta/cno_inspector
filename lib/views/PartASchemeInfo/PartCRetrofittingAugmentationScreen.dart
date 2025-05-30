@@ -12,6 +12,7 @@ import '../../utils/CommonScreen.dart';
 import '../../utils/CustomCheckBoxQuestion.dart';
 import '../../utils/CustomTextField.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customcheckquestion.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
@@ -199,11 +200,21 @@ class _RetrofittingAugmentationScreen
                                 ),
                                 const SizedBox(height: 8),
 
+                                Text('2.4 Storage Structures (Nos./Capacity in KL',style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),),
+                                  const SizedBox(height: 8),
+
                                 Customtxtfeild(
                                   label:
-                                      '2.4 Storage Structures (Nos./Capacity in KL)',
+                                      'In Nos.',
                                   controller: schemeProvider
                                       .storageStructureDetailsController,
+                                  keyboardType: TextInputType.text,
+                                ),
+                                  Customtxtfeild(
+                                  label:
+                                      'Capacity (in KL)',
+                                  controller: schemeProvider
+                                      .storageStructureInKL,
                                   keyboardType: TextInputType.text,
                                 ),
                                 const SizedBox(height: 10),
@@ -239,7 +250,7 @@ class _RetrofittingAugmentationScreen
                                         onChanged: (val) =>
                                         schemeProvider.onPmGatiShakti = val,
                                       ),
-                                    if (schemeProvider.onPmGatishaktiID == 2)
+                                    if (schemeProvider.onPmGatishaktiID == 0)
                                       Customtxtfeild(
                                         label: '4.1 Reason',
                                         controller:
@@ -250,6 +261,18 @@ class _RetrofittingAugmentationScreen
                                   ],
                                 )),
 
+
+
+
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+
+
+                                  CustomObservationField(
+                                    labelText: 'Obseration on "Additional information for Retrofitting/Augmentation Schemes only"',
+                                    controller:  schemeProvider.PartCUserObservation,
+                                  ),
 
                                   SizedBox(
                                     height: 20,
@@ -286,25 +309,29 @@ class _RetrofittingAugmentationScreen
                                                   assessmentMethod: '',
                                                   assessmentReason: '',
                                                   //not found
-                                                  pipelineKms: schemeProvider.transmissionPipelineKmController.text.isEmpty ? 0.00 :double.parse(schemeProvider
+                                                  pipelineKms:double.tryParse(schemeProvider
                                                       .transmissionPipelineKmController
-                                                      .text),
-                                                  distributionKms: schemeProvider.distributionPipelineKmController.text.isEmpty ? 0.00 :double.parse(
+                                                      .text)!,
+                                                  distributionKms: double.tryParse(
                                                       schemeProvider
                                                           .distributionPipelineKmController
-                                                          .text),
-                                                  wtpCapacity: schemeProvider.wtpCapacityMldController.text.isEmpty ? 0.00 :double.parse(schemeProvider
+                                                          .text)!,
+                                                  wtpCapacity: double.tryParse(schemeProvider
                                                       .wtpCapacityMldController
-                                                      .text),
-                                                  structureNos: schemeProvider.storageStructureDetailsController.text.isEmpty ? 0 :int.parse(schemeProvider
+                                                      .text)!,
+                                                  structureNos: int.tryParse(schemeProvider
                                                       .storageStructureDetailsController
-                                                      .text),
-                                                  structureCapacity: 0.0,
+                                                      .text)!,
+                                                  structureCapacity: double.tryParse(schemeProvider.storageStructureInKL.text)!,
                                                   // not found
                                                   buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
                                                   onPMGati: schemeProvider.onPmGatishaktiID,
                                                   noReason: schemeProvider.reasonController.text.isEmpty ? "" : schemeProvider.reasonController.text,
-                                        phyStatus: modeType!.modeValue);
+                                        phyStatus: modeType!.modeValue,
+                                            user_remark: schemeProvider.PartCUserObservation.text
+
+
+                                          );
                                           if (schemeProvider.status!) {
                                             ToastHelper.showToastMessage(
                                                 schemeProvider.message!,

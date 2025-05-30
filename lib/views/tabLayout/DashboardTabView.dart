@@ -1,3 +1,6 @@
+import 'package:cno_inspection/provider/dwsmInfoProvider/DwsmProvider.dart';
+import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
+import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../provider/AppStateProvider.dart';
@@ -25,6 +28,7 @@ class _DashboardTabViewState extends State<DashboardTabView>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       dashboardProvider = Provider.of<DashboardProvider>(context, listen: false);
       dashboardProvider.fetchDashboardHomeData(1);
+      dashboardProvider.clearDashboardData();
       final appState = Provider.of<AppStateProvider>(context, listen: false);
 
       final mode = _tabController.index == 0
@@ -46,6 +50,9 @@ class _DashboardTabViewState extends State<DashboardTabView>
         : ProjectMode.above10;
     appState.setMode(mode);
 
+    Provider.of<Schemeprovider>(context,listen: false).clearSchemeProvider();
+    Provider.of<Dwsmprovider>(context,listen: false).clearDwsmProvider();
+    Provider.of<Vwscprovider>(context,listen: false).clearVwscProvider();
   }
 
 

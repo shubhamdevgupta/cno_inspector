@@ -8,6 +8,7 @@ import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'DWSMCommonClass.dart';
@@ -151,46 +152,57 @@ class _PartDoperationandmaintenance
                               const SizedBox(height: 10),
 
                               Customtxtfeild(
-                                label: "2. Percentage of villages where trained multi-skilled manpower available for O&M",
+                                label: "1.1 Percentage of villages where trained multi-skilled manpower available for O&M",
                                 controller: dwsmProvider.manpowerPercentController,
                                 keyboardType: TextInputType.number,
                               ),
 
                               const SizedBox(height: 10),
 
-                              Customtxtfeild(
-                                label: "3. Water fee amount (₹/month or per connection)",
-                                controller: dwsmProvider.waterFeeController,
-                                keyboardType: TextInputType.number,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("2. Is a Water charged from households?", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),),
+                                  const SizedBox(height: 10),
+                                  Customtxtfeild(
+                                    label: "2.1. Water fee amount (₹/month or per connection)",
+                                    controller: dwsmProvider.waterFeeController,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Customradiobttn(
+                                    question: "2.2 Is the fee uniform or based on consumption?",
+                                    options: dwsmProvider.feeBasisMap.keys.toList(),
+                                    selectedOption: dwsmProvider.feeBasis,
+                                    onChanged: (val) => dwsmProvider.feeBasis = val,
+                                  ),
+
+                                ],
                               ),
 
-                              const SizedBox(height: 10),
 
-                              Customradiobttn(
-                                question: "4. Is the fee uniform or based on consumption?",
-                                options: dwsmProvider.feeBasisMap.keys.toList(),
-                                selectedOption: dwsmProvider.feeBasis,
-                                onChanged: (val) => dwsmProvider.feeBasis = val,
-                              ),
 
-                              const SizedBox(height: 10),
 
                               Customtxtfeild(
-                                label: "5. Percentage of villages where User Fee is being collected",
+                                label: "3. Percentage of villages where User Fee is being collected",
                                 controller: dwsmProvider.userFeePercentController,
                                 keyboardType: TextInputType.number,
                               ),
-                              Customtxtfeild(
-                                label: "6. Observation on Operation & Maintenance",
-                                controller: dwsmProvider.observationOperationMaintencen,
-                                keyboardType: TextInputType.text,
-                              ),
+
                             ],
                           ),
 
 
 
+                              SizedBox(
+                                height: 10,
+                              ),
 
+
+                              CustomObservationField(
+                                labelText: '* Obseration on "Quality Assurance and Commissioning":',
+                                controller:  dwsmProvider.observationOperationMaintencen,
+                              ),
 
                               SizedBox(
                                 height: 10,
@@ -214,10 +226,10 @@ class _PartDoperationandmaintenance
 
                                       await dwsmProvider.saveOperationMaintenance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
                                         isProtocolInPlace: dwsmProvider.handoverProtocolID, percentVillagesWithManpower: double.parse(dwsmProvider.manpowerPercentController.text),
-                                        isWaterFeeCharged: -1, feeAmountPerMonth: int.parse(dwsmProvider.waterFeeController.text),
+                                        isWaterFeeCharged: -1, feeAmountPerMonth: int.tryParse(dwsmProvider.waterFeeController.text)!,
                                         isUniformFee: dwsmProvider.feeBasisID,
                                         obserVationOperationMaintenance: dwsmProvider.observationOperationMaintencen.text,
-                                        percentVillagesFeeCollected: double.parse(dwsmProvider.userFeePercentController.text),modeType: modeType!.modeValue);
+                                        percentVillagesFeeCollected: double.tryParse(dwsmProvider.userFeePercentController.text)!,modeType: modeType!.modeValue);
                                       if (dwsmProvider.status!) {
                                         ToastHelper.showToastMessage(
                                             dwsmProvider.message!,

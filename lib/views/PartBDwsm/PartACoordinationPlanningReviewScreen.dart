@@ -8,6 +8,7 @@ import '../../provider/AppStateProvider.dart';
 import '../../utils/AppConstants.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'DWSMCommonClass.dart';
@@ -194,13 +195,17 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                   dwsmProvider.selectedDISHA = value;
                                 },
                               ),
-                              Customtxtfeild(
-                                label:
-                                '4. Obseration on "Coordination, Planning & Review Mechanism"',
-                                controller:
-                                dwsmProvider.observationCoordination,
-                                keyboardType: TextInputType.text,
+
+                              SizedBox(
+                                height: 10,
                               ),
+
+                              CustomObservationField(
+                                labelText: '* Obseration on "Coordination, Planning & Review Mechanism":',
+                                controller:  dwsmProvider.observationCoordination,
+                              ),
+
+
                               SizedBox(
                                 height: 10,
                               ),
@@ -237,7 +242,7 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                                               areMonthlyMeetingsHeld:
                                                   dwsmProvider
                                                       .selectedValueQ1Id,
-                                              numberOfMeetingsLast6Months: dwsmProvider.meetingsHeldController.text.isEmpty ?0:int.parse(dwsmProvider.meetingsHeldController.text),
+                                              numberOfMeetingsLast6Months: int.tryParse(dwsmProvider.meetingsHeldController.text)!,
                                               qualityOfMeeting: dwsmProvider
                                                   .selectedMeetingQualityID,
                                               areCoordinationMeetingsRegular:

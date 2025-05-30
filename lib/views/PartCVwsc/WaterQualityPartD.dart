@@ -198,8 +198,11 @@ void initState() {
                                   ),
                                 ),
 
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 CustomObservationField(
-                                  labelText: '* User Observation / Remarks:',
+                                  labelText: '* Obseration on "Water Quality Monitoring":',
                                   controller:  vwscProvider.PartDVWSCuserObservationController,
                                 ),
 
@@ -223,7 +226,7 @@ void initState() {
                                            villageId: vwscProvider.villageId!,
                                            isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,
                                            ftkTestingPeriod: vwscProvider.selectedFTKTestingFrequencyId,
-                                           numberWomenTrainedFtk: int.parse(vwscProvider.womenTrainedController.text),
+                                           numberWomenTrainedFtk: int.tryParse(vwscProvider.womenTrainedController.text)!,
                                            whoTestFtk: vwscProvider.testerNameController.text,
                                            isChlorinationDone: vwscProvider.selectedDisinfectionDoneId,
                                            frcAvailableAtEnd: vwscProvider.selectedFRCLevelId,

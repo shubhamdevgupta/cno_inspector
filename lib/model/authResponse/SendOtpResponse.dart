@@ -1,31 +1,30 @@
 
-/*{
-"Status": true,
-"Message": "Sucess",
-"MobileNumber": "7738705450",
-"LoginId": "9871544420"
-}*/
 
 class SendOtpResponse {
-  final bool? Status;
-  final String? Message;
-  final String? MobileNumber;
-  final String? LoginId;
+  final bool? status;
+  final String? message;
+  final String? mobileNumber;
+  final String? loginId;
+  final String? responseOtp;
+  final String? emailId;
 
   SendOtpResponse({
-    required this.Status,
-    required this.Message,
-    required this.MobileNumber,
-    required this.LoginId,
+    required this.status,
+    required this.message,
+    required this.mobileNumber,
+    required this.loginId,
+    required this.responseOtp,
+    required this.emailId,
   });
 
   factory SendOtpResponse.fromJson(Map<String, dynamic> json) {
     return SendOtpResponse(
-      Status: json['Status'],
-      Message: json['Message'],
-      MobileNumber: json['MobileNumber'],
-      LoginId: json['LoginId'],
-
+      status: json['Status'],
+      message: json['Message'],
+      mobileNumber: json['MobileNumber'],
+      loginId: json['LoginId'],
+      responseOtp: json['ResponseOTP'],
+      emailId: json['EmailId'],
     );
   }
 }

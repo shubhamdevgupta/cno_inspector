@@ -37,6 +37,7 @@ class Schemeprovider extends ChangeNotifier {
   String? _selectedValueQ1;
   String? _selectedValueQ2;
   String? _selectedValueQ3;
+  String? _waterAllocationPurpose;
 
   // Getter for Q1
   String? get selectedValueQ1 => _selectedValueQ1;
@@ -65,17 +66,24 @@ class Schemeprovider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? get waterAllocationPurpose => _waterAllocationPurpose;
+
+  set selectedWaterAllocation(String? value){
+    _waterAllocationPurpose = value;
+    notifyListeners();
+  }
+
   int get selectedValueQ3Id => yesNoMap[_selectedValueQ3] ?? -1;
 
   int get selectedValueQ2Id => yesNoMap[_selectedValueQ2] ?? -1;
 
   int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? -1;
 
-  final TextEditingController safeController = TextEditingController();
-  final TextEditingController criticalController = TextEditingController();
-  final TextEditingController semiCriticalController = TextEditingController();
-  final TextEditingController waterAllocationController =
-      TextEditingController();
+  int get selectedWaterAllocationId => yesNoMap[_waterAllocationPurpose]??-1;
+
+   TextEditingController safeController = TextEditingController();
+   TextEditingController criticalController = TextEditingController();
+   TextEditingController semiCriticalController = TextEditingController();
 
   int? _schemeId;
 
@@ -132,6 +140,7 @@ class Schemeprovider extends ChangeNotifier {
     required String alterNativeSource,
     required String repressFindinCommitte,
     required int modeType,
+    required String userremark
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -150,7 +159,9 @@ class Schemeprovider extends ChangeNotifier {
           waterAllocationFromWRD: waterAllocationFromWRD,
           alterNativeSource: alterNativeSource,
           repressFindinCommitte: repressFindinCommitte,
-          modeType: modeType);
+          modeType: modeType,
+          userremark: userremark
+      );
 
       _message = response.message;
       _status = response.status;
@@ -202,14 +213,13 @@ class Schemeprovider extends ChangeNotifier {
             sourceSurveyData.first.incaseGwContAnyAnalysisConduct, yesNoMap);
         print('selectedValueQ3: $selectedValueQ3');
 
-        waterAllocationController.text =
+       selectedWaterAllocation =
             sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw.toString();
-        print('waterAllocationController: ${waterAllocationController.text}');
         //
         sourceFindingRepresentativesConsulted_Controller.text =
             sourceSurveyData.first.represe_of_ource_finding_committee;
-        alternativeSourcesAvailable_Controller.text =
-            sourceSurveyData.first.cost_effective_alternative_sources;
+        alternativeSourcesAvailable_Controller.text = sourceSurveyData.first.cost_effective_alternative_sources;
+        PartAUserObservation.text = sourceSurveyData.first.Remarks_Source;
 
         //  Remarks_Source;
       } else {
@@ -224,19 +234,32 @@ class Schemeprovider extends ChangeNotifier {
     }
   }
 
+  void clearSchemeProvider(){
+
+    clearfetchSourceSurvey();
+    //clear for part b
+    clearfetchSchemePlanning();
+    //clear for part c
+    clearfetchAdditionalInfoRetrofit();
+    //clear for part d
+    clearSchemeImplementationData();
+    //clear for par e
+    clearVisualInspectionAnswers();
+  }
+
   void clearfetchSourceSurvey() {
     // Clear selected radio button values
     selectedValueQ1 = null;
     selectedValueQ2 = null;
     selectedValueQ3 = null;
-
+    selectedWaterAllocation=null;
     // Clear frequency text field
-    safeController.clear();
-    criticalController.clear();
-    semiCriticalController.clear();
-    waterAllocationController.clear();
-    sourceFindingRepresentativesConsulted_Controller.clear();
-    alternativeSourcesAvailable_Controller.clear();
+    safeController.text='';
+    criticalController.text='';
+    semiCriticalController.text='';
+    sourceFindingRepresentativesConsulted_Controller.text='';
+    alternativeSourcesAvailable_Controller.text='';
+    PartAUserObservation.clear();
 
     notifyListeners();
   }
@@ -350,6 +373,7 @@ class Schemeprovider extends ChangeNotifier {
     required String multiple_schemes_sanctioned_justify_detial,
     required String desgined_conjunctive_detail,
     required int phy_status,
+    required String user_remark,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -375,6 +399,7 @@ class Schemeprovider extends ChangeNotifier {
             multiple_schemes_sanctioned_justify_detial,
         desgined_conjunctive_detail: desgined_conjunctive_detail,
         phy_status: phy_status,
+        userremark: user_remark
       );
 
       _message = response.message;
@@ -457,8 +482,10 @@ class Schemeprovider extends ChangeNotifier {
             schemePlanningData.first.txtwork_awarded_no_physical_progress;
         schemePlanning_Question5Controller.text = schemePlanningData
             .first.txtmultiple_schemes_sanctioned_justify_detial;
-        schemePlanning_Question6Controller.text =
-            schemePlanningData.first.txtdesgined_conjunctive_detail;
+        schemePlanning_Question6Controller.text = schemePlanningData.first.txtdesgined_conjunctive_detail;
+
+        PartBUserObservation.text = schemePlanningData.first.scheme_planning_Remarks;
+
         //       =schemePlanningData.first.scheme_planning_Remarks;
         //
       } else {
@@ -482,10 +509,9 @@ class Schemeprovider extends ChangeNotifier {
     onSpotExcavation = null;
 
     // Clear frequency text field
-    wtpHoursController.clear();
-    ohsrTimeController.clear();
-    mbrTimeController.clear();
-    waterAllocationController.clear();
+    wtpHoursController.text='0';
+    ohsrTimeController.text='0';
+    mbrTimeController.text='0';
     rockyPipeMaterialController.clear();
     soilPipeMaterialController.clear();
     deviationReasonController.clear();
@@ -494,6 +520,7 @@ class Schemeprovider extends ChangeNotifier {
     schemePlanning_Question2Controller.clear();
     schemePlanning_Question5Controller.clear();
     schemePlanning_Question6Controller.clear();
+    PartBUserObservation.clear();
 
     notifyListeners();
   }
@@ -521,6 +548,9 @@ class Schemeprovider extends ChangeNotifier {
       TextEditingController();
 
   final TextEditingController storageStructureDetailsController =
+      TextEditingController();
+
+  final TextEditingController storageStructureInKL =
       TextEditingController();
 
   // Radio 2: As-built Drawing Availability
@@ -565,6 +595,7 @@ class Schemeprovider extends ChangeNotifier {
     required int onPMGati,
     required String noReason,
     required int phyStatus,
+    required String user_remark,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -585,7 +616,10 @@ class Schemeprovider extends ChangeNotifier {
           buildDrawingAvailable: buildDrawingAvailable,
           onPMGati: onPMGati,
           noReason: noReason,
-          phy_status: phyStatus);
+          phy_status: phyStatus,
+          userremark: user_remark
+
+      );
 
       _message = response.message;
       _status = response.status;
@@ -635,10 +669,12 @@ class Schemeprovider extends ChangeNotifier {
         print('wtpCapacityMldController: ${wtpCapacityMldController.text}');
 
         storageStructureDetailsController.text = retrofitInfoData
-            .first.legacyInfrastructureStorageStrCapacityKl
+            .first.legacyInfrastructureStorageStrNos
             .toString();
-        print(
-            'storageStructureDetailsController: ${storageStructureDetailsController.text}');
+        print('storageStructureDetailsController: ${storageStructureDetailsController.text}');
+
+        storageStructureInKL.text= retrofitInfoData.first.legacyInfrastructureStorageStrCapacityKl.toString();
+        print('storageStructureInKL: ${storageStructureInKL.text}');
 
         asBuiltDrawingAvailability = getRadiobuttonData(
             retrofitInfoData.first.buildDrawingInfrAvailable, yesNoMap);
@@ -675,6 +711,7 @@ class Schemeprovider extends ChangeNotifier {
     distributionPipelineKmController.clear();
     wtpCapacityMldController.clear();
     storageStructureDetailsController.clear();
+    storageStructureInKL.clear();
     reasonController.clear();
 
     notifyListeners();
@@ -683,6 +720,30 @@ class Schemeprovider extends ChangeNotifier {
   //**** fetch api Part C end here ***///
 
   // Q1: Delay reasons
+  List<String> _belowselectedDelayReasons = [];
+
+  List<String> get belowselectedDelayReasons => _belowselectedDelayReasons;
+
+  set belowselectedDelayReasons(List<String> value) {
+    _belowselectedDelayReasons = value;
+    notifyListeners();
+  }
+
+  final Map<String, int> belowdelayReasons = {
+    "Delay in DPR approval": 1,
+    "Land/site issues": 5,
+    "Clearances from Highway/Forest/Railways etc.": 8,
+    "Others": 9,
+
+  };
+
+
+  List<String> get belowdelayReasonsOptions => belowdelayReasons.keys.toList();
+
+  List<int> get belowselectedDelayReasonsID => _belowselectedDelayReasons.map((e) => belowdelayReasons[e] ?? 0).toList();
+
+
+
   List<String> _selectedDelayReasons = [];
 
   List<String> get selectedDelayReasons => _selectedDelayReasons;
@@ -700,14 +761,21 @@ class Schemeprovider extends ChangeNotifier {
     "Land/site issues": 5,
     "Weather/natural calamities": 6,
     "Inter-departmental coordination": 7,
+    "Clearances from Highway/Forest/Railways etc.": 8,
+    "Others": 9,
     "Others": 8,
     "Clearances from Highway/Forest/Railways etc.": 9,
   };
 
+
   List<String> get delayReasonsOptions => delayReasons.keys.toList();
 
-  List<int> get selectedDelayReasonsID =>
-      _selectedDelayReasons.map((e) => delayReasons[e] ?? 0).toList();
+  List<int> get selectedDelayReasonsID => _selectedDelayReasons.map((e) => delayReasons[e] ?? -1).toList();
+
+
+
+  TextEditingController PartDothersComplaintController = TextEditingController();
+  TextEditingController PartEothersComplaintController = TextEditingController();
 
   // Q2: Cost overrun (single choice)
   String? _selectedCostOverrun;
@@ -740,20 +808,20 @@ class Schemeprovider extends ChangeNotifier {
 
   final Map<String, int> ReasonsOptions = {
     "Price escalation of materials": 1,
-    "Additional scope of work added post-DPR": 2,
-    "Delay in project execution leading to cost inflation": 3,
-    "Revision in technical design/specifications": 4,
-    "Change in site conditions or unforeseen site challenges": 5,
-    "Contractor claim settlement/additional payments": 6,
-    "Logistic/transportation constraints": 7,
-    "Poor estimation at DPR stage": 8,
+    "Logistic/transportation constraints": 2,
+    "Additional scope of work added post-DPR": 3,
+    "Poor estimation at DPR stage": 4,
+    "Delay in project execution leading to cost inflation": 5,
+    "Revision in technical design/specifications": 6,
+    "Change in site conditions or unforeseen site challenges": 7,
+    "Contractor claim settlement/additional payments": 8,
     "Others": 9,
   };
 
   List<String> get ReasonsOptionsOptions => ReasonsOptions.keys.toList();
 
   List<int> get selectedcostOverrunReasonsID =>
-      _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? 0).toList();
+      _selectedcostOverrunReasons.map((e) => ReasonsOptions[e] ?? -1).toList();
 
   // Q4: Revised cost approved before award (yes/no)
   String? _selectedrevisedCostApproved; // Yes / No
@@ -835,6 +903,7 @@ class Schemeprovider extends ChangeNotifier {
   int roadRestorationNum;
   int solarComponentNum;
   int otherComponentsNum;
+  int LevelizedcostNum;
 
   Schemeprovider({
     this.intakeTubeWellNum = 0,
@@ -849,6 +918,7 @@ class Schemeprovider extends ChangeNotifier {
     this.roadRestorationNum = 0,
     this.solarComponentNum = 0,
     this.otherComponentsNum = 0,
+    this.LevelizedcostNum = 0,
   }) {
     _initCostControllers();
   }
@@ -867,6 +937,7 @@ class Schemeprovider extends ChangeNotifier {
       'Road Restoration': TextEditingController(),
       'Solar components': TextEditingController(),
       'Others (DG sets, HH storage)': TextEditingController(),
+      'Levelized cost per FHTC (considering conjunctive scheme, if any)': TextEditingController(),
     };
   }
 
@@ -884,8 +955,8 @@ class Schemeprovider extends ChangeNotifier {
         'roadRestorationNum': roadRestorationNum,
         'solarComponentNum': solarComponentNum,
         'otherComponentsNum': otherComponentsNum,
-        'costControllers':
-            costControllers.map((key, value) => MapEntry(key, value.text)),
+        'levelizedcostNum': LevelizedcostNum,
+        'costControllers': costControllers.map((key, value) => MapEntry(key, value.text)),
       };
 
   //Q8.1
@@ -962,11 +1033,18 @@ class Schemeprovider extends ChangeNotifier {
   List<String> get revisionReasonsIDOptions => revisionReasonsID.keys.toList();
 
   List<int> get selectedrevisionReasonsID =>
-      _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? 0).toList();
+      _selectedrevisionReasons.map((e) => revisionReasonsID[e] ?? -1).toList();
 
   // Below 10% content
-  final TextEditingController below10PartD_ques8_Controller =
-      TextEditingController();
+  final TextEditingController below10PartD_ques8_Controller = TextEditingController();
+
+  final TextEditingController PartAUserObservation = TextEditingController();
+  final TextEditingController PartBUserObservation = TextEditingController();
+  final TextEditingController PartCUserObservation = TextEditingController();
+  final TextEditingController PartDUserObservation = TextEditingController();
+  final TextEditingController PartEUserObservation = TextEditingController();
+
+
 
   Future<void> saveSchemeImplementation({
     required int userId,
@@ -1012,6 +1090,7 @@ class Schemeprovider extends ChangeNotifier {
     required int concurrent_supervission_scope_value,
     required String txtpws_status_under_scheme,
     required int phy_status,
+    required String user_remark,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1062,6 +1141,7 @@ class Schemeprovider extends ChangeNotifier {
             concurrent_supervission_scope_value,
         txtpws_status_under_scheme: txtpws_status_under_scheme,
         phy_status: phy_status,
+        userremark: user_remark
       );
 
       _message = response.message;
@@ -1286,7 +1366,9 @@ class Schemeprovider extends ChangeNotifier {
     required int commissioningProofAvailable,
     required List<int> tpiaIssueTypes,
     required int modeType,
-    required int hydroTestingDistribute
+    required int hydroTestingDistribute,
+    required String typeofissuestpiasOther,
+    required String visualInspectionRemarks
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -1332,7 +1414,11 @@ class Schemeprovider extends ChangeNotifier {
           commissioningProofAvailable: commissioningProofAvailable,
           tpiaIssueTypes: tpiaIssueTypes,
           modeType: modeType,
-          hydroTestingDistribute: hydroTestingDistribute);
+          hydroTestingDistribute: hydroTestingDistribute,
+        visualInspectionRemarks: visualInspectionRemarks,
+        typeofissuestpiasOther: typeofissuestpiasOther
+
+      );
 
       _message = response.message;
       _status = response.status;
@@ -1486,9 +1572,11 @@ class Schemeprovider extends ChangeNotifier {
     quesPartE17 = getRadiobuttonData(
         schemeVisualInspectionModel.schemeCommissionedAsPerProtocol,
         question17Map);
-    quesPartE18 = getRadiobuttonData(
-        schemeVisualInspectionModel.documentAsProofOfCommissioningAvailable,
-        question18Map);
+    quesPartE18 = getRadiobuttonData(schemeVisualInspectionModel.documentAsProofOfCommissioningAvailable, question18Map);
+
+    PartEUserObservation.text = schemeVisualInspectionModel.typeofissuestpiasOther!;
+    PartEothersComplaintController.text = schemeVisualInspectionModel.visualInspectionRemarks!;
+
   }
 
   void clearVisualInspectionAnswers() {
@@ -1812,11 +1900,11 @@ class Schemeprovider extends ChangeNotifier {
   int get selectedId_partE9 => yesNoMap[_quesPartE9] ?? -1;
 
   final Map<String, int> question10Map = {
-    "Pipelines without proper depth": 1,
-    "Pipelines leaking": 2,
+    "Pipelines without proper depth/cushion": 1,
+    "Pipelines damages & leaking ": 2,
     "OHT leaking": 3,
     "Cracks in RCC works": 4,
-    "Water connections in drains": 5,
+    "Water connections passing through drains": 5,
     "Others": 6
   };
   List<String> _quesPartE10 = [];
@@ -1829,11 +1917,11 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   List<int> get selectedId_partE10 =>
-      _quesPartE10.map((e) => question10Map[e] ?? 0).toList();
+      _quesPartE10.map((e) => question10Map[e] ?? -1).toList();
 
   final Map<String, int> question11Map = {
-    "Rectification/Demolition Done": 1,
-    "Partial Action": 2,
+    "Yes - Rectification/Demolition Done": 1,
+    "Yes - Partial Action": 2,
     "No Action": 3,
     "Not Known": 4
   };
@@ -1849,8 +1937,8 @@ class Schemeprovider extends ChangeNotifier {
   int get selectedId_partE11 => question11Map[_quesPartE11] ?? -1;
 
   final Map<String, int> question12Map = {
-    "Regularly": 1,
-    "Occasionally": 2,
+    "Yes - Regularly": 1,
+    "Yes - Occasionally": 2,
     "No": 3,
     "Not Known": 4
   };

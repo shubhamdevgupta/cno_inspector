@@ -21,6 +21,7 @@ class SchemeRepositoy {
     required String repressFindinCommitte,
     required String alterNativeSource,
     required int modeType,
+    required String userremark
   }) async {
     try {
       final response = await _apiService.post(
@@ -39,6 +40,7 @@ class SchemeRepositoy {
           "represe_of_ource_finding_committee": repressFindinCommitte,
           "cost_effective_alternative_sources":alterNativeSource,
           "phy_status":modeType,
+          "Remarks_Source":userremark,
         }),
       );
       return BaseResponse.fromJson(response);
@@ -76,6 +78,7 @@ class SchemeRepositoy {
     required String multiple_schemes_sanctioned_justify_detial,
     required String desgined_conjunctive_detail,
     required int phy_status ,
+    required String userremark
   }) async {
     try {
       final response = await _apiService.post(
@@ -101,7 +104,8 @@ class SchemeRepositoy {
           "txtwork_awarded_no_physical_progress" :  work_awarded_no_physical_progress,
           "txtmultiple_schemes_sanctioned_justify_detial" : multiple_schemes_sanctioned_justify_detial,
           "txtdesgined_conjunctive_detail" : desgined_conjunctive_detail,
-          "phy_status" : phy_status
+          "phy_status" : phy_status,
+          "scheme_planning_Remarks" : userremark
 
         }),
       );
@@ -127,6 +131,7 @@ class SchemeRepositoy {
     required int onPMGati,
     required String noReason,
     required int phy_status,
+    required String userremark,
   }) async {
     try {
       final response = await _apiService.post(
@@ -146,7 +151,8 @@ class SchemeRepositoy {
           "build_drawing_infr_available": buildDrawingAvailable,
           "if_yes_is_it_on_PMGati": onPMGati,
           "if_no_reason": noReason,
-          "phy_status" : phy_status
+          "phy_status" : phy_status,
+          "AdditionalInfo_Remarks" : userremark,
         }),
       );
       return BaseResponse.fromJson(response);
@@ -202,6 +208,7 @@ class SchemeRepositoy {
     required int    concurrent_supervission_scope_value,
     required String txtpws_status_under_scheme,
     required int    phy_status,
+    required String    userremark,
 
   }) async {
     try {
@@ -252,6 +259,7 @@ class SchemeRepositoy {
           "concurrent_supervission_scope_value":concurrent_supervission_scope_value,
           "txtpws_status_under_scheme":txtpws_status_under_scheme,
           "phy_status":phy_status,
+          "scheme_implementation_Remarks":userremark,
 
         }),
       );
@@ -302,7 +310,9 @@ class SchemeRepositoy {
     required int commissioningProofAvailable,
     required List<int> tpiaIssueTypes,
     required int modeType,
-    required int hydroTestingDistribute
+    required int hydroTestingDistribute,
+    required String typeofissuestpiasOther,
+    required String visualInspectionRemarks
   }) async {
     try {
       final response = await _apiService.post(
@@ -347,7 +357,9 @@ class SchemeRepositoy {
           "document_as_proof_of_commissioning_available": commissioningProofAvailable,
           "type_of_issues_tpias": tpiaIssueTypes,
           "phy_status":modeType,
-          "Hydrotesting_Distribution_line":hydroTestingDistribute
+          "Hydrotesting_Distribution_line":hydroTestingDistribute,
+          "type_of_issues_tpias_Other":typeofissuestpiasOther,
+          "visual_Inspection_Remarks":visualInspectionRemarks
         }),
       );
       return BaseResponse.fromJson(response);

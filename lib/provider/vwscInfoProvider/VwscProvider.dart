@@ -225,8 +225,8 @@ class Vwscprovider extends ChangeNotifier {
   final Map<String, int> OMArrangements = {
     "VWSC": 1,
     "PHED": 2,
-    "Outsourced": 3,
-    "No arrangement": 4,
+    "Outsourced Contractor": 4,
+    "No arrangement": 3,
   };
 
   List<String> get OMArrangementsOptions => OMArrangements.keys.toList();
@@ -311,7 +311,7 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   // Get mapped ID
-  int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? 0;
+  int get selectedHouseholdWaterId => yesNoMap[_selectedHouseholdWater] ?? -1;
 
   // question 2222222222222222
   TextEditingController PartBVWSCuserObservationController = TextEditingController();
@@ -406,11 +406,11 @@ class Vwscprovider extends ChangeNotifier {
 
 // que 6666666666666666666666666
  final Map<String, int> vwscBelowPartAQues2Map = {
-     'JJM new':1,
-     'JJM Retrofitted':2,
-     'NRDWP':3,
-     'State Scheme':4,
-     'No scheme':5,
+     'JJM new':4,
+     'JJM Retrofitted':3,
+     'NRDWP':2,
+     'State Scheme':1,
+     'No scheme':0,
  };
 
  final Map<String, int> vwscBelowPartAQues3Map = {
@@ -613,7 +613,7 @@ class Vwscprovider extends ChangeNotifier {
   String getRadiobuttonData(int id, Map<String, int> labelMap) {
     return labelMap.entries
         .firstWhere((entry) => entry.value == id,
-        orElse: () => const MapEntry('', 0))
+        orElse: () => const MapEntry('', -1))
         .key;
   }
 
@@ -1313,5 +1313,22 @@ class Vwscprovider extends ChangeNotifier {
       .whereType<int>()
       .toList();
 
-//
+  clearVwscProvider(){
+    //part a clear
+    clearValuesforqueA();
+
+    clearValuesforqueA();
+
+    // part b clear
+    clearCommunityInvolvementData();
+
+    // part c clear
+    clearCommunityFeedback();
+
+    // part d clear
+    clearFetchWaterQuality();
+
+    //part e clear
+    clearFetchGrievance();
+  }
 }

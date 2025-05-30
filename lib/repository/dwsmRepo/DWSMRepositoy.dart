@@ -53,6 +53,7 @@ class DWSMRepositoy {
     required int accrediteLabWaterQuality,
     required String accrediteLabWaterQualityNoRemark,
     required int modeType,
+    required String userremark,
 
   }) async {
     try {
@@ -69,7 +70,8 @@ class DWSMRepositoy {
           "are_any_impact_studies_assessments_conducted_source_sustain_efforts": areImpactStudiesConducted,
           "Does_district_NABL_accredited_lab_water_quality":accrediteLabWaterQuality,
           "Does_district_NABL_accredited_lab_water_quality_no_remark":accrediteLabWaterQualityNoRemark,
-          "phy_status":modeType
+          "phy_status":modeType,
+          "Obseration_source_sustainability_water_conservation":userremark
         }),
       );
       return BaseResponse.fromJson(response);

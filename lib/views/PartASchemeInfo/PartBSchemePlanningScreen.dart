@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../provider/AppStateProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/UserFeedback.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
@@ -273,9 +274,6 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                 ),
                               ),
 // Above 10% part End
-
-
-
                                 // Below 10% part Start
                                 Visibility(
                                   visible: modeType==ProjectMode.below10,
@@ -342,14 +340,14 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                   ),
                                   const SizedBox(height: 6),
                                   Customtxtfeild(
-                                    label: '4.1 Rocky Strata - Pipe Material Used',
+                                    label: '4.1 Rocky Strata',
                                     controller:
                                     schemeProvider.rockyPipeMaterialController,
                                     keyboardType: TextInputType.text,
                                   ),
                                   const SizedBox(height: 6),
                                   Customtxtfeild(
-                                    label: '4.2 Soil Strata - Pipe Material Used',
+                                    label: '4.2 Soil Strata',
                                     controller:
                                     schemeProvider.soilPipeMaterialController,
                                     keyboardType: TextInputType.text,
@@ -374,6 +372,12 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                               ),
 
                               // Below 10% part End
+
+
+                                CustomObservationField(
+                                  labelText: '* Obseration on "Scheme Planning":',
+                                  controller:  schemeProvider.PartBUserObservation,
+                                ),
 
                                 Align(
                                   alignment: Alignment.centerRight,
@@ -402,12 +406,12 @@ print("STATE : ${schemeProvider.stateId}");
                                                 .googleEarthSurveyID,
                                             numberOfSurveys:
                                                 schemeProvider.noSurveyID,
-                                            designRunningHours: schemeProvider.wtpHoursController.text.isEmpty ? 0 :int.parse(schemeProvider
-                                                .wtpHoursController.text),
-                                            retentionTimeOHT: schemeProvider.ohsrTimeController.text.isEmpty?0:int.parse(schemeProvider
-                                                .ohsrTimeController.text),
-                                            retentionTimeMBR: schemeProvider.mbrTimeController.text.isEmpty ?0:int.parse(schemeProvider
-                                                .mbrTimeController.text),
+                                            designRunningHours: int.tryParse(schemeProvider
+                                                .wtpHoursController.text)!,
+                                            retentionTimeOHT: int.tryParse(schemeProvider
+                                                .ohsrTimeController.text)!,
+                                            retentionTimeMBR: int.tryParse(schemeProvider
+                                                .mbrTimeController.text)!,
                                             terrainRocky: schemeProvider
                                                 .rockyPipeMaterialController.text,
                                             terrainSoil: schemeProvider
@@ -415,6 +419,7 @@ print("STATE : ${schemeProvider.stateId}");
                                             foundAsPerDPR:
                                                 schemeProvider.onSpotExcavationID,
                                             deviation: schemeProvider.deviationReasonController.text,
+                                         user_remark: schemeProvider.PartBUserObservation.text,
 
 
                                          reason_not_awarded_scheme_planning:schemeProvider.schemePlanning_Question1Controller.text ,

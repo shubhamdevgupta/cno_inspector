@@ -15,18 +15,18 @@ class DashboardProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   bool _status = true;
-  bool get status => _status;
 
+  bool get status => _status;
 
   String errorMsg = '';
 
- // CnoDashboardResponse? cnoDashboardResponse;
+  // CnoDashboardResponse? cnoDashboardResponse;
 
-  List<CnoDashboardItem> dashboardList=[];
-  List<CnoDashboardHomeItem> cnoDashboardHomeList=[];
+  List<CnoDashboardItem> dashboardList = [];
+  List<CnoDashboardHomeItem> cnoDashboardHomeList = [];
   String? selectedSchemeID;
-  int selectedVwscId=0;
-  int selectedDwsmID=0;
+  int selectedVwscId = 0;
+  int selectedDwsmID = 0;
 
   Future<void> fetchDashboardHomeData(int action) async {
     _isLoading = true;
@@ -35,7 +35,8 @@ class DashboardProvider extends ChangeNotifier {
     final int userId = _localStorage.getInt(AppConstants.prefUserId) ?? 0;
 
     try {
-      final rawData = await _dashboardRepository.fetchDashboardHomeData(userId, action);
+      final rawData =
+          await _dashboardRepository.fetchDashboardHomeData(userId, action);
 
       _status = rawData.status;
 
@@ -52,18 +53,24 @@ class DashboardProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchDashboardData(int userId,int action,int phy) async {
+  Future<void> fetchDashboardData(int userId, int action, int phy) async {
     _isLoading = true;
     notifyListeners();
     int userId = _localStorage.getInt(AppConstants.prefUserId) ?? 0;
     try {
-     final rawDashboardList = await _dashboardRepository.fetchDashboardData(userId, action,phy);
-     _status=rawDashboardList.status;
-     if(rawDashboardList.status==true){
-       dashboardList=rawDashboardList.result;
-     }else{
-       errorMsg=rawDashboardList.message;
-     }
+      final rawDashboardList =
+          await _dashboardRepository.fetchDashboardData(userId, action, phy);
+      _status = rawDashboardList.status;
+      if (rawDashboardList.status == true) {
+        dashboardList = rawDashboardList.result;
+        if (dashboardList.length == 1) {
+          selectedSchemeID = dashboardList.first.schemeId.toString();
+          selectedDwsmID = dashboardList.first.districtId;
+          selectedVwscId = dashboardList.first.villageId;
+        }
+      } else {
+        errorMsg = rawDashboardList.message;
+      }
     } catch (e) {
       GlobalExceptionHandler.handleException(e as Exception);
     } finally {
@@ -76,12 +83,19 @@ class DashboardProvider extends ChangeNotifier {
     selectedSchemeID = schemeId;
     notifyListeners();
   }
+
   void setSelectedDWSM(int dwsmId) {
     selectedDwsmID = dwsmId;
     notifyListeners();
   }
+
   void setSelectedVWSC(int vwscId) {
     selectedVwscId = vwscId;
     notifyListeners();
+  }
+
+  void clearDashboardData() {
+    dashboardList.clear();
+    cnoDashboardHomeList.clear();
   }
 }

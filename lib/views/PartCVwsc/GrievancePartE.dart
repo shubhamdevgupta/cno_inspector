@@ -191,7 +191,7 @@ class _GrievancePartE extends State<GrievancePartE> {
 
 
                                   CustomObservationField(
-                                    labelText: '* User Observation / Remarks:',
+                                    labelText: '* Obseration on "Grievance Redressal" :',
                                     controller:  vwscProvider.PartEVWSCuserObservationController,
                                   ),
 
