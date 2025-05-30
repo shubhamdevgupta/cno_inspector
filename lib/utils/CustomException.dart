@@ -4,7 +4,6 @@ class AppException implements Exception {
 
   AppException(this.message, this.prefix);
 
-
   @override
   String toString() {
     return "$prefix$message";
@@ -13,10 +12,10 @@ class AppException implements Exception {
 
 class NetworkException extends AppException {
   NetworkException([String message = "No Internet Connection"])
-      : super(message, "");
+      : super(message, "Network Error: ");
 }
 
 class ApiException extends AppException {
   ApiException([String message = "Something went wrong with the API"])
-      : super(message, "");
+      : super(message, "Please Contact to Admin ");
 }

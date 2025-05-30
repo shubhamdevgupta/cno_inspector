@@ -82,7 +82,7 @@ class BaseApiService {
       throw NetworkException('No internet connection');
     } catch (e) {
       log('Exception during GET request: $e');
-      throw ApiException('API Error : $e');
+      throw ApiException('Please Contact to Admin: $e');
     }
   }
 
@@ -99,23 +99,19 @@ class BaseApiService {
       case 200:
         return jsonDecode(response.body);
       case 400:
-        throw ApiException(
-            'Bad Request ${handleErrorResp(response.body, '')}');
+        throw ApiException('Please Contact to Admin');
       case 404:
-        throw ApiException('Page not found (404) ,Please contact to admin');
+        throw ApiException('Please Contact to Admin');
       case 401:
-        throw ApiException(
-            'Unauthorized ${handleErrorResp(response.body, '')}');
+        throw ApiException('Please Contact to Admin');
       case 500:
-        throw ApiException(handleErrorResp(response.body, 'Internal Server Error'));
+        throw ApiException('Please Contact to Admin');
       case 502:
-        throw ApiException(
-            'Bad Gateway ${handleErrorResp(response.body, '')}');
+        throw ApiException('Please Contact to Admin');
       case 408:
-        throw ApiException('Request Timeout : Please Try after some time');
+        throw ApiException('Please Contact to Admin');
       default:
-        throw ApiException(
-            'Unexpected error ${response.statusCode} \n ${handleErrorResp(response.body, '')}');
+        throw ApiException('Please Contact to Admin');
     }
   }
 

@@ -799,6 +799,8 @@ class Dwsmprovider extends ChangeNotifier {
 
   // 1. Authorized Inspectors - Multi Select
 
+
+
   final Map<String, int> authorizedInspectorsMap = {
     "PHED Engineer": 1,
     "PMC/PMU": 2,
@@ -808,17 +810,19 @@ class Dwsmprovider extends ChangeNotifier {
     "Others": 6
   };
 
-  String? _authorizedInspectors;
+  List<String> _authorizedInspectors=[];
 
-  String? get authorizedInspectors => _authorizedInspectors;
+  List<String> get authorizedInspectors => _authorizedInspectors;
 
-  set authorizedInspectors(String? value) {
+  set authorizedInspectors(List<String> value) {
     _authorizedInspectors = value;
     notifyListeners();
   }
 
   int get authorizedInspectorID =>
       authorizedInspectorsMap[_authorizedInspectors] ?? -1;
+
+  List<int> get selectedAuthorizedInspectorID => _authorizedInspectors.map((e) => authorizedInspectorsMap[e] ?? -1).toList();
 
 // 2. Commissioning Protocol Followed - Radio
   String? _commissioningProtocolFollowed;
@@ -834,7 +838,14 @@ class Dwsmprovider extends ChangeNotifier {
       yesNoMap[_commissioningProtocolFollowed] ?? -1;
 
 // 3. Commissioning Presence - Multi Select
+/*  List<String> _selectedDelayReasons = [];
 
+  List<String> get selectedDelayReasons => _selectedDelayReasons;
+
+  set selectedDelayReasons(List<String> value) {
+    _selectedDelayReasons = value;
+    notifyListeners();
+  }*/
   final Map<String, int> commissioningPresenceMap = {
     "PHED": 1,
     "VWSC Members": 2,
@@ -843,17 +854,17 @@ class Dwsmprovider extends ChangeNotifier {
     "TPIA": 5,
     "Community Members": 6
   };
-  String? _commissioningPresence;
+  List<String> _commissioningPresence=[];
 
-  String? get commissioningPresence => _commissioningPresence;
+  List<String> get commissioningPresence => _commissioningPresence;
 
-  set commissioningPresence(String? value) {
+  set commissioningPresence(List<String> value) {
     _commissioningPresence = value;
     notifyListeners();
   }
 
-  int get commissioningPresenceID =>
-      commissioningPresenceMap[_commissioningPresence] ?? -1;
+  int get commissioningPresenceID => commissioningPresenceMap[_commissioningPresence] ?? -1;
+  List<int> get selectedCommissioningPresenceID => _commissioningPresence.map((e) => commissioningPresenceMap[e] ?? -1).toList();
 
 // 4. Third Party Assessment - Radio
   final Map<String, int> thirdPartyAssessmentMap = {
@@ -891,9 +902,9 @@ class Dwsmprovider extends ChangeNotifier {
     required int userId,
     required int stateId,
     required int districtId,
-    required int inspectionAuthority,
+    required List<int> inspectionAuthority,
     required int isCommissioningProtocolFollowed,
-    required int schemesPresentDuringCommissioning,
+    required List<int> schemesPresentDuringCommissioning,
     required int districtAssessmentAgencies,
     required int districtHiredAgencies,
     required int modeType,
@@ -942,7 +953,7 @@ class Dwsmprovider extends ChangeNotifier {
         _message = response.message;
         _status = response.status;
 
-        authorizedInspectors = getRadiobuttonData(
+        authorizedInspectors = getCheckBoxData(
             qualityAssuranceData
                 .first.whoAuthorizedInspectMeasureFieldInspection,
             authorizedInspectorsMap);
@@ -953,7 +964,7 @@ class Dwsmprovider extends ChangeNotifier {
             yesNoMap);
         print('commissioningProtocolFollowed: $commissioningProtocolFollowed');
 
-        commissioningPresence = getRadiobuttonData(
+        commissioningPresence = getCheckBoxData(
             qualityAssuranceData.first.duringCommissioningSchemesPresent,
             commissioningPresenceMap);
         print('commissioningPresence: $commissioningPresence');
@@ -977,9 +988,9 @@ class Dwsmprovider extends ChangeNotifier {
   }
 
   void clearfetchQualityAssuranceData() {
-    authorizedInspectors = null;
+    authorizedInspectors =[];
     commissioningProtocolFollowed = null;
-    commissioningPresence = null;
+    commissioningPresence = [];
     thirdPartyAssessment = null;
   }
 
@@ -1002,6 +1013,8 @@ class Dwsmprovider extends ChangeNotifier {
 
 // 2. Grievance Registration Methods - Multi Select
 
+
+
   final Map<String, int> grievanceRegistrationMethodsMap = {
     "Toll free number": 1,
     "Web based portal": 2,
@@ -1010,17 +1023,19 @@ class Dwsmprovider extends ChangeNotifier {
     "Directly calling to PHED/Contractor/O&M agency": 5
   };
 
-  String? _grievanceRegistrationMethods;
+  List<String> _grievanceRegistrationMethods=[];
 
-  String? get grievanceRegistrationMethods => _grievanceRegistrationMethods;
+  List<String> get grievanceRegistrationMethods => _grievanceRegistrationMethods;
 
-  set grievanceRegistrationMethods(String? value) {
+  set grievanceRegistrationMethods(List<String> value) {
     _grievanceRegistrationMethods = value;
     notifyListeners();
   }
 
-  int get grievanceRegistrationMethodsID =>
-      grievanceRegistrationMethodsMap[_grievanceRegistrationMethods] ?? -1;
+  int get grievanceRegistrationMethodsID => grievanceRegistrationMethodsMap[_grievanceRegistrationMethods] ?? -1;
+
+  List<int> get selectedGrievanceRegistrationMethodsID => _grievanceRegistrationMethods.map((e) => grievanceRegistrationMethodsMap[e] ?? -1).toList();
+
 
 // 3. Complaints Received - Radio
   String? _complaintsReceived;
@@ -1067,7 +1082,7 @@ class Dwsmprovider extends ChangeNotifier {
     required int stateId,
     required int districtId,
     required int grievanceMechanismAvailable,
-    required int howGrievancesRegistered,
+    required List<int> howGrievancesRegistered,
     required int complaintsReceived,
     required List<int> typeOfComplaints,
     required String otherComplaints,
@@ -1125,7 +1140,7 @@ class Dwsmprovider extends ChangeNotifier {
             grievanceData.first.grievanceRedressalMechanismAvailable, yesNoMap);
         print('grievanceMechanismAvailable: $grievanceMechanismAvailable');
 
-        grievanceRegistrationMethods = getRadiobuttonData(
+        grievanceRegistrationMethods = getCheckBoxData(
             grievanceData.first.howGrievancesRegisteredVillagers,
             grievanceRegistrationMethodsMap);
         print('grievanceRegistrationMethods: $grievanceRegistrationMethods');
@@ -1161,7 +1176,7 @@ class Dwsmprovider extends ChangeNotifier {
 
   void clearfetchGrievanceRedressalData() {
     grievanceMechanismAvailable = null;
-    grievanceRegistrationMethods = null;
+    grievanceRegistrationMethods = [];
     complaintsReceived = null;
     complaintTypes.clear();
 

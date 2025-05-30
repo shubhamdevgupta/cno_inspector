@@ -242,49 +242,57 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                           schemeProvider.setQuesPartE5 = val;
                                         },
                                       ),
-                                      Customradiobttn(
-                                        question: '5.1 If yes, increase in cost:',
-                                        options: schemeProvider.increaseInCostID.keys
-                                            .toList(),
-                                        selectedOption:
-                                        schemeProvider.selectedincreaseInCost,
-                                        onChanged: (value) {
-                                          schemeProvider.selectedincreaseInCost = value;
 
-                                          print(
-                                              'selectedincreaseInCost:  ${schemeProvider.selectedincreaseInCostID}');
-                                        },
-                                      ),
-                                      const SizedBox(height: 10),
+                                      Visibility(
+                                        visible: schemeProvider.selectedId_partE5==1,
 
-                                      GestureDetector(
-                                        onTap: () async {
-                                          DateTime? pickedDate = await showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime(2000),
-                                            lastDate: DateTime(2100),
-                                          );
+                                        child: Column(
+                                          children: [
+                                            Customradiobttn(
+                                              question: '5.1 If yes, increase in cost:',
+                                              options: schemeProvider.increaseInCostID.keys
+                                                  .toList(),
+                                              selectedOption:
+                                              schemeProvider.selectedincreaseInCost,
+                                              onChanged: (value) {
+                                                schemeProvider.selectedincreaseInCost = value;
 
-                                          if (pickedDate != null) {
-                                            // Format the picked date as "dd-mm-yyyy"
-                                            String formattedDate =
-                                                "${pickedDate.day.toString().padLeft(2, '0')}/${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
-                                            schemeProvider.dateApproval =
-                                                formattedDate;
-                                          }
-                                        },
-                                        child: AbsorbPointer(
-                                          // Prevents typing
-                                          child: Customtxtfeild(
-                                            label:
-                                            '5.2 Date of SLSSC approval in seriatim for revised estimate?',
-                                            controller: TextEditingController(
-                                                text: schemeProvider.dateApproval ??
-                                                    ''),
-                                            keyboardType: TextInputType.datetime,
-                                            hintText: 'dd-mm-yyyy',
-                                          ),
+                                                print(
+                                                    'selectedincreaseInCost:  ${schemeProvider.selectedincreaseInCostID}');
+                                              },
+                                            ),
+                                            GestureDetector(
+                                              onTap: () async {
+                                                DateTime? pickedDate = await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2000),
+                                                  lastDate: DateTime(2100),
+                                                );
+
+                                                if (pickedDate != null) {
+                                                  // Format the picked date as "dd-mm-yyyy"
+                                                  String formattedDate =
+                                                      "${pickedDate.day.toString().padLeft(2, '0')}/${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
+                                                  schemeProvider.dateApproval =
+                                                      formattedDate;
+                                                }
+                                              },
+                                              child: AbsorbPointer(
+                                                // Prevents typing
+                                                child: Customtxtfeild(
+                                                  label:
+                                                  '5.2 Date of SLSSC approval in seriatim for revised estimate?',
+                                                  controller: TextEditingController(
+                                                      text: schemeProvider.dateApproval ??
+                                                          ''),
+                                                  keyboardType: TextInputType.datetime,
+                                                  hintText: 'dd-mm-yyyy',
+                                                ),
+                                              ),
+                                            ),
+
+                                          ],
                                         ),
                                       ),
 
@@ -302,7 +310,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         },
                                       ),
 
-                                      if (schemeProvider.revisionReasonsID.containsValue("Others"))
+                                      if (schemeProvider.selectedrevisionReasons.contains("Others"))
                                         Customtxtfeild(
                                           label: '6.1 Reason',
                                           controller:
@@ -321,7 +329,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       const SizedBox(height: 6),
 
                                       _buildAdmissibleCostTable(
-                                          context, schemeProvider),
+                                          context, schemeProvider,modeType),
 
                                       const SizedBox(height: 20),
                                       const Text(
@@ -401,9 +409,9 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       ),
 
                                       // Show text field if 'Others' is selected
-                                      if (schemeProvider.selectedDelayReasons.contains("Others"))
+                                      if (schemeProvider.belowselectedDelayReasons.contains("Others"))
                                         Customtxtfeild(
-                                          label: "In Case of Other please provide details:",
+                                          label: "In case of Other, please provide details:",
                                           controller: schemeProvider.PartDQ1othersComplaintController,
                                           maxLines: 2,
                                         ),
@@ -442,49 +450,58 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Customradiobttn(
-                                        question: '3.1 If yes, increase in cost:',
-                                        options: schemeProvider.increaseInCostID.keys
-                                            .toList(),
-                                        selectedOption:
-                                        schemeProvider.selectslsscapp,
-                                        onChanged: (value) {
-                                          schemeProvider.selectslsscapp =
-                                              value;
 
-                                          print('selectslsscappID:  ${schemeProvider.selectslsscappID}');
-                                        },
-                                      ),
-                                      const SizedBox(height: 10),
 
-                                      GestureDetector(
-                                        onTap: () async {
-                                          DateTime? pickedDate = await showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime(2000),
-                                            lastDate: DateTime(2100),
-                                          );
+                                      Visibility(
+                                        visible: schemeProvider.selectedId_partE5==1,
+                                        child: Column(
+                                          children: [
 
-                                          if (pickedDate != null) {
-                                            // Format the picked date as "dd-mm-yyyy"
-                                            String formattedDate =
-                                                "${pickedDate.day.toString().padLeft(2, '0')}/${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
-                                            schemeProvider.dateApproval =
-                                                formattedDate;
-                                          }
-                                        },
-                                        child: AbsorbPointer(
-                                          // Prevents typing
-                                          child: Customtxtfeild(
-                                            label:
-                                            '3.2 Date of SLSSC approval in seriatim for revised estimate?',
-                                            controller: TextEditingController(
-                                                text: schemeProvider.dateApproval ??
-                                                    ''),
-                                            keyboardType: TextInputType.datetime,
-                                            hintText: 'dd-mm-yyyy',
+                                            Customradiobttn(
+                                            question: '3.1 If yes, increase in cost:',
+                                            options: schemeProvider.increaseInCostID.keys
+                                                .toList(),
+                                            selectedOption:
+                                            schemeProvider.selectslsscapp,
+                                            onChanged: (value) {
+                                              schemeProvider.selectslsscapp =
+                                                  value;
+
+                                              print('selectslsscappID:  ${schemeProvider.selectslsscappID}');
+                                            },
                                           ),
+
+                                            GestureDetector(
+                                              onTap: () async {
+                                                DateTime? pickedDate = await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2000),
+                                                  lastDate: DateTime(2100),
+                                                );
+
+                                                if (pickedDate != null) {
+                                                  // Format the picked date as "dd-mm-yyyy"
+                                                  String formattedDate =
+                                                      "${pickedDate.day.toString().padLeft(2, '0')}/${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
+                                                  schemeProvider.dateApproval =
+                                                      formattedDate;
+                                                }
+                                              },
+                                              child: AbsorbPointer(
+                                                // Prevents typing
+                                                child: Customtxtfeild(
+                                                  label:
+                                                  '3.2 Date of SLSSC approval in seriatim for revised estimate?',
+                                                  controller: TextEditingController(
+                                                      text: schemeProvider.dateApproval ??
+                                                          ''),
+                                                  keyboardType: TextInputType.datetime,
+                                                  hintText: 'dd-mm-yyyy',
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
 
@@ -500,7 +517,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         },
                                       ),
 
-                                      if (schemeProvider.revisionReasonsID.containsValue("Others"))
+                                      if (schemeProvider.selectedrevisionReasons.contains("Others"))
                                         Customtxtfeild(
                                           label: '4.1 Reason',
                                           controller:
@@ -520,7 +537,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       const SizedBox(height: 6),
 
                                       _buildAdmissibleCostTable(
-                                          context, schemeProvider),
+                                          context, schemeProvider,modeType),
 
                                       const SizedBox(height: 20),
 
@@ -687,8 +704,9 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
   }
 
   Widget _buildAdmissibleCostTable(
-      BuildContext context, Schemeprovider schemeProvider) {
+      BuildContext context, Schemeprovider schemeProvider, ProjectMode? modeType) {
     final columns = ['Components', 'Unit', 'Capacity', 'Cost (in cr.)'];
+
     final rows = [
       ['Intake/Tubewell', 'Nos.', 'In LPM', ''],
       ['Electromechanical components', 'Nos.', 'Head and discharge', ''],
@@ -702,7 +720,8 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
       ['Road Restoration', 'Nos.', 'Length in Kms', ''],
       ['Solar components', 'Nos.', '-', ''],
       ['Others (DG sets, HH storage)', 'Nos.', '-', ''],
-      ['Levelized cost per FHTC (considering conjunctive scheme, if any)', '-', '-', ''],
+      if (modeType == ProjectMode.above10)
+        ['Levelized cost per FHTC (considering conjunctive scheme, if any)', '-', '-', ''],
     ];
 
     return Table(
@@ -714,40 +733,45 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
         3: FlexColumnWidth(2),
       },
       children: [
+        // Header row
         TableRow(
           decoration: BoxDecoration(color: Colors.grey[300]),
           children: columns
               .map((col) => Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: Text(
-                      col,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ))
+            padding: const EdgeInsets.all(6.0),
+            child: Text(
+              col,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ))
               .toList(),
         ),
+        // Data rows
         ...rows.map((row) {
           final component = row[0];
+
+          // Ensure row has exactly 4 items
+          final safeRow = List<String>.from(row);
+          while (safeRow.length < 4) {
+            safeRow.add('');
+          }
+
           return TableRow(
-            children: row.map((cell) {
+            children: safeRow.map((cell) {
               if (cell == '') {
                 return Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: TextFormField(
                     controller: schemeProvider.costControllers[component],
                     keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    const TextInputType.numberWithOptions(decimal: true),
                     decoration: const InputDecoration(
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                      EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                       border: OutlineInputBorder(),
                     ),
                     onChanged: (val) {
-                      final id = schemeProvider.costControllers[component] ?? 0;
-                      print("Component: $component, ID: $id, Value: $val");
-                      print(
-                          "--3434 ${schemeProvider.costControllers['Intake/Tubewell']?.text}");
-                      print("--56565 ${schemeProvider.intakeTubeWellNum}");
+                      print("Component: $component, Value: $val");
                     },
                   ),
                 );
@@ -763,4 +787,5 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
       ],
     );
   }
+
 }
