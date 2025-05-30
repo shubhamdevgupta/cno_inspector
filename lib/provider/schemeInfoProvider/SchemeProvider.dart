@@ -774,7 +774,8 @@ class Schemeprovider extends ChangeNotifier {
 
 
 
-  TextEditingController PartDothersComplaintController = TextEditingController();
+  TextEditingController PartDQ1othersComplaintController = TextEditingController();
+  TextEditingController PartDQ3othersComplaintController = TextEditingController();
   TextEditingController PartEothersComplaintController = TextEditingController();
 
   // Q2: Cost overrun (single choice)

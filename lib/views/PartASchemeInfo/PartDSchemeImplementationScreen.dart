@@ -169,7 +169,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       if (schemeProvider.selectedDelayReasons.contains("Others"))
                                         Customtxtfeild(
                                           label: "In Case of Other please provide details:",
-                                          controller: schemeProvider.PartDothersComplaintController,
+                                          controller: schemeProvider.PartDQ1othersComplaintController,
                                           maxLines: 2,
                                         ),
 
@@ -193,8 +193,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                       CustomMultiSelectChipQuestion(
                                         question: '3. Reason(s) for cost overrun:',
                                         options: schemeProvider.ReasonsOptionsOptions,
-                                        selectedValues:
-                                        schemeProvider.selectedcostOverrunReasons,
+                                        selectedValues: schemeProvider.selectedcostOverrunReasons,
                                         onSelectionChanged: (values) {
                                           schemeProvider.selectedcostOverrunReasons =
                                               values;
@@ -202,6 +201,17 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                               'selectedcostOverrunReasons:  ${schemeProvider.selectedcostOverrunReasonsID}');
                                         },
                                       ),
+
+
+                                      // Show text field if 'Others' is selected
+                                      if (schemeProvider.selectedcostOverrunReasons.contains("Others"))
+                                        Customtxtfeild(
+                                          label: "In Case of Other please provide details:",
+                                          controller: schemeProvider.PartDQ3othersComplaintController,
+                                          maxLines: 2,
+                                        ),
+
+
                                       const SizedBox(height: 10),
 
                                       if (schemeProvider.ReasonsOptions.containsValue("Others"))
