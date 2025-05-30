@@ -1216,8 +1216,7 @@ class Schemeprovider extends ChangeNotifier {
 
   List<SchemeImplementationModel> schemeImplementationData = [];
 
-  Future<void> fetchSchemeImplementationData(
-      String stateId, String schemeId, String userId, int modeType) async {
+  Future<void> fetchSchemeImplementationData(String stateId, String schemeId, String userId, int modeType) async {
     _isLoading = true;
     notifyListeners();
 
@@ -1312,6 +1311,15 @@ class Schemeprovider extends ChangeNotifier {
             schemeImplementationData.first.isComponentPlannedPipeline,
             yesNoMap);
         print('selectedPipeline: $selectedPipeline');
+
+        PartDQ1othersComplaintController.text = schemeImplementationData.first.Resion_for_delay_after_aword_other;
+        PartDQ4reasonController.text = schemeImplementationData.first.Reason_for_revision;
+        PartDQ3othersComplaintController.text = schemeImplementationData.first.Reason_for_cost_overrun;
+        PartDUserObservation.text = schemeImplementationData.first.scheme_implementation_Remarks;
+        below10PartD_ques8_Controller.text = schemeImplementationData.first.txtpws_status_under_scheme;
+
+
+
       } else {
         _message = response.message;
       }
@@ -1337,6 +1345,11 @@ class Schemeprovider extends ChangeNotifier {
     selecteSource = null;
     selectedPipeline = null;
     costControllers.clear();
+    PartDQ1othersComplaintController.clear();
+    PartDQ4reasonController.clear();
+    PartDQ3othersComplaintController.clear();
+    PartDUserObservation.clear();
+    below10PartD_ques8_Controller.clear();
     notifyListeners();
   }
 

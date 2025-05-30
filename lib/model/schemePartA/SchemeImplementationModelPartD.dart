@@ -38,6 +38,17 @@ class SchemeImplementationModel {
   final List<int> costOverrunReason;
   final List<int> costRevisionReason;
 
+  // New fields
+  final double txtcost_levelzed_cost_cr;
+  final int is_tpia_engaged_value;
+  final int concurrent_supervission_scope_value;
+  final String txtpws_status_under_scheme;
+  final int phy_status;
+  final String scheme_implementation_Remarks;
+  final String Resion_for_delay_after_aword_other;
+  final String Reason_for_revision;
+  final String Reason_for_cost_overrun;
+
   SchemeImplementationModel({
     required this.userid,
     required this.stateid,
@@ -77,6 +88,17 @@ class SchemeImplementationModel {
     required this.delayWorkReason,
     required this.costOverrunReason,
     required this.costRevisionReason,
+
+    // New fields
+    required this.txtcost_levelzed_cost_cr,
+    required this.is_tpia_engaged_value,
+    required this.concurrent_supervission_scope_value,
+    required this.txtpws_status_under_scheme,
+    required this.phy_status,
+    required this.scheme_implementation_Remarks,
+    required this.Resion_for_delay_after_aword_other,
+    required this.Reason_for_revision,
+    required this.Reason_for_cost_overrun,
   });
 
   factory SchemeImplementationModel.fromJson(Map<String, dynamic> json) {
@@ -119,26 +141,17 @@ class SchemeImplementationModel {
       delayWorkReason: List<int>.from(json['delay_work_reason'] ?? []),
       costOverrunReason: List<int>.from(json['cost_overrun_reason'] ?? []),
       costRevisionReason: List<int>.from(json['cost_revision_reason'] ?? []),
-      //
-        //delay_work_reasonIds: List<int>.from(json['delay_work_reasonIds'] ?? []),
-// This need to be verify once
-      /*
 
-            "cost_overrun_reasonIds": "",
-            "cost_revision_reasonIds": "",
-            "listdelay_work_reason": [1,2  ],
-            "listcost_overrun_reason": [ 10, 11,  ],
-            "listcost_revision_reason": [ 12, 13, ],
-
-            "txtcost_levelzed_cost_cr": null,
-            "is_tpia_engaged_value": 1,
-            "concurrent_supervission_scope_value": 1,
-            "txtpws_status_under_scheme": "Test data 1",
-            "phy_status": 0,
-            "Resion_for_delay_after_aword_other": "Test data 2",
-            "scheme_implementation_Remarks": "",
-            "Reason_for_cost_overrun": "",
-            "Reason_for_revision": ""*/
+      // New fields
+      txtcost_levelzed_cost_cr: (json['txtcost_levelzed_cost_cr'] ?? 0).toDouble(),
+      is_tpia_engaged_value: json['is_tpia_engaged_value'] ?? 0,
+      concurrent_supervission_scope_value: json['concurrent_supervission_scope_value'] ?? 0,
+      txtpws_status_under_scheme: json['txtpws_status_under_scheme'] ?? '',
+      phy_status: json['phy_status'] ?? 0,
+      scheme_implementation_Remarks: json['scheme_implementation_Remarks'] ?? '',
+      Resion_for_delay_after_aword_other: json['Resion_for_delay_after_aword_other'] ?? '',
+      Reason_for_revision: json['Reason_for_revision'] ?? '',
+      Reason_for_cost_overrun: json['Reason_for_cost_overrun'] ?? '',
     );
   }
 }
