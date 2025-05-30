@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/authentication_provider.dart';
 import '../../provider/dashboardProvider.dart';
 import '../../utils/AppConstants.dart';
+import '../../utils/LoaderUtils.dart';
 import 'DashboardCard.dart';
 
 class AboveTenPercentTab extends StatelessWidget {
@@ -19,13 +21,13 @@ class AboveTenPercentTab extends StatelessWidget {
         final int totalDistricts = data?.totalDistrictUpper ?? 0;
         final int totalVillages = data?.totalVillageUpper ?? 0;
 
-        return SingleChildScrollView(
+        return provider.isLoading?LoaderUtils.conditionalLoader(isLoading: provider.isLoading):SingleChildScrollView(
           child: Column(
             children: [
 
               DashboardCard(
                 title: "Scheme Inspection Form",
-                baselineStatus: "Total Schemes \n$totalSchemes",
+                value: "Total Schemes \n$totalSchemes",
                 onStartPressed: () {
                   Navigator.pushReplacementNamed(
                     context,
@@ -41,7 +43,7 @@ class AboveTenPercentTab extends StatelessWidget {
 
               DashboardCard(
                 title: "Interaction with DWSM",
-                baselineStatus: "Total Districts \n$totalDistricts",
+                value: "Total Districts \n$totalDistricts",
                 onStartPressed: () {
                   Navigator.pushReplacementNamed(
                     context,
@@ -56,7 +58,7 @@ class AboveTenPercentTab extends StatelessWidget {
 
               DashboardCard(
                 title: "Interaction with VWSC",
-                baselineStatus: "Total VWSC \n$totalVillages",
+                value: "Total VWSC \n$totalVillages",
                 onStartPressed: () {
                   Navigator.pushReplacementNamed(
                     context,
@@ -68,6 +70,14 @@ class AboveTenPercentTab extends StatelessWidget {
                 accentColor: Colors.lightGreen.shade50,
                 imagePath: "assets/icons/village.png",
               ),
+              ElevatedButton(onPressed: (){
+                final authProvider = Provider.of<AuthenticationProvider>(
+                    context,
+                    listen: false);
+                 authProvider.logoutUser();
+                Navigator.pushReplacementNamed(
+                    context, AppConstants.navigateToLogin);
+              }, child: Text('logout'))
             ],
           ),
         );

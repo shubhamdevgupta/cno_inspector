@@ -509,9 +509,9 @@ class Schemeprovider extends ChangeNotifier {
     onSpotExcavation = null;
 
     // Clear frequency text field
-    wtpHoursController.text='0';
-    ohsrTimeController.text='0';
-    mbrTimeController.text='0';
+    wtpHoursController.clear();
+    ohsrTimeController.clear();
+    mbrTimeController.clear();
     rockyPipeMaterialController.clear();
     soilPipeMaterialController.clear();
     deviationReasonController.clear();
@@ -764,8 +764,6 @@ class Schemeprovider extends ChangeNotifier {
     "Inter-departmental coordination": 7,
     "Clearances from Highway/Forest/Railways etc.": 8,
     "Others": 9,
-    "Others": 8,
-    "Clearances from Highway/Forest/Railways etc.": 9,
   };
 
 

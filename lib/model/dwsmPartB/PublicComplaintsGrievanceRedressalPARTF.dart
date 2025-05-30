@@ -3,7 +3,7 @@ class PublicComplaintsGrievanceRedressal {
   final int stateid;
   final int districtid;
   final int grievanceRedressalMechanismAvailable;
-  final int howGrievancesRegisteredVillagers;
+  final List<int> howGrievancesRegisteredVillagers;
   final int areComplaintsReceivedPublicRegardingSchemes;
   final int yesTypeComplaints;
   final String yesTypeComplaintsOthers;

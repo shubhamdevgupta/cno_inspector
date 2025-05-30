@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class DashboardCard extends StatelessWidget {
   final String title;
-  final String baselineStatus;
+  final String value;
   final VoidCallback onStartPressed;
   final Color primaryColor;
   final Color accentColor;
@@ -12,7 +12,7 @@ class DashboardCard extends StatelessWidget {
   const DashboardCard({
     Key? key,
     required this.title,
-    required this.baselineStatus,
+    required this.value,
     required this.onStartPressed,
     this.primaryColor = Colors.blue,
     this.accentColor = const Color(0xFFE3F2FD),
@@ -21,9 +21,12 @@ class DashboardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusParts = baselineStatus.split('\n');
+    final statusParts = value.split('\n');
     final statusTitle = statusParts.first;
     final statusValue = statusParts.length > 1 ? statusParts.last : '';
+
+    final int numericValue = int.tryParse(statusValue.trim()) ?? 0;
+    final bool isDisabled = numericValue == 0;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
@@ -104,31 +107,35 @@ class DashboardCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: onStartPressed,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.play_arrow_rounded, size: 16),
-                        SizedBox(width: 6),
-                        Text(
-                          "Start",
-                          style: TextStyle(fontSize: 14),
+                  child: Opacity(
+                    opacity: isDisabled ? 0.9 : 1.0, // Only dim the button
+                    child: ElevatedButton(
+                      onPressed: isDisabled ? null : onStartPressed,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      ],
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.play_arrow_rounded, size: 16),
+                          SizedBox(width: 6),
+                          Text(
+                            "Start",
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
+
               ],
             ),
           ),

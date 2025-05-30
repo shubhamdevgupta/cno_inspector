@@ -2,9 +2,9 @@ class QualityAssuranceCommissioning {
   final int userid;
   final int stateid;
   final int districtid;
-  final int whoAuthorizedInspectMeasureFieldInspection;
+  final List<int> whoAuthorizedInspectMeasureFieldInspection;
   final int isCommissioningProtocolFollowed;
-  final int duringCommissioningSchemesPresent;
+  final List<int> duringCommissioningSchemesPresent;
   final int hasDistrictUndertakenAssessmentInspectionAgencies;
   final int modeType;
   final String observationQualityAssurance;

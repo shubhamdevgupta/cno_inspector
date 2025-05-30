@@ -1,28 +1,20 @@
-import 'package:cno_inspection/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
-
-import '../main.dart';
+import '../main.dart'; // Ensure this has `navigatorKey`
+import '../utils/toast_helper.dart';
 import '../views/auth/ExceptionScreen.dart';
 import 'CustomException.dart';
 
 class GlobalExceptionHandler {
   static void handleException(Exception e) {
-    print("exception is $e");
+    print("Exception caught: $e");
+
     if (navigatorKey.currentContext == null) {
-      debugPrint("Navigator key context is null, cannot show error.");
+      debugPrint("Navigator key context is null.");
       return;
     }
 
-    BuildContext context = navigatorKey.currentContext!;
-    String errorMessage;
-
-    if (e is AppException) {
-      errorMessage = e.toString();
-    } else {
-      errorMessage = 'Unexpected Error Occurred \n$e';
-    }
-
-    debugPrint("Error Handled: $errorMessage");
+    final context = navigatorKey.currentContext!;
+    String errorMessage = e is AppException ? e.toString() : "Unexpected error occurred\n$e";
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (e is NetworkException) {
@@ -31,16 +23,14 @@ class GlobalExceptionHandler {
         }
         ToastHelper.showSnackBar(context, errorMessage);
       } else {
-        // Full-screen error for API or unexpected errors
         if (navigatorKey.currentState?.canPop() == true) {
           navigatorKey.currentState?.pop();
         }
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            insetPadding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-            contentPadding: EdgeInsets.zero, // Remove default padding
+            insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+            contentPadding: EdgeInsets.zero,
             content: ConstrainedBox(
               constraints: BoxConstraints(
                 maxHeight: MediaQuery.of(context).size.height * 0.4,
