@@ -225,8 +225,8 @@ class Vwscprovider extends ChangeNotifier {
   final Map<String, int> OMArrangements = {
     "VWSC": 1,
     "PHED": 2,
-    "Outsourced Contractor": 3,
-    "No arrangement": 4,
+    "Outsourced Contractor": 4,
+    "No arrangement": 3,
   };
 
   List<String> get OMArrangementsOptions => OMArrangements.keys.toList();
@@ -406,11 +406,11 @@ class Vwscprovider extends ChangeNotifier {
 
 // que 6666666666666666666666666
  final Map<String, int> vwscBelowPartAQues2Map = {
-     'JJM new':1,
-     'JJM Retrofitted':2,
-     'NRDWP':3,
-     'State Scheme':4,
-     'No scheme':5,
+     'JJM new':4,
+     'JJM Retrofitted':3,
+     'NRDWP':2,
+     'State Scheme':1,
+     'No scheme':0,
  };
 
  final Map<String, int> vwscBelowPartAQues3Map = {
