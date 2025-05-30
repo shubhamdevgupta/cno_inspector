@@ -696,6 +696,30 @@ class Schemeprovider extends ChangeNotifier {
   //**** fetch api Part C end here ***///
 
   // Q1: Delay reasons
+  List<String> _belowselectedDelayReasons = [];
+
+  List<String> get belowselectedDelayReasons => _belowselectedDelayReasons;
+
+  set belowselectedDelayReasons(List<String> value) {
+    _belowselectedDelayReasons = value;
+    notifyListeners();
+  }
+
+  final Map<String, int> belowdelayReasons = {
+    "Delay in DPR approval": 1,
+    "Land/site issues": 5,
+    "Clearances from Highway/Forest/Railways etc.": 8,
+    "Others": 9,
+
+  };
+
+
+  List<String> get belowdelayReasonsOptions => belowdelayReasons.keys.toList();
+
+  List<int> get belowselectedDelayReasonsID => _belowselectedDelayReasons.map((e) => belowdelayReasons[e] ?? 0).toList();
+
+
+
   List<String> _selectedDelayReasons = [];
 
   List<String> get selectedDelayReasons => _selectedDelayReasons;
@@ -711,8 +735,6 @@ class Schemeprovider extends ChangeNotifier {
     "Design changes during execution": 3,
     "Material shortage": 4,
     "Land/site issues": 5,
-    "Weather/natural calamities": 6,
-    "Inter-departmental coordination": 7,
     "Others": 8,
     "Clearances from Highway/Forest/Railways etc.": 9,
   };
@@ -720,8 +742,7 @@ class Schemeprovider extends ChangeNotifier {
 
   List<String> get delayReasonsOptions => delayReasons.keys.toList();
 
-  List<int> get selectedDelayReasonsID =>
-      _selectedDelayReasons.map((e) => delayReasons[e] ?? 0).toList();
+  List<int> get selectedDelayReasonsID => _selectedDelayReasons.map((e) => delayReasons[e] ?? 0).toList();
 
 
 

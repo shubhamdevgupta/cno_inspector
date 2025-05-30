@@ -274,9 +274,6 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                 ),
                               ),
 // Above 10% part End
-
-
-
                                 // Below 10% part Start
                                 Visibility(
                                   visible: modeType==ProjectMode.below10,

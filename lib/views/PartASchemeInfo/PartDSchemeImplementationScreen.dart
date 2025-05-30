@@ -369,11 +369,11 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                     children: [
                                       CustomMultiSelectChipQuestion(
                                         question: '1. What are the reason(s) for delay after award of work Please select that are relatable:',
-                                        options: schemeProvider.delayReasonsOptions,
-                                        selectedValues: schemeProvider.selectedDelayReasons,
+                                        options: schemeProvider.belowdelayReasonsOptions,
+                                        selectedValues: schemeProvider.belowselectedDelayReasons,
                                         onSelectionChanged: (val) {
-                                          schemeProvider.selectedDelayReasons = val;
-                                          print('SelecteddelayReasons: ${schemeProvider.selectedDelayReasons} : ${schemeProvider.selectedDelayReasonsID}');
+                                          schemeProvider.belowselectedDelayReasons = val;
+                                          print('belowselectedDelayReasonsID: ${schemeProvider.selectedDelayReasons} : ${schemeProvider.belowselectedDelayReasonsID}');
                                         },
                                       ),
 
@@ -551,8 +551,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         message:
                                             "Saving Scheme implementation...");
 
-                                    await schemeProvider
-                                        .saveSchemeImplementation(
+                                    await schemeProvider.saveSchemeImplementation(
                                       userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                       stateId: schemeProvider.stateId!,
                                       schemeId: schemeProvider.schemeId!,
@@ -595,8 +594,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                           schemeProvider.selecteSourceID,
                                       plannedPTGatiShaktiPipeline:
                                           schemeProvider.selectedPipelineID,
-                                      delayReasons: schemeProvider
-                                          .selectedDelayReasonsID,
+                                      delayReasons: modeType == ProjectMode.below10? schemeProvider.belowselectedDelayReasonsID:schemeProvider.selectedDelayReasonsID,
                                       costOverrunReasons: schemeProvider
                                           .selectedcostOverrunReasonsID,
                                       costRevisionReasons: schemeProvider
