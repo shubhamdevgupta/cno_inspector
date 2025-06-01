@@ -208,14 +208,14 @@ class _RetrofittingAugmentationScreen
                                       'In Nos.',
                                   controller: schemeProvider
                                       .storageStructureDetailsController,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
                                 ),
                                   Customtxtfeild(
                                   label:
                                       'Capacity (in KL)',
                                   controller: schemeProvider
                                       .storageStructureInKL,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
                                 ),
                                 const SizedBox(height: 10),
 
@@ -235,11 +235,7 @@ class _RetrofittingAugmentationScreen
                                         onChanged: (val) => schemeProvider
                                             .asBuiltDrawingAvailability = val,
                                       ),
-                                      const SizedBox(height: 20),
 
-                                    if (schemeProvider
-                                        .asBuiltDrawingAvailabilityID ==
-                                        1)
                                       Customradiobttn(
                                         question:
                                         '4. Has it been digitized and uploaded on PM Gatishakti? ',

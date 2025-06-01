@@ -153,20 +153,16 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                     onChanged: (val) => dwsmProvider
                                         .grievanceMechanismAvailable = val,
                                   ),
-                                  const SizedBox(height: 10),
-                                  Customradiobttn(
-                                    question:
-                                        "2. How grievances are registered by the villagers:",
-                                    options: dwsmProvider
+                                  CustomMultiSelectChipQuestion(
+                                    question: '2. How grievances are registered by the villagers:',
+                                    options:  dwsmProvider
                                         .grievanceRegistrationMethodsMap.keys
                                         .toList(),
-                                    selectedOption: dwsmProvider
-                                        .grievanceRegistrationMethods,
-                                    onChanged: (values) => dwsmProvider
-                                        .grievanceRegistrationMethods = values,
-                                    orientation: Axis.vertical,
+                                    selectedValues: dwsmProvider.grievanceRegistrationMethods,
+                                    onSelectionChanged: (val) {
+                                      dwsmProvider.grievanceRegistrationMethods = val;
+                                    },
                                   ),
-                                  const SizedBox(height: 10),
                                   Customradiobttn(
                                     question:
                                         "3. Are complaints received from public regarding JJM schemes?",
@@ -213,9 +209,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                       keyboardType: TextInputType.text,
                                     ),
                                   ],
-                                  SizedBox(
-                                    height: 10,
-                                  ),
+
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(
@@ -247,7 +241,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                                   dwsmProvider
                                                       .grievanceMechanismAvailableID,
                                               howGrievancesRegistered: dwsmProvider
-                                                  .grievanceRegistrationMethodsID,
+                                                  .selectedGrievanceRegistrationMethodsID,
                                               complaintsReceived: dwsmProvider
                                                   .complaintsReceivedID,
                                               typeOfComplaints:

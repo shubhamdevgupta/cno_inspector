@@ -189,22 +189,14 @@ class DWSMRepositoy {
       rethrow;
     }
   }
-/*  {
-  "Who_authorized_inspect_measure_field_inspection": 6,
-  "Is_commissioning_protocol_followed": 0,
-  "During_commissioning_schemes_present": 6,
-  "Has_district_undertaken_assessment_inspection_agencies": 3,
-  "Has_distric_hired_third_party_inspection_agencies_JJM_schemes": -1,
-  "phy_status": 0,
-  "Obseration_Quality_Assurance_Commissioning": ""
-  }*/
+
   Future<BaseResponse> saveQualityAssurance({
     required int userId,
     required int stateId,
     required int districtId,
-    required int inspectionAuthority,
+    required List<int> inspectionAuthority,
     required int isCommissioningProtocolFollowed,
-    required int schemesPresentDuringCommissioning,
+    required List<int> schemesPresentDuringCommissioning,
     required int districtAssessmentAgencies,
     required int districtHiredAgencies,
     required int modeType,
@@ -237,7 +229,7 @@ class DWSMRepositoy {
     required int stateId,
     required int districtId,
     required int grievanceMechanismAvailable,
-    required int howGrievancesRegistered,
+    required List<int> howGrievancesRegistered,
     required int complaintsReceived,
     required List<int> typeOfComplaints,
     required String otherComplaints,

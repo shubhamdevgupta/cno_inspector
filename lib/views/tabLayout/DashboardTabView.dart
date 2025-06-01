@@ -49,7 +49,7 @@ class _DashboardTabViewState extends State<DashboardTabView>
         ? ProjectMode.below10
         : ProjectMode.above10;
     appState.setMode(mode);
-
+    dashboardProvider.fetchDashboardHomeData(1);
     Provider.of<Schemeprovider>(context,listen: false).clearSchemeProvider();
     Provider.of<Dwsmprovider>(context,listen: false).clearDwsmProvider();
     Provider.of<Vwscprovider>(context,listen: false).clearVwscProvider();

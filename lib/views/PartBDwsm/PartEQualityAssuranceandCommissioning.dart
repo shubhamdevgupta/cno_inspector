@@ -8,6 +8,7 @@ import '../../provider/AppStateProvider.dart';
 import '../../provider/dwsmInfoProvider/DwsmProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
+import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
 import 'DWSMCommonClass.dart';
@@ -151,19 +152,15 @@ class _PartEQualityAssuranceCommissioning
 
                                   Column(
                                     children: [
-                                      Customradiobttn(
-                                        question:
-                                            "1. Who all are authorized to inspect and measure works during field inspection?",
-                                        options: dwsmProvider
-                                            .authorizedInspectorsMap.keys
-                                            .toList(),
-                                        selectedOption:
-                                            dwsmProvider.authorizedInspectors,
-                                        onChanged: (values) {
-                                          dwsmProvider.authorizedInspectors =
-                                              values;
+                                      CustomMultiSelectChipQuestion(
+                                        question: '1. Who all are authorized to inspect and measure works during field inspection?',
+                                        options: dwsmProvider.authorizedInspectorsMap.keys.toList(),
+                                        selectedValues: dwsmProvider.authorizedInspectors,
+                                        onSelectionChanged: (val) {
+                                          dwsmProvider.authorizedInspectors = val;
                                         },
                                       ),
+
                                       const SizedBox(height: 10),
                                       Customradiobttn(
                                         question:
@@ -191,28 +188,24 @@ class _PartEQualityAssuranceCommissioning
                                               val,
                                         ),
                                       ),
-                                      const SizedBox(height: 10),
                                       Visibility(
                                         visible: modeType == ProjectMode.above10,
                                         child: Column(
                                           children: [
-                                            Customradiobttn(
-                                              question:
-                                              "3. During commissioning of schemes, who are generally present?",
+                                            CustomMultiSelectChipQuestion(
+                                              question: '3. During commissioning of schemes, who are generally present?',
                                               options: dwsmProvider
                                                   .commissioningPresenceMap.keys
                                                   .toList(),
-                                              selectedOption:
-                                              dwsmProvider.commissioningPresence,
-                                              onChanged: (values) {
-                                                dwsmProvider.commissioningPresence =
-                                                    values;
+                                              selectedValues: dwsmProvider.commissioningPresence,
+                                              onSelectionChanged: (val) {
+                                                dwsmProvider.commissioningPresence = val;
                                               },
                                             ),
                                             const SizedBox(height: 10),
                                             Customradiobttn(
                                               question:
-                                              "4.	•	Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?",
+                                              "4.	Has the district undertaken any assessment of third-party inspection agencies on quality checks for JJM schemes?",
                                               options: dwsmProvider
                                                   .thirdPartyAssessmentMap.keys
                                                   .toList(),
@@ -224,6 +217,7 @@ class _PartEQualityAssuranceCommissioning
                                           ],
                                         ),
                                       ),
+
                                       Customtxtfeild(
                                         label: "5. Observation for Quality Assurance and Commissioning.",
                                         controller: dwsmProvider
@@ -231,6 +225,7 @@ class _PartEQualityAssuranceCommissioning
                                       ),
                                     ],
                                   ),
+                                  const SizedBox(height: 10),
 
                                   Align(
                                     alignment: Alignment.centerRight,
@@ -258,14 +253,11 @@ class _PartEQualityAssuranceCommissioning
                                               stateId: dwsmProvider.stateId!,
                                               districtId:
                                                   dwsmProvider.districtId!,
-                                              inspectionAuthority: dwsmProvider
-                                                  .authorizedInspectorID,
+                                              inspectionAuthority: dwsmProvider.selectedAuthorizedInspectorID,
                                               isCommissioningProtocolFollowed:
                                                   dwsmProvider
                                                       .commissioningProtocolFollowedID,
-                                              schemesPresentDuringCommissioning:
-                                                  dwsmProvider
-                                                      .commissioningPresenceID,
+                                              schemesPresentDuringCommissioning:[4,2],
                                               districtAssessmentAgencies:
                                                   dwsmProvider
                                                       .thirdPartyAssessmentID,

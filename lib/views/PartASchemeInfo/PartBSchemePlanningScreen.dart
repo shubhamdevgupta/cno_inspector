@@ -255,7 +255,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                     ),
                                     const SizedBox(height: 6),
                                     Customradiobttn(
-                                      question: 'Found as per DPR',
+                                      question: '5.1 Found as per DPR',
                                       options: schemeProvider.yesNoMap.keys.toList(),
                                       selectedOption: schemeProvider.onSpotExcavation,
                                       onChanged: (val) {
@@ -263,9 +263,8 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                       },
                                     ),
 
-                                    if (schemeProvider.onSpotExcavation == "Yes")
                                       Customtxtfeild(
-                                        label: 'If deviation found, provide reason',
+                                        label: '5.2 If deviation found, provide reason',
                                         controller: schemeProvider.deviationReasonController,
                                         keyboardType: TextInputType.text,
                                       ),
