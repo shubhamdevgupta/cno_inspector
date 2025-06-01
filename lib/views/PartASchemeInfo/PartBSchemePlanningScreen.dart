@@ -28,7 +28,6 @@ class SchemePlanningScreen extends StatefulWidget {
 
 class _SchemePlanningScreen extends State<SchemePlanningScreen> {
   LocalStorageService _localStorageService = LocalStorageService();
-  ProjectMode? modeType;
 
   @override
   void initState() {
@@ -52,7 +51,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+       final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
         schemeProvider.fetchSchemePlanning(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
@@ -120,6 +119,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
             ),
             body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
+                final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -394,38 +394,44 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                         LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Scheme Planning...");
 print("STATE : ${schemeProvider.stateId}");
                                         await schemeProvider.saveSchemePlanning(
-                                            userId: _localStorageService
-                                                .getInt(AppConstants.prefUserId)!,
-                                            stateId: schemeProvider.stateId!,
-                                            schemeId: schemeProvider.schemeId!,
-                                            topoSurvey:
-                                                schemeProvider.topoSurveyID,
-                                            gpsSurvey: schemeProvider.gpsSurveyID,
-                                            googleSurvey: schemeProvider
-                                                .googleEarthSurveyID,
-                                            numberOfSurveys:
-                                                schemeProvider.noSurveyID,
-                                            designRunningHours: int.tryParse(schemeProvider
-                                                .wtpHoursController.text)!,
-                                            retentionTimeOHT: int.tryParse(schemeProvider
-                                                .ohsrTimeController.text)!,
-                                            retentionTimeMBR: int.tryParse(schemeProvider
-                                                .mbrTimeController.text)!,
-                                            terrainRocky: schemeProvider
-                                                .rockyPipeMaterialController.text,
-                                            terrainSoil: schemeProvider
-                                                .soilPipeMaterialController.text,
-                                            foundAsPerDPR:
-                                                schemeProvider.onSpotExcavationID,
-                                            deviation: schemeProvider.deviationReasonController.text,
-                                         user_remark: schemeProvider.PartBUserObservation.text,
+                                          userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
+                                          stateId: schemeProvider.stateId ?? 0,
+                                          schemeId: schemeProvider.schemeId ?? 0,
+                                          topoSurvey: schemeProvider.topoSurveyID,
+                                          gpsSurvey: schemeProvider.gpsSurveyID,
+                                          googleSurvey: schemeProvider.googleEarthSurveyID,
+                                          numberOfSurveys: schemeProvider.noSurveyID ,
+                                          designRunningHours: int.tryParse(schemeProvider.wtpHoursController.text) ?? 0,
+                                          retentionTimeOHT: int.tryParse(schemeProvider.ohsrTimeController.text) ?? 0,
+                                          retentionTimeMBR: int.tryParse(schemeProvider.mbrTimeController.text) ?? 0,
+                                          terrainRocky: schemeProvider.rockyPipeMaterialController.text.trim().isEmpty
+                                              ? ''
+                                              : schemeProvider.rockyPipeMaterialController.text,
+                                          terrainSoil: schemeProvider.soilPipeMaterialController.text.trim().isEmpty
+                                              ? ''
+                                              : schemeProvider.soilPipeMaterialController.text,
+                                          foundAsPerDPR: schemeProvider.onSpotExcavationID ,
+                                          deviation: schemeProvider.deviationReasonController.text.trim().isEmpty
+                                              ? ''
+                                              : schemeProvider.deviationReasonController.text,
+                                          user_remark: schemeProvider.PartBUserObservation.text.trim().isEmpty
+                                              ? ''
+                                              : schemeProvider.PartBUserObservation.text,
+                                          reason_not_awarded_scheme_planning: schemeProvider.schemePlanning_Question1Controller.text.trim().isEmpty
+                                              ? ''
+                                              : schemeProvider.schemePlanning_Question1Controller.text,
+                                          work_awarded_no_physical_progress: schemeProvider.schemePlanning_Question2Controller.text.trim().isEmpty
+                                              ? ''
+                                              : schemeProvider.schemePlanning_Question2Controller.text,
+                                          multiple_schemes_sanctioned_justify_detial: schemeProvider.schemePlanning_Question5Controller.text.trim().isEmpty
+                                              ? ''
+                                              : schemeProvider.schemePlanning_Question5Controller.text,
+                                          desgined_conjunctive_detail: schemeProvider.schemePlanning_Question6Controller.text.trim().isEmpty
+                                              ? ''
+                                              : schemeProvider.schemePlanning_Question6Controller.text,
+                                          phy_status: modeType.modeValue ?? 0,
+                                        );
 
-
-                                         reason_not_awarded_scheme_planning:schemeProvider.schemePlanning_Question1Controller.text ,
-                                         work_awarded_no_physical_progress:schemeProvider. schemePlanning_Question2Controller.text ,
-                                         multiple_schemes_sanctioned_justify_detial: schemeProvider.schemePlanning_Question5Controller.text,
-                                         desgined_conjunctive_detail: schemeProvider.schemePlanning_Question6Controller.text,
-                                         phy_status: modeType!.modeValue ,);
                                         if (schemeProvider.status!) {
                                           ToastHelper.showToastMessage(
                                               schemeProvider.message!,
