@@ -25,7 +25,6 @@ class SchemeImplementationScreen extends StatefulWidget {
 
 class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
   LocalStorageService _localStorageService = LocalStorageService();
-  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -46,7 +45,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+      final  modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
         schemeProvider.fetchSchemeImplementationData(
             stateId.toString(),
@@ -117,7 +116,8 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
           ),
           body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
-            return SingleChildScrollView(
+                final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+                return SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.only(
                     top: 20, left: 6, right: 6, bottom: 5),
@@ -606,62 +606,67 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                             "Saving Scheme implementation...");
 
                                     await schemeProvider.saveSchemeImplementation(
-                                      userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                      stateId: schemeProvider.stateId!,
-                                      schemeId: schemeProvider.schemeId!,
+                                      userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
+                                      stateId: schemeProvider.stateId ?? 0,
+                                      schemeId: schemeProvider.schemeId ?? 0,
                                       costOverrun: schemeProvider.selectedCostOverrunID,
-                                      costRevisedBeforeWork: schemeProvider.selectedrevisedCostApprovedID,
-                                      revisedCostPercentage: schemeProvider.selectedincreaseInCostID,
-                                      slsscDate: schemeProvider.dateApproval ?? "",
-                                      intakeTubeWellNum: schemeProvider.intakeTubeWellNum,
+                                      costRevisedBeforeWork: schemeProvider.selectedrevisedCostApprovedID ,
+                                      revisedCostPercentage: schemeProvider.selectedincreaseInCostID ,
+                                      slsscDate: schemeProvider.dateApproval ?? '',
+                                      intakeTubeWellNum: schemeProvider.intakeTubeWellNum ?? 0,
                                       intakeTubeWellCost: double.tryParse(schemeProvider.costControllers['Intake/Tubewell']?.text ?? '') ?? 0.0,
-                                      electroMechanicalNum: schemeProvider.electroMechanicalNum,
+                                      electroMechanicalNum: schemeProvider.electroMechanicalNum ?? 0,
                                       electroMechanicalCost: double.tryParse(schemeProvider.costControllers['Electromechanical components']?.text ?? '') ?? 0.0,
                                       wtpNum: 1,
-                                      wtpCost: double.tryParse(schemeProvider.costControllers['WTP']?.text ?? '')??0.0,
+                                      wtpCost: double.tryParse(schemeProvider.costControllers['WTP']?.text ?? '') ?? 0.0,
                                       mbrNum: 2,
-                                      mbrCost: double.tryParse(schemeProvider.costControllers['MBR']?.text ?? '')??0.0,
+                                      mbrCost: double.tryParse(schemeProvider.costControllers['MBR']?.text ?? '') ?? 0.0,
                                       transmissionPipelineNum: 3,
-                                      transmissionPipelineCost: double.tryParse(schemeProvider.costControllers['Transmission pipeline']?.text ?? '')??0.0,
+                                      transmissionPipelineCost: double.tryParse(schemeProvider.costControllers['Transmission pipeline']?.text ?? '') ?? 0.0,
                                       distributionPipelineNum: 4,
-                                      distributionPipelineCost: double.tryParse(schemeProvider.costControllers['Distribution pipeline']?.text ?? '')??0.0,
+                                      distributionPipelineCost: double.tryParse(schemeProvider.costControllers['Distribution pipeline']?.text ?? '') ?? 0.0,
                                       disinfectionUnitNum: 5,
-                                      disinfectionUnitCost: double.tryParse(schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ??'')??0.0,
+                                      disinfectionUnitCost: double.tryParse(schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ?? '') ?? 0.0,
                                       ohtNum: 6,
-                                      ohtCost: double.tryParse(schemeProvider.costControllers['Disinfection unit']?.text ?? '')??0.0,
+                                      ohtCost: double.tryParse(schemeProvider.costControllers['Disinfection unit']?.text ?? '') ?? 0.0,
                                       iotNum: 7,
-                                      iotCost: double.tryParse(schemeProvider.costControllers['IoT/SCADA']?.text ?? '')??0.0,
+                                      iotCost: double.tryParse(schemeProvider.costControllers['IoT/SCADA']?.text ?? '') ?? 0.0,
                                       roadRestorationNum: 8,
-                                      roadRestorationCost: double.tryParse(
-                                          schemeProvider.costControllers['Road Restoration']?.text ?? '')??0.0,
+                                      roadRestorationCost: double.tryParse(schemeProvider.costControllers['Road Restoration']?.text ?? '') ?? 0.0,
                                       solarComponentNum: 9,
-                                      solarComponentCost: double.tryParse(
-                                          schemeProvider.costControllers['Solar components']?.text ?? '')??0.0,
+                                      solarComponentCost: double.tryParse(schemeProvider.costControllers['Solar components']?.text ?? '') ?? 0.0,
                                       otherComponentsNum: 10,
-                                      otherComponentsCost: double.tryParse(
-                                          schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '')??0.0,
-                                      plannedPTGatiShaktiWTP:
-                                          schemeProvider.selectedWTPID,
-                                      plannedPTGatiShaktiOHT:
-                                          schemeProvider.selectedOHSRID,
-                                      plannedPTGatiShaktiSource:
-                                          schemeProvider.selecteSourceID,
-                                      plannedPTGatiShaktiPipeline:
-                                          schemeProvider.selectedPipelineID,
-                                      delayReasons: modeType == ProjectMode.below10? schemeProvider.belowselectedDelayReasonsID:schemeProvider.selectedDelayReasonsID,
+                                      otherComponentsCost: double.tryParse(schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '') ?? 0.0,
+                                      plannedPTGatiShaktiWTP: schemeProvider.selectedWTPID,
+                                      plannedPTGatiShaktiOHT: schemeProvider.selectedOHSRID,
+                                      plannedPTGatiShaktiSource: schemeProvider.selecteSourceID,
+                                      plannedPTGatiShaktiPipeline: schemeProvider.selectedPipelineID,
+                                      delayReasons: modeType == ProjectMode.below10
+                                          ? schemeProvider.belowselectedDelayReasonsID
+                                          : schemeProvider.selectedDelayReasonsID,
                                       costOverrunReasons: schemeProvider.selectedcostOverrunReasonsID,
                                       costRevisionReasons: schemeProvider.selectedrevisionReasonsID,
-
-                                     txtcost_levelzed_cost_cr : 0.00,
-                                     is_tpia_engaged_value : schemeProvider.selectedId_partE5,
-                                     concurrent_supervission_scope_value : schemeProvider.selectedId_partE7,
-                                     txtpws_status_under_scheme : schemeProvider.below10PartD_ques8_Controller.text,
-                                     phy_status :modeType!.modeValue ,
-                                      user_remark: schemeProvider.PartDUserObservation.text,
-                                      Resion_for_delay_after_aword_other: schemeProvider.PartDQ1othersComplaintController.text,
-                                      Reason_for_revision: schemeProvider.PartDQ4reasonController.text,
-                                      Reason_for_cost_overrun: schemeProvider.PartDQ3othersComplaintController.text
+                                      txtcost_levelzed_cost_cr: 0.00,
+                                      is_tpia_engaged_value: schemeProvider.selectedId_partE5,
+                                      concurrent_supervission_scope_value: schemeProvider.selectedId_partE7,
+                                      txtpws_status_under_scheme: schemeProvider.below10PartD_ques8_Controller.text.trim().isEmpty
+                                          ? ''
+                                          : schemeProvider.below10PartD_ques8_Controller.text.trim(),
+                                      phy_status: modeType.modeValue,
+                                      user_remark: schemeProvider.PartDUserObservation.text.trim().isEmpty
+                                          ? ''
+                                          : schemeProvider.PartDUserObservation.text.trim(),
+                                      Resion_for_delay_after_aword_other: schemeProvider.PartDQ1othersComplaintController.text.trim().isEmpty
+                                          ? ''
+                                          : schemeProvider.PartDQ1othersComplaintController.text.trim(),
+                                      Reason_for_revision: schemeProvider.PartDQ4reasonController.text.trim().isEmpty
+                                          ? ''
+                                          : schemeProvider.PartDQ4reasonController.text.trim(),
+                                      Reason_for_cost_overrun: schemeProvider.PartDQ3othersComplaintController.text.trim().isEmpty
+                                          ? ''
+                                          : schemeProvider.PartDQ3othersComplaintController.text.trim(),
                                     );
+
 
                                     if (schemeProvider.status!) {
                                       ToastHelper.showToastMessage(

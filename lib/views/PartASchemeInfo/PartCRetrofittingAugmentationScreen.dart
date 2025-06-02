@@ -32,7 +32,6 @@ class RetrofittingAugmentationScreen extends StatefulWidget {
 class _RetrofittingAugmentationScreen
     extends State<RetrofittingAugmentationScreen> {
   LocalStorageService _localStorageService = LocalStorageService();
-  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
@@ -54,7 +53,7 @@ class _RetrofittingAugmentationScreen
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+        final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
         schemeProvider.fetchAdditionalInfoRetrofit(
             stateId.toString(),
@@ -123,7 +122,8 @@ class _RetrofittingAugmentationScreen
             ),
             body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
-               return SingleChildScrollView(
+                final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+                return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
                         top: 20, left: 6, right: 6, bottom: 5),
@@ -292,40 +292,27 @@ class _RetrofittingAugmentationScreen
                                               isLoading: schemeProvider.isLoading,
                                               message:
                                                   "Additional info for Retrofitting/Augmentation Schemes only");
-                                          await schemeProvider
-                                              .saveRetrofitAdditionalInfo(
-                                                  userId: _localStorageService.getInt(
-                                                      AppConstants.prefUserId)!,
-                                                  stateId:
-                                                      schemeProvider.stateId!,
-                                                  schemeId:
-                                                      schemeProvider.schemeId!,
-                                                  isAssessmentDone: schemeProvider
-                                                      .selectedLegacyInfraAssessmentId,
-                                                  assessmentMethod: '',
-                                                  assessmentReason: '',
-                                                  //not found
-                                                  pipelineKms:double.tryParse(schemeProvider
-                                                      .transmissionPipelineKmController
-                                                      .text)!,
-                                                  distributionKms: double.tryParse(
-                                                      schemeProvider
-                                                          .distributionPipelineKmController
-                                                          .text)!,
-                                                  wtpCapacity: double.tryParse(schemeProvider
-                                                      .wtpCapacityMldController
-                                                      .text)!,
-                                                  structureNos: int.tryParse(schemeProvider
-                                                      .storageStructureDetailsController
-                                                      .text)!,
-                                                  structureCapacity: double.tryParse(schemeProvider.storageStructureInKL.text)!,
-                                                  // not found
-                                                  buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
-                                                  onPMGati: schemeProvider.onPmGatishaktiID,
-                                                  noReason: schemeProvider.reasonController.text.isEmpty ? "" : schemeProvider.reasonController.text,
-                                        phyStatus: modeType!.modeValue,
-                                            user_remark: schemeProvider.PartCUserObservation.text
-
+                                          await schemeProvider.saveRetrofitAdditionalInfo(
+                                            userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
+                                            stateId: schemeProvider.stateId ?? 0,
+                                            schemeId: schemeProvider.schemeId ?? 0,
+                                            isAssessmentDone: schemeProvider.selectedLegacyInfraAssessmentId ,
+                                            assessmentMethod: '', // Not found, defaulted to empty
+                                            assessmentReason: '', // Not found, defaulted to empty
+                                            pipelineKms: double.tryParse(schemeProvider.transmissionPipelineKmController.text) ?? 0.0,
+                                            distributionKms: double.tryParse(schemeProvider.distributionPipelineKmController.text) ?? 0.0,
+                                            wtpCapacity: double.tryParse(schemeProvider.wtpCapacityMldController.text) ?? 0.0,
+                                            structureNos: int.tryParse(schemeProvider.storageStructureDetailsController.text) ?? 0,
+                                            structureCapacity: double.tryParse(schemeProvider.storageStructureInKL.text) ?? 0.0,
+                                            buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
+                                            onPMGati: schemeProvider.onPmGatishaktiID ,
+                                            noReason: schemeProvider.reasonController.text.trim().isEmpty
+                                                ? ''
+                                                : schemeProvider.reasonController.text.trim(),
+                                            phyStatus: modeType.modeValue ?? 0,
+                                            user_remark: schemeProvider.PartCUserObservation.text.trim().isEmpty
+                                                ? ''
+                                                : schemeProvider.PartCUserObservation.text.trim(),
 
                                           );
                                           if (schemeProvider.status!) {

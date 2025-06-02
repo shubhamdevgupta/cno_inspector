@@ -24,7 +24,6 @@ class SourceScreenQuestions extends StatefulWidget {
 
 class _SourceScreenQuestions extends State<SourceScreenQuestions> {
   LocalStorageService _localStorageService = LocalStorageService();
-   ProjectMode? modeType;
 
   @override
   void initState() {
@@ -32,7 +31,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-      modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+   final   modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
       if (args != null) {
         final schemeId = args['schemeId'] as int?;
@@ -113,6 +112,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
             ),
             body: Consumer<Schemeprovider>(
               builder: (context, schemeProvider, child) {
+                final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -286,21 +286,28 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                               message: "Saving Source...");
                                           print('---------------${int.tryParse(schemeProvider.safeController.text)} ');
                                           await schemeProvider.saveSourceSurvey(
-                                              userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                              stateId: schemeProvider.stateId!,
-                                              schemeId: schemeProvider.schemeId!,
-                                              isRecommendShiftToSurface: schemeProvider.selectedValueQ1Id,
-                                              studyAccessGroundBeforeSurface: schemeProvider.selectedValueQ2Id,
-                                              safeZoneVillages: int.tryParse(schemeProvider.safeController.text)!,
-                                              criticalZoneVillages: int.tryParse(schemeProvider.criticalController.text)!,
-                                              semiCriticalZoneVillages: int.tryParse(schemeProvider.semiCriticalController.text)!,
-                                              groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id,
-                                              waterAllocationFromWRD: schemeProvider.selectedWaterAllocationId,
-                                              alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text,
-                                              repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text,
-                                              modeType: modeType!.modeValue,
-                                              userremark: schemeProvider.PartAUserObservation.text
+                                            userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
+                                            stateId: schemeProvider.stateId ?? 0,
+                                            schemeId: schemeProvider.schemeId ?? 0,
+                                            isRecommendShiftToSurface: schemeProvider.selectedValueQ1Id ?? 0,
+                                            studyAccessGroundBeforeSurface: schemeProvider.selectedValueQ2Id ?? 0,
+                                            safeZoneVillages: int.tryParse(schemeProvider.safeController.text) ?? 0,
+                                            criticalZoneVillages: int.tryParse(schemeProvider.criticalController.text) ?? 0,
+                                            semiCriticalZoneVillages: int.tryParse(schemeProvider.semiCriticalController.text) ?? 0,
+                                            groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id ?? 0,
+                                            waterAllocationFromWRD: schemeProvider.selectedWaterAllocationId ?? 0,
+                                            alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text.isNotEmpty
+                                                ? schemeProvider.alternativeSourcesAvailable_Controller.text
+                                                : "",
+                                            repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text.isNotEmpty
+                                                ? schemeProvider.sourceFindingRepresentativesConsulted_Controller.text
+                                                : "",
+                                            modeType: modeType?.modeValue ?? 0,
+                                            userremark: schemeProvider.PartAUserObservation.text.isNotEmpty
+                                                ? schemeProvider.PartAUserObservation.text
+                                                : "",
                                           );
+
 
                                           if (schemeProvider.status!) {
                                             ToastHelper.showToastMessage(

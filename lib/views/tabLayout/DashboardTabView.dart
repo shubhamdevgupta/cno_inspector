@@ -17,6 +17,7 @@ class _DashboardTabViewState extends State<DashboardTabView>
     with TickerProviderStateMixin {
   late TabController _tabController;
   late DashboardProvider dashboardProvider;
+  bool _isProviderInitialized = false;
 
   @override
   void initState() {
@@ -25,36 +26,47 @@ class _DashboardTabViewState extends State<DashboardTabView>
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabChange);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider = Provider.of<DashboardProvider>(context, listen: false);
-      dashboardProvider.fetchDashboardHomeData(1);
+
       dashboardProvider.clearDashboardData();
+      await dashboardProvider.fetchDashboardHomeData(1);
+
+      _isProviderInitialized = true; // ✅ mark as ready
+
+      final data = dashboardProvider.cnoDashboardHomeList.first;
+      final isBelowDataEmpty =
+          data.totalSchemeBelow == 0 &&
+              data.totalDistrictBelow == 0 &&
+              data.totalVillageBelow == 0;
+
       final appState = Provider.of<AppStateProvider>(context, listen: false);
 
-      final mode = _tabController.index == 0
-          ? ProjectMode.below10
-          : ProjectMode.above10;
-      appState.setMode(mode);
-
-
+      if (isBelowDataEmpty) {
+        _tabController.animateTo(1);
+        appState.setMode(ProjectMode.above10);
+      } else {
+        _tabController.animateTo(0);
+        appState.setMode(ProjectMode.below10);
+      }
     });
   }
 
-
   void _handleTabChange() {
-    if (_tabController.indexIsChanging) return;
-    final appState = Provider.of<AppStateProvider>(context, listen: false);
+    if (_tabController.indexIsChanging || !_isProviderInitialized) return;
 
-    final mode = _tabController.index == 0
+    final appState = Provider.of<AppStateProvider>(context, listen: false);
+    final newMode = _tabController.index == 0
         ? ProjectMode.below10
         : ProjectMode.above10;
-    appState.setMode(mode);
-    dashboardProvider.fetchDashboardHomeData(1);
-    Provider.of<Schemeprovider>(context,listen: false).clearSchemeProvider();
-    Provider.of<Dwsmprovider>(context,listen: false).clearDwsmProvider();
-    Provider.of<Vwscprovider>(context,listen: false).clearVwscProvider();
-  }
 
+    appState.setMode(newMode);
+
+    dashboardProvider.fetchDashboardHomeData(1);
+    Provider.of<Schemeprovider>(context, listen: false).clearSchemeProvider();
+    Provider.of<Dwsmprovider>(context, listen: false).clearDwsmProvider();
+    Provider.of<Vwscprovider>(context, listen: false).clearVwscProvider();
+  }
 
   @override
   void dispose() {
@@ -67,31 +79,36 @@ class _DashboardTabViewState extends State<DashboardTabView>
     return Consumer<DashboardProvider>(
       builder: (context, provider, child) {
         return WillPopScope(
-          onWillPop: () async {Navigator.pop(context);
+          onWillPop: () async {
+            Navigator.pop(context);
             return false;
           },
           child: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/icons/header_bg.png'), fit: BoxFit.cover),
+                image: AssetImage('assets/icons/header_bg.png'),
+                fit: BoxFit.cover,
+              ),
             ),
             child: Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
-                title: Center(child: const Text("Dashboard",style: TextStyle(color: Colors.white),)),
+                title: const Center(
+                  child: Text(
+                    "Dashboard",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
                 backgroundColor: Colors.blue,
                 bottom: TabBar(
                   controller: _tabController,
                   tabs: const [
                     Tab(
-                      icon: Icon(
-                        Icons.arrow_downward,
-                        color: Colors.white, // Dark green for below 10%
-                      ),
+                      icon: Icon(Icons.arrow_downward, color: Colors.white),
                       child: Text(
                         'Below 10 Percent',
                         style: TextStyle(
-                          color: Colors.white, // Dark green
+                          color: Colors.white,
                           fontFamily: 'OpenSans',
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -99,10 +116,7 @@ class _DashboardTabViewState extends State<DashboardTabView>
                       ),
                     ),
                     Tab(
-                      icon: Icon(
-                        Icons.arrow_upward,
-                        color: Colors.white, // Blue for above 10%
-                      ),
+                      icon: Icon(Icons.arrow_upward, color: Colors.white),
                       child: Text(
                         'Above 10 Percent',
                         style: TextStyle(
