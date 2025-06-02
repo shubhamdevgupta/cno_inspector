@@ -63,23 +63,23 @@ class SourceSurveyItem {
 
   factory SourceSurveyItem.fromJson(Map<String, dynamic> json) {
     return SourceSurveyItem(
-      userid: json['userid'] ?? 0,
-      stateid: json['stateid'] ?? 0,
-      schemeid: json['schemeid'] ?? 0,
-      isRcmndShiftToSurfaceWtr: json['is_rcmnd_shift_to_surface_wtr'] ?? 0,
-      anyStudyAccessGwBeforeSw: json['any_study_access_gw_before_sw'] ?? 0,
-      noVillagesSafeZone: json['no_villages_safe_zone'] ?? 0,
-      noVillagesCriticalZone: json['no_villages_critical_zone'] ?? 0,
-      noVillagesSemiCriticalZone: json['no_villages_semi_critical_zone'] ?? 0,
-      incaseGwContAnyAnalysisConduct: json['incase_gw_cont_any_analysis_conduct'] ?? 0,
-      wtrAllocationFrmStateWRDIDFrmSw: json['wtr_allocation_frm_state_WRD_ID_frm_sw'] ?? 0,
+      userid: json['userid'],
+      stateid: json['stateid'],
+      schemeid: json['schemeid'],
+      isRcmndShiftToSurfaceWtr: json['is_rcmnd_shift_to_surface_wtr'],
+      anyStudyAccessGwBeforeSw: json['any_study_access_gw_before_sw'],
+      noVillagesSafeZone: json['no_villages_safe_zone'],
+      noVillagesCriticalZone: json['no_villages_critical_zone'],
+      noVillagesSemiCriticalZone: json['no_villages_semi_critical_zone'],
+      incaseGwContAnyAnalysisConduct: json['incase_gw_cont_any_analysis_conduct'],
+      wtrAllocationFrmStateWRDIDFrmSw: json['wtr_allocation_frm_state_WRD_ID_frm_sw'],
       createdby: json['createdby'],
       createdip: json['createdip'],
 /////////////
-      represe_of_ource_finding_committee: json['represe_of_ource_finding_committee'] ?? "",
-      cost_effective_alternative_sources: json['cost_effective_alternative_sources'] ?? "",
-      phy_status: json['phy_status'] ?? 0,
-      Remarks_Source: json['Remarks_Source'] ?? "",
+      represe_of_ource_finding_committee: json['represent_of_source_finding_committee'] ,
+      cost_effective_alternative_sources: json['cost_effective_alternative_sources'] ,
+      phy_status: json['phy_status'] ,
+      Remarks_Source: json['Remarks_Source'] ,
 
     );
   }
