@@ -1,5 +1,6 @@
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
+import 'package:cno_inspection/views/PartBDwsm/PartEQualityAssuranceandCommissioning.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +11,7 @@ import '../../utils/LoaderUtils.dart';
 import '../../utils/UserFeedback.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
-import 'DWSMCommonClass.dart';
+import 'AboveDWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 import 'PartDOperationandMaintenance.dart';
 
@@ -192,71 +193,100 @@ class _PartcBelowTechnocommercialviabilityP
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: SizedBox(
-                                      height: 35,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.deepOrange,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10), // Adjust the radius as needed
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(
-                                              context,
-                                              isLoading: dwsmProvider.isLoading,
-                                              message:
-                                                  "Saving  Monitoring, Quality and Lab Infrastructure");
 
-                                          await dwsmProvider.saveTecnoCommercialViabbility(
-                                              userId:
-                                                  localStorageService.getInt(
-                                                      AppConstants.prefUserId)!,
-                                              stateId: dwsmProvider.stateId!,
-                                              districtId:
-                                                  dwsmProvider.districtId!,
-                                              requiredOperation: dwsmProvider
-                                                  .requiredOperationController
-                                                  .text,
-                                              remaningExpenses: dwsmProvider
-                                                  .remaningExpensesController
-                                                  .text,
-                                              chargeStakeHolder: dwsmProvider
-                                                  .chargeStakeHolderController
-                                                  .text,
-                                              omCostScheme: dwsmProvider
-                                                  .onCostSchemeController.text,
-                                              modeType: modeType!.modeValue);
-                                          if (dwsmProvider.status!) {
-                                            ToastHelper.showToastMessage(
-                                                dwsmProvider.message!,
-                                                backgroundColor: Colors.green);
-                                            Navigator.of(context)
-                                                .pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      PartDoperationandmaintenance()),
-                                            );
-                                          } else {
-                                            ToastHelper.showToastMessage(
-                                                dwsmProvider.message!,
-                                                backgroundColor: Colors.red);
-                                          }
-                                        },
-                                        child: Text(
-                                          "SAVE & NEXT",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+
+
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+
+
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.deepOrange,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+
+                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartEQualityAssuranceCommissioning()),);
+                                          },
+                                          child: Text(
+                                            "SKIP",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.deepOrange,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            LoaderUtils.showLoadingWithMessage(
+                                                context,
+                                                isLoading: dwsmProvider.isLoading,
+                                                message:
+                                                "Saving  Monitoring, Quality and Lab Infrastructure");
+
+                                            await dwsmProvider.saveTecnoCommercialViabbility(
+                                                userId:
+                                                localStorageService.getInt(
+                                                    AppConstants.prefUserId)!,
+                                                stateId: dwsmProvider.stateId!,
+                                                districtId:
+                                                dwsmProvider.districtId!,
+                                                requiredOperation: dwsmProvider
+                                                    .requiredOperationController
+                                                    .text,
+                                                remaningExpenses: dwsmProvider
+                                                    .remaningExpensesController
+                                                    .text,
+                                                chargeStakeHolder: dwsmProvider
+                                                    .chargeStakeHolderController
+                                                    .text,
+                                                omCostScheme: dwsmProvider
+                                                    .onCostSchemeController.text,
+                                                modeType: modeType!.modeValue);
+                                            if (dwsmProvider.status!) {
+                                              ToastHelper.showToastMessage(
+                                                  dwsmProvider.message!,
+                                                  backgroundColor: Colors.green);
+                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartEQualityAssuranceCommissioning()),);
+                                            } else {
+                                              ToastHelper.showToastMessage(
+                                                  dwsmProvider.message!,
+                                                  backgroundColor: Colors.red);
+                                            }
+                                          },
+                                          child: Text(
+                                            "SAVE",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                    ],
+                                  )
+
+
                                 ],
                               )),
                         )

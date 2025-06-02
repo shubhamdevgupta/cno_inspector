@@ -11,7 +11,7 @@ import '../../utils/LoaderUtils.dart';
 import '../../utils/UserFeedback.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
-import 'DWSMCommonClass.dart';
+import 'AboveDWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 import 'PartBSourceSustainabilityWaterConservation.dart';
 
@@ -209,73 +209,111 @@ class _CoordinationPlanningReview extends State<CoordinationPlanningReview> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
-                                  height: 35,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10), // Adjust the radius as needed
+
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+
+
+                                  SizedBox(
+                                    height: 35,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.blue,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              10), // Adjust the radius as needed
+                                        ),
                                       ),
-                                    ),
-                                    onPressed: () async {
+                                      onPressed: () async {
 
-                                      LoaderUtils.showLoadingWithMessage(
-                                          context,
-                                          isLoading: dwsmProvider.isLoading,
-                                          message:
-                                              "Saving Coordination, Planning & Review Mechanism");
-                                      await dwsmProvider
-                                          .saveCoordinationPlanningReview(
-                                              userId:
-                                                  localStorageService
-                                                      .getInt(
-                                                          AppConstants
-                                                              .prefUserId)!,
-                                              stateId: dwsmProvider.stateId!,
-                                              districtId: dwsmProvider
-                                                  .districtId!,
-                                          auditInternalObservation:dwsmProvider.auditInternalObservation.text,
-                                              areMonthlyMeetingsHeld:
-                                                  dwsmProvider
-                                                      .selectedValueQ1Id,
-                                              numberOfMeetingsLast6Months: int.tryParse(dwsmProvider.meetingsHeldController.text)!,
-                                              qualityOfMeeting: dwsmProvider
-                                                  .selectedMeetingQualityID,
-                                              areCoordinationMeetingsRegular:
-                                                  dwsmProvider.selectedDISHAID,
-                                            modeType: modeType!.modeValue,
-                                            observationCoordination: dwsmProvider.observationCoordination.text);
-
-                                      if (dwsmProvider.status!) {
-                                        ToastHelper.showToastMessage(
-                                            dwsmProvider.message!,
-                                            backgroundColor: Colors.green);
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (_) =>
                                                   SourceSustainablitiyWasterConservation()),
                                         );
-                                      } else {
-                                        ToastHelper.showToastMessage(
-                                            dwsmProvider.message!,
-                                            backgroundColor: Colors.red);
-                                      }
-                                    },
-                                    child: Text(
-                                      "SAVE & NEXT",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
+                                      },
+                                      child: Text(
+                                        "SKIP",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
+                                  SizedBox(
+                                    height: 35,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.blue,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              10), // Adjust the radius as needed
+                                        ),
+                                      ),
+                                      onPressed: () async {
+
+                                        LoaderUtils.showLoadingWithMessage(
+                                            context,
+                                            isLoading: dwsmProvider.isLoading,
+                                            message:
+                                            "Saving Coordination, Planning & Review Mechanism");
+                                        await dwsmProvider
+                                            .saveCoordinationPlanningReview(
+                                            userId:
+                                            localStorageService
+                                                .getInt(
+                                                AppConstants
+                                                    .prefUserId)!,
+                                            stateId: dwsmProvider.stateId!,
+                                            districtId: dwsmProvider
+                                                .districtId!,
+                                            auditInternalObservation:dwsmProvider.auditInternalObservation.text,
+                                            areMonthlyMeetingsHeld:
+                                            dwsmProvider
+                                                .selectedValueQ1Id,
+                                            numberOfMeetingsLast6Months: int.tryParse(dwsmProvider.meetingsHeldController.text)!,
+                                            qualityOfMeeting: dwsmProvider
+                                                .selectedMeetingQualityID,
+                                            areCoordinationMeetingsRegular:
+                                            dwsmProvider.selectedDISHAID,
+                                            modeType: modeType!.modeValue,
+                                            observationCoordination: dwsmProvider.observationCoordination.text);
+
+                                        if (dwsmProvider.status!) {
+                                          ToastHelper.showToastMessage(
+                                              dwsmProvider.message!,
+                                              backgroundColor: Colors.green);
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    SourceSustainablitiyWasterConservation()),
+                                          );
+                                        } else {
+                                          ToastHelper.showToastMessage(
+                                              dwsmProvider.message!,
+                                              backgroundColor: Colors.red);
+                                        }
+                                      },
+                                      child: Text(
+                                        "SAVE ",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                ],
+                              )
+
+
+
                             ],
                           ),
                         ),

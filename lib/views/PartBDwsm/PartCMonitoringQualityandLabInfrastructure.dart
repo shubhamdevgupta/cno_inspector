@@ -11,7 +11,7 @@ import '../../utils/LoaderUtils.dart';
 import '../../utils/UserFeedback.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
-import 'DWSMCommonClass.dart';
+import 'AboveDWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 import 'PartDOperationandMaintenance.dart';
 
@@ -182,73 +182,108 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                   ),
 
 
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
 
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: SizedBox(
-                                      height: 35,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.deepOrange,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10), // Adjust the radius as needed
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.deepOrange,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
                                           ),
-                                        ),
-                                        onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(
-                                              context,
-                                              isLoading: dwsmProvider.isLoading,
-                                              message:
-                                                  "Saving  Monitoring, Quality and Lab Infrastructure");
-
-                                          await dwsmProvider
-                                              .saveMonitoringQualityLab(
-                                                  userId: localStorageService
-                                                      .getInt(AppConstants
-                                                          .prefUserId)!,
-                                                  stateId:
-                                                      dwsmProvider.stateId!,
-                                                  districtId:
-                                                      dwsmProvider.districtId!,
-                                                  areAssetsGeotagged:
-                                                      dwsmProvider
-                                                          .assetsGeotaggedID,
-                                                  hasNABLLab:
-                                                      dwsmProvider.hasNablLabID,
-                                                  testingManagementDescription:
-                                                      dwsmProvider
-                                                          .testingManagedController
-                                                          .text,
-                                                  observationMonitoringQuality: dwsmProvider.obserVationControllerQuality.text,
-                                                  modeType: modeType!.modeValue);
-                                          if (dwsmProvider.status!) {
-                                            ToastHelper.showToastMessage(
-                                                dwsmProvider.message!,
-                                                backgroundColor: Colors.green);
+                                          onPressed: () async {
                                             Navigator.of(context)
                                                 .pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (_) =>
                                                       PartDoperationandmaintenance()),
                                             );
-                                          } else {
-                                            ToastHelper.showToastMessage(
-                                                dwsmProvider.message!,
-                                                backgroundColor: Colors.red);
-                                          }
-                                        },
-                                        child: Text(
-                                          "SAVE & NEXT",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+                                          },
+                                          child: Text(
+                                            "SKIP",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
+
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.deepOrange,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            LoaderUtils.showLoadingWithMessage(
+                                                context,
+                                                isLoading: dwsmProvider.isLoading,
+                                                message:
+                                                "Saving  Monitoring, Quality and Lab Infrastructure");
+
+                                            await dwsmProvider
+                                                .saveMonitoringQualityLab(
+                                                userId: localStorageService
+                                                    .getInt(AppConstants
+                                                    .prefUserId)!,
+                                                stateId:
+                                                dwsmProvider.stateId!,
+                                                districtId:
+                                                dwsmProvider.districtId!,
+                                                areAssetsGeotagged:
+                                                dwsmProvider
+                                                    .assetsGeotaggedID,
+                                                hasNABLLab:
+                                                dwsmProvider.hasNablLabID,
+                                                testingManagementDescription:
+                                                dwsmProvider
+                                                    .testingManagedController
+                                                    .text,
+                                                observationMonitoringQuality: dwsmProvider.obserVationControllerQuality.text,
+                                                modeType: modeType!.modeValue);
+                                            if (dwsmProvider.status!) {
+                                              ToastHelper.showToastMessage(
+                                                  dwsmProvider.message!,
+                                                  backgroundColor: Colors.green);
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        PartDoperationandmaintenance()),
+                                              );
+                                            } else {
+                                              ToastHelper.showToastMessage(
+                                                  dwsmProvider.message!,
+                                                  backgroundColor: Colors.red);
+                                            }
+                                          },
+                                          child: Text(
+                                            "SAVE",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+
+                                    ],
+                                  )
+
+
+,
                                 ],
                               )),
                         )

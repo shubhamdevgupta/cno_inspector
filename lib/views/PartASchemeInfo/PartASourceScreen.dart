@@ -37,16 +37,11 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
         final schemeId = args['schemeId'] as int?;
         final stateId = args['stateId'] as int?;
 
-        final schemeProvider =
-            Provider.of<Schemeprovider>(context, listen: false);
+        final schemeProvider = Provider.of<Schemeprovider>(context, listen: false);
         schemeProvider.clearfetchSourceSurvey();
 
-        if (schemeId != null) {
-          schemeProvider.setSchemeId(schemeId);
-        }
-        if (stateId != null) {
-          schemeProvider.setStateId(stateId);
-        }
+        if (schemeId != null) {schemeProvider.setSchemeId(schemeId);}
+        if (stateId != null) {schemeProvider.setStateId(stateId);}
         schemeProvider.fetchSourceSurvey(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       print('-----------${modeType!.modeValue}');
       }
@@ -266,76 +261,115 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                     controller:  schemeProvider.PartAUserObservation,
                                   ),
                                   const SizedBox(height: 15),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: SizedBox(
-                                      height: 35,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Color(0xffb0D6EFD),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10), // Adjust the radius as needed
+
+
+
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color(0xffb0D6EFD),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
                                           ),
-                                        ),
-                                        onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(
-                                              context,
-                                              isLoading:
-                                                  schemeProvider.isLoading,
-                                              message: "Saving Source...");
-                                          print('---------------${int.tryParse(schemeProvider.safeController.text)} ');
-                                          await schemeProvider.saveSourceSurvey(
-                                            userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
-                                            stateId: schemeProvider.stateId ?? 0,
-                                            schemeId: schemeProvider.schemeId ?? 0,
-                                            isRecommendShiftToSurface: schemeProvider.selectedValueQ1Id ?? 0,
-                                            studyAccessGroundBeforeSurface: schemeProvider.selectedValueQ2Id ?? 0,
-                                            safeZoneVillages: int.tryParse(schemeProvider.safeController.text) ?? 0,
-                                            criticalZoneVillages: int.tryParse(schemeProvider.criticalController.text) ?? 0,
-                                            semiCriticalZoneVillages: int.tryParse(schemeProvider.semiCriticalController.text) ?? 0,
-                                            groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id ?? 0,
-                                            waterAllocationFromWRD: schemeProvider.selectedWaterAllocationId ?? 0,
-                                            alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text.isNotEmpty
-                                                ? schemeProvider.alternativeSourcesAvailable_Controller.text
-                                                : "",
-                                            repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text.isNotEmpty
-                                                ? schemeProvider.sourceFindingRepresentativesConsulted_Controller.text
-                                                : "",
-                                            modeType: modeType?.modeValue ?? 0,
-                                            userremark: schemeProvider.PartAUserObservation.text.isNotEmpty
-                                                ? schemeProvider.PartAUserObservation.text
-                                                : "",
-                                          );
-
-
-                                          if (schemeProvider.status!) {
-                                            ToastHelper.showToastMessage(
-                                                schemeProvider.message!,
-                                                backgroundColor: Colors.green);
+                                          onPressed: () async {
                                             Navigator.of(context)
                                                 .pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (_) =>
                                                       SchemePlanningScreen()),
                                             );
-                                          } else {
-                                            ToastHelper.showToastMessage(
-                                                schemeProvider.message!,
-                                                backgroundColor: Colors.red);
-                                          }
-                                        },
-                                        child: Text(
-                                          "SAVE & NEXT",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+                                          },
+                                          child: Text(
+                                            "SKIP",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color(0xffb0D6EFD),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            LoaderUtils.showLoadingWithMessage(
+                                                context,
+                                                isLoading:
+                                                schemeProvider.isLoading,
+                                                message: "Saving Source...");
+                                            print('---------------${int.tryParse(schemeProvider.safeController.text)} ');
+                                            await schemeProvider.saveSourceSurvey(
+                                              userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
+                                              stateId: schemeProvider.stateId ?? 0,
+                                              schemeId: schemeProvider.schemeId ?? 0,
+                                              isRecommendShiftToSurface: schemeProvider.selectedValueQ1Id ?? 0,
+                                              studyAccessGroundBeforeSurface: schemeProvider.selectedValueQ2Id ?? 0,
+                                              safeZoneVillages: int.tryParse(schemeProvider.safeController.text) ?? 0,
+                                              criticalZoneVillages: int.tryParse(schemeProvider.criticalController.text) ?? 0,
+                                              semiCriticalZoneVillages: int.tryParse(schemeProvider.semiCriticalController.text) ?? 0,
+                                              groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id ?? 0,
+                                              waterAllocationFromWRD: schemeProvider.selectedWaterAllocationId ?? 0,
+                                              alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text.isNotEmpty
+                                                  ? schemeProvider.alternativeSourcesAvailable_Controller.text
+                                                  : "",
+                                              repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text.isNotEmpty
+                                                  ? schemeProvider.sourceFindingRepresentativesConsulted_Controller.text
+                                                  : "",
+                                              modeType: modeType?.modeValue ?? 0,
+                                              userremark: schemeProvider.PartAUserObservation.text.isNotEmpty
+                                                  ? schemeProvider.PartAUserObservation.text
+                                                  : "",
+                                            );
+
+
+                                            if (schemeProvider.status!) {
+                                              ToastHelper.showToastMessage(
+                                                  schemeProvider.message!,
+                                                  backgroundColor: Colors.green);
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        SchemePlanningScreen()),
+                                              );
+                                            } else {
+                                              ToastHelper.showToastMessage(
+                                                  schemeProvider.message!,
+                                                  backgroundColor: Colors.red);
+                                            }
+                                          },
+                                          child: Text(
+                                            "SAVE",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+
+
+
+                                    ],
+                                  )
+
                                 ],
                               )),
                         )
