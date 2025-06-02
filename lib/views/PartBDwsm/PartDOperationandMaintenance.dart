@@ -12,7 +12,7 @@ import '../../utils/LoaderUtils.dart';
 import '../../utils/UserFeedback.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
-import 'DWSMCommonClass.dart';
+import 'AboveDWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 import 'PartEQualityAssuranceandCommissioning.dart';
 
@@ -27,11 +27,12 @@ class PartDoperationandmaintenance extends StatefulWidget {
 class _PartDoperationandmaintenance
     extends State<PartDoperationandmaintenance> {
   LocalStorageService localStorageService = LocalStorageService();
-  ProjectMode? modeType;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
+      final  modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
       final args =
       ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
@@ -45,7 +46,7 @@ class _PartDoperationandmaintenance
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
 
         dwsmProvider.fetchOperationMaintenanceData(stateId.toString(),districtid.toString(),localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
       }
@@ -110,6 +111,7 @@ class _PartDoperationandmaintenance
             elevation: 5,
           ),
           body: Consumer<Dwsmprovider>(builder: (context,dwsmProvider,child){
+            final  modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
             return SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.only(
@@ -208,56 +210,91 @@ class _PartDoperationandmaintenance
                               SizedBox(
                                 height: 10,
                               ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
-                                  height: 35,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.lightGreen,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10), // Adjust the radius as needed
+
+                              Row(
+
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    height: 35,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.lightGreen,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              10), // Adjust the radius as needed
+                                        ),
                                       ),
-                                    ),
-                                    onPressed: () async {
+                                      onPressed: () async {
 
-                                      LoaderUtils.showLoadingWithMessage(context,
-                                          isLoading: dwsmProvider.isLoading,message: "Saving Operation & Maintenance (O&M)");
-
-                                      await dwsmProvider.saveOperationMaintenance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
-                                        isProtocolInPlace: dwsmProvider.handoverProtocolID,
-                                          percentVillagesWithManpower: Utilityclass.parseDoubleOrZero(dwsmProvider.manpowerPercentController.text),
-                                          isWaterFeeCharged: -1, feeAmountPerMonth: Utilityclass.parseInt(dwsmProvider.waterFeeController.text),
-                                        isUniformFee: dwsmProvider.feeBasisID,
-                                        obserVationOperationMaintenance: dwsmProvider.observationOperationMaintencen.text,
-                                        percentVillagesFeeCollected: Utilityclass.parseDoubleOrZero(dwsmProvider.userFeePercentController.text),modeType: modeType!.modeValue);
-                                      if (dwsmProvider.status!) {
-                                        ToastHelper.showToastMessage(
-                                            dwsmProvider.message!,
-                                            backgroundColor: Colors.green);
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (_) =>
                                                   PartEQualityAssuranceCommissioning()),
                                         );
-                                      } else {
-                                        ToastHelper.showToastMessage(
-                                            dwsmProvider.message!,
-                                            backgroundColor: Colors.red);
-                                      }
-                                    },
-                                    child: Text(
-                                      "SAVE & NEXT",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
+                                      },
+                                      child: Text(
+                                        "SKIP",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
+
+                                  SizedBox(
+                                    height: 35,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.lightGreen,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              10), // Adjust the radius as needed
+                                        ),
+                                      ),
+                                      onPressed: () async {
+
+                                        LoaderUtils.showLoadingWithMessage(context,
+                                            isLoading: dwsmProvider.isLoading,message: "Saving Operation & Maintenance (O&M)");
+
+                                        await dwsmProvider.saveOperationMaintenance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
+                                        isProtocolInPlace: dwsmProvider.handoverProtocolID,
+                                          percentVillagesWithManpower: Utilityclass.parseDoubleOrZero(dwsmProvider.manpowerPercentController.text),
+                                          isWaterFeeCharged: -1, feeAmountPerMonth: Utilityclass.parseInt(dwsmProvider.waterFeeController.text),
+                                            isUniformFee: dwsmProvider.feeBasisID,
+                                            obserVationOperationMaintenance: dwsmProvider.observationOperationMaintencen.text,
+                                        percentVillagesFeeCollected: Utilityclass.parseDoubleOrZero(dwsmProvider.userFeePercentController.text),modeType: modeType!.modeValue);
+                                        if (dwsmProvider.status!) {
+                                          ToastHelper.showToastMessage(
+                                              dwsmProvider.message!,
+                                              backgroundColor: Colors.green);
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    PartEQualityAssuranceCommissioning()),
+                                          );
+                                        } else {
+                                          ToastHelper.showToastMessage(
+                                              dwsmProvider.message!,
+                                              backgroundColor: Colors.red);
+                                        }
+                                      },
+                                      child: Text(
+                                        "SAVE",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+
+
                             ],
                           )),
                     )

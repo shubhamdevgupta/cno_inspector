@@ -35,7 +35,7 @@ void initState() {
     final args =
     ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-    ProjectMode? ModeType;
+    final  ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
     if (args != null) {
       final villageId = args['villageId'] as int?;
       final stateId = args['stateId'] as int?;
@@ -52,7 +52,6 @@ void initState() {
         vwscProvider.setStateId(stateId);
       }
 
-      ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
       vwscProvider.fetchWaterQuality(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(), ModeType!.modeValue);
     }
   });
@@ -119,7 +118,7 @@ void initState() {
             elevation: 5,
           ),
           body: Consumer<Vwscprovider>(builder: (context,vwscProvider,child){
-            final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+            final  mode = Provider.of<AppStateProvider>(context, listen: false).mode;
             return SingleChildScrollView(
               child: Container(
                 child: Column(
@@ -207,56 +206,93 @@ void initState() {
                                   controller:  vwscProvider.PartDVWSCuserObservationController,
                                 ),
 
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: SizedBox(
-                                    height: 35,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.lightGreen,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+
+                                    SizedBox(
+                                      height: 35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.lightGreen,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                                          ),
                                         ),
-                                      ),
-                                      onPressed: () async{
-                                         LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading,message: "Saving Water Quality Monitoring");
+                                        onPressed: () async{
 
-                                         await vwscProvider.saveWaterQualityMonitoring(
-                                           userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                           stateId: vwscProvider.stateId!,
-                                           villageId: vwscProvider.villageId!,
-                                           isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,
-                                           ftkTestingPeriod: vwscProvider.selectedFTKTestingFrequencyId,
-                                           numberWomenTrainedFtk: Utilityclass.stringToZero(vwscProvider.womenTrainedController.text),
-                                           whoTestFtk: vwscProvider.testerNameController.text,
-                                           isChlorinationDone: vwscProvider.selectedDisinfectionDoneId,
-                                           frcAvailableAtEnd: vwscProvider.selectedFRCLevelId,
-                                           phyStatus: mode.modeValue,
-                                           observationWaterQualityMonitoring: vwscProvider.PartDVWSCuserObservationController.text,
-                                         );
-
-                                         if(vwscProvider.status!){
-                                          ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.green);
                                           Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (_) =>
                                                     GrievancePartE()),
                                           );
-                                        }else{
-                                          ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.red);
-                                        }
-                                      },
-                                      child: Text(
-                                        "SAVE & NEXT",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
+
+                                        },
+                                        child: Text(
+                                          "SKIP",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
+
+                                    SizedBox(
+                                      height: 35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.lightGreen,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                                          ),
+                                        ),
+                                        onPressed: () async{
+                                          LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading,message: "Saving Water Quality Monitoring");
+
+                                          await vwscProvider.saveWaterQualityMonitoring(
+                                            userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                            stateId: vwscProvider.stateId!,
+                                            villageId: vwscProvider.villageId!,
+                                            isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,
+                                            ftkTestingPeriod: vwscProvider.selectedFTKTestingFrequencyId,
+                                           numberWomenTrainedFtk: Utilityclass.stringToZero(vwscProvider.womenTrainedController.text),
+                                            whoTestFtk: vwscProvider.testerNameController.text,
+                                            isChlorinationDone: vwscProvider.selectedDisinfectionDoneId,
+                                            frcAvailableAtEnd: vwscProvider.selectedFRCLevelId,
+                                            phyStatus: mode.modeValue,
+                                            observationWaterQualityMonitoring: vwscProvider.PartDVWSCuserObservationController.text,
+                                          );
+
+                                          if(vwscProvider.status!){
+                                            ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.green);
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      GrievancePartE()),
+                                            );
+                                          }else{
+                                            ToastHelper.showToastMessage( vwscProvider.message!,backgroundColor: Colors.red);
+                                          }
+                                        },
+                                        child: Text(
+                                          "SAVE",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+
+                                  ],
+                                )
+
+
                               ],
                             )
                         ),

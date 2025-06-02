@@ -11,8 +11,10 @@ import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
-import 'DWSMCommonClass.dart';
+import 'AboveDWSMCommonClass.dart';
+import 'BelowDWSMCommon.dart';
 import 'DashboardDWSM.dart';
+import 'PartBDWSMUserobservation.dart';
 import 'PartFPublicComplaintsandGrievance.dart';
 
 class PartEQualityAssuranceCommissioning extends StatefulWidget {
@@ -26,12 +28,13 @@ class PartEQualityAssuranceCommissioning extends StatefulWidget {
 class _PartEQualityAssuranceCommissioning
     extends State<PartEQualityAssuranceCommissioning> {
   LocalStorageService localStorageService = LocalStorageService();
- ProjectMode? modeType;
+
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final  modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
@@ -46,7 +49,7 @@ class _PartEQualityAssuranceCommissioning
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-        modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
 
         dwsmProvider.fetchQualityAssuranceData(
             stateId.toString(),
@@ -117,7 +120,6 @@ class _PartEQualityAssuranceCommissioning
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
                 final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
-
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -125,9 +127,12 @@ class _PartEQualityAssuranceCommissioning
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Dwsmcommonclass(
-                          no: 5,
-                        ),
+
+
+
+
+                     modeType == ProjectMode.below10?Belowdwsmcommon(no: 4): Dwsmcommonclass(no: 5),
+
                         Card(
                           elevation: 5,
                           child: Container(
@@ -228,65 +233,96 @@ class _PartEQualityAssuranceCommissioning
                                   ),
                                   const SizedBox(height: 10),
 
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: SizedBox(
-                                      height: 35,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.green,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10), // Adjust the radius as needed
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(
-                                              context,
-                                              isLoading: dwsmProvider.isLoading,
-                                              message:
-                                                  "Saving Quality Assurance and Commissioning");
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: SizedBox(
+                                          height: 35,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.green,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(
+                                                    10), // Adjust the radius as needed
+                                              ),
+                                            ),
+                                            onPressed: () async {
 
-                                          await dwsmProvider.saveQualityAssurance(
-                                              userId: localStorageService.getInt(AppConstants.prefUserId)!,
-                                              stateId: dwsmProvider.stateId!,
-                                              districtId: dwsmProvider.districtId!,
-                                              inspectionAuthority: dwsmProvider.selectedAuthorizedInspectorID,
-                                              isCommissioningProtocolFollowed: dwsmProvider.commissioningProtocolFollowedID,
-                                              schemesPresentDuringCommissioning:[4,2],
-                                              districtAssessmentAgencies: dwsmProvider.thirdPartyAssessmentID,
-                                              districtHiredAgencies: dwsmProvider.thirdPartyInspectionAgencyID,
-                                              modeType: modeType.modeValue,
-                                            observationQualityAssurance: dwsmProvider.obserVationQualityAssurance.text
-                                          );
-
-                                          if (dwsmProvider.status!) {
-                                            ToastHelper.showToastMessage(
-                                                dwsmProvider.message!,
-                                                backgroundColor: Colors.green);
-                                            Navigator.of(context)
-                                                .pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      PartFPublicCompliant()),
-                                            );
-                                          } else {
-                                            ToastHelper.showToastMessage(
-                                                dwsmProvider.message!,
-                                                backgroundColor: Colors.red);
-                                          }
-                                        },
-                                        child: Text(
-                                          "SAVE & NEXT",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartFPublicCompliant()),
+                                              );
+                                            },
+                                            child: Text(
+                                              "SKIP",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.green,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            LoaderUtils.showLoadingWithMessage(
+                                                context,
+                                                isLoading: dwsmProvider.isLoading,
+                                                message:
+                                                "Saving Quality Assurance and Commissioning");
+
+                                            await dwsmProvider.saveQualityAssurance(
+                                              userId: localStorageService.getInt(AppConstants.prefUserId)!,
+                                                stateId: dwsmProvider.stateId!,
+                                              districtId: dwsmProvider.districtId!,
+                                                inspectionAuthority: dwsmProvider.selectedAuthorizedInspectorID,
+                                              isCommissioningProtocolFollowed: dwsmProvider.commissioningProtocolFollowedID,
+                                                schemesPresentDuringCommissioning:[4,2],
+                                              districtAssessmentAgencies: dwsmProvider.thirdPartyAssessmentID,
+                                                districtHiredAgencies: dwsmProvider.thirdPartyInspectionAgencyID,
+                                              modeType: modeType.modeValue,
+                                                observationQualityAssurance: dwsmProvider.obserVationQualityAssurance.text
+                                            );
+
+                                            if (dwsmProvider.status!) {
+                                              ToastHelper.showToastMessage(
+                                                  dwsmProvider.message!,
+                                                  backgroundColor: Colors.green);
+
+                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartFPublicCompliant()),
+                                              );
+
+                                            } else {
+                                              ToastHelper.showToastMessage(
+                                                  dwsmProvider.message!,
+                                                  backgroundColor: Colors.red);
+                                            }
+                                          },
+                                          child: Text(
+                                            "SAVE",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+
+
+
                                 ],
                               )),
                         )

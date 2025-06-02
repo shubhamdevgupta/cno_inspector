@@ -378,70 +378,109 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                   controller:  schemeProvider.PartBUserObservation,
                                 ),
 
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: SizedBox(
-                                    height: 35,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.orangeAccent,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              10), // Adjust the radius as needed
+
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+
+                                    SizedBox(
+                                      height: 35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.orangeAccent,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Adjust the radius as needed
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          Navigator.of(context)
+                                              .pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    RetrofittingAugmentationScreen()),
+                                          );
+                                        },
+                                        child: Text(
+                                          "SKIP",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                      onPressed: () async {
-                                        LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Scheme Planning...");
-print("STATE : ${schemeProvider.stateId}");
-                                        await schemeProvider.saveSchemePlanning(
-                                          userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
-                                          stateId: schemeProvider.stateId ?? 0,
-                                          schemeId: schemeProvider.schemeId ?? 0,
-                                          topoSurvey: schemeProvider.topoSurveyID,
-                                          gpsSurvey: schemeProvider.gpsSurveyID,
-                                          googleSurvey: schemeProvider.googleEarthSurveyID,
-                                          numberOfSurveys: schemeProvider.noSurveyID ,
-                                          designRunningHours: int.tryParse(schemeProvider.wtpHoursController.text) ?? 0,
-                                          retentionTimeOHT: int.tryParse(schemeProvider.ohsrTimeController.text) ?? 0,
-                                          retentionTimeMBR: int.tryParse(schemeProvider.mbrTimeController.text) ?? 0,
+                                    ),
+                                    SizedBox(
+                                      height: 35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.orangeAccent,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Adjust the radius as needed
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          LoaderUtils.showLoadingWithMessage(context, isLoading: schemeProvider.isLoading,message: "Saving Scheme Planning...");
+                                          print("STATE : ${schemeProvider.stateId}");
+                                          await schemeProvider.saveSchemePlanning(
+                                            userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
+                                            stateId: schemeProvider.stateId ?? 0,
+                                            schemeId: schemeProvider.schemeId ?? 0,
+                                            topoSurvey: schemeProvider.topoSurveyID,
+                                            gpsSurvey: schemeProvider.gpsSurveyID,
+                                            googleSurvey: schemeProvider.googleEarthSurveyID,
+                                            numberOfSurveys: schemeProvider.noSurveyID ,
+                                            designRunningHours: int.tryParse(schemeProvider.wtpHoursController.text) ?? 0,
+                                            retentionTimeOHT: int.tryParse(schemeProvider.ohsrTimeController.text) ?? 0,
+                                            retentionTimeMBR: int.tryParse(schemeProvider.mbrTimeController.text) ?? 0,
                                           terrainRocky: schemeProvider.rockyPipeMaterialController.text.trim().isEmpty ? '' : schemeProvider.rockyPipeMaterialController.text,
                                           terrainSoil: schemeProvider.soilPipeMaterialController.text.trim().isEmpty ? '' : schemeProvider.soilPipeMaterialController.text,
-                                          foundAsPerDPR: schemeProvider.onSpotExcavationID ,
+                                            foundAsPerDPR: schemeProvider.onSpotExcavationID ,
                                           deviation: schemeProvider.deviationReasonController.text.trim().isEmpty ? '' : schemeProvider.deviationReasonController.text,
                                           user_remark: schemeProvider.PartBUserObservation.text.trim().isEmpty ? '' : schemeProvider.PartBUserObservation.text,
                                           reason_not_awarded_scheme_planning: schemeProvider.schemePlanning_Question1Controller.text.trim().isEmpty ? '' : schemeProvider.schemePlanning_Question1Controller.text,
                                           work_awarded_no_physical_progress: schemeProvider.schemePlanning_Question2Controller.text.trim().isEmpty ? '' : schemeProvider.schemePlanning_Question2Controller.text,
                                           multiple_schemes_sanctioned_justify_detial: schemeProvider.schemePlanning_Question5Controller.text.trim().isEmpty ? '' : schemeProvider.schemePlanning_Question5Controller.text,
                                           desgined_conjunctive_detail: schemeProvider.schemePlanning_Question6Controller.text.trim().isEmpty ? '' : schemeProvider.schemePlanning_Question6Controller.text,
-                                          phy_status: modeType.modeValue ?? 0,
-                                        );
-
-                                        if (schemeProvider.status!) {
-                                          ToastHelper.showToastMessage(
-                                              schemeProvider.message!,
-                                              backgroundColor: Colors.green);
-                                          Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (_) =>
-                                                    RetrofittingAugmentationScreen()),
+                                            phy_status: modeType.modeValue ?? 0,
                                           );
-                                        } else {
-                                          ToastHelper.showToastMessage(
-                                              schemeProvider.message!,
-                                              backgroundColor: Colors.red);
-                                        }
-                                      },
-                                      child: Text(
-                                        "SAVE & NEXT",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
+
+                                          if (schemeProvider.status!) {
+                                            ToastHelper.showToastMessage(
+                                                schemeProvider.message!,
+                                                backgroundColor: Colors.green);
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      RetrofittingAugmentationScreen()),
+                                            );
+                                          } else {
+                                            ToastHelper.showToastMessage(
+                                                schemeProvider.message!,
+                                                backgroundColor: Colors.red);
+                                          }
+                                        },
+                                        child: Text(
+                                          "SAVE & NEXT",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
+
+
+
+
+                                  ],
                                 ),
+
+
                               ],
                             ),
                           ),

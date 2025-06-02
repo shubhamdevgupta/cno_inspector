@@ -30,12 +30,12 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
   @override
   void initState() {
     super.initState();
-
+    final  ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-      ProjectMode? ModeType;
+
       if (args != null) {
         final villageId = args['villageId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -51,7 +51,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
           vwscProvider.setStateId(stateId);
         }
 
-        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
         vwscProvider.fetchCommunityInvolvement(stateId.toString(), villageId.toString(), _localStorage.getInt(AppConstants.prefUserId).toString(), ModeType!.modeValue);
       }
     });
@@ -114,7 +114,7 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
               elevation: 5,
             ),
             body: Consumer<Vwscprovider>(builder: (context, vwscProvider, child) {
-              final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+              final  mode = Provider.of<AppStateProvider>(context, listen: false).mode;
 
 
 
@@ -149,9 +149,6 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
-
-
 
 
 
@@ -450,50 +447,20 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                 ),
 
 
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: SizedBox(
-                                    height: 35,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.orangeAccent,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              10), // Adjust the radius as needed
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      height: 35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.orangeAccent,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Adjust the radius as needed
+                                          ),
                                         ),
-                                      ),
-                                      onPressed: () async {
-                                        LoaderUtils.showLoadingWithMessage(
-                                            context,
-                                            isLoading: vwscProvider.isLoading,
-                                            message:
-                                                "Community Involvement & VWSC Functionality");
-                                        //   vwscProvider.fetchCommunityInvolvement("45", "111140", "1121");
-                                        await vwscProvider.saveVwscCommunityInvolvement(
-                                            userId: _localStorage
-                                                .getInt(AppConstants.prefUserId)!,
-                                            stateId: vwscProvider.stateId!,
-                                            villageId: vwscProvider.villageId!,
-                                            isPaniSamitiFormed: vwscProvider.selectedVWSCFormedID,
-                                            isVwscBankAccount: vwscProvider.selectedVWSCBankAccountID,
-                                            vwscGpInvolvementScheme: vwscProvider.selectedVWSCInvolvementID,
-                                            drawingPipelineAvlGpOffice: vwscProvider.selectedAsBuiltDrawingID,
-                                            isVwscMeetingPeriodic: vwscProvider.selectedVWSCMeetingConductedID,
-                                            meetingHeldFrequency: vwscProvider.FrequencyController.text,
-                                            isVwscMeetingRecordAvl: vwscProvider.selectedVWSCRecordsAvailableID,
-                                            vwscInvolvementOM: vwscProvider.selectedVWSCOMInvolvedID,
-                                            schemeHandedOverGp: vwscProvider.selectedSchemeHandoverID,
-                                            omArrangement: vwscProvider.selectedOMArrangementsID,
-                                            communityAwareness: vwscProvider.selectedCommunityAwarenessID,
-                                            communitySatisfactionWithWq: vwscProvider.selectedWaterQualitySatisfactionID,
-                                            phyStatus: mode.modeValue,
-                                            observationCommunityInvolvementFunctionality:  vwscProvider.PartBVWSCuserObservationController.text
-                                        );
-
-                                        if (vwscProvider.status!) {
-                                          ToastHelper.showToastMessage(
-                                              vwscProvider.message!,
-                                              backgroundColor: Colors.green);
+                                        onPressed: () async {
 
                                           if (mode == ProjectMode.below10){
                                             Navigator.of(context).pushReplacement(
@@ -510,23 +477,98 @@ class _CommunityInvolvementPartBState extends State<CommunityInvolvementPartB> {
                                             );
                                           }
 
-                                        } else {
-                                          ToastHelper.showToastMessage(
-                                              vwscProvider.message!,
-                                              backgroundColor: Colors.red);
-                                        }
-                                      },
-                                      child: Text(
-                                        "SAVE & NEXT",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
+                                        },
+                                        child: Text(
+                                          "SKIP",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
+                                    SizedBox(
+                                      height: 35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.orangeAccent,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Adjust the radius as needed
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          LoaderUtils.showLoadingWithMessage(
+                                              context,
+                                              isLoading: vwscProvider.isLoading,
+                                              message:
+                                              "Community Involvement & VWSC Functionality");
+                                          //   vwscProvider.fetchCommunityInvolvement("45", "111140", "1121");
+                                          await vwscProvider.saveVwscCommunityInvolvement(
+                                              userId: _localStorage
+                                                  .getInt(AppConstants.prefUserId)!,
+                                              stateId: vwscProvider.stateId!,
+                                              villageId: vwscProvider.villageId!,
+                                              isPaniSamitiFormed: vwscProvider.selectedVWSCFormedID,
+                                              isVwscBankAccount: vwscProvider.selectedVWSCBankAccountID,
+                                              vwscGpInvolvementScheme: vwscProvider.selectedVWSCInvolvementID,
+                                              drawingPipelineAvlGpOffice: vwscProvider.selectedAsBuiltDrawingID,
+                                              isVwscMeetingPeriodic: vwscProvider.selectedVWSCMeetingConductedID,
+                                              meetingHeldFrequency: vwscProvider.FrequencyController.text,
+                                              isVwscMeetingRecordAvl: vwscProvider.selectedVWSCRecordsAvailableID,
+                                              vwscInvolvementOM: vwscProvider.selectedVWSCOMInvolvedID,
+                                              schemeHandedOverGp: vwscProvider.selectedSchemeHandoverID,
+                                              omArrangement: vwscProvider.selectedOMArrangementsID,
+                                              communityAwareness: vwscProvider.selectedCommunityAwarenessID,
+                                              communitySatisfactionWithWq: vwscProvider.selectedWaterQualitySatisfactionID,
+                                              phyStatus: mode.modeValue,
+                                              observationCommunityInvolvementFunctionality:  vwscProvider.PartBVWSCuserObservationController.text
+                                          );
+
+                                          if (vwscProvider.status!) {
+                                            ToastHelper.showToastMessage(
+                                                vwscProvider.message!,
+                                                backgroundColor: Colors.green);
+
+                                            if (mode == ProjectMode.below10){
+                                              Navigator.of(context).pushReplacement(
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        WaterQualityPartD()),
+                                              );
+                                            }
+                                            else{
+                                              Navigator.of(context).pushReplacement(
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        CommunityFeedbackPartC()),
+                                              );
+                                            }
+
+                                          } else {
+                                            ToastHelper.showToastMessage(
+                                                vwscProvider.message!,
+                                                backgroundColor: Colors.red);
+                                          }
+                                        },
+                                        child: Text(
+                                          "SAVE",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+
+
+
+
+
                               ],
                             )),
                       ),

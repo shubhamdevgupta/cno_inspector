@@ -1,5 +1,6 @@
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
+import 'package:cno_inspection/views/PartBDwsm/BelowDWSMCommon.dart';
 import 'package:cno_inspection/views/PartBDwsm/PartC_below_TechnoCommercialViability.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ import '../../utils/LoaderUtils.dart';
 import '../../utils/UserFeedback.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
-import 'DWSMCommonClass.dart';
+import 'AboveDWSMCommonClass.dart';
 import 'DashboardDWSM.dart';
 import 'PartCMonitoringQualityandLabInfrastructure.dart';
 
@@ -27,14 +28,15 @@ class SourceSustainablitiyWasterConservation extends StatefulWidget {
 class _SourceSustainablitiyWasterConservation
     extends State<SourceSustainablitiyWasterConservation> {
   LocalStorageService localStorageService = LocalStorageService();
-ProjectMode? modeType;
+
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
+      final  modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
       if (args != null) {
         final districtid = args['districtid'] as int?;
         final stateId = args['stateId'] as int?;
@@ -46,7 +48,7 @@ ProjectMode? modeType;
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
 
         dwsmProvider.fetchSustainabilityData(
             stateId.toString(),
@@ -116,6 +118,7 @@ ProjectMode? modeType;
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
+                final  modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
                 return SingleChildScrollView(
                   child: Container(
@@ -124,9 +127,8 @@ ProjectMode? modeType;
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Dwsmcommonclass(
-                          no: 2,
-                        ),
+                        modeType == ProjectMode.below10? Belowdwsmcommon(no: 2) :  Dwsmcommonclass(no: 2),
+
                         Card(
                           elevation: 5,
                           child: Container(
@@ -242,62 +244,23 @@ ProjectMode? modeType;
                                   controller:  dwsmProvider.PartBUserObservation,
                                 ),
 
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: SizedBox(
-                                    height: 35,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.deepOrange,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              10), // Adjust the radius as needed
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      height: 35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.deepOrange,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Adjust the radius as needed
+                                          ),
                                         ),
-                                      ),
-                                      onPressed: () async {
-                                        LoaderUtils.showLoadingWithMessage(
-                                            context,
-                                            isLoading: dwsmProvider.isLoading,
-                                            message:
-                                                "Saving Source Sustainability and Water Conservation");
+                                        onPressed: () async {
 
-                                     await  dwsmProvider.saveSourceSustainability(
-                                            userId: localStorageService.getInt(
-                                                AppConstants.prefUserId)!,
-                                            stateId: dwsmProvider.stateId!,
-                                            districtId:
-                                                dwsmProvider.districtId!,
-                                            areSustainabilityMeasuresPromoted:
-                                                dwsmProvider
-                                                    .sourceSustainabilityId,
-                                            areGWSourcesProtected: dwsmProvider
-                                                .groundwaterProtectionId,
-                                            isRechargeStructureImplemented:
-                                                dwsmProvider
-                                                    .rechargeStructureImplementedID,
-                                            reasonIfNotImplemented: dwsmProvider
-                                                .rechargeReasonController.text,
-                                            areImpactStudiesConducted:
-                                                dwsmProvider.impactStudiesID,
-                                            accrediteLabWaterQuality:
-                                                dwsmProvider
-                                                    .accreditedLabWaterQualityID,
-                                            accrediteLabWaterQualityNoRemark:
-                                                dwsmProvider
-                                                    .testingManagedDataController
-                                                    .text,
-                                            modeType: modeType!.modeValue,
-                                       user_remark: dwsmProvider.PartBUserObservation.text
-
-
-
-                                     );
-
-                                        if (dwsmProvider.status!) {
-                                          ToastHelper.showToastMessage(
-                                              dwsmProvider.message!,
-                                              backgroundColor: Colors.green);
-                                          if(modeType==ProjectMode.below10){
+                                          if(modeType == ProjectMode.below10){
                                             Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (_) =>
@@ -310,24 +273,100 @@ ProjectMode? modeType;
                                                       MonitioringQuality()),
                                             );
                                           }
-
-                                        } else {
-                                          ToastHelper.showToastMessage(
-                                              dwsmProvider.message!,
-                                              backgroundColor: Colors.red);
-                                        }
-                                      },
-                                      child: Text(
-                                        "SAVE & NEXT",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
+                                        },
+                                        child: Text(
+                                          "SKIP",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
+                                    SizedBox(
+                                      height: 35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.deepOrange,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Adjust the radius as needed
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          LoaderUtils.showLoadingWithMessage(
+                                              context,
+                                              isLoading: dwsmProvider.isLoading,
+                                              message:
+                                              "Saving Source Sustainability and Water Conservation");
+
+                                          await  dwsmProvider.saveSourceSustainability(
+                                              userId: localStorageService.getInt(
+                                                  AppConstants.prefUserId)!,
+                                              stateId: dwsmProvider.stateId!,
+                                              districtId:
+                                              dwsmProvider.districtId!,
+                                              areSustainabilityMeasuresPromoted:
+                                              dwsmProvider
+                                                  .sourceSustainabilityId,
+                                              areGWSourcesProtected: dwsmProvider
+                                                  .groundwaterProtectionId,
+                                              isRechargeStructureImplemented:
+                                              dwsmProvider
+                                                  .rechargeStructureImplementedID,
+                                              reasonIfNotImplemented: dwsmProvider
+                                                  .rechargeReasonController.text,
+                                              areImpactStudiesConducted:
+                                              dwsmProvider.impactStudiesID,
+                                              accrediteLabWaterQuality:
+                                              dwsmProvider
+                                                  .accreditedLabWaterQualityID,
+                                              accrediteLabWaterQualityNoRemark:
+                                              dwsmProvider
+                                                  .testingManagedDataController
+                                                  .text,
+                                              modeType: modeType!.modeValue,
+                                              user_remark: dwsmProvider.PartBUserObservation.text
+                                          );
+
+                                          if (dwsmProvider.status!) {
+                                            ToastHelper.showToastMessage(
+                                                dwsmProvider.message!,
+                                                backgroundColor: Colors.green);
+
+                                            if(modeType == ProjectMode.below10){
+
+                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => PartcBelowTechnocommercialviabilityP()),);
+
+                                            }else{
+                                              Navigator.of(context).pushReplacement(
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        MonitioringQuality()),
+                                              );
+                                            }
+
+                                          } else {
+                                            ToastHelper.showToastMessage(
+                                                dwsmProvider.message!,
+                                                backgroundColor: Colors.red);
+                                          }
+                                        },
+                                        child: Text(
+                                          "SAVE & NEXT",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+
+
                               ],
                             ),
                           ),
