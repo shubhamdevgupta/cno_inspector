@@ -35,12 +35,12 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
   @override
   void initState() {
     super.initState();
-
+    final  ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-      ProjectMode? ModeType;
+
       if (args != null) {
         final villageId = args['villageId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -56,7 +56,6 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
           vwscProvider.setStateId(stateId);
         }
 
-        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
         vwscProvider.fetchCommunityFeedback(
             stateId.toString(),
             villageId.toString(),
@@ -127,7 +126,7 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
             body: Consumer<Vwscprovider>(
               builder: (context, vwscProvider, child) {
 
-                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+                final  mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return Stack(
                   children: [
                     SingleChildScrollView(
@@ -221,65 +220,104 @@ class _CommunityFeedbackPartC extends State<CommunityFeedbackPartC> {
                                           labelText: '* User Observation / Remarks:',
                                           controller:  vwscProvider.PartCVWSCuserObservationController,
                                         ),
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: SizedBox(
-                                            height: 35,
-                                            child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    Colors.deepOrange,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(
-                                                      10), // Adjust the radius as needed
+
+
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+
+                                            SizedBox(
+                                              height: 35,
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                  Colors.deepOrange,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(
+                                                        10), // Adjust the radius as needed
+                                                  ),
                                                 ),
-                                              ),
-                                              onPressed: () async {
-                                                LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Community feedback on quality of construction");
+                                                onPressed: () async {
 
-                                                await vwscProvider.saveCommunityFeedback(
-                                                  userId: _localStorage.getInt(AppConstants.prefUserId)!,
-                                                  stateId: vwscProvider.stateId!,
-                                                  villageId: vwscProvider.villageId!,
-                                                  anyComplaintByCommunity: vwscProvider.selectedComplaintByCommunityId,
-                                                  isComplaintAddressed: vwscProvider.selectedWhereComplaintAddressOptId,
-                                                  complaintType: vwscProvider.selectedTypeOfComplaintIds,
-
-                                                  typeComplaintOther: vwscProvider.othersComplaintController.text,
-                                                  phyStatus:  mode.modeValue ,
-                                                  observationCommunityFeedbackQualityConstruction: vwscProvider.PartCVWSCuserObservationController.text,
-                                                  createdBy: _localStorage.getInt(AppConstants.prefUserId)!,
-                                                );
-
-                                                if (vwscProvider.status!) {
-                                                  ToastHelper.showToastMessage(
-                                                      vwscProvider.message!,
-                                                      backgroundColor:
-                                                          Colors.green);
                                                   Navigator.of(context)
                                                       .pushReplacement(
                                                     MaterialPageRoute(
                                                         builder: (_) =>
                                                             WaterQualityPartD()),
                                                   );
-                                                } else {
-                                                  ToastHelper.showToastMessage(
-                                                      vwscProvider.message!,
-                                                      backgroundColor:
-                                                          Colors.red);
-                                                }
-                                              },
-                                              child: Text(
-                                                "SAVE & NEXT",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.white,
+
+                                                },
+                                                child: Text(
+                                                  "SKIP",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ),
+
+                                            SizedBox(
+                                              height: 35,
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                  Colors.deepOrange,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(
+                                                        10), // Adjust the radius as needed
+                                                  ),
+                                                ),
+                                                onPressed: () async {
+                                                  LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Community feedback on quality of construction");
+
+                                                  await vwscProvider.saveCommunityFeedback(
+                                                    userId: _localStorage.getInt(AppConstants.prefUserId)!,
+                                                    stateId: vwscProvider.stateId!,
+                                                    villageId: vwscProvider.villageId!,
+                                                    anyComplaintByCommunity: vwscProvider.selectedComplaintByCommunityId,
+                                                    isComplaintAddressed: vwscProvider.selectedWhereComplaintAddressOptId,
+                                                    complaintType: vwscProvider.selectedTypeOfComplaintIds,
+
+                                                    typeComplaintOther: vwscProvider.othersComplaintController.text,
+                                                    phyStatus:  mode.modeValue ,
+                                                    observationCommunityFeedbackQualityConstruction: vwscProvider.PartCVWSCuserObservationController.text,
+                                                    createdBy: _localStorage.getInt(AppConstants.prefUserId)!,
+                                                  );
+
+                                                  if (vwscProvider.status!) {
+                                                    ToastHelper.showToastMessage(
+                                                        vwscProvider.message!,
+                                                        backgroundColor:
+                                                        Colors.green);
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                      MaterialPageRoute(
+                                                          builder: (_) =>
+                                                              WaterQualityPartD()),
+                                                    );
+                                                  } else {
+                                                    ToastHelper.showToastMessage(
+                                                        vwscProvider.message!,
+                                                        backgroundColor:
+                                                        Colors.red);
+                                                  }
+                                                },
+                                                child: Text(
+                                                  "SAVE ",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+
+                                          ],
+                                        )
+
                                       ],
                                     )),
                               ),

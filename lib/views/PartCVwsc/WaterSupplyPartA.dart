@@ -30,9 +30,11 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final  ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-      ProjectMode? ModeType;
+
       if (args != null) {
         final villageId = args['villageId'] as int?;
         final stateId = args['stateId'] as int?;
@@ -45,7 +47,6 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
         if (stateId != null) {
           vwscProvider.setStateId(stateId);
         }
-        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
         await vwscProvider.fetchWaterSupply(stateId.toString(), villageId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),ModeType!.modeValue );
       }
     });
@@ -113,7 +114,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
             body: Consumer<Vwscprovider>(
               builder: (context, vwscProvider, child) {
 
-                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+                final  mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -229,23 +230,50 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                     controller:  vwscProvider.PartAVWSCuserObservationController,
                                   ),
 
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: SizedBox(
-                                      height: 35,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Color(0xffb0D6EFD),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10), // Adjust the radius as needed
+
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color(0xffb0D6EFD),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => CommunityInvolvementPartB()),);
+
+                                          },
+                                          child: Text(
+                                            "SKIP",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
-                                        onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Water Supply Functionality");
+                                      ),
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color(0xffb0D6EFD),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            LoaderUtils.showLoadingWithMessage(context, isLoading: vwscProvider.isLoading, message: "Water Supply Functionality");
 
 
-                                          await vwscProvider.saveVwscWaterSupply(
+                                            await vwscProvider.saveVwscWaterSupply(
                                               userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                               stateId: vwscProvider.stateId!,
                                               villageId: vwscProvider.villageId!,
@@ -258,41 +286,43 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                               pwsReachInstitutions: vwscProvider.selectedinstitutionsIds,
 
 
-                                            // New parameters
-                                            phyStatus: mode.modeValue ,
-                                            isPipedWaterSupplyScheme:-1,
-                                            typeOfSchemeCommissioned: 0,
-                                            schemeBeneficiaryHouseholds:"",
-                                            presentStatusOfWaterSupplySchemes: 0,
-                                            waterSupplyFrequencyAssured: 0,
-                                            remoteGroupsPlanned: -1,
-                                            remoteGroupsPlannedDetails: "",
-                                            //TODO feedback
-                                            observationWaterSupplyFunctionality: vwscProvider.PartAVWSCuserObservationController.text,
+                                              // New parameters
+                                              phyStatus: mode.modeValue ,
+                                              isPipedWaterSupplyScheme:-1,
+                                              typeOfSchemeCommissioned: 0,
+                                              schemeBeneficiaryHouseholds:"",
+                                              presentStatusOfWaterSupplySchemes: 0,
+                                              waterSupplyFrequencyAssured: 0,
+                                              remoteGroupsPlanned: -1,
+                                              remoteGroupsPlannedDetails: "",
+                                              //TODO feedback
+                                              observationWaterSupplyFunctionality: vwscProvider.PartAVWSCuserObservationController.text,
 
 
 
-
-                                          );
-                                          if (vwscProvider.status!) {ToastHelper.showToastMessage(vwscProvider.message!, backgroundColor: Colors.green);
+                                            );
+                                            if (vwscProvider.status!) {ToastHelper.showToastMessage(vwscProvider.message!, backgroundColor: Colors.green);
                                             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => CommunityInvolvementPartB()),);
-                                          } else {
-                                            ToastHelper.showToastMessage(
-                                                vwscProvider.message!,
-                                                backgroundColor: Colors.red);
-                                          }
-                                        },
-                                        child: Text(
-                                          "SAVE & NEXT",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+                                            } else {
+                                              ToastHelper.showToastMessage(
+                                                  vwscProvider.message!,
+                                                  backgroundColor: Colors.red);
+                                            }
+                                          },
+                                          child: Text(
+                                            "SAVE",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
+                                    ],
+                                  )
+
+
                                 ],
                               ),
                             ),

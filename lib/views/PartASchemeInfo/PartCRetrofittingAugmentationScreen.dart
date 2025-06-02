@@ -273,74 +273,114 @@ class _RetrofittingAugmentationScreen
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: SizedBox(
-                                      height: 35,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              Colors.deepOrangeAccent,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10), // Adjust the radius as needed
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(
-                                              context,
-                                              isLoading: schemeProvider.isLoading,
-                                              message:
-                                                  "Additional info for Retrofitting/Augmentation Schemes only");
-                                          await schemeProvider.saveRetrofitAdditionalInfo(
-                                            userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
-                                            stateId: schemeProvider.stateId ?? 0,
-                                            schemeId: schemeProvider.schemeId ?? 0,
-                                            isAssessmentDone: schemeProvider.selectedLegacyInfraAssessmentId ,
-                                            assessmentMethod: '', // Not found, defaulted to empty
-                                            assessmentReason: '', // Not found, defaulted to empty
-                                            pipelineKms: double.tryParse(schemeProvider.transmissionPipelineKmController.text) ?? 0.0,
-                                            distributionKms: double.tryParse(schemeProvider.distributionPipelineKmController.text) ?? 0.0,
-                                            wtpCapacity: double.tryParse(schemeProvider.wtpCapacityMldController.text) ?? 0.0,
-                                            structureNos: int.tryParse(schemeProvider.storageStructureDetailsController.text) ?? 0,
-                                            structureCapacity: double.tryParse(schemeProvider.storageStructureInKL.text) ?? 0.0,
-                                            buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
-                                            onPMGati: schemeProvider.onPmGatishaktiID ,
-                                            noReason: schemeProvider.reasonController.text.trim().isEmpty
-                                                ? ''
-                                                : schemeProvider.reasonController.text.trim(),
-                                            phyStatus: modeType.modeValue ?? 0,
-                                            user_remark: schemeProvider.PartCUserObservation.text.trim().isEmpty
-                                                ? ''
-                                                : schemeProvider.PartCUserObservation.text.trim(),
 
-                                          );
-                                          if (schemeProvider.status!) {
-                                            ToastHelper.showToastMessage(
-                                                schemeProvider.message!,
-                                                backgroundColor: Colors.green);
+
+
+
+
+
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                            Colors.deepOrangeAccent,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+
                                             Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (_) =>
                                                       SchemeImplementationScreen()),
                                             );
-                                          } else {
-                                            ToastHelper.showToastMessage(
-                                                schemeProvider.message!,
-                                                backgroundColor: Colors.red);
-                                          }
-                                        },
-                                        child: Text(
-                                          "SAVE & NEXT",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+                                          },
+                                          child: Text(
+                                            "SKIP",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                            Colors.deepOrangeAccent,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            LoaderUtils.showLoadingWithMessage(
+                                                context,
+                                                isLoading: schemeProvider.isLoading,
+                                                message:
+                                                "Additional info for Retrofitting/Augmentation Schemes only");
+                                            await schemeProvider.saveRetrofitAdditionalInfo(
+                                              userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
+                                              stateId: schemeProvider.stateId ?? 0,
+                                              schemeId: schemeProvider.schemeId ?? 0,
+                                              isAssessmentDone: schemeProvider.selectedLegacyInfraAssessmentId ,
+                                              assessmentMethod: '', // Not found, defaulted to empty
+                                              assessmentReason: '', // Not found, defaulted to empty
+                                              pipelineKms: double.tryParse(schemeProvider.transmissionPipelineKmController.text) ?? 0.0,
+                                              distributionKms: double.tryParse(schemeProvider.distributionPipelineKmController.text) ?? 0.0,
+                                              wtpCapacity: double.tryParse(schemeProvider.wtpCapacityMldController.text) ?? 0.0,
+                                              structureNos: int.tryParse(schemeProvider.storageStructureDetailsController.text) ?? 0,
+                                              structureCapacity: double.tryParse(schemeProvider.storageStructureInKL.text) ?? 0.0,
+                                              buildDrawingAvailable: schemeProvider.asBuiltDrawingAvailabilityID,
+                                              onPMGati: schemeProvider.onPmGatishaktiID ,
+                                              noReason: schemeProvider.reasonController.text.trim().isEmpty
+                                                  ? ''
+                                                  : schemeProvider.reasonController.text.trim(),
+                                              phyStatus: modeType.modeValue ?? 0,
+                                              user_remark: schemeProvider.PartCUserObservation.text.trim().isEmpty
+                                                  ? ''
+                                                  : schemeProvider.PartCUserObservation.text.trim(),
+
+                                            );
+                                            if (schemeProvider.status!) {
+                                              ToastHelper.showToastMessage(
+                                                  schemeProvider.message!,
+                                                  backgroundColor: Colors.green);
+                                              Navigator.of(context).pushReplacement(
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        SchemeImplementationScreen()),
+                                              );
+                                            } else {
+                                              ToastHelper.showToastMessage(
+                                                  schemeProvider.message!,
+                                                  backgroundColor: Colors.red);
+                                            }
+                                          },
+                                          child: Text(
+                                            "SAVE",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                    ],
+                                  )
+
                                 ],
                               )),
                         )

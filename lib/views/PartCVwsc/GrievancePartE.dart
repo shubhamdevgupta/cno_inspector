@@ -17,6 +17,7 @@ import '../../utils/toast_helper.dart';
 import 'BelowVWSCCommon.dart';
 import 'DashboardVWSC.dart';
 import 'AboveVWSCCommonClass.dart';
+import 'PartCVWSCUserobservation.dart';
 
 class GrievancePartE extends StatefulWidget {
   @override
@@ -25,11 +26,11 @@ class GrievancePartE extends StatefulWidget {
 
 class _GrievancePartE extends State<GrievancePartE> {
   LocalStorageService _localStorageService = LocalStorageService();
-  ProjectMode?ModeType;
+
   @override
   void initState() {
     super.initState();
-
+    final  ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
@@ -48,7 +49,6 @@ class _GrievancePartE extends State<GrievancePartE> {
           vwscProvider.setStateId(stateId);
         }
 
-        ModeType = Provider.of<AppStateProvider>(context, listen: false).mode;
         vwscProvider.fetchVwscGrievance(
             stateId.toString(),
             villageId.toString(),
@@ -114,7 +114,7 @@ class _GrievancePartE extends State<GrievancePartE> {
             ),
             body: Consumer<Vwscprovider>(
               builder: (context, vwscProvider, child) {
-                final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
+                final  mode = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     child: Column(
@@ -196,65 +196,98 @@ class _GrievancePartE extends State<GrievancePartE> {
                                   ),
 
 
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: SizedBox(
-                                      height: 35,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.green,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10), // Adjust the radius as needed
+
+                                  Row(
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.green,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
                                           ),
-                                        ),
-                                        onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(
-                                              context,
-                                              isLoading: vwscProvider.isLoading,
-                                              message: "Grievance Redressal");
-                                          await vwscProvider.saveGrievanceRedressal(
-                                            userId: _localStorageService.getInt(AppConstants.prefUserId)!,
-                                            stateId: vwscProvider.stateId!,
-                                            villageId: vwscProvider.villageId!,
-                                            grievanceMechanismAvailable: vwscProvider.selectedGrievanceMechanismId,
-                                            grievanceTurnAroundTime: vwscProvider.selectedTurnAroundTimeId,
-                                            registrationTypes: vwscProvider.selectedGrievanceMethodIds,
-                                            observationGrievanceRedressal: vwscProvider.PartEVWSCuserObservationController.text, // NEW
-                                            phyStatus: mode.modeValue, // NEW
+                                          onPressed: () async {
 
-                                          );
-
-                                          if (vwscProvider.status!) {
-                                            ToastHelper.showToastMessage(
-                                                vwscProvider.message!,
-                                                backgroundColor: Colors.green);
-                                            // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardvwsc()),);
-
-                                            Navigator.of(context)
-                                                .pushAndRemoveUntil(
+                                            Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      Dashboardvwsc()),
-                                              (Route<dynamic> route) => false,
+                                                  builder: (_) => Partcvwscuserobservation()),
                                             );
-                                          } else {
-                                            ToastHelper.showToastMessage(
-                                                vwscProvider.message!,
-                                                backgroundColor: Colors.red);
-                                          }
-                                        },
-                                        child: Text(
-                                          "SAVE",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+
+                                          },
+                                          child: Text(
+                                            "SKIP",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.green,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            LoaderUtils.showLoadingWithMessage(
+                                                context,
+                                                isLoading: vwscProvider.isLoading,
+                                                message: "Grievance Redressal");
+                                            await vwscProvider.saveGrievanceRedressal(
+                                              userId: _localStorageService.getInt(AppConstants.prefUserId)!,
+                                              stateId: vwscProvider.stateId!,
+                                              villageId: vwscProvider.villageId!,
+                                              grievanceMechanismAvailable: vwscProvider.selectedGrievanceMechanismId,
+                                              grievanceTurnAroundTime: vwscProvider.selectedTurnAroundTimeId,
+                                              registrationTypes: vwscProvider.selectedGrievanceMethodIds,
+                                              observationGrievanceRedressal: vwscProvider.PartEVWSCuserObservationController.text, // NEW
+                                              phyStatus: mode.modeValue, // NEW
+
+                                            );
+
+                                            if (vwscProvider.status!) {
+                                              ToastHelper.showToastMessage(
+                                                  vwscProvider.message!,
+                                                  backgroundColor: Colors.green);
+                                              // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Dashboardvwsc()),);
+
+                                              Navigator.of(context)
+                                                  .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        Dashboardvwsc()),
+                                                    (Route<dynamic> route) => false,
+                                              );
+                                            } else {
+                                              ToastHelper.showToastMessage(
+                                                  vwscProvider.message!,
+                                                  backgroundColor: Colors.red);
+                                            }
+                                          },
+                                          child: Text(
+                                            "SAVE",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+
+
                                 ],
                               ),
                             ),

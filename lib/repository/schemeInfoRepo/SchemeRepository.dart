@@ -253,9 +253,9 @@ class SchemeRepositoy {
           "is_compoent_planed_PT_gati_shakti_oshr_esr_oht_gsr": plannedPTGatiShaktiOHT,
           "is_compoent_planed_PT_gati_shakti_source": plannedPTGatiShaktiSource,
           "is_compoent_planed_PT_gati_shakti_pipeline": plannedPTGatiShaktiPipeline,
-          "delay_work_reason": delayReasons,
-          "cost_overrun_reason": costOverrunReasons,
-          "cost_revision_reason": costRevisionReasons,
+          "listdelay_work_reason": delayReasons,
+          "listcost_overrun_reason": costOverrunReasons,
+          "listcost_revision_reason": costRevisionReasons,
 
           "txtcost_levelzed_cost_cr":txtcost_levelzed_cost_cr,
           "is_tpia_engaged_value":is_tpia_engaged_value,

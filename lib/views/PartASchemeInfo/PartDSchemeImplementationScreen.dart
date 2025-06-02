@@ -13,7 +13,9 @@ import '../../utils/UserFeedback.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
+import 'PartASchemeInfoUserobservation.dart';
 import 'PartBSchemePlanningScreen.dart';
+import 'PartEVisual Inspection.dart';
 import 'SchemeInfoCommonScreen.dart';
 
 class SchemeImplementationScreen extends StatefulWidget {
@@ -586,114 +588,167 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                             ),
 
                             const SizedBox(height: 20),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: SizedBox(
-                                height: 35,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.lightGreen,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          10), // Adjust the radius as needed
+
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  height: 35,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.lightGreen,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            10), // Adjust the radius as needed
+                                      ),
                                     ),
-                                  ),
-                                  onPressed: () async {
-                                    LoaderUtils.showLoadingWithMessage(
-                                        context,
-                                        isLoading: schemeProvider.isLoading,
-                                        message:
-                                            "Saving Scheme implementation...");
+                                    onPressed: () async {
+                                      modeType == ProjectMode.below10?
 
-                                    await schemeProvider.saveSchemeImplementation(
-                                      userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
-                                      stateId: schemeProvider.stateId ?? 0,
-                                      schemeId: schemeProvider.schemeId ?? 0,
-                                      costOverrun: schemeProvider.selectedCostOverrunID,
-                                      costRevisedBeforeWork: schemeProvider.selectedrevisedCostApprovedID ,
-                                      revisedCostPercentage: schemeProvider.selectedincreaseInCostID ,
-                                      slsscDate: schemeProvider.dateApproval ?? '',
-                                      intakeTubeWellNum: schemeProvider.intakeTubeWellNum ?? 0,
-                                      intakeTubeWellCost: double.tryParse(schemeProvider.costControllers['Intake/Tubewell']?.text ?? '') ?? 0.0,
-                                      electroMechanicalNum: schemeProvider.electroMechanicalNum ?? 0,
-                                      electroMechanicalCost: double.tryParse(schemeProvider.costControllers['Electromechanical components']?.text ?? '') ?? 0.0,
-                                      wtpNum: 1,
-                                      wtpCost: double.tryParse(schemeProvider.costControllers['WTP']?.text ?? '') ?? 0.0,
-                                      mbrNum: 2,
-                                      mbrCost: double.tryParse(schemeProvider.costControllers['MBR']?.text ?? '') ?? 0.0,
-                                      transmissionPipelineNum: 3,
-                                      transmissionPipelineCost: double.tryParse(schemeProvider.costControllers['Transmission pipeline']?.text ?? '') ?? 0.0,
-                                      distributionPipelineNum: 4,
-                                      distributionPipelineCost: double.tryParse(schemeProvider.costControllers['Distribution pipeline']?.text ?? '') ?? 0.0,
-                                      disinfectionUnitNum: 5,
-                                      disinfectionUnitCost: double.tryParse(schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ?? '') ?? 0.0,
-                                      ohtNum: 6,
-                                      ohtCost: double.tryParse(schemeProvider.costControllers['Disinfection unit']?.text ?? '') ?? 0.0,
-                                      iotNum: 7,
-                                      iotCost: double.tryParse(schemeProvider.costControllers['IoT/SCADA']?.text ?? '') ?? 0.0,
-                                      roadRestorationNum: 8,
-                                      roadRestorationCost: double.tryParse(schemeProvider.costControllers['Road Restoration']?.text ?? '') ?? 0.0,
-                                      solarComponentNum: 9,
-                                      solarComponentCost: double.tryParse(schemeProvider.costControllers['Solar components']?.text ?? '') ?? 0.0,
-                                      otherComponentsNum: 10,
-                                      otherComponentsCost: double.tryParse(schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '') ?? 0.0,
-                                      plannedPTGatiShaktiWTP: schemeProvider.selectedWTPID,
-                                      plannedPTGatiShaktiOHT: schemeProvider.selectedOHSRID,
-                                      plannedPTGatiShaktiSource: schemeProvider.selecteSourceID,
-                                      plannedPTGatiShaktiPipeline: schemeProvider.selectedPipelineID,
-                                      delayReasons: modeType == ProjectMode.below10
-                                          ? schemeProvider.belowselectedDelayReasonsID
-                                          : schemeProvider.selectedDelayReasonsID,
-                                      costOverrunReasons: schemeProvider.selectedcostOverrunReasonsID,
-                                      costRevisionReasons: schemeProvider.selectedrevisionReasonsID,
-                                      txtcost_levelzed_cost_cr: 0.00,
-                                      is_tpia_engaged_value: schemeProvider.selectedId_partE5,
-                                      concurrent_supervission_scope_value: schemeProvider.selectedId_partE7,
-                                      txtpws_status_under_scheme: schemeProvider.below10PartD_ques8_Controller.text.trim().isEmpty
-                                          ? ''
-                                          : schemeProvider.below10PartD_ques8_Controller.text.trim(),
-                                      phy_status: modeType.modeValue,
-                                      user_remark: schemeProvider.PartDUserObservation.text.trim().isEmpty
-                                          ? ''
-                                          : schemeProvider.PartDUserObservation.text.trim(),
-                                      Resion_for_delay_after_aword_other: schemeProvider.PartDQ1othersComplaintController.text.trim().isEmpty
-                                          ? ''
-                                          : schemeProvider.PartDQ1othersComplaintController.text.trim(),
-                                      Reason_for_revision: schemeProvider.PartDQ4reasonController.text.trim().isEmpty
-                                          ? ''
-                                          : schemeProvider.PartDQ4reasonController.text.trim(),
-                                      Reason_for_cost_overrun: schemeProvider.PartDQ3othersComplaintController.text.trim().isEmpty
-                                          ? ''
-                                          : schemeProvider.PartDQ3othersComplaintController.text.trim(),
-                                    );
-
-
-                                    if (schemeProvider.status!) {
-                                      ToastHelper.showToastMessage(
-                                          schemeProvider.message!,
-                                          backgroundColor: Colors.green);
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (_) =>
-                                                SchemePlanningScreen()),
+                                                Partaschemeinfouserobservation()),
+                                      ):   Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                VisualInspectionScreen()),
                                       );
-                                    } else {
-                                      ToastHelper.showToastMessage(
-                                          schemeProvider.message!,
-                                          backgroundColor: Colors.red);
-                                    }
-                                  },
-                                  child: Text(
-                                    "SAVE & NEXT",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
+                                    },
+                                    child: Text(
+                                      "SKIP",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 35,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.lightGreen,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            10), // Adjust the radius as needed
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      LoaderUtils.showLoadingWithMessage(
+                                          context,
+                                          isLoading: schemeProvider.isLoading,
+                                          message:
+                                          "Saving Scheme implementation...");
+
+                                      await schemeProvider.saveSchemeImplementation(
+                                        userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
+                                        stateId: schemeProvider.stateId ?? 0,
+                                        schemeId: schemeProvider.schemeId ?? 0,
+                                        costOverrun: schemeProvider.selectedCostOverrunID,
+                                        costRevisedBeforeWork: schemeProvider.selectedrevisedCostApprovedID ,
+                                        revisedCostPercentage: schemeProvider.selectedincreaseInCostID ,
+                                        slsscDate: schemeProvider.dateApproval ?? '',
+                                        intakeTubeWellNum: schemeProvider.intakeTubeWellNum ?? 0,
+                                        intakeTubeWellCost: double.tryParse(schemeProvider.costControllers['Intake/Tubewell']?.text ?? '') ?? 0.0,
+                                        electroMechanicalNum: schemeProvider.electroMechanicalNum ?? 0,
+                                        electroMechanicalCost: double.tryParse(schemeProvider.costControllers['Electromechanical components']?.text ?? '') ?? 0.0,
+                                        wtpNum: 1,
+                                        wtpCost: double.tryParse(schemeProvider.costControllers['WTP']?.text ?? '') ?? 0.0,
+                                        mbrNum: 2,
+                                        mbrCost: double.tryParse(schemeProvider.costControllers['MBR']?.text ?? '') ?? 0.0,
+                                        transmissionPipelineNum: 3,
+                                        transmissionPipelineCost: double.tryParse(schemeProvider.costControllers['Transmission pipeline']?.text ?? '') ?? 0.0,
+                                        distributionPipelineNum: 4,
+                                        distributionPipelineCost: double.tryParse(schemeProvider.costControllers['Distribution pipeline']?.text ?? '') ?? 0.0,
+                                        disinfectionUnitNum: 5,
+                                        disinfectionUnitCost: double.tryParse(schemeProvider.costControllers['OHSR/ESR/OHT/GSR']?.text ?? '') ?? 0.0,
+                                        ohtNum: 6,
+                                        ohtCost: double.tryParse(schemeProvider.costControllers['Disinfection unit']?.text ?? '') ?? 0.0,
+                                        iotNum: 7,
+                                        iotCost: double.tryParse(schemeProvider.costControllers['IoT/SCADA']?.text ?? '') ?? 0.0,
+                                        roadRestorationNum: 8,
+                                        roadRestorationCost: double.tryParse(schemeProvider.costControllers['Road Restoration']?.text ?? '') ?? 0.0,
+                                        solarComponentNum: 9,
+                                        solarComponentCost: double.tryParse(schemeProvider.costControllers['Solar components']?.text ?? '') ?? 0.0,
+                                        otherComponentsNum: 10,
+                                        otherComponentsCost: double.tryParse(schemeProvider.costControllers['Others (DG sets, HH storage)']?.text ?? '') ?? 0.0,
+                                        plannedPTGatiShaktiWTP: schemeProvider.selectedWTPID,
+                                        plannedPTGatiShaktiOHT: schemeProvider.selectedOHSRID,
+                                        plannedPTGatiShaktiSource: schemeProvider.selecteSourceID,
+                                        plannedPTGatiShaktiPipeline: schemeProvider.selectedPipelineID,
+                                        delayReasons: modeType == ProjectMode.below10
+                                            ? schemeProvider.belowselectedDelayReasonsID
+                                            : schemeProvider.selectedDelayReasonsID,
+                                        costOverrunReasons: schemeProvider.selectedcostOverrunReasonsID,
+                                        costRevisionReasons: schemeProvider.selectedrevisionReasonsID,
+                                        txtcost_levelzed_cost_cr: 0.00,
+                                        is_tpia_engaged_value: schemeProvider.selectedId_partE5,
+                                        concurrent_supervission_scope_value: schemeProvider.selectedId_partE7,
+                                        txtpws_status_under_scheme: schemeProvider.below10PartD_ques8_Controller.text.trim().isEmpty
+                                            ? ''
+                                            : schemeProvider.below10PartD_ques8_Controller.text.trim(),
+                                        phy_status: modeType.modeValue,
+                                        user_remark: schemeProvider.PartDUserObservation.text.trim().isEmpty
+                                            ? ''
+                                            : schemeProvider.PartDUserObservation.text.trim(),
+                                        Resion_for_delay_after_aword_other: schemeProvider.PartDQ1othersComplaintController.text.trim().isEmpty
+                                            ? ''
+                                            : schemeProvider.PartDQ1othersComplaintController.text.trim(),
+                                        Reason_for_revision: schemeProvider.PartDQ4reasonController.text.trim().isEmpty
+                                            ? ''
+                                            : schemeProvider.PartDQ4reasonController.text.trim(),
+                                        Reason_for_cost_overrun: schemeProvider.PartDQ3othersComplaintController.text.trim().isEmpty
+                                            ? ''
+                                            : schemeProvider.PartDQ3othersComplaintController.text.trim(),
+                                      );
+
+
+                                      if (schemeProvider.status!) {
+                                        ToastHelper.showToastMessage(
+                                            schemeProvider.message!,
+                                            backgroundColor: Colors.green);
+
+                                        if(modeType == ProjectMode.below10){
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    Partaschemeinfouserobservation()),
+                                          );
+
+                                        }
+                                        else
+                                          {
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      VisualInspectionScreen()),
+                                            );
+                                          }
+
+
+                                      } else {
+                                        ToastHelper.showToastMessage(
+                                            schemeProvider.message!,
+                                            backgroundColor: Colors.red);
+                                      }
+                                    },
+                                    child: Text(
+                                      "SAVE ",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+
+
                           ],
                         ),
                       ),
@@ -725,7 +780,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
       ['Road Restoration', 'Nos.', 'Length in Kms', ''],
       ['Solar components', 'Nos.', '-', ''],
       ['Others (DG sets, HH storage)', 'Nos.', '-', ''],
-      if (modeType == ProjectMode.above10)
+      if (modeType == ProjectMode.below10)
         ['Levelized cost per FHTC (considering conjunctive scheme, if any)', '-', '-', ''],
     ];
 

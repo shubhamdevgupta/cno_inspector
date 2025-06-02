@@ -11,8 +11,10 @@ import '../../utils/LoaderUtils.dart';
 import '../../utils/MultiSelectionlist.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
-import 'DWSMCommonClass.dart';
+import 'AboveDWSMCommonClass.dart';
+import 'BelowDWSMCommon.dart';
 import 'DashboardDWSM.dart';
+import 'PartBDWSMUserobservation.dart';
 
 class PartFPublicCompliant extends StatefulWidget {
   const PartFPublicCompliant({Key? key}) : super(key: key);
@@ -23,11 +25,11 @@ class PartFPublicCompliant extends StatefulWidget {
 
 class _PartFPublicCompliant extends State<PartFPublicCompliant> {
   LocalStorageService localStorageService = LocalStorageService();
-  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final  modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
@@ -42,7 +44,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
         if (stateId != null) {
           dwsmProvider.setStateId(stateId);
         }
-         modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
 
         dwsmProvider.fetchGrievanceRedressalData(
             stateId.toString(),
@@ -112,6 +114,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
+                final  modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
                 return SingleChildScrollView(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -119,9 +122,9 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Dwsmcommonclass(
-                          no: 6,
-                        ),
+
+                        modeType == ProjectMode.below10? Belowdwsmcommon(no: 5) :  Dwsmcommonclass(no: 6),
+
                         Card(
                           elevation: 5,
                           child: Container(
@@ -210,79 +213,125 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                     ),
                                   ],
 
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: SizedBox(
-                                      height: 35,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              Colors.deepPurpleAccent,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10), // Adjust the radius as needed
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(
-                                              context,
-                                              isLoading: dwsmProvider.isLoading,
-                                              message:
-                                                  "Saving Public Complaints and Grievance Redressal");
-                                          print('------------------- ${dwsmProvider.complaintTypesID}');
-                                          await dwsmProvider.saveGrievanceRedressal(
-                                              userId:
-                                                  localStorageService.getInt(
-                                                      AppConstants.prefUserId)!,
-                                              stateId: dwsmProvider.stateId!,
-                                              districtId:
-                                                  dwsmProvider.districtId!,
-                                              grievanceMechanismAvailable:
-                                                  dwsmProvider
-                                                      .grievanceMechanismAvailableID,
-                                              howGrievancesRegistered: dwsmProvider
-                                                  .selectedGrievanceRegistrationMethodsID,
-                                              complaintsReceived: dwsmProvider
-                                                  .complaintsReceivedID,
-                                              typeOfComplaints:
-                                                  dwsmProvider.complaintTypesID,
-                                              otherComplaints: '',
-                                              resolutionTime: dwsmProvider.avgResolutionTimeController.text.isEmpty ? 0:int.parse(dwsmProvider.avgResolutionTimeController.text),
-                                              actionTakenByDepartment:
-                                              dwsmProvider.actionTakenController.text.isEmpty ? 0:  int.parse(dwsmProvider
-                                                      .actionTakenController
-                                                      .text),
-                                                modeType: modeType!.modeValue
-                                          );
 
-                                          if (dwsmProvider.status!) {
-                                            ToastHelper.showToastMessage(
-                                                dwsmProvider.message!,
-                                                backgroundColor: Colors.green);
-                                            Navigator.of(context)
-                                                .pushAndRemoveUntil(
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                            Colors.deepPurpleAccent,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+
+                                            Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (_) =>
-                                                      Dashboarddwsm()),
-                                              (Route<dynamic> route) => false,
+                                                      Partbdwsmuserobservation()),
                                             );
-                                          } else {
-                                            ToastHelper.showToastMessage(
-                                                dwsmProvider.message!,
-                                                backgroundColor: Colors.red);
-                                          }
-                                        },
-                                        child: Text(
-                                          "SAVE",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+
+                                            if (dwsmProvider.status!) {
+                                              ToastHelper.showToastMessage(
+                                                  dwsmProvider.message!,
+                                                  backgroundColor: Colors.green);
+
+                                            } else {
+                                              ToastHelper.showToastMessage(
+                                                  dwsmProvider.message!,
+                                                  backgroundColor: Colors.red);
+                                            }
+                                          },
+                                          child: Text(
+                                            "SKIP",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
+
+                                      SizedBox(
+                                        height: 35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                            Colors.deepPurpleAccent,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  10), // Adjust the radius as needed
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            LoaderUtils.showLoadingWithMessage(
+                                                context,
+                                                isLoading: dwsmProvider.isLoading,
+                                                message:
+                                                "Saving Public Complaints and Grievance Redressal");
+                                            print('------------------- ${dwsmProvider.complaintTypesID}');
+                                            await dwsmProvider.saveGrievanceRedressal(
+                                                userId:
+                                                localStorageService.getInt(
+                                                    AppConstants.prefUserId)!,
+                                                stateId: dwsmProvider.stateId!,
+                                                districtId:
+                                                dwsmProvider.districtId!,
+                                                grievanceMechanismAvailable:
+                                                dwsmProvider
+                                                    .grievanceMechanismAvailableID,
+                                                howGrievancesRegistered: dwsmProvider
+                                                    .selectedGrievanceRegistrationMethodsID,
+                                                complaintsReceived: dwsmProvider
+                                                    .complaintsReceivedID,
+                                                typeOfComplaints:
+                                                dwsmProvider.complaintTypesID,
+                                                otherComplaints: '',
+                                                resolutionTime: dwsmProvider.avgResolutionTimeController.text.isEmpty ? 0:int.parse(dwsmProvider.avgResolutionTimeController.text),
+                                                actionTakenByDepartment:
+                                                dwsmProvider.actionTakenController.text.isEmpty ? 0:  int.parse(dwsmProvider
+                                                    .actionTakenController
+                                                    .text),
+                                                modeType: modeType!.modeValue
+                                            );
+
+                                            if (dwsmProvider.status!) {
+                                              ToastHelper.showToastMessage(
+                                                  dwsmProvider.message!,
+                                                  backgroundColor: Colors.green);
+
+                                              Navigator.of(context).pushReplacement(
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        Partbdwsmuserobservation()),
+                                              );
+
+                                            } else {
+                                              ToastHelper.showToastMessage(
+                                                  dwsmProvider.message!,
+                                                  backgroundColor: Colors.red);
+                                            }
+                                          },
+                                          child: Text(
+                                            "SAVE",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+
+
                                 ],
                               )),
                         )

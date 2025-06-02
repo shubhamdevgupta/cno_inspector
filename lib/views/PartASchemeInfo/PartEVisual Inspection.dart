@@ -14,6 +14,7 @@ import '../../utils/UserFeedback.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
+import 'PartASchemeInfoUserobservation.dart';
 import 'SchemeInfoCommonScreen.dart';
 
 class VisualInspectionScreen extends StatefulWidget {
@@ -691,12 +692,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                             ToastHelper.showToastMessage(
                                                 schemeProvider.message!,
                                                 backgroundColor: Colors.green);
-                                            Navigator.of(context)
-                                                .pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      SchemeImplementationScreen()),
-                                            );
+                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Partaschemeinfouserobservation()),);
+
+
                                           } else {
                                             ToastHelper.showToastMessage(
                                                 schemeProvider.message!,
