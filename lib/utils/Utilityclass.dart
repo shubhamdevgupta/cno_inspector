@@ -54,4 +54,24 @@ class Utilityclass{
       },
     );
   }
+
+ static int parseInt(String? text) {
+    return int.tryParse(text ?? '') ?? 0;
+  }
+
+ static String safeText(String? text) {
+    return (text?.trim().isNotEmpty ?? false) ? text!.trim() : '';
+  }
+
+  /// Parses an integer from a string.
+  /// Returns 0 if the text is null, empty, or not a valid integer.
+  static int stringToZero(String? text) {
+    final cleaned = text?.trim();
+    if (cleaned == null || cleaned.isEmpty) return 0;
+    return int.tryParse(cleaned) ?? 0;
+  }
+
+  static double parseDoubleOrZero(String? text) =>
+      double.tryParse(text?.trim() ?? '') ?? 0.0;
+
 }

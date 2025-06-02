@@ -116,6 +116,7 @@ class _PartEQualityAssuranceCommissioning
             ),
             body: Consumer<Dwsmprovider>(
               builder: (context, dwsmProvider, child) {
+                final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
                 return SingleChildScrollView(
                   child: Container(
@@ -247,22 +248,15 @@ class _PartEQualityAssuranceCommissioning
                                                   "Saving Quality Assurance and Commissioning");
 
                                           await dwsmProvider.saveQualityAssurance(
-                                              userId:
-                                                  localStorageService.getInt(
-                                                      AppConstants.prefUserId)!,
+                                              userId: localStorageService.getInt(AppConstants.prefUserId)!,
                                               stateId: dwsmProvider.stateId!,
-                                              districtId:
-                                                  dwsmProvider.districtId!,
+                                              districtId: dwsmProvider.districtId!,
                                               inspectionAuthority: dwsmProvider.selectedAuthorizedInspectorID,
-                                              isCommissioningProtocolFollowed:
-                                                  dwsmProvider
-                                                      .commissioningProtocolFollowedID,
+                                              isCommissioningProtocolFollowed: dwsmProvider.commissioningProtocolFollowedID,
                                               schemesPresentDuringCommissioning:[4,2],
-                                              districtAssessmentAgencies:
-                                                  dwsmProvider
-                                                      .thirdPartyAssessmentID,
+                                              districtAssessmentAgencies: dwsmProvider.thirdPartyAssessmentID,
                                               districtHiredAgencies: dwsmProvider.thirdPartyInspectionAgencyID,
-                                              modeType: modeType!.modeValue,
+                                              modeType: modeType.modeValue,
                                             observationQualityAssurance: dwsmProvider.obserVationQualityAssurance.text
                                           );
 

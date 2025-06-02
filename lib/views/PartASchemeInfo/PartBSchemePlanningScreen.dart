@@ -404,31 +404,15 @@ print("STATE : ${schemeProvider.stateId}");
                                           designRunningHours: int.tryParse(schemeProvider.wtpHoursController.text) ?? 0,
                                           retentionTimeOHT: int.tryParse(schemeProvider.ohsrTimeController.text) ?? 0,
                                           retentionTimeMBR: int.tryParse(schemeProvider.mbrTimeController.text) ?? 0,
-                                          terrainRocky: schemeProvider.rockyPipeMaterialController.text.trim().isEmpty
-                                              ? ''
-                                              : schemeProvider.rockyPipeMaterialController.text,
-                                          terrainSoil: schemeProvider.soilPipeMaterialController.text.trim().isEmpty
-                                              ? ''
-                                              : schemeProvider.soilPipeMaterialController.text,
+                                          terrainRocky: schemeProvider.rockyPipeMaterialController.text.trim().isEmpty ? '' : schemeProvider.rockyPipeMaterialController.text,
+                                          terrainSoil: schemeProvider.soilPipeMaterialController.text.trim().isEmpty ? '' : schemeProvider.soilPipeMaterialController.text,
                                           foundAsPerDPR: schemeProvider.onSpotExcavationID ,
-                                          deviation: schemeProvider.deviationReasonController.text.trim().isEmpty
-                                              ? ''
-                                              : schemeProvider.deviationReasonController.text,
-                                          user_remark: schemeProvider.PartBUserObservation.text.trim().isEmpty
-                                              ? ''
-                                              : schemeProvider.PartBUserObservation.text,
-                                          reason_not_awarded_scheme_planning: schemeProvider.schemePlanning_Question1Controller.text.trim().isEmpty
-                                              ? ''
-                                              : schemeProvider.schemePlanning_Question1Controller.text,
-                                          work_awarded_no_physical_progress: schemeProvider.schemePlanning_Question2Controller.text.trim().isEmpty
-                                              ? ''
-                                              : schemeProvider.schemePlanning_Question2Controller.text,
-                                          multiple_schemes_sanctioned_justify_detial: schemeProvider.schemePlanning_Question5Controller.text.trim().isEmpty
-                                              ? ''
-                                              : schemeProvider.schemePlanning_Question5Controller.text,
-                                          desgined_conjunctive_detail: schemeProvider.schemePlanning_Question6Controller.text.trim().isEmpty
-                                              ? ''
-                                              : schemeProvider.schemePlanning_Question6Controller.text,
+                                          deviation: schemeProvider.deviationReasonController.text.trim().isEmpty ? '' : schemeProvider.deviationReasonController.text,
+                                          user_remark: schemeProvider.PartBUserObservation.text.trim().isEmpty ? '' : schemeProvider.PartBUserObservation.text,
+                                          reason_not_awarded_scheme_planning: schemeProvider.schemePlanning_Question1Controller.text.trim().isEmpty ? '' : schemeProvider.schemePlanning_Question1Controller.text,
+                                          work_awarded_no_physical_progress: schemeProvider.schemePlanning_Question2Controller.text.trim().isEmpty ? '' : schemeProvider.schemePlanning_Question2Controller.text,
+                                          multiple_schemes_sanctioned_justify_detial: schemeProvider.schemePlanning_Question5Controller.text.trim().isEmpty ? '' : schemeProvider.schemePlanning_Question5Controller.text,
+                                          desgined_conjunctive_detail: schemeProvider.schemePlanning_Question6Controller.text.trim().isEmpty ? '' : schemeProvider.schemePlanning_Question6Controller.text,
                                           phy_status: modeType.modeValue ?? 0,
                                         );
 

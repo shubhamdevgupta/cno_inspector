@@ -1,4 +1,5 @@
 import 'package:cno_inspection/services/LocalStorageService.dart';
+import 'package:cno_inspection/utils/Utilityclass.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -225,11 +226,12 @@ class _PartDoperationandmaintenance
                                           isLoading: dwsmProvider.isLoading,message: "Saving Operation & Maintenance (O&M)");
 
                                       await dwsmProvider.saveOperationMaintenance(userId: localStorageService.getInt(AppConstants.prefUserId)!, stateId: dwsmProvider.stateId!, districtId: dwsmProvider.districtId!,
-                                        isProtocolInPlace: dwsmProvider.handoverProtocolID, percentVillagesWithManpower: double.parse(dwsmProvider.manpowerPercentController.text),
-                                        isWaterFeeCharged: -1, feeAmountPerMonth: int.tryParse(dwsmProvider.waterFeeController.text)!,
+                                        isProtocolInPlace: dwsmProvider.handoverProtocolID,
+                                          percentVillagesWithManpower: Utilityclass.parseDoubleOrZero(dwsmProvider.manpowerPercentController.text),
+                                          isWaterFeeCharged: -1, feeAmountPerMonth: Utilityclass.parseInt(dwsmProvider.waterFeeController.text),
                                         isUniformFee: dwsmProvider.feeBasisID,
                                         obserVationOperationMaintenance: dwsmProvider.observationOperationMaintencen.text,
-                                        percentVillagesFeeCollected: double.tryParse(dwsmProvider.userFeePercentController.text)!,modeType: modeType!.modeValue);
+                                        percentVillagesFeeCollected: Utilityclass.parseDoubleOrZero(dwsmProvider.userFeePercentController.text),modeType: modeType!.modeValue);
                                       if (dwsmProvider.status!) {
                                         ToastHelper.showToastMessage(
                                             dwsmProvider.message!,

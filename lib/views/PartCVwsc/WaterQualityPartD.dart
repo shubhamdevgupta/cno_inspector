@@ -2,6 +2,7 @@ import 'package:cno_inspection/provider/vwscInfoProvider/VwscProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
 import 'package:cno_inspection/utils/LoaderUtils.dart';
+import 'package:cno_inspection/utils/Utilityclass.dart';
 import 'package:cno_inspection/utils/customradiobttn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -226,7 +227,7 @@ void initState() {
                                            villageId: vwscProvider.villageId!,
                                            isFtkAvailable: vwscProvider.selectedFTKAvailabilityId,
                                            ftkTestingPeriod: vwscProvider.selectedFTKTestingFrequencyId,
-                                           numberWomenTrainedFtk: int.tryParse(vwscProvider.womenTrainedController.text)!,
+                                           numberWomenTrainedFtk: Utilityclass.stringToZero(vwscProvider.womenTrainedController.text),
                                            whoTestFtk: vwscProvider.testerNameController.text,
                                            isChlorinationDone: vwscProvider.selectedDisinfectionDoneId,
                                            frcAvailableAtEnd: vwscProvider.selectedFRCLevelId,

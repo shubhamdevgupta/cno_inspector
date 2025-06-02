@@ -138,9 +138,10 @@ class SchemeImplementationModel {
       isComponentPlannedOshrEsrOhtGsr: json['is_compoent_planed_PT_gati_shakti_oshr_esr_oht_gsr'] ?? 0,
       isComponentPlannedSource: json['is_compoent_planed_PT_gati_shakti_source'] ?? 0,
       isComponentPlannedPipeline: json['is_compoent_planed_PT_gati_shakti_pipeline'] ?? 0,
-      delayWorkReason: List<int>.from(json['delay_work_reason'] ?? []),
-      costOverrunReason: List<int>.from(json['cost_overrun_reason'] ?? []),
-      costRevisionReason: List<int>.from(json['cost_revision_reason'] ?? []),
+
+      delayWorkReason: List<int>.from(json['listdelay_work_reason'] ?? []),
+      costOverrunReason: List<int>.from(json['listcost_overrun_reason'] ?? []),
+      costRevisionReason: List<int>.from(json['listcost_revision_reason'] ?? []),
 
       // New fields
       txtcost_levelzed_cost_cr: (json['txtcost_levelzed_cost_cr'] ?? 0).toDouble(),

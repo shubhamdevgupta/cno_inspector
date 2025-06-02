@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cno_inspection/provider/schemeInfoProvider/SchemeProvider.dart';
 import 'package:cno_inspection/services/LocalStorageService.dart';
 import 'package:cno_inspection/utils/AppConstants.dart';
@@ -8,6 +10,7 @@ import '../../provider/AppStateProvider.dart';
 import '../../utils/AppStyles.dart';
 import '../../utils/LoaderUtils.dart';
 import '../../utils/UserFeedback.dart';
+import '../../utils/Utilityclass.dart';
 import '../../utils/customradiobttn.dart';
 import '../../utils/customtxtfeild.dart';
 import '../../utils/toast_helper.dart';
@@ -47,7 +50,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
         if (stateId != null) {
           schemeProvider.setStateId(stateId);
         }
-        schemeProvider.fetchSourceSurvey(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
+        schemeProvider.fetchSourceSurvey(stateId.toString(), schemeId.toString(), _localStorageService.getInt(AppConstants.prefUserId).toString(),modeType.modeValue);
       print('-----------${modeType!.modeValue}');
       }
     });
@@ -279,33 +282,29 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                           ),
                                         ),
                                         onPressed: () async {
+
                                           LoaderUtils.showLoadingWithMessage(
                                               context,
                                               isLoading:
                                                   schemeProvider.isLoading,
                                               message: "Saving Source...");
                                           print('---------------${int.tryParse(schemeProvider.safeController.text)} ');
+
                                           await schemeProvider.saveSourceSurvey(
                                             userId: _localStorageService.getInt(AppConstants.prefUserId) ?? 0,
                                             stateId: schemeProvider.stateId ?? 0,
                                             schemeId: schemeProvider.schemeId ?? 0,
-                                            isRecommendShiftToSurface: schemeProvider.selectedValueQ1Id ?? 0,
-                                            studyAccessGroundBeforeSurface: schemeProvider.selectedValueQ2Id ?? 0,
-                                            safeZoneVillages: int.tryParse(schemeProvider.safeController.text) ?? 0,
-                                            criticalZoneVillages: int.tryParse(schemeProvider.criticalController.text) ?? 0,
-                                            semiCriticalZoneVillages: int.tryParse(schemeProvider.semiCriticalController.text) ?? 0,
-                                            groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id ?? 0,
-                                            waterAllocationFromWRD: schemeProvider.selectedWaterAllocationId ?? 0,
-                                            alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text.isNotEmpty
-                                                ? schemeProvider.alternativeSourcesAvailable_Controller.text
-                                                : "",
-                                            repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text.isNotEmpty
-                                                ? schemeProvider.sourceFindingRepresentativesConsulted_Controller.text
-                                                : "",
+                                            isRecommendShiftToSurface: schemeProvider.selectedValueQ1Id,
+                                            studyAccessGroundBeforeSurface: schemeProvider.selectedValueQ2Id,
+                                            safeZoneVillages:Utilityclass.stringToZero(schemeProvider.safeController.text),
+                                            criticalZoneVillages:     Utilityclass.stringToZero(schemeProvider.criticalController.text    ),
+                                            semiCriticalZoneVillages: Utilityclass.stringToZero(schemeProvider.semiCriticalController.text),
+                                            groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id,
+                                            waterAllocationFromWRD: schemeProvider.selectedWaterAllocationId,
+                                            alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text.isNotEmpty ? schemeProvider.alternativeSourcesAvailable_Controller.text : "",
+                                            repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text.isNotEmpty ? schemeProvider.sourceFindingRepresentativesConsulted_Controller.text : "",
                                             modeType: modeType?.modeValue ?? 0,
-                                            userremark: schemeProvider.PartAUserObservation.text.isNotEmpty
-                                                ? schemeProvider.PartAUserObservation.text
-                                                : "",
+                                            userremark: schemeProvider.PartAUserObservation.text.isNotEmpty ? schemeProvider.PartAUserObservation.text : "",
                                           );
 
 
