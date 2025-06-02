@@ -22,8 +22,6 @@ class Dashboarddwsm extends StatefulWidget {
 }
 
 class _Dashboarddwsm extends State<Dashboarddwsm> {
-  final LocalStorageService _localStorage = LocalStorageService();
-
   late DashboardProvider dashboardProvider;
   late Dwsmprovider dwsmprovider;
 
@@ -34,10 +32,6 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
 
-
-      final mode = Provider.of<AppStateProvider>(context, listen: false).mode;
-
-      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,2,mode.modeValue);
       dwsmprovider = Provider.of<Dwsmprovider>(context, listen: false);
 
       //clear part a
@@ -213,10 +207,6 @@ class _Dashboarddwsm extends State<Dashboarddwsm> {
                         SizedBox(
                           height: 10,
                         ),
-
-
-
-
 
                         Visibility(
                           visible: mode == ProjectMode.above10,

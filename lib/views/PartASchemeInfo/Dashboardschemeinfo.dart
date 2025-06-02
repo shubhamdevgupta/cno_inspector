@@ -23,17 +23,12 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
   late DashboardProvider dashboardProvider;
   late Schemeprovider schemeprovider;
   LocalStorageService localStorageService = LocalStorageService();
-  ProjectMode? modeType;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =Provider.of<DashboardProvider>(context,listen: false);
 
-      modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
-
-      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!,1,modeType!.modeValue);
-      dashboardProvider = Provider.of<DashboardProvider>(context, listen: false);
       schemeprovider = Provider.of<Schemeprovider>(context,listen: false);
       //clear for part a
       schemeprovider.clearfetchSourceSurvey();
@@ -107,6 +102,8 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
             ),
             body: Consumer<DashboardProvider>(
               builder: (context, dashboardProvider, child) {
+                final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
                 if (dashboardProvider.isLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }

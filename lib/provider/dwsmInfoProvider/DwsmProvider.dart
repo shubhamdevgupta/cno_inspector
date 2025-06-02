@@ -938,7 +938,7 @@ class Dwsmprovider extends ChangeNotifier {
 
   // fetch for dwsm part E start
 
-  List<QualityAssuranceCommissioning> qualityAssuranceData = [];
+  List<QualityAssuranceResult> qualityAssuranceData = [];
 
   Future<void> fetchQualityAssuranceData(
       String stateId, String districtId, String userId, int modeType) async {
@@ -955,7 +955,7 @@ class Dwsmprovider extends ChangeNotifier {
 
         authorizedInspectors = getCheckBoxData(
             qualityAssuranceData
-                .first.whoAuthorizedInspectMeasureFieldInspection,
+                .first.whoAuthorizedInspect,
             authorizedInspectorsMap);
         print('authorizedInspectors: $authorizedInspectors');
 
@@ -965,17 +965,17 @@ class Dwsmprovider extends ChangeNotifier {
         print('commissioningProtocolFollowed: $commissioningProtocolFollowed');
 
         commissioningPresence = getCheckBoxData(
-            qualityAssuranceData.first.duringCommissioningSchemesPresent,
+            qualityAssuranceData.first.duringCommissioningPresent,
             commissioningPresenceMap);
         print('commissioningPresence: $commissioningPresence');
 
         thirdPartyAssessment = getRadiobuttonData(
             qualityAssuranceData
-                .first.hasDistrictUndertakenAssessmentInspectionAgencies,
+                .first.hasDistrictUndertakenAssessment,
             thirdPartyAssessmentMap);
         print('thirdPartyAssessment: $thirdPartyAssessment');
 
-        obserVationQualityAssurance.text = qualityAssuranceData.first.observationQualityAssurance;
+        obserVationQualityAssurance.text = qualityAssuranceData.first.observation;
       } else {
         _message = response.message;
       }
@@ -1120,7 +1120,7 @@ class Dwsmprovider extends ChangeNotifier {
 
 // fetch for dwsm part F start
 
-  List<PublicComplaintsGrievanceRedressal> grievanceData = [];
+  List<GrievanceResult> grievanceData = [];
 
   Future<void> fetchGrievanceRedressalData(
       String stateId, String districtId, String userId, modeType) async {
@@ -1146,7 +1146,7 @@ class Dwsmprovider extends ChangeNotifier {
         print('grievanceRegistrationMethods: $grievanceRegistrationMethods');
 
         complaintsReceived = getRadiobuttonData(
-            grievanceData.first.areComplaintsReceivedPublicRegardingSchemes,
+            grievanceData.first.areComplaintsReceived,
             yesNoMap);
         print('complaintsReceived: $complaintsReceived');
 
@@ -1155,13 +1155,13 @@ class Dwsmprovider extends ChangeNotifier {
         print('complaintTypes: $complaintTypes');
 
         avgResolutionTimeController.text = grievanceData
-            .first.yesTypeComplaintsOthersAverageTimeResolution
+            .first.yesTypeComplaintsOthers
             .toString();
         print(
             'avgResolutionTimeController: ${avgResolutionTimeController.text}');
 
         actionTakenController.text =
-            grievanceData.first.yesTypeComplaintsOthersActionTakenDepartment;
+            grievanceData.first.yesTypeComplaintsOthersActionTaken;
         print('actionTakenController: ${actionTakenController.text}');
       } else {
         _message = response.message;

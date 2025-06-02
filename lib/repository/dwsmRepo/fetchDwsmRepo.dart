@@ -83,29 +83,29 @@ class Fetchdwsmrepo {
     }
   }
 
-  Future<BaseResponseModel<QualityAssuranceCommissioning>>
+  Future<BaseResponseModel<QualityAssuranceResult>>
       fetchQualityAssuranceCommissioning(
           String stateId, String districtId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
           '/CNOSurvey/Get_cno_dwsm_Quality_Assurance_Commissioning?stateid=$stateId&districtid=$districtId&userid=$userId&phy_status=$modeType');
-      return BaseResponseModel<QualityAssuranceCommissioning>.fromJson(
-          response, (json) => QualityAssuranceCommissioning.fromJson(json));
+      return BaseResponseModel<QualityAssuranceResult>.fromJson(
+          response, (json) => QualityAssuranceResult.fromJson(json));
     } catch (e) {
       print('Error fetching Quality Assurance and Commissioning: $e');
       rethrow;
     }
   }
 
-  Future<BaseResponseModel<PublicComplaintsGrievanceRedressal>>
+  Future<BaseResponseModel<GrievanceResult>>
       fetchPublicComplaintsGrievanceRedressal(
           String stateId, String districtId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
           '/CNOSurvey/Get_cno_dwsm_Public_Complaints_Grievance_Redressal?stateid=$stateId&districtid=$districtId&userid=$userId&phy_status=$modeType');
-      return BaseResponseModel<PublicComplaintsGrievanceRedressal>.fromJson(
+      return BaseResponseModel<GrievanceResult>.fromJson(
           response,
-          (json) => PublicComplaintsGrievanceRedressal.fromJson(json));
+          (json) => GrievanceResult.fromJson(json));
     } catch (e) {
       print('Error fetching Public Complaints and Grievance Redressal: $e');
       rethrow;
