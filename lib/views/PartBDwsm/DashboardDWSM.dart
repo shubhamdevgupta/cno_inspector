@@ -24,13 +24,16 @@ class Dashboarddwsm extends StatefulWidget {
 class _Dashboarddwsm extends State<Dashboarddwsm> {
   late DashboardProvider dashboardProvider;
   late Dwsmprovider dwsmprovider;
-
+  LocalStorageService localStorageService = LocalStorageService();
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
+      final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
+
+      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!,2,modeType.modeValue);
 
       dwsmprovider = Provider.of<Dwsmprovider>(context, listen: false);
 

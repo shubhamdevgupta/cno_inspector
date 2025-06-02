@@ -28,7 +28,9 @@ class _Dashboardschemeinfo extends State<Dashboardschemeinfo> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =Provider.of<DashboardProvider>(context,listen: false);
+      final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
+      await dashboardProvider.fetchDashboardData(localStorageService.getInt(AppConstants.prefUserId)!,1,modeType.modeValue);
       schemeprovider = Provider.of<Schemeprovider>(context,listen: false);
       //clear for part a
       schemeprovider.clearfetchSourceSurvey();

@@ -33,7 +33,9 @@ class _Dashboardvwsc extends State<Dashboardvwsc> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dashboardProvider =
           Provider.of<DashboardProvider>(context, listen: false);
+      final modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
 
+      await dashboardProvider.fetchDashboardData(_localStorage.getInt(AppConstants.prefUserId)!,3,modeType.modeValue);
       _localStorage.saveInt(
           "villageId", dashboardProvider.dashboardList.first.villageId);
 
