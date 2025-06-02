@@ -5,7 +5,7 @@ class SourceSustainabilityWaterConservation {
   final int areSourceSustainabilityMeasuresBeingPromoted;
   final int arePipedWaterSchemesGwSourcesProtectedContamination;
   final int isAtLeastOneRechargeStructureGwSourceImplemented;
-  final int ifNoLeastOneRechargeStructureGwSourceImplementedReson;
+  final String ifNoLeastOneRechargeStructureGwSourceImplementedReson;
   final int areAnyImpactStudiesAssessmentsConductedSourceSustainEfforts;
   final int accrediteLabWaterQuality;
   final String accrediteLabWaterQualityNoRemark;

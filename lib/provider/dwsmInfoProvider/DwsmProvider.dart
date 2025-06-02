@@ -390,23 +390,31 @@ class Dwsmprovider extends ChangeNotifier {
 
         if (sustainabilityData.isNotEmpty) {
           sourceSustainability = getRadiobuttonData(
-              sustainabilityData
-                  .first.areSourceSustainabilityMeasuresBeingPromoted,
-              sourceSustainabilityMap);
+            sustainabilityData.first.areSourceSustainabilityMeasuresBeingPromoted ?? -1,
+            sourceSustainabilityMap,
+          );
+
           groundwaterProtection = getRadiobuttonData(
-              sustainabilityData
-                  .first.arePipedWaterSchemesGwSourcesProtectedContamination,
-              groundwaterProtectionMap);
+            sustainabilityData.first.arePipedWaterSchemesGwSourcesProtectedContamination ?? -1,
+            groundwaterProtectionMap,
+          );
+
           rechargeStructureImplemented = getRadiobuttonData(
-              sustainabilityData
-                  .first.isAtLeastOneRechargeStructureGwSourceImplemented,
-              rechargeStructureMap);
+            sustainabilityData.first.isAtLeastOneRechargeStructureGwSourceImplemented ?? -1,
+            rechargeStructureMap,
+          );
+
           rechargeReasonController.text = sustainabilityData
               .first.ifNoLeastOneRechargeStructureGwSourceImplementedReson
-              .toString();
-          impactStudies = getRadiobuttonData(sustainabilityData.first.areAnyImpactStudiesAssessmentsConductedSourceSustainEfforts, impactStudiesMap);
+              ?.toString() ?? '';
 
-          PartBUserObservation.text = sustainabilityData.first.userremark;
+          impactStudies = getRadiobuttonData(
+            sustainabilityData.first.areAnyImpactStudiesAssessmentsConductedSourceSustainEfforts ?? -1,
+            impactStudiesMap,
+          );
+
+          PartBUserObservation.text = sustainabilityData.first.userremark ?? '';
+
 
         }
         // Process sustainabilityData if needed

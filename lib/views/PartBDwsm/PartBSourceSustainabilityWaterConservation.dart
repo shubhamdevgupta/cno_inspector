@@ -33,7 +33,7 @@ class _SourceSustainablitiyWasterConservation
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
       final  modeType = Provider.of<AppStateProvider>(context, listen: false).mode;
@@ -50,10 +50,10 @@ class _SourceSustainablitiyWasterConservation
         }
 
 
-        dwsmProvider.fetchSustainabilityData(
+      await  dwsmProvider.fetchSustainabilityData(
             stateId.toString(),
             districtid.toString(),
-            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType!.modeValue);
+            localStorageService.getInt(AppConstants.prefUserId).toString(),modeType.modeValue);
       }
     });
   }

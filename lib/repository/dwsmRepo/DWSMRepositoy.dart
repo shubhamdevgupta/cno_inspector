@@ -140,20 +140,7 @@ class DWSMRepositoy {
       rethrow;
     }
   }
-/*  {
-  "userid": 1726,
-  "stateid": 17,
-  "districtid": 264,
-  "Is_protocol_in_village_infrastructure": 3,
-  "Percentage_villages_trained_manpower": 4.00000,
-  "Is_Water_charged_households_fee_amount": 5,
-  "Is_Water_charged_households_uniform_consumption": 2,
-  "Percentage_villages_User_Fee_collected": 6.00000,
-  "createdby": null,
-  "createdip": null,
-  "phy_status": 0,
-  "Obseration_Operation_Maintenance": ""
-  }*/
+
 
   Future<BaseResponse> saveOperationMaintenance({
     required int userId,
