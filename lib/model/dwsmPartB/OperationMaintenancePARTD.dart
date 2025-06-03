@@ -8,7 +8,7 @@ class OperationMaintenance {
   final int isItUniformBasedOnConsumption;
   final double perOfVillagesWhereUserFeeCollected;
   final int modeType;
-  final String obserVationOperationMaintenance;
+  final String  obserVationOperationMaintenance;
 
   OperationMaintenance({
     required this.userid,

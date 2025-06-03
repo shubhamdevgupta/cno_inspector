@@ -246,10 +246,7 @@ class _MonitioringQuality extends State<MonitioringQuality> {
                                                     .assetsGeotaggedID,
                                                 hasNABLLab:
                                                 dwsmProvider.hasNablLabID,
-                                                testingManagementDescription:
-                                                dwsmProvider
-                                                    .testingManagedController
-                                                    .text,
+                                                hasNABLLabDesc:dwsmProvider.testingManagedController.text,
                                                 observationMonitoringQuality: dwsmProvider.obserVationControllerQuality.text,
                                                 modeType: modeType!.modeValue);
                                             if (dwsmProvider.status!) {

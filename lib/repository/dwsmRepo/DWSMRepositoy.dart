@@ -86,7 +86,7 @@ class DWSMRepositoy {
     required int districtId,
     required int areAssetsGeotagged,
     required int hasNABLLab,
-    required String testingManagementDescription,
+    required String hasNABLLabDesc,
     required String observationMonitoringQuality,
     required int modeType
   }) async {
@@ -99,7 +99,7 @@ class DWSMRepositoy {
           "districtid": districtId,
           "are_water_supply_assets_geotagged": areAssetsGeotagged,
           "does_the_district_have_an_nabl_accredited_lab_equivalent": hasNABLLab,
-          "if_no_how_is_testing_managed_description": testingManagementDescription,
+          "Does_district_NABL_accredited_lab_desc":hasNABLLabDesc,
           "Obseration_Monitoring_Quality_lab_Infrastructure":observationMonitoringQuality,
           "phy_status":modeType
         }),
@@ -140,20 +140,6 @@ class DWSMRepositoy {
       rethrow;
     }
   }
-/*  {
-  "userid": 1726,
-  "stateid": 17,
-  "districtid": 264,
-  "Is_protocol_in_village_infrastructure": 3,
-  "Percentage_villages_trained_manpower": 4.00000,
-  "Is_Water_charged_households_fee_amount": 5,
-  "Is_Water_charged_households_uniform_consumption": 2,
-  "Percentage_villages_User_Fee_collected": 6.00000,
-  "createdby": null,
-  "createdip": null,
-  "phy_status": 0,
-  "Obseration_Operation_Maintenance": ""
-  }*/
 
   Future<BaseResponse> saveOperationMaintenance({
     required int userId,

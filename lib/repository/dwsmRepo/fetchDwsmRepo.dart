@@ -55,15 +55,15 @@ class Fetchdwsmrepo {
       rethrow;
     }
   }
-  Future<BaseResponseModel<MonitoringQualityLabInfrastructure>>
+  Future<BaseResponseModel<MonitoringQualityLabResult>>
       fetchMonitoringQualityLabInfrastructure(
           String stateId, String districtId, String userId,int modeType) async {
     try {
       final response = await _apiService.get(
           '/CNOSurvey/Get_cno_dwsm_monitoring_quality_lab_infrastructure?stateid=$stateId&districtid=$districtId&userid=$userId&phy_status=$modeType');
-      return BaseResponseModel<MonitoringQualityLabInfrastructure>.fromJson(
+      return BaseResponseModel<MonitoringQualityLabResult>.fromJson(
           response,
-          (json) => MonitoringQualityLabInfrastructure.fromJson(json));
+          (json) => MonitoringQualityLabResult.fromJson(json));
     } catch (e) {
       print('Error fetching Monitoring Quality and Lab Infrastructure: $e');
       rethrow;

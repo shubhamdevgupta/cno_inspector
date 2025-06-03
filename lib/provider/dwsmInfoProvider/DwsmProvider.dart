@@ -482,7 +482,7 @@ class Dwsmprovider extends ChangeNotifier {
       required int districtId,
       required int areAssetsGeotagged,
       required int hasNABLLab,
-      required String testingManagementDescription,
+      required String hasNABLLabDesc,
       required String observationMonitoringQuality,
       required int modeType}) async {
     _isLoading = true;
@@ -495,7 +495,8 @@ class Dwsmprovider extends ChangeNotifier {
           districtId: districtId,
           areAssetsGeotagged: areAssetsGeotagged,
           hasNABLLab: hasNABLLab,
-          testingManagementDescription: testingManagementDescription,
+          hasNABLLabDesc: hasNABLLabDesc,
+
           observationMonitoringQuality: observationMonitoringQuality,
           modeType: modeType);
 
@@ -509,7 +510,7 @@ class Dwsmprovider extends ChangeNotifier {
     }
   }
 
-  List<MonitoringQualityLabInfrastructure> monitoringData = [];
+  List<MonitoringQualityLabResult> monitoringData = [];
 
   Future<void> fetchMonitoringLabData(
       String stateId, String districtId, String userId, int modeType) async {
@@ -528,10 +529,10 @@ class Dwsmprovider extends ChangeNotifier {
               monitoringData.first.areWaterSupplyAssetsGeotagged,
               assetsGeotaggedMap);
           hasNablLab = getRadiobuttonData(
-              monitoringData.first.doesDistrictHaveNablAccreditedLabEquivalent,
+              monitoringData.first.doesDistrictNablAccreditedLab,
               yesNoMap);
           testingManagedController.text =
-              monitoringData.first.ifNoHowIsTestingManagedDescription;
+              monitoringData.first.doesDistrictNablAccreditedLabDesc;
         }
 
         _message = response.message;
@@ -1150,12 +1151,12 @@ class Dwsmprovider extends ChangeNotifier {
             yesNoMap);
         print('complaintsReceived: $complaintsReceived');
 
-       /* complaintTypes = getRadiobuttonData(
-            grievanceData.first.yesTypeComplaints, complaintTypeMap);*/
+        complaintTypes = getCheckBoxData(
+            grievanceData.first.yesTypeComplaint, complaintTypeMap);
         print('complaintTypes: $complaintTypes');
 
         avgResolutionTimeController.text = grievanceData
-            .first.yesTypeComplaintsOthers
+            .first.yesTypeComplaintsOthersAvgTimeResolution
             .toString();
         print(
             'avgResolutionTimeController: ${avgResolutionTimeController.text}');
@@ -1163,6 +1164,8 @@ class Dwsmprovider extends ChangeNotifier {
         actionTakenController.text =
             grievanceData.first.yesTypeComplaintsOthersActionTaken;
         print('actionTakenController: ${actionTakenController.text}');
+
+        othersComplaintController.text = grievanceData.first.yesTypeComplaintsOthers;
       } else {
         _message = response.message;
       }

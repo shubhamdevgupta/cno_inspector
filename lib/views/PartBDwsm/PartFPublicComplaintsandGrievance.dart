@@ -122,9 +122,6 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-                        modeType == ProjectMode.below10? Belowdwsmcommon(no: 5) :  Dwsmcommonclass(no: 6),
-
                         Card(
                           elevation: 5,
                           child: Container(
@@ -202,7 +199,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                           "3.2 What is the average time of resolution:",
                                       controller: dwsmProvider
                                           .avgResolutionTimeController,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: TextInputType.text,
                                     ),
                                     const SizedBox(height: 10),
                                     Customtxtfeild(
@@ -292,7 +289,7 @@ class _PartFPublicCompliant extends State<PartFPublicCompliant> {
                                                     .complaintsReceivedID,
                                                 typeOfComplaints:
                                                 dwsmProvider.complaintTypesID,
-                                                otherComplaints: '',
+                                                otherComplaints: dwsmProvider.othersComplaintController.text,
                                                 resolutionTime: dwsmProvider.avgResolutionTimeController.text.isEmpty ? 0:int.parse(dwsmProvider.avgResolutionTimeController.text),
                                                 actionTakenByDepartment:
                                                 dwsmProvider.actionTakenController.text.isEmpty ? 0:  int.parse(dwsmProvider

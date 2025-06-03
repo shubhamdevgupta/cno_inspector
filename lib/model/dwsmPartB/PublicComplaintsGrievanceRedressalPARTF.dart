@@ -33,8 +33,7 @@ class GrievanceResult {
   final int stateid;
   final int districtid;
   final int grievanceRedressalMechanismAvailable;
-  final String howGrievancesRegisteredVillagersIds;
-  final dynamic howGrievancesRegisteredVillagers;
+  final List<int> howGrievancesRegisteredVillagers;
   final int areComplaintsReceived;
   final List<int> yesTypeComplaint;
   final String yesTypeComplaintIds;
@@ -50,8 +49,7 @@ class GrievanceResult {
     required this.stateid,
     required this.districtid,
     required this.grievanceRedressalMechanismAvailable,
-    required this.howGrievancesRegisteredVillagersIds,
-    this.howGrievancesRegisteredVillagers,
+    required this.howGrievancesRegisteredVillagers,
     required this.areComplaintsReceived,
     required this.yesTypeComplaint,
     required this.yesTypeComplaintIds,
@@ -70,10 +68,8 @@ class GrievanceResult {
       districtid: json['districtid'] ?? 0,
       grievanceRedressalMechanismAvailable:
       json['Grievance_Redressal_mechanism_available'] ?? 0,
-      howGrievancesRegisteredVillagersIds:
-      json['How_grievances_registered_the_villagersIds'] ?? '',
       howGrievancesRegisteredVillagers:
-      json['How_grievances_registered_the_villagers'],
+      json['How_grievances_registered_the_villagers'] ?? [],
       areComplaintsReceived:
       json['Are_complaints_received_public_regarding_schemes'] ?? 0,
       yesTypeComplaint: List<int>.from(json['yes_type_complaint'] ?? []),
@@ -96,8 +92,6 @@ class GrievanceResult {
       'districtid': districtid,
       'Grievance_Redressal_mechanism_available':
       grievanceRedressalMechanismAvailable,
-      'How_grievances_registered_the_villagersIds':
-      howGrievancesRegisteredVillagersIds,
       'How_grievances_registered_the_villagers':
       howGrievancesRegisteredVillagers,
       'Are_complaints_received_public_regarding_schemes':
