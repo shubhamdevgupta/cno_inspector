@@ -38,6 +38,7 @@ class Schemeprovider extends ChangeNotifier {
   String? _selectedValueQ2;
   String? _selectedValueQ3;
   String? _waterAllocationPurpose;
+  String? _selectedWaterAllocation;
 
   // Getter for Q1
   String? get selectedValueQ1 => _selectedValueQ1;
@@ -68,10 +69,20 @@ class Schemeprovider extends ChangeNotifier {
 
   String? get waterAllocationPurpose => _waterAllocationPurpose;
 
-  set selectedWaterAllocation(String? value){
+  set waterAllocationPurpose(String? value){
     _waterAllocationPurpose = value;
     notifyListeners();
   }
+  int get waterAllocationPurposeID => yesNoMap[_waterAllocationPurpose]??-1;
+  String? get selectedWaterAllocation => _selectedWaterAllocation;
+
+  set selectedWaterAllocation(String? value){
+    _selectedWaterAllocation = value;
+    notifyListeners();
+  }
+
+  int get selectedWaterAllocationId => yesNoMap[_selectedWaterAllocation]??-1;
+
 
   int get selectedValueQ3Id => yesNoMap[_selectedValueQ3] ?? -1;
 
@@ -79,7 +90,7 @@ class Schemeprovider extends ChangeNotifier {
 
   int get selectedValueQ1Id => yesNoMap[_selectedValueQ1] ?? -1;
 
-  int get selectedWaterAllocationId => yesNoMap[_waterAllocationPurpose]??-1;
+
 
    TextEditingController safeController = TextEditingController();
    TextEditingController criticalController = TextEditingController();
@@ -213,8 +224,15 @@ class Schemeprovider extends ChangeNotifier {
             sourceSurveyData.first.incaseGwContAnyAnalysisConduct, yesNoMap);
         print('selectedValueQ3: $selectedValueQ3');
 
-       selectedWaterAllocation =
-            sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw.toString();
+
+        waterAllocationPurpose = getRadiobuttonData(sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw, yesNoMap);
+        print('waterAllocationPurpose: $selectedValueQ3');
+
+/*        selectedWaterAllocation = getRadiobuttonData(
+            sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw, yesNoMap);
+        print('selectedWaterAllocation: $selectedValueQ3');*/
+
+
         //
         sourceFindingRepresentativesConsulted_Controller.text =
             sourceSurveyData.first.represe_of_ource_finding_committee;
@@ -1307,6 +1325,12 @@ class Schemeprovider extends ChangeNotifier {
 
         selectedPipeline = getRadiobuttonData(
             schemeImplementationData.first.isComponentPlannedPipeline,
+            yesNoMap);
+
+        setQuesPartE6=getRadiobuttonData(schemeImplementationData.first.is_tpia_engaged_value,
+            yesNoMap);
+        setQuesPartE7 = getRadiobuttonData(
+            schemeImplementationData.first.concurrent_supervission_scope_value,
             yesNoMap);
         print('selectedPipeline: $selectedPipeline');
 

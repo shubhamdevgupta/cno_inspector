@@ -402,10 +402,11 @@ class Dwsmprovider extends ChangeNotifier {
                   .first.isAtLeastOneRechargeStructureGwSourceImplemented,
               rechargeStructureMap);
           rechargeReasonController.text = sustainabilityData
-              .first.ifNoLeastOneRechargeStructureGwSourceImplementedReson
-              .toString();
+              .first.ifNoLeastOneRechargeStructureGwSourceImplementedReson;
           impactStudies = getRadiobuttonData(sustainabilityData.first.areAnyImpactStudiesAssessmentsConductedSourceSustainEfforts, impactStudiesMap);
 
+          accreditedLabWaterQuality=getRadiobuttonData(sustainabilityData.first.accrediteLabWaterQuality, yesNoMap);
+          testingManagedDataController.text=   sustainabilityData.first.accrediteLabWaterQualityNoRemark;
           PartBUserObservation.text = sustainabilityData.first.userremark;
 
         }
@@ -819,8 +820,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get authorizedInspectorID =>
-      authorizedInspectorsMap[_authorizedInspectors] ?? -1;
+  int get authorizedInspectorID => authorizedInspectorsMap[_authorizedInspectors] ?? -1;
 
   List<int> get selectedAuthorizedInspectorID => _authorizedInspectors.map((e) => authorizedInspectorsMap[e] ?? -1).toList();
 

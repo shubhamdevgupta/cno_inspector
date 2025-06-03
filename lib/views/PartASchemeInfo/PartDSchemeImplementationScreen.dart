@@ -550,7 +550,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         options:
                                         schemeProvider.yesNoMap.keys.toList(),
                                         selectedOption:
-                                        schemeProvider.getSelectedPartE5,
+                                        schemeProvider.getSelectedPartE6,
                                         onChanged: (val) {
                                           schemeProvider.setQuesPartE5 = val;
                                         },
