@@ -277,7 +277,7 @@ class _WaterSupplyPartA extends State<WaterSupplyPartA> {
                                               userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                               stateId: vwscProvider.stateId!,
                                               villageId: vwscProvider.villageId!,
-                                              waterSupplyFrequency: vwscProvider.selectedFTKTestingFrequencyId,
+                                              waterSupplyFrequency: vwscProvider.selectedFrequencyID,
                                               adequateWaterToHH: vwscProvider.selectedHouseholdWaterId,
                                               adequateWaterToRemote: vwscProvider.selectedPvtgGroupsId,
                                               remoteReason: vwscProvider.reasonRemoteGroupsController.text,

@@ -14,7 +14,7 @@ class CommunityInvolvement {
   final int omArrangement;
   final int communityAwareness;
   final int communitySatisfactionWithWq;
-  final int createdby;
+  final int? createdby;
   final String? createdip;
   final int phyStatus;
   final String observationCommunityInvolvementFunctionality;
@@ -35,7 +35,7 @@ class CommunityInvolvement {
     required this.omArrangement,
     required this.communityAwareness,
     required this.communitySatisfactionWithWq,
-    required this.createdby,
+     this.createdby,
     required this.createdip,
     required this.phyStatus,
     required this.observationCommunityInvolvementFunctionality,
