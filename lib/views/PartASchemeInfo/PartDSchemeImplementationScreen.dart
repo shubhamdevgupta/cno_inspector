@@ -305,10 +305,8 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         selectedValues:
                                         schemeProvider.selectedrevisionReasons,
                                         onSelectionChanged: (values) {
-                                          setState(() => schemeProvider
-                                              .selectedrevisionReasons = values);
-                                          print(
-                                              ' schemeProvider.selectedrevisionReasons  ${schemeProvider.selectedrevisionReasonsID}');
+                                         schemeProvider.selectedrevisionReasons = values;
+                                          print(' schemeProvider.selectedrevisionReasons  ${schemeProvider.selectedrevisionReasonsID}');
                                         },
                                       ),
 
@@ -512,10 +510,8 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         options: schemeProvider.revisionReasonsIDOptions,
                                         selectedValues: schemeProvider.selectedrevisionReasons,
                                         onSelectionChanged: (values) {
-                                          setState(() => schemeProvider
-                                              .selectedrevisionReasons = values);
-                                          print(
-                                              ' schemeProvider.selectedrevisionReasons  ${schemeProvider.selectedrevisionReasonsID}');
+                                         schemeProvider.selectedrevisionReasons = values;
+                                          print(' schemeProvider.selectedrevisionReasons  ${schemeProvider.selectedrevisionReasonsID}');
                                         },
                                       ),
 
@@ -552,7 +548,7 @@ class _SchemeImplementationScreen extends State<SchemeImplementationScreen> {
                                         selectedOption:
                                         schemeProvider.getSelectedPartE6,
                                         onChanged: (val) {
-                                          schemeProvider.setQuesPartE5 = val;
+                                          schemeProvider.setQuesPartE6 = val;
                                         },
                                       ),
 
