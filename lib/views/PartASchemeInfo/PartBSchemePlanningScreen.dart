@@ -464,7 +464,7 @@ class _SchemePlanningScreen extends State<SchemePlanningScreen> {
                                           }
                                         },
                                         child: Text(
-                                          "SAVE & NEXT",
+                                          "SAVE ",
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
