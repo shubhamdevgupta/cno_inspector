@@ -414,8 +414,8 @@ class Vwscprovider extends ChangeNotifier {
  };
 
  final Map<String, int> vwscBelowPartAQues3Map = {
-     'Meeting daily needs throughout the year':1,
-     'Meeting daily needs partly in the year':2,
+     'Meeting daily needs throughout the year':2,
+     'Meeting daily needs partly in the year':1,
      'Not able to meet daily needs:':3
  };
 

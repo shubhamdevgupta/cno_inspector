@@ -227,7 +227,7 @@ class _RetrofittingAugmentationScreen
                                       // 3. Radio Button: As-built Drawing Availability
                                       Customradiobttn(
                                         question:
-                                        '3. Is the as-built drawing of the new infrastructure in conjunction with the existing infrastructure available with the department/agency/GP?',
+                                        '3.1 Is the as-built drawing of the new infrastructure in conjunction with the existing infrastructure available with the department/agency/GP?',
                                         options:
                                         schemeProvider.yesNoMap.keys.toList(),
                                         selectedOption: schemeProvider
@@ -238,7 +238,7 @@ class _RetrofittingAugmentationScreen
 
                                       Customradiobttn(
                                         question:
-                                        '4. Has it been digitized and uploaded on PM Gatishakti? ',
+                                        '3.2 Has it been digitized and uploaded on PM Gatishakti? ',
                                         options: schemeProvider.yesNoMap.keys
                                             .toList(),
                                         selectedOption:
@@ -248,7 +248,7 @@ class _RetrofittingAugmentationScreen
                                       ),
                                     if (schemeProvider.onPmGatishaktiID == 0)
                                       Customtxtfeild(
-                                        label: '4.1 Reason',
+                                        label: '* Reason',
                                         controller:
                                         schemeProvider.reasonController,
                                         keyboardType: TextInputType.text,

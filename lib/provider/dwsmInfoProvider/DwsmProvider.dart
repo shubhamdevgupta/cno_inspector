@@ -820,8 +820,7 @@ class Dwsmprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get authorizedInspectorID =>
-      authorizedInspectorsMap[_authorizedInspectors] ?? -1;
+  int get authorizedInspectorID => authorizedInspectorsMap[_authorizedInspectors] ?? -1;
 
   List<int> get selectedAuthorizedInspectorID => _authorizedInspectors.map((e) => authorizedInspectorsMap[e] ?? -1).toList();
 
