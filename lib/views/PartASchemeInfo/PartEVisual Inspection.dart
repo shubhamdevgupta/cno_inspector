@@ -198,37 +198,37 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         schemeProvider.setQuesPartEa1 = val;
                                       },
                                     ),
-                                    Visibility(
-                                        visible:
-                                            schemeProvider.selectedId_partEa1 == 1,
+                                    imageCaptureWidget(
+                                      selectedId:
+                                          schemeProvider.selectedId_partEa1,
+                                      cameraHelper: _cameraHelper,
+                                      captureStatus: _captureStatus,
+                                      onStatusChange: (status) {
+                                        setState(() {
+                                          _captureStatus = status;
+                                        });
+                                      },
+                                    ),
+
+                                    /*Visibility(
+                                        visible: schemeProvider.selectedId_partEa1 == 1,
                                         child: Center(
                                           child: GestureDetector(
                                             onTap: () async {
                                               try {
-                                                await _cameraHelper
-                                                    .pickFromCamera();
-                                                if (_cameraHelper.imageFile !=
-                                                    null) {
-                                                  _captureStatus =
-                                                      CaptureStatus.success;
+                                                await _cameraHelper.pickFromCamera();
+                                                if (_cameraHelper.imageFile != null) {
+                                                  _captureStatus = CaptureStatus.success;
                                                 } else {
-                                                  _captureStatus =
-                                                      CaptureStatus.failure;
+                                                  _captureStatus = CaptureStatus.failure;
                                                 }
                                               } catch (e) {
-                                                _captureStatus =
-                                                    CaptureStatus.failure;
+                                                _captureStatus = CaptureStatus.failure;
                                               }
                                               setState(() {});
                                             },
                                             child: Text(
-                                              _captureStatus ==
-                                                      CaptureStatus.success
-                                                  ? 'Image Captured'
-                                                  : (_captureStatus ==
-                                                          CaptureStatus.failure
-                                                      ? 'Capture Failed'
-                                                      : 'Capture Image'),
+                                              _captureStatus == CaptureStatus.success ? 'Image Captured' : (_captureStatus == CaptureStatus.failure ? 'Capture Failed' : 'Capture Image'),
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 color: _captureStatus ==
@@ -239,7 +239,8 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               ),
                                             ),
                                           ),
-                                        )),
+                                        )
+                                    ),*/
                                   ]),
                                   Row(
                                     children: [
@@ -254,8 +255,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa2== 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa2 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -278,16 +280,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -311,8 +314,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa3 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa3 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -335,16 +339,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -352,7 +357,6 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               ),
                                             ),
                                           )),
-
                                     ],
                                   ),
 
@@ -369,8 +373,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa4 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa4 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -393,16 +398,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -426,8 +432,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa5 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa5 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -450,16 +457,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -467,7 +475,6 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               ),
                                             ),
                                           )),
-
                                     ],
                                   ),
 
@@ -485,8 +492,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa6 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa6 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -509,16 +517,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -526,7 +535,6 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               ),
                                             ),
                                           )),
-
                                     ],
                                   ),
 
@@ -544,8 +552,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa8 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa8 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -568,16 +577,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -601,8 +611,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa9 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa9 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -625,16 +636,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -642,7 +654,6 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               ),
                                             ),
                                           )),
-
                                     ],
                                   ),
                                   Row(
@@ -659,8 +670,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa9 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa9 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -683,16 +695,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -700,7 +713,6 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               ),
                                             ),
                                           )),
-
                                     ],
                                   ),
                                   Row(
@@ -717,8 +729,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa11 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa11 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -741,16 +754,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -775,8 +789,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa12 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa12 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -799,16 +814,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -833,8 +849,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa13 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa13 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -857,16 +874,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -890,8 +908,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa14 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa14 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -914,16 +933,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -947,8 +967,9 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                         },
                                       ),
                                       Visibility(
-                                          visible:
-                                          schemeProvider.selectedId_partEa15 == 1,
+                                          visible: schemeProvider
+                                                  .selectedId_partEa15 ==
+                                              1,
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () async {
@@ -971,16 +992,17 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                               },
                                               child: Text(
                                                 _captureStatus ==
-                                                    CaptureStatus.success
+                                                        CaptureStatus.success
                                                     ? 'Image Captured'
                                                     : (_captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? 'Capture Failed'
-                                                    : 'Capture Image'),
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   color: _captureStatus ==
-                                                      CaptureStatus.failure
+                                                          CaptureStatus.failure
                                                       ? Colors.red
                                                       : Colors.green,
                                                   fontWeight: FontWeight.bold,
@@ -997,177 +1019,185 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                           fontWeight: FontWeight.w600,
                                           fontSize: 15)),
                                   const SizedBox(height: 4),
-                                  Row(children: [
-                                    Customradiobttn(
-                                      question:
-                                      "b.1 leakages in transmission pipelines/valves",
-                                      options:
-                                      schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption:
-                                      schemeProvider.getSelectedPartEb1,
-                                      onChanged: (val) {
-                                        schemeProvider.setQuesPartEb1 = val;
-                                      },
-                                    ),
-                                    Visibility(
-                                        visible:
-                                        schemeProvider.selectedId_partEb1 == 1,
-                                        child: Center(
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              try {
-                                                await _cameraHelper
-                                                    .pickFromCamera();
-                                                if (_cameraHelper.imageFile !=
-                                                    null) {
-                                                  _captureStatus =
-                                                      CaptureStatus.success;
-                                                } else {
-                                                  _captureStatus =
-                                                      CaptureStatus.failure;
-                                                }
-                                              } catch (e) {
-                                                _captureStatus =
-                                                    CaptureStatus.failure;
-                                              }
-                                              setState(() {});
-                                            },
-                                            child: Text(
-                                              _captureStatus ==
-                                                  CaptureStatus.success
-                                                  ? 'Image Captured'
-                                                  : (_captureStatus ==
-                                                  CaptureStatus.failure
-                                                  ? 'Capture Failed'
-                                                  : 'Capture Image'),
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: _captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? Colors.red
-                                                    : Colors.green,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        )),
-
-                                  ],),
-
-                                  Row(children: [
-                                    Customradiobttn(
-                                      question:
-                                      "b.2 leakages in distribution pipelines/valves",
-                                      options:
-                                      schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption:
-                                      schemeProvider.getSelectedPartEb2,
-                                      onChanged: (val) {
-                                        schemeProvider.setQuesPartEb2 = val;
-                                      },
-                                    ),
-                                    Visibility(
-                                        visible:
-                                        schemeProvider.selectedId_partEb2 == 1,
-                                        child: Center(
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              try {
-                                                await _cameraHelper
-                                                    .pickFromCamera();
-                                                if (_cameraHelper.imageFile !=
-                                                    null) {
-                                                  _captureStatus =
-                                                      CaptureStatus.success;
-                                                } else {
+                                  Row(
+                                    children: [
+                                      Customradiobttn(
+                                        question:
+                                            "b.1 leakages in transmission pipelines/valves",
+                                        options: schemeProvider.yesNoMap.keys
+                                            .toList(),
+                                        selectedOption:
+                                            schemeProvider.getSelectedPartEb1,
+                                        onChanged: (val) {
+                                          schemeProvider.setQuesPartEb1 = val;
+                                        },
+                                      ),
+                                      Visibility(
+                                          visible: schemeProvider
+                                                  .selectedId_partEb1 ==
+                                              1,
+                                          child: Center(
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                try {
+                                                  await _cameraHelper
+                                                      .pickFromCamera();
+                                                  if (_cameraHelper.imageFile !=
+                                                      null) {
+                                                    _captureStatus =
+                                                        CaptureStatus.success;
+                                                  } else {
+                                                    _captureStatus =
+                                                        CaptureStatus.failure;
+                                                  }
+                                                } catch (e) {
                                                   _captureStatus =
                                                       CaptureStatus.failure;
                                                 }
-                                              } catch (e) {
-                                                _captureStatus =
-                                                    CaptureStatus.failure;
-                                              }
-                                              setState(() {});
-                                            },
-                                            child: Text(
-                                              _captureStatus ==
-                                                  CaptureStatus.success
-                                                  ? 'Image Captured'
-                                                  : (_captureStatus ==
-                                                  CaptureStatus.failure
-                                                  ? 'Capture Failed'
-                                                  : 'Capture Image'),
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: _captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? Colors.red
-                                                    : Colors.green,
-                                                fontWeight: FontWeight.bold,
+                                                setState(() {});
+                                              },
+                                              child: Text(
+                                                _captureStatus ==
+                                                        CaptureStatus.success
+                                                    ? 'Image Captured'
+                                                    : (_captureStatus ==
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: _captureStatus ==
+                                                          CaptureStatus.failure
+                                                      ? Colors.red
+                                                      : Colors.green,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        )),
+                                          )),
+                                    ],
+                                  ),
 
-                                  ],),
-
-                                  Row(children: [
-                                    Customradiobttn(
-                                      question:
-                                      "b.3 wet patches/pool of water on the ground along the route of pipe	",
-                                      options:
-                                      schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption:
-                                      schemeProvider.getSelectedPartEb3,
-                                      onChanged: (val) {
-                                        schemeProvider.setQuesPartEb3 = val;
-                                      },
-                                    ),
-                                    Visibility(
-                                        visible:
-                                        schemeProvider.selectedId_partEb3 == 1,
-                                        child: Center(
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              try {
-                                                await _cameraHelper
-                                                    .pickFromCamera();
-                                                if (_cameraHelper.imageFile !=
-                                                    null) {
-                                                  _captureStatus =
-                                                      CaptureStatus.success;
-                                                } else {
+                                  Row(
+                                    children: [
+                                      Customradiobttn(
+                                        question:
+                                            "b.2 leakages in distribution pipelines/valves",
+                                        options: schemeProvider.yesNoMap.keys
+                                            .toList(),
+                                        selectedOption:
+                                            schemeProvider.getSelectedPartEb2,
+                                        onChanged: (val) {
+                                          schemeProvider.setQuesPartEb2 = val;
+                                        },
+                                      ),
+                                      Visibility(
+                                          visible: schemeProvider
+                                                  .selectedId_partEb2 ==
+                                              1,
+                                          child: Center(
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                try {
+                                                  await _cameraHelper
+                                                      .pickFromCamera();
+                                                  if (_cameraHelper.imageFile !=
+                                                      null) {
+                                                    _captureStatus =
+                                                        CaptureStatus.success;
+                                                  } else {
+                                                    _captureStatus =
+                                                        CaptureStatus.failure;
+                                                  }
+                                                } catch (e) {
                                                   _captureStatus =
                                                       CaptureStatus.failure;
                                                 }
-                                              } catch (e) {
-                                                _captureStatus =
-                                                    CaptureStatus.failure;
-                                              }
-                                              setState(() {});
-                                            },
-                                            child: Text(
-                                              _captureStatus ==
-                                                  CaptureStatus.success
-                                                  ? 'Image Captured'
-                                                  : (_captureStatus ==
-                                                  CaptureStatus.failure
-                                                  ? 'Capture Failed'
-                                                  : 'Capture Image'),
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: _captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? Colors.red
-                                                    : Colors.green,
-                                                fontWeight: FontWeight.bold,
+                                                setState(() {});
+                                              },
+                                              child: Text(
+                                                _captureStatus ==
+                                                        CaptureStatus.success
+                                                    ? 'Image Captured'
+                                                    : (_captureStatus ==
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: _captureStatus ==
+                                                          CaptureStatus.failure
+                                                      ? Colors.red
+                                                      : Colors.green,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        )),
+                                          )),
+                                    ],
+                                  ),
 
-                                  ],),
-
+                                  Row(
+                                    children: [
+                                      Customradiobttn(
+                                        question:
+                                            "b.3 wet patches/pool of water on the ground along the route of pipe	",
+                                        options: schemeProvider.yesNoMap.keys
+                                            .toList(),
+                                        selectedOption:
+                                            schemeProvider.getSelectedPartEb3,
+                                        onChanged: (val) {
+                                          schemeProvider.setQuesPartEb3 = val;
+                                        },
+                                      ),
+                                      Visibility(
+                                          visible: schemeProvider
+                                                  .selectedId_partEb3 ==
+                                              1,
+                                          child: Center(
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                try {
+                                                  await _cameraHelper
+                                                      .pickFromCamera();
+                                                  if (_cameraHelper.imageFile !=
+                                                      null) {
+                                                    _captureStatus =
+                                                        CaptureStatus.success;
+                                                  } else {
+                                                    _captureStatus =
+                                                        CaptureStatus.failure;
+                                                  }
+                                                } catch (e) {
+                                                  _captureStatus =
+                                                      CaptureStatus.failure;
+                                                }
+                                                setState(() {});
+                                              },
+                                              child: Text(
+                                                _captureStatus ==
+                                                        CaptureStatus.success
+                                                    ? 'Image Captured'
+                                                    : (_captureStatus ==
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: _captureStatus ==
+                                                          CaptureStatus.failure
+                                                      ? Colors.red
+                                                      : Colors.green,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          )),
+                                    ],
+                                  ),
 
                                   // Repeat for 1(b)...
 
@@ -1255,63 +1285,65 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                     },
                                   ),
 
-                                  Row(children: [
-                                    Customradiobttn(
-                                      question:
-                                      "9.	Are there records of observations/inspection reports issued by TPIA?",
-                                      options:
-                                      schemeProvider.yesNoMap.keys.toList(),
-                                      selectedOption:
-                                      schemeProvider.getSelectedPartE9,
-                                      onChanged: (val) {
-                                        schemeProvider.setQuesPartE9 = val;
-                                      },
-                                    ),
-                                    Visibility(
-                                        visible:
-                                        schemeProvider.selectedId_partE9 == 1,
-                                        child: Center(
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              try {
-                                                await _cameraHelper
-                                                    .pickFromCamera();
-                                                if (_cameraHelper.imageFile !=
-                                                    null) {
-                                                  _captureStatus =
-                                                      CaptureStatus.success;
-                                                } else {
+                                  Row(
+                                    children: [
+                                      Customradiobttn(
+                                        question:
+                                            "9.	Are there records of observations/inspection reports issued by TPIA?",
+                                        options: schemeProvider.yesNoMap.keys
+                                            .toList(),
+                                        selectedOption:
+                                            schemeProvider.getSelectedPartE9,
+                                        onChanged: (val) {
+                                          schemeProvider.setQuesPartE9 = val;
+                                        },
+                                      ),
+                                      Visibility(
+                                          visible: schemeProvider
+                                                  .selectedId_partE9 ==
+                                              1,
+                                          child: Center(
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                try {
+                                                  await _cameraHelper
+                                                      .pickFromCamera();
+                                                  if (_cameraHelper.imageFile !=
+                                                      null) {
+                                                    _captureStatus =
+                                                        CaptureStatus.success;
+                                                  } else {
+                                                    _captureStatus =
+                                                        CaptureStatus.failure;
+                                                  }
+                                                } catch (e) {
                                                   _captureStatus =
                                                       CaptureStatus.failure;
                                                 }
-                                              } catch (e) {
-                                                _captureStatus =
-                                                    CaptureStatus.failure;
-                                              }
-                                              setState(() {});
-                                            },
-                                            child: Text(
-                                              _captureStatus ==
-                                                  CaptureStatus.success
-                                                  ? 'Image Captured'
-                                                  : (_captureStatus ==
-                                                  CaptureStatus.failure
-                                                  ? 'Capture Failed'
-                                                  : 'Capture Image'),
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: _captureStatus ==
-                                                    CaptureStatus.failure
-                                                    ? Colors.red
-                                                    : Colors.green,
-                                                fontWeight: FontWeight.bold,
+                                                setState(() {});
+                                              },
+                                              child: Text(
+                                                _captureStatus ==
+                                                        CaptureStatus.success
+                                                    ? 'Image Captured'
+                                                    : (_captureStatus ==
+                                                            CaptureStatus
+                                                                .failure
+                                                        ? 'Capture Failed'
+                                                        : 'Capture Image'),
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: _captureStatus ==
+                                                          CaptureStatus.failure
+                                                      ? Colors.red
+                                                      : Colors.green,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        )),
-
-                                  ],),
-
+                                          )),
+                                    ],
+                                  ),
 
                                   // Continue similarly for all remaining questions...
 
@@ -1473,11 +1505,6 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                           ),
                                         ),
                                         onPressed: () async {
-                                          LoaderUtils.showLoadingWithMessage(
-                                              context,
-                                              isLoading: true,
-                                              message:
-                                                  "Additional info for Retrofitting/Augmentation Schemes only");
 
                                           LoaderUtils.showLoadingWithMessage(
                                               context,
@@ -1590,20 +1617,23 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                                             ToastHelper.showToastMessage(
                                                 schemeProvider.message!,
                                                 backgroundColor: Colors.green);
-                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Partaschemeinfouserobservation()),);
-
-
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      Partaschemeinfouserobservation()),
+                                            );
                                           } else {
                                             ToastHelper.showToastMessage(
                                                 schemeProvider.message!,
                                                 backgroundColor: Colors.red);
                                           }
 
-                                          Navigator.of(context).pushReplacement(
+                                          /*Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (_) =>
                                                     Dashboardschemeinfo()),
-                                          );
+                                          );*/
                                         },
                                         child: Text(
                                           "SAVE",
@@ -1627,6 +1657,48 @@ class _VisualInspectionScreen extends State<VisualInspectionScreen> {
                 );
               },
             )),
+      ),
+    );
+  }
+
+  // Method for image capture part
+  Widget imageCaptureWidget({
+    required int selectedId,
+    required CameraHelper cameraHelper,
+    required CaptureStatus captureStatus,
+    required ValueChanged<CaptureStatus> onStatusChange,
+  }) {
+    return Visibility(
+      visible: selectedId == 1,
+      child: Center(
+        child: GestureDetector(
+          onTap: () async {
+            try {
+              await cameraHelper.pickFromCamera();
+              if (cameraHelper.imageFile != null) {
+                onStatusChange(CaptureStatus.success);
+              } else {
+                onStatusChange(CaptureStatus.failure);
+              }
+            } catch (e) {
+              onStatusChange(CaptureStatus.failure);
+            }
+          },
+          child: Text(
+            captureStatus == CaptureStatus.success
+                ? 'Image Captured'
+                : (captureStatus == CaptureStatus.failure
+                    ? 'Capture Failed'
+                    : 'Capture Image'),
+            style: TextStyle(
+              fontSize: 18,
+              color: captureStatus == CaptureStatus.failure
+                  ? Colors.red
+                  : Colors.green,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
     );
   }
