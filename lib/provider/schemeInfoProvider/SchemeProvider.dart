@@ -893,7 +893,7 @@ class Schemeprovider extends ChangeNotifier {
   }
 
   // Q5.2: Date of SLSSC approval (text)
-  String? _dateApproval;
+  String? _dateApproval ="";
 
   String? get dateApproval => _dateApproval;
 
@@ -1245,6 +1245,10 @@ class Schemeprovider extends ChangeNotifier {
 
         selectedDelayReasons = getCheckBoxData(
             schemeImplementationData.first.delayWorkReason, delayReasons);
+
+        belowselectedDelayReasons = getCheckBoxData(
+            schemeImplementationData.first.delayWorkReason   ,belowdelayReasons);
+
         print('selectedDelayReasons: $selectedDelayReasons');
 
         selectedCostOverrun = getRadiobuttonData(
@@ -1260,14 +1264,19 @@ class Schemeprovider extends ChangeNotifier {
             yesNoMap);
         print('selectedrevisedCostApproved: $selectedrevisedCostApproved');
 
-        selectedincreaseInCost = getRadiobuttonData(
-            schemeImplementationData.first.schemeCostRevisedBeforeWorkYesPer,
-            increaseInCostID);
-        print('selectedincreaseInCost: $selectedincreaseInCost');
+        selectedincreaseInCost = getRadiobuttonData(schemeImplementationData.first.schemeCostRevisedBeforeWorkYesPer, increaseInCostID);
+
+    print('selectedincreaseInCost: $selectedincreaseInCost');
         //TODO
-        dateApproval =
-            schemeImplementationData.first.slsscDateForRevisedEstimate;
-        print('dateApproval: $dateApproval');
+        dateApproval =schemeImplementationData.first.slsscDateForRevisedEstimate;
+
+        if(dateApproval!.isNotEmpty || selectedincreaseInCost!= -1){
+          setQuesPartE5=getRadiobuttonData(1, yesNoMap); //// SHAKTI
+        }
+
+
+
+    print('dateApproval: $dateApproval');
 
         selectedrevisionReasons = getCheckBoxData(
             schemeImplementationData.first.costOverrunReason,
@@ -1360,7 +1369,7 @@ class Schemeprovider extends ChangeNotifier {
     selectedcostOverrunReasons = [];
     selectedrevisedCostApproved = null;
     selectedincreaseInCost = null;
-    dateApproval = null;
+    dateApproval = "";
     selectedrevisionReasons = [];
     selectedWTP = null;
     selectedOHSR = null;
