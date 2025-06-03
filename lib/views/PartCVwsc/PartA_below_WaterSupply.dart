@@ -195,12 +195,11 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
 
                                 Customradiobttn(
                                   question: "4. Water supply frequency assured to villagers in the scheme:",
-                                  options: vwscProvider.FrequencyLabelOption,
-                                  selectedOption:
-                                  vwscProvider.selectedFrequency,
+                                  options: vwscProvider.belowFrequencyLabelOption,
+                                  selectedOption: vwscProvider.belowselectedFrequencyLabels,
                                   onChanged: (val) {
-                                    vwscProvider.selectedFrequency = val;
-                                    print('-------selectedFrequencyID ${vwscProvider.selectedFrequencyID}');
+                                    vwscProvider.belowselectedFrequencyLabels = val;
+                                    print('-------selectedFrequencyID ${vwscProvider.belowselectedFrequencyLabelsID}');
                                   },
                                 ),
 
@@ -297,7 +296,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                               userId: _localStorageService.getInt(AppConstants.prefUserId)!,
                                               stateId: vwscProvider.stateId!,
                                               villageId: vwscProvider.villageId!,
-                                              waterSupplyFrequency: 0,
+                                              waterSupplyFrequency: -1,
                                               adequateWaterToHH: -1,
                                               adequateWaterToRemote: -1,
                                               remoteReason: "",
@@ -312,7 +311,7 @@ class _PartaBelowWatersupply extends State<PartaBelowWatersupply> {
                                               typeOfSchemeCommissioned: vwscProvider.selectedOption2_belowPartAID,
                                               schemeBeneficiaryHouseholds: vwscProvider.householdPercentageController.text,
                                               presentStatusOfWaterSupplySchemes: vwscProvider.selectedOption3_belowPartAID,
-                                              waterSupplyFrequencyAssured: vwscProvider.selectedFrequencyID,
+                                              waterSupplyFrequencyAssured: vwscProvider.belowselectedFrequencyLabelsID,
                                               remoteGroupsPlanned: vwscProvider.selectedOption5_belowPartAID,
                                               remoteGroupsPlannedDetails: vwscProvider.reasonsController.text,
                                               //TODO feedback

@@ -46,12 +46,40 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   // 1. Define the options map
+  final Map<String, int> belowFrequencyLabels = {
+    "Daily": 4,
+    "Once in two days": 3,
+    "Once in three days": 2,
+    "Irregular": 1,
+    "Not functional": 0,
+  };
+
+  List<String> get belowFrequencyLabelOption => belowFrequencyLabels.keys.toList();
+
+  // 2. Expose just the labels for the UI
+
+  String? _belowselectedFrequencyLabels;
+
+  String? get belowselectedFrequencyLabels => _belowselectedFrequencyLabels;
+
+  // 3. Track selected labels
+
+  set belowselectedFrequencyLabels(String? values) {
+    _belowselectedFrequencyLabels = values;
+    notifyListeners();
+  }
+
+  int get belowselectedFrequencyLabelsID => FrequencyLabels[_belowselectedFrequencyLabels] ?? -1;
+
+
+
+  // 1. Define the options map
   final Map<String, int> FrequencyLabels = {
-    "Daily": 1,
-    "Once in two days": 2,
-    "Once in three days": 3,
-    "Irregular": 4,
-    "Not functional": 5,
+    "Daily": 4,
+    "Once in two days": 3,
+    "Once in three days": 2,
+    "Irregular": 1,
+    "Not functional": 0,
   };
 
   List<String> get FrequencyLabelOption => FrequencyLabels.keys.toList();
@@ -182,8 +210,8 @@ class Vwscprovider extends ChangeNotifier {
   }
 
   final Map<String, int> VWSCOMInvolvedID = {
-    "Active": 1,
-    "Limited": 2,
+    "Yes - Active": 1,
+    "Yes - Limited": 2,
     "No": 3,
     "Not Applicable": 4,
   };
@@ -416,7 +444,7 @@ class Vwscprovider extends ChangeNotifier {
  final Map<String, int> vwscBelowPartAQues3Map = {
      'Meeting daily needs throughout the year':2,
      'Meeting daily needs partly in the year':1,
-     'Not able to meet daily needs:':3
+     'Not able to meet daily needs:':0
  };
 
   // below 10%  start
@@ -577,6 +605,9 @@ class Vwscprovider extends ChangeNotifier {
         selectedOption2_belowPartA = getRadiobuttonData(waterSupplyData.first.whatIsTheTypeOfSchemePresentlyCommissioned,vwscBelowPartAQues2Map);
         print('selectedOption2_belowPartA: $selectedOption2_belowPartA');
 
+        belowselectedFrequencyLabels = getRadiobuttonData(waterSupplyData.first.waterSupplyFrequencyAssuredToVillagersInTheScheme,belowFrequencyLabels);
+        print('belowselectedFrequencyLabels: $belowselectedFrequencyLabels');
+
         householdPercentageController.text = waterSupplyData.first.ifSchemeIsCommissionedHowManyHouseholdsAreBeingBenefitted;
         print('householdPercentageController: ${householdPercentageController.text}');
 
@@ -702,7 +733,7 @@ class Vwscprovider extends ChangeNotifier {
         selectedWaterQualitySatisfaction = getRadiobuttonData(communityInvolvementData.first.communitySatisfactionWithWq,WaterQualitySatisfaction);
         print('selectedWaterQualitySatisfaction: $selectedWaterQualitySatisfaction');
 
-        PartBVWSCuserObservationController.text = communityInvolvementData.first.meetingHeldYesFrequency;
+        PartBVWSCuserObservationController.text = communityInvolvementData.first.observationCommunityInvolvementFunctionality;
         print('PartBVWSCuserObservationController: ${PartBVWSCuserObservationController.text}');
 
 
