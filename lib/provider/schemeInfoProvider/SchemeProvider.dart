@@ -224,9 +224,13 @@ class Schemeprovider extends ChangeNotifier {
             sourceSurveyData.first.incaseGwContAnyAnalysisConduct, yesNoMap);
         print('selectedValueQ3: $selectedValueQ3');
 
-        selectedWaterAllocation = getRadiobuttonData(
+
+        waterAllocationPurpose = getRadiobuttonData(sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw, yesNoMap);
+        print('waterAllocationPurpose: $selectedValueQ3');
+
+/*        selectedWaterAllocation = getRadiobuttonData(
             sourceSurveyData.first.wtrAllocationFrmStateWRDIDFrmSw, yesNoMap);
-        print('selectedWaterAllocation: $selectedValueQ3');
+        print('selectedWaterAllocation: $selectedValueQ3');*/
 
 
         //
