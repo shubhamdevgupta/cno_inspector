@@ -37,7 +37,7 @@ class SchemeRepositoy {
           "no_villages_semi_critical_zone": semiCriticalZoneVillages,
           "incase_gw_cont_any_analysis_conduct": groundWaterAnalysisConducted,
           "wtr_allocation_frm_state_WRD_ID_frm_sw": waterAllocationFromWRD,
-          "represe_of_ource_finding_committee": repressFindinCommitte,
+          "represent_of_source_finding_committee": repressFindinCommitte,
           "cost_effective_alternative_sources":alterNativeSource,
           "phy_status":modeType,
           "Remarks_Source":userremark,
