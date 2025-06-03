@@ -60,6 +60,22 @@ class SourceSurveyItem {
     required this.Remarks_Source,
 
   });
+ /* "userid": 1726,
+  "stateid": 17,
+  "schemeid": 30080100,
+  "is_rcmnd_shift_to_surface_wtr": 1,
+  "any_study_access_gw_before_sw": 1,
+  "no_villages_safe_zone": 10,
+  "no_villages_critical_zone": 11,
+  "no_villages_semi_critical_zone": 12,
+  "incase_gw_cont_any_analysis_conduct": 1,
+  "wtr_allocation_frm_state_WRD_ID_frm_sw": 1,
+  "represent_of_source_finding_committee": "rer",
+  "cost_effective_alternative_sources": "tes data q7",
+  "phy_status": 0,
+  "createdby": null,
+  "createdip": null,
+  "Remarks_Source": ""*/
 
   factory SourceSurveyItem.fromJson(Map<String, dynamic> json) {
     return SourceSurveyItem(

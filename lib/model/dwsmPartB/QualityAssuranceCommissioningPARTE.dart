@@ -68,8 +68,7 @@ class QualityAssuranceResult {
       districtid: json['districtid'] ?? 0,
       whoAuthorizedInspectIds:
       json['Who_authorized_inspect_measure_works_field_inspectionIds'] ?? '',
-      whoAuthorizedInspect: List<int>.from(
-          json['Who_authorized_inspect_measure_works_field_inspection'] ?? []),
+      whoAuthorizedInspect: List<int>.from(json['Who_authorized_inspect_measure_works_field_inspection'] ?? []),
       isCommissioningProtocolFollowed:
       json['Is_commissioning_protocol_followed'] ?? 0,
       duringCommissioningPresentIds:

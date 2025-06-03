@@ -219,7 +219,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                     options: schemeProvider.yesNoMap.keys.toList(),
                                     selectedOption: schemeProvider.waterAllocationPurpose,
                                     onChanged: (val){
-                                      schemeProvider.selectedWaterAllocation = val;
+                                      schemeProvider.waterAllocationPurpose = val;
                                     },
                                   ),
 
@@ -328,7 +328,7 @@ class _SourceScreenQuestions extends State<SourceScreenQuestions> {
                                             criticalZoneVillages:     Utilityclass.stringToZero(schemeProvider.criticalController.text    ),
                                             semiCriticalZoneVillages: Utilityclass.stringToZero(schemeProvider.semiCriticalController.text),
                                             groundWaterAnalysisConducted: schemeProvider.selectedValueQ3Id,
-                                            waterAllocationFromWRD: schemeProvider.selectedWaterAllocationId,
+                                            waterAllocationFromWRD: schemeProvider.waterAllocationPurposeID,
                                             alterNativeSource: schemeProvider.alternativeSourcesAvailable_Controller.text.isNotEmpty ? schemeProvider.alternativeSourcesAvailable_Controller.text : "",
                                             repressFindinCommitte: schemeProvider.sourceFindingRepresentativesConsulted_Controller.text.isNotEmpty ? schemeProvider.sourceFindingRepresentativesConsulted_Controller.text : "",
                                               modeType: modeType?.modeValue ?? 0,
